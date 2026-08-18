@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - feature/growth-os-*
+      - feature/merchant-*
       - main
   pull_request:
 
