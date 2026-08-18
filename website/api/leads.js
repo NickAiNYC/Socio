@@ -1,5 +1,5 @@
 const http = require('http');
-const { exec } = require('child_process');
+const { execFile } = require('child_process');
 
 const PORT = process.env.WEBHOOK_PORT || 3001;
 
@@ -26,9 +26,9 @@ http.createServer((req, res) => {
 
         if (req.url === '/api/leads') {
           // Create Kanban task in Hermes
-          const cmd = `hermes kanban create "Lead: ${lead.name} — ${lead.type}" --assignee socio-prospect --board socio`;
+          const args = ['kanban', 'create', `Lead: ${lead.name} — ${lead.type}`, '--assignee', 'socio-prospect', '--board', 'socio'];
           
-          exec(cmd, (error, stdout, stderr) => {
+          execFile('hermes', args, (error, stdout, stderr) => {
             if (error) {
               console.error(`Error executing hermes: ${error}`);
             } else {
