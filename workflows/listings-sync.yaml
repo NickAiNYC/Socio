@@ -1,0 +1,18 @@
+workflow:
+  name: socio-listings-daily
+  steps:
+    - name: sync-google-maps
+      agent: dsh-plugin-subagents
+      tool: synup-mcp
+      params: "Merchant A - Google Maps"
+    - name: sync-yelp
+      agent: dsh-plugin-subagents
+      tool: synup-mcp
+      params: "Merchant A - Yelp"
+    - name: sync-instagram
+      agent: dsh-plugin-subagents
+      tool: synup-mcp
+      params: "Merchant A - Instagram"
+    - name: generate-review-responses
+      agent: dsh-plan-execute
+      params: "Draft responses to all new reviews"

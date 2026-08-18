@@ -1,0 +1,26 @@
+workflow:
+  name: socio-prospect-daily
+  steps:
+    - name: scrape-harlem
+      agent: dsh-plugin-subagents
+      params:
+        tool: google-maps-api
+        query: "florists in East Harlem, NYC"
+    - name: scrape-washington-heights
+      agent: dsh-plugin-subagents
+      params:
+        tool: google-maps-api
+        query: "florists in Washington Heights, NYC"
+    - name: scrape-bronx
+      agent: dsh-plugin-subagents
+      params:
+        tool: google-maps-api
+        query: "florists in Bronx, NYC"
+    - name: scrape-queens
+      agent: dsh-plugin-subagents
+      params:
+        tool: google-maps-api
+        query: "florists in Queens, NYC"
+    - name: merge-results
+      agent: dsh-plugin-subagents
+      tool: merge-json
