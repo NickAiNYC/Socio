@@ -3,136 +3,688 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Socio | Your local growth partner. NYC.</title>
-  <meta name="description" content="We don't get paid until you do. NYC's local growth partner for florists, restaurants, and bodegas.">
+  <title>Socio — Your NYC Growth Partner</title>
+  
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="index.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Embedded CSS -->
+  <style>
+    :root {
+      --bg-base: #0A0A0A;
+      --bg-depth: #1E1B4B;
+      --accent-green: #10B981;
+      --accent-green-glow: rgba(16, 185, 129, 0.4);
+      --accent-gold: #F59E0B;
+      --text-main: #F3F4F6;
+      --text-muted: #9CA3AF;
+      --glass-bg: rgba(255, 255, 255, 0.03);
+      --glass-border: rgba(255, 255, 255, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3, h4, .font-display {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    a {
+      color: var(--text-main);
+      text-decoration: none;
+    }
+
+    /* --- Three.js Canvas --- */
+    #canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      background: radial-gradient(circle at center, var(--bg-depth) 0%, var(--bg-base) 100%);
+    }
+
+    /* --- Header & Language Toggle --- */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 1.5rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      background: rgba(10, 10, 10, 0.5);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--glass-border);
+      transition: all 0.3s ease;
+    }
+
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.5rem;
+      letter-spacing: -0.5px;
+      color: var(--text-main);
+    }
+    
+    .logo span {
+      color: var(--accent-green);
+    }
+
+    .lang-toggle {
+      display: flex;
+      gap: 0.5rem;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 0.25rem;
+    }
+
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 0.5rem 1rem;
+      border-radius: 15px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .lang-btn.active {
+      background: var(--accent-green);
+      color: #fff;
+      box-shadow: 0 0 10px var(--accent-green-glow);
+    }
+
+    /* --- Layout & Sections --- */
+    section {
+      position: relative;
+      padding: 6rem 5%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      z-index: 10;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .glass-panel {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 3rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    /* --- Hero Section --- */
+    #hero {
+      text-align: center;
+      align-items: center;
+    }
+
+    #hero h1 {
+      font-size: clamp(3rem, 8vw, 5rem);
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(to right, #fff, var(--text-muted));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    #hero p {
+      font-size: clamp(1.2rem, 2vw, 1.5rem);
+      color: var(--text-muted);
+      margin-bottom: 3rem;
+      max-width: 600px;
+      margin-inline: auto;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      background: var(--accent-green);
+      color: #fff;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      border: 1px solid rgba(255,255,255,0.2);
+      box-shadow: 0 0 20px var(--accent-green-glow);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 0 30px var(--accent-green);
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: bounce 2s infinite;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+      40% { transform: translateY(-15px) translateX(-50%); }
+      60% { transform: translateY(-7px) translateX(-50%); }
+    }
+
+    /* --- Two Columns (The Promise) --- */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    
+    @media (min-width: 768px) {
+      .two-col {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .promise-card {
+      text-align: left;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+    
+    .promise-card h3 {
+      font-size: 2rem;
+      color: var(--accent-green);
+      margin-bottom: 1rem;
+      transform: translateZ(30px);
+    }
+
+    .promise-card p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      transform: translateZ(20px);
+    }
+
+    .promise-card hr {
+      border: 0;
+      height: 1px;
+      background: var(--glass-border);
+      margin: 1.5rem 0;
+      transform: translateZ(10px);
+    }
+
+    .promise-card .highlight {
+      color: var(--text-main);
+      font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+      transform: translateZ(30px);
+      display: inline-block;
+    }
+
+    /* --- Three Steps (How It Works) --- */
+    .three-step {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      text-align: center;
+    }
+
+    @media (min-width: 992px) {
+      .three-step {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+
+    .step-card h3 {
+      font-size: 1.5rem;
+      color: var(--accent-gold);
+      margin-bottom: 1rem;
+    }
+
+    /* --- The Manifesto --- */
+    .manifesto-quote {
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .manifesto-quote h2 {
+      font-size: clamp(2rem, 5vw, 4rem);
+      line-height: 1.2;
+      color: var(--text-main);
+      margin-bottom: 2rem;
+    }
+
+    .link-arrow {
+      color: var(--accent-green);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.2rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: gap 0.3s ease;
+    }
+
+    .link-arrow:hover {
+      gap: 1rem;
+    }
+
+    /* --- Social Proof --- */
+    .logo-carousel {
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+      margin-bottom: 4rem;
+      mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    }
+
+    .logo-track {
+      display: inline-block;
+      animation: scroll 20s linear infinite;
+    }
+
+    .logo-track span {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5rem;
+      color: var(--text-muted);
+      margin: 0 3rem;
+      opacity: 0.5;
+    }
+
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .testimonial {
+      text-align: center;
+      font-size: 1.5rem;
+      font-style: italic;
+      color: var(--text-main);
+    }
+
+    .testimonial span {
+      display: block;
+      font-size: 1rem;
+      color: var(--text-muted);
+      font-style: normal;
+      margin-top: 1rem;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    /* --- Footer --- */
+    footer {
+      padding: 4rem 5%;
+      border-top: 1px solid var(--glass-border);
+      text-align: center;
+      background: var(--bg-base);
+      position: relative;
+      z-index: 10;
+    }
+
+    .footer-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .footer-grid {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+
+    .social-links a {
+      color: var(--text-muted);
+      margin: 0 1rem;
+      transition: color 0.3s ease;
+    }
+
+    .social-links a:hover {
+      color: var(--accent-green);
+    }
+    
+    .compliance-footer {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 2rem;
+      opacity: 0.7;
+    }
+
+    /* --- Reveal Animations --- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+
+    /* Bilingual Transition Class */
+    .lang-fade {
+      transition: opacity 0.3s ease;
+    }
+    .lang-fade.hidden {
+      opacity: 0;
+    }
+  </style>
 </head>
 <body>
-  <nav class="navbar">
-    <div class="logo">Socio<span>.nyc</span></div>
-    <div class="nav-links">
-      <a href="#manifesto">Manifesto</a>
-      <a href="#how-it-works">How It Works</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#contact" class="btn-primary">Become a Socio</a>
-    </div>
-  </nav>
 
-  <header class="hero" id="home">
-    <div class="hero-content fade-in-up">
-      <div class="badge">NYC's Local Growth Partner</div>
-      <h1>We don't get paid<br><span class="highlight">until you do.</span></h1>
-      <p>Zero upfront fees. No confusing jargon. We invest in your business and only take a cut of the new revenue we generate.</p>
-      <div class="hero-cta">
-        <a href="#manifesto" class="btn-secondary">Read our Manifesto</a>
-        <a href="#contact" class="btn-primary glow">Let's Talk Growth</a>
-      </div>
-    </div>
-    <div class="hero-visual fade-in">
-      <div class="glass-card image-wrapper">
-        <img src="assets/hero.jpg" alt="Local NYC Florist at dusk" />
-      </div>
-      <div class="floating-stat float-1">
-        <div class="stat-value">+24%</div>
-        <div class="stat-label">Net New Revenue</div>
-      </div>
-      <div class="floating-stat float-2">
-        <div class="stat-value">$0</div>
-        <div class="stat-label">Upfront Fees</div>
-      </div>
+  <!-- Three.js Canvas -->
+  <div id="canvas-container"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">Socio<span>.</span></div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="es">ES</button>
     </div>
   </header>
 
-  <section id="manifesto" class="manifesto">
-    <div class="section-header">
-      <h2>The Socio <span class="highlight">Manifesto</span></h2>
-      <p>True partners share the risk. This is who we are.</p>
-    </div>
-    <div class="manifesto-grid">
-      <div class="manifesto-card glass-panel">
-        <h3>We are Socio. We are your partners in growth.</h3>
-        <p>For too long, local businesses—the florists, the restaurants, the corner stores that give our neighborhoods life—have been treated like cash registers by marketing "agencies." They ask for thousands of dollars upfront, with zero guarantees, leaving you holding the risk if things don't work out.</p>
-        <p>We believe there is a better way. The word "Socio" means <em>partner</em>. And true partners share the risk.</p>
+  <!-- Hero Section -->
+  <section id="hero">
+    <div class="container">
+      <h1 class="reveal lang-fade" data-i18n="heroTitle">We don't get paid until you do.</h1>
+      <p class="reveal delay-1 lang-fade" data-i18n="heroSub">Socio — Your NYC Growth Partner</p>
+      <div class="reveal delay-2">
+        <a href="#contact" class="cta-btn lang-fade" data-i18n="heroCta">Become a Socio &rarr;</a>
       </div>
-      <div class="manifesto-card glass-panel spanish">
-        <h3>Somos Socio. Somos sus aliados en el crecimiento.</h3>
-        <p>Durante demasiado tiempo, los negocios locales (las floristerías, los restaurantes, las bodegas que dan vida a nuestros vecindarios) han sido tratados como cajeros automáticos por "agencias" de marketing. Piden miles de dólares por adelantado, sin ninguna garantía, dejándole a usted con todo el riesgo si las cosas no funcionan.</p>
-        <p>Creemos que hay una forma mejor. La palabra "Socio" significa <em>compañero, aliado</em>. Y los verdaderos socios comparten el riesgo.</p>
+      <p class="reveal delay-3 lang-fade" style="margin-top:2rem; font-size:1rem; color:var(--text-muted);" data-i18n="heroTrust">Trusted by local merchants across NYC</p>
+    </div>
+    <div class="scroll-indicator">&darr;</div>
+  </section>
+
+  <!-- Section 2: The Promise -->
+  <section id="promise">
+    <div class="container">
+      <h2 class="font-display reveal lang-fade" style="font-size: 2.5rem; margin-bottom: 3rem; text-align: center;" data-i18n="promiseTitle">Our Promise to You</h2>
+      <div class="two-col">
+        <div class="glass-panel promise-card reveal delay-1 tilt-card">
+          <h3 class="lang-fade" data-i18n="netNew">Net New Revenue</h3>
+          <p class="lang-fade" data-i18n="netNewDesc">Money from brand-new customers who have never visited your business before.</p>
+          <hr>
+          <div class="highlight lang-fade" data-i18n="trackedOpt">Tracked. Optimized. Commissioned.</div>
+        </div>
+        <div class="glass-panel promise-card reveal delay-2 tilt-card">
+          <h3 style="color: var(--accent-gold);" class="lang-fade" data-i18n="expansion">Expansion Revenue</h3>
+          <p class="lang-fade" data-i18n="expansionDesc">Extra money from existing customers returning more frequently to spend more.</p>
+          <hr>
+          <div class="highlight lang-fade" data-i18n="trackedOpt">Tracked. Optimized. Commissioned.</div>
+        </div>
       </div>
     </div>
   </section>
 
-  <section id="how-it-works" class="how-it-works">
-    <div class="section-header">
-      <h2>How It <span class="highlight">Works</span></h2>
-      <p>Three simple steps. Total transparency.</p>
-    </div>
-    <div class="steps-grid">
-      <div class="step-card reveal">
-        <div class="step-number">01</div>
-        <h3>Audit</h3>
-        <p>We analyze your local footprint, customer retention, and discover exactly where you're leaving money on the table.</p>
-      </div>
-      <div class="step-card reveal delay-1">
-        <div class="step-number">02</div>
-        <h3>Execute</h3>
-        <p>Our team builds your listings, launches campaigns, and automates outreach. We invest our time, technology, and sweat.</p>
-      </div>
-      <div class="step-card reveal delay-2">
-        <div class="step-number">03</div>
-        <h3>Grow</h3>
-        <p>We only track two numbers: Net New Revenue and Expansion Revenue. We take our commission only from the upside.</p>
+  <!-- Section 3: How It Works -->
+  <section id="how-it-works">
+    <div class="container">
+      <h2 class="font-display reveal lang-fade" style="font-size: 2.5rem; margin-bottom: 3rem; text-align: center;" data-i18n="howItWorksTitle">How It Works</h2>
+      <div class="three-step">
+        <div class="glass-panel step-card reveal delay-1 tilt-card">
+          <h3 class="lang-fade" data-i18n="step1">1. Audit</h3>
+          <p class="lang-fade" data-i18n="step1Desc">Free 48-hour digital assessment of your exact market gaps.</p>
+        </div>
+        <div class="glass-panel step-card reveal delay-2 tilt-card">
+          <h3 class="lang-fade" data-i18n="step2">2. Execute</h3>
+          <p class="lang-fade" data-i18n="step2Desc">AI-powered local marketing, content generation, and SEO sync.</p>
+        </div>
+        <div class="glass-panel step-card reveal delay-3 tilt-card">
+          <h3 class="lang-fade" data-i18n="step3">3. Grow</h3>
+          <p class="lang-fade" data-i18n="step3Desc">You keep the profits. We only take a commission on the growth.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <section id="philosophy" class="philosophy">
-    <div class="philosophy-content">
-      <h2>Our Philosophy</h2>
-      <div class="big-quote">
-        "10 great partners beat 100 mediocre ones."
-      </div>
-      <p>We are not an agency trying to sign up as many businesses as possible. We choose to go deep, not wide. We invest our resources into a select few local businesses to ensure they thrive in their neighborhood.</p>
+  <!-- Section 4: The Manifesto -->
+  <section id="manifesto">
+    <div class="container manifesto-quote">
+      <h2 class="reveal lang-fade" data-i18n="manifestoQuote">"10 great partners beat 100 mediocre ones."</h2>
+      <p class="reveal delay-1 font-display" style="color: var(--accent-gold); font-size: 1.5rem; margin-bottom: 2rem;">— Socio Manifesto</p>
+      <a href="#" class="link-arrow reveal delay-2 lang-fade" data-i18n="manifestoLink">Read the full manifesto &rarr;</a>
     </div>
   </section>
 
-  <section id="pricing" class="pricing">
-    <div class="pricing-card glass-panel glow-border">
-      <div class="pricing-header">
-        <h2>Transparent Pricing</h2>
-        <div class="price">$0<span> upfront</span></div>
+  <!-- Section 5: Services -->
+  <section id="services">
+    <div class="container">
+      <h2 class="font-display reveal lang-fade" style="font-size: 2.5rem; margin-bottom: 3rem; text-align: center;" data-i18n="whatWeDo">What We Do</h2>
+      <div class="two-col">
+        <div class="glass-panel promise-card reveal delay-1 tilt-card">
+          <h3 class="lang-fade" data-i18n="forLocal">For Local Shops</h3>
+          <p class="lang-fade" data-i18n="forLocalDesc">Florists, bodegas, restaurants, and laundromats. We digitize your foot traffic.</p>
+        </div>
+        <div class="glass-panel promise-card reveal delay-2 tilt-card">
+          <h3 class="lang-fade" data-i18n="forChinese">For Chinese Brands</h3>
+          <p class="lang-fade" data-i18n="forChineseDesc">TikTok Shop USA scaling, brand localization, and seamless US market entry.</p>
+        </div>
       </div>
-      <ul class="pricing-features">
-        <li><span>✅</span> 10–15% commission on <strong>new revenue only</strong></li>
-        <li><span>✅</span> $0 monthly retainers</li>
-        <li><span>✅</span> Custom built growth engine</li>
-        <li><span>✅</span> Weekly revenue tracking</li>
-      </ul>
-      <a href="#contact" class="btn-primary block">Become a Socio</a>
     </div>
   </section>
 
-  <footer class="footer">
-    <div class="footer-content">
-      <div class="logo">Socio<span>.nyc</span></div>
-      <p>Your local growth partner. 🇲🇽 🇺🇸</p>
-      <div class="compliance-links" style="margin-top: 1.5rem; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.8;">
-        <p><strong>Pricing Guarantee:</strong> 100% All-In Pricing. Zero setup or junk fees. You only pay commission on revenue.</p>
-        <p><strong>Transparency:</strong> Content across Socio is AI-assisted. Humans approve everything.</p>
+  <!-- Section 6: Social Proof -->
+  <section id="proof">
+    <div class="container">
+      <h2 class="font-display reveal lang-fade" style="font-size: 2.5rem; margin-bottom: 3rem; text-align: center;" data-i18n="trustedBy">Trusted by NYC's Best</h2>
+      
+      <div class="logo-carousel reveal delay-1">
+        <div class="logo-track">
+          <span>CRISTAL FLOWERS</span>
+          <span>EL NUEVO CAFE</span>
+          <span>LA BODEGA NYC</span>
+          <span>QUEENS DRY CLEANERS</span>
+          <span>EAST HARLEM BITES</span>
+          <!-- Duplicate for infinite scroll -->
+          <span>CRISTAL FLOWERS</span>
+          <span>EL NUEVO CAFE</span>
+          <span>LA BODEGA NYC</span>
+          <span>QUEENS DRY CLEANERS</span>
+          <span>EAST HARLEM BITES</span>
+        </div>
       </div>
-      <p class="copyright" style="margin-top: 1.5rem;">&copy; 2026 Socio NYC. All rights reserved.</p>
+
+      <div class="glass-panel reveal delay-2" style="max-width: 800px; margin: 0 auto;">
+        <p class="testimonial lang-fade" data-i18n="test1Quote">"Socio doubled our online orders in 30 days. We pay nothing upfront."
+          <span class="lang-fade" data-i18n="test1Author">— Cristal Flowers, East Harlem</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 7: CTA -->
+  <section id="contact" style="text-align: center; min-height: 70vh;">
+    <div class="container glass-panel reveal" style="padding: 5rem 2rem;">
+      <h2 class="font-display lang-fade" style="font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1rem;" data-i18n="ctaTitle">Ready to Grow?</h2>
+      <p class="lang-fade" style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 3rem;" data-i18n="ctaDesc">Let's talk. No strings. No fees. Just growth.</p>
+      <a href="#" class="cta-btn lang-fade" data-i18n="ctaBtn">Book a Free Consultation &rarr;</a>
+      <p style="margin-top: 2rem; font-family: 'Space Grotesk', sans-serif;" class="lang-fade" data-i18n="ctaText">Or text us: <strong style="color: var(--text-main);">+1 (212) 555-SOCIO</strong></p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="logo" style="font-size: 1.2rem;">Socio<span>.</span></div>
+        <div class="social-links">
+          <a href="#">Instagram</a>
+          <a href="#">LinkedIn</a>
+          <a href="#">TikTok</a>
+          <a href="#">WhatsApp</a>
+        </div>
+      </div>
+      <p style="color: var(--text-muted); font-size: 0.9rem;" class="lang-fade" data-i18n="footerRights">© 2026 Socio. All rights reserved. Made with ❤️ in NYC.</p>
+      <p class="compliance-footer lang-fade" data-i18n="complianceFooter">Socio abides by NYC Consumer Protection Law 2026. 100% All-In Pricing. All synthetic content generated on behalf of merchants is explicitly labeled. Powered by DeepSeek and Hermes.</p>
     </div>
   </footer>
 
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  
   <script>
-    // Reveal animations on scroll
+    /* =========================================
+       1. BILINGUAL DICTIONARY SYSTEM
+       ========================================= */
+    const dict = {
+      en: {
+        heroTitle: "We don't get paid until you do.",
+        heroSub: "Socio — Your NYC Growth Partner",
+        heroCta: "Become a Socio &rarr;",
+        heroTrust: "Trusted by local merchants across NYC",
+        promiseTitle: "Our Promise to You",
+        netNew: "Net New Revenue",
+        netNewDesc: "Money from brand-new customers who have never visited your business before.",
+        trackedOpt: "Tracked. Optimized. Commissioned.",
+        expansion: "Expansion Revenue",
+        expansionDesc: "Extra money from existing customers returning more frequently to spend more.",
+        howItWorksTitle: "How It Works",
+        step1: "1. Audit",
+        step1Desc: "Free 48-hour digital assessment of your exact market gaps.",
+        step2: "2. Execute",
+        step2Desc: "AI-powered local marketing, content generation, and SEO sync.",
+        step3: "3. Grow",
+        step3Desc: "You keep the profits. We only take a commission on the growth.",
+        manifestoQuote: "\"10 great partners beat 100 mediocre ones.\"",
+        manifestoLink: "Read the full manifesto &rarr;",
+        whatWeDo: "What We Do",
+        forLocal: "For Local Shops",
+        forLocalDesc: "Florists, bodegas, restaurants, and laundromats. We digitize your foot traffic.",
+        forChinese: "For Chinese Brands",
+        forChineseDesc: "TikTok Shop USA scaling, brand localization, and seamless US market entry.",
+        trustedBy: "Trusted by NYC's Best",
+        test1Quote: "\"Socio doubled our online orders in 30 days. We pay nothing upfront.\"",
+        test1Author: "— Cristal Flowers, East Harlem",
+        ctaTitle: "Ready to Grow?",
+        ctaDesc: "Let's talk. No strings. No fees. Just growth.",
+        ctaBtn: "Book a Free Consultation &rarr;",
+        ctaText: "Or text us: <strong style='color: var(--text-main);'>+1 (212) 555-SOCIO</strong>",
+        footerRights: "© 2026 Socio. All rights reserved. Made with ❤️ in NYC.",
+        complianceFooter: "Socio abides by NYC Consumer Protection Law 2026. 100% All-In Pricing. All synthetic content generated on behalf of merchants is explicitly labeled. Powered by DeepSeek and Hermes."
+      },
+      es: {
+        heroTitle: "No cobramos hasta que tú ganes.",
+        heroSub: "Socio — Tu socio de crecimiento en NYC",
+        heroCta: "Conviértete en Socio &rarr;",
+        heroTrust: "Confiado por comerciantes locales en todo NYC",
+        promiseTitle: "Nuestra Promesa",
+        netNew: "Nuevos Ingresos Netos",
+        netNewDesc: "Dinero de clientes completamente nuevos que nunca antes habían visitado tu negocio.",
+        trackedOpt: "Rastreado. Optimizado. Comisionado.",
+        expansion: "Ingresos por Expansión",
+        expansionDesc: "Dinero extra de clientes existentes que regresan con más frecuencia para gastar más.",
+        howItWorksTitle: "Cómo Funciona",
+        step1: "1. Auditoría",
+        step1Desc: "Evaluación digital gratuita de 48 horas de tus brechas de mercado.",
+        step2: "2. Ejecución",
+        step2Desc: "Marketing local impulsado por IA, creación de contenido y sincronización SEO.",
+        step3: "3. Crecimiento",
+        step3Desc: "Tú te quedas con las ganancias. Solo cobramos comisión sobre el crecimiento.",
+        manifestoQuote: "\"10 socios excelentes superan a 100 mediocres.\"",
+        manifestoLink: "Lee el manifiesto completo &rarr;",
+        whatWeDo: "Lo Que Hacemos",
+        forLocal: "Para Negocios Locales",
+        forLocalDesc: "Floristerías, bodegas, restaurantes y lavanderías. Digitalizamos tu tráfico peatonal.",
+        forChinese: "Para Marcas Chinas",
+        forChineseDesc: "Escalado de TikTok Shop USA, localización de marca y entrada fluida al mercado.",
+        trustedBy: "Confiado por los Mejores de NYC",
+        test1Quote: "\"Socio duplicó nuestros pedidos en línea en 30 días. No pagamos nada por adelantado.\"",
+        test1Author: "— Cristal Flowers, East Harlem",
+        ctaTitle: "¿Listo para Crecer?",
+        ctaDesc: "Hablemos. Sin ataduras. Sin cuotas. Solo crecimiento.",
+        ctaBtn: "Reserva una Consulta Gratuita &rarr;",
+        ctaText: "O envíanos un texto: <strong style='color: var(--text-main);'>+1 (212) 555-SOCIO</strong>",
+        footerRights: "© 2026 Socio. Todos los derechos reservados. Hecho con ❤️ en NYC.",
+        complianceFooter: "Socio cumple con la Ley de Protección al Consumidor de NYC de 2026. Precios 100% transparentes. Todo el contenido sintético generado se etiqueta explícitamente. Impulsado por DeepSeek y Hermes."
+      }
+    };
+
+    const langBtns = document.querySelectorAll('.lang-btn');
+    const translatableElements = document.querySelectorAll('[data-i18n]');
+    let currentLang = localStorage.getItem('socioLang') || 'en';
+
+    function setLanguage(lang) {
+      // Fade out
+      translatableElements.forEach(el => el.classList.add('hidden'));
+      
+      setTimeout(() => {
+        translatableElements.forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (dict[lang][key]) {
+            el.innerHTML = dict[lang][key];
+          }
+        });
+        // Fade in
+        translatableElements.forEach(el => el.classList.remove('hidden'));
+      }, 300);
+
+      langBtns.forEach(btn => {
+        if (btn.dataset.lang === lang) btn.classList.add('active');
+        else btn.classList.remove('active');
+      });
+      
+      localStorage.setItem('socioLang', lang);
+      currentLang = lang;
+    }
+
+    // Initialize lang
+    setLanguage(currentLang);
+
+    langBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        setLanguage(btn.dataset.lang);
+      });
+    });
+
+
+    /* =========================================
+       2. INTERSECTION OBSERVER (Scroll Animations)
+       ========================================= */
     const observerOptions = {
       root: null,
       rootMargin: '0px',
-      threshold: 0.1
+      threshold: 0.15
     };
 
     const observer = new IntersectionObserver((entries, observer) => {
@@ -144,9 +696,220 @@
       });
     }, observerOptions);
 
-    document.querySelectorAll('.reveal, .fade-in-up, .fade-in').forEach((el) => {
+    document.querySelectorAll('.reveal').forEach(el => {
       observer.observe(el);
     });
+
+
+    /* =========================================
+       3. 3D CARD TILT EFFECT
+       ========================================= */
+    const tiltCards = document.querySelectorAll('.tilt-card');
+    
+    tiltCards.forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const rotateX = ((y - centerY) / centerY) * -10; // Max 10 deg
+        const rotateY = ((x - centerX) / centerX) * 10;
+        
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+      });
+      
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+      });
+    });
+
+
+    /* =========================================
+       4. THREE.JS LIVING CANVAS
+       ========================================= */
+    const container = document.getElementById('canvas-container');
+    const scene = new THREE.Scene();
+    
+    // Camera setup
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 200;
+    
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    container.appendChild(renderer.domElement);
+
+    // Nodes geometry
+    const particleCount = window.innerWidth < 768 ? 100 : 250;
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(particleCount * 3);
+    const colors = new Float32Array(particleCount * 3);
+    
+    const emerald = new THREE.Color('#10B981');
+    const gold = new THREE.Color('#F59E0B');
+
+    // Base positions and velocities
+    const particlesData = [];
+    
+    for (let i = 0; i < particleCount; i++) {
+      // Distribute mostly in a wide cylinder/sphere
+      const x = (Math.random() - 0.5) * 600;
+      const y = (Math.random() - 0.5) * 400;
+      const z = (Math.random() - 0.5) * 300;
+      
+      positions[i * 3] = x;
+      positions[i * 3 + 1] = y;
+      positions[i * 3 + 2] = z;
+      
+      // Color mix
+      const mixRatio = Math.random();
+      const c = mixRatio > 0.8 ? gold : emerald;
+      colors[i * 3] = c.r;
+      colors[i * 3 + 1] = c.g;
+      colors[i * 3 + 2] = c.b;
+
+      particlesData.push({
+        velocity: new THREE.Vector3(-0.5 + Math.random(), -0.5 + Math.random(), -0.5 + Math.random()).multiplyScalar(0.2),
+        baseX: x,
+        baseY: y,
+        baseZ: z
+      });
+    }
+
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+    // Circle sprite for smooth dots
+    const canvas = document.createElement('canvas');
+    canvas.width = 16;
+    canvas.height = 16;
+    const context = canvas.getContext('2d');
+    const gradient = context.createRadialGradient(8, 8, 0, 8, 8, 8);
+    gradient.addColorStop(0, 'rgba(255,255,255,1)');
+    gradient.addColorStop(1, 'rgba(255,255,255,0)');
+    context.fillStyle = gradient;
+    context.fillRect(0, 0, 16, 16);
+    const particleTexture = new THREE.CanvasTexture(canvas);
+
+    const material = new THREE.PointsMaterial({
+      size: 4,
+      vertexColors: true,
+      map: particleTexture,
+      blending: THREE.AdditiveBlending,
+      transparent: true,
+      depthWrite: false
+    });
+
+    const particles = new THREE.Points(geometry, material);
+    scene.add(particles);
+
+    // Edges
+    const lineMaterial = new THREE.LineBasicMaterial({
+      color: 0x10B981,
+      transparent: true,
+      opacity: 0.15,
+      blending: THREE.AdditiveBlending
+    });
+    
+    // We update line geometry every frame based on distance
+    const lineGeometry = new THREE.BufferGeometry();
+    const linesMesh = new THREE.LineSegments(lineGeometry, lineMaterial);
+    scene.add(linesMesh);
+
+    // Mouse Tracking
+    const mouse = new THREE.Vector2(0, 0);
+    const targetMouse = new THREE.Vector2(0, 0);
+    let windowHalfX = window.innerWidth / 2;
+    let windowHalfY = window.innerHeight / 2;
+
+    document.addEventListener('mousemove', onDocumentMouseMove, false);
+
+    function onDocumentMouseMove(event) {
+      targetMouse.x = (event.clientX - windowHalfX) * 0.1;
+      targetMouse.y = (event.clientY - windowHalfY) * 0.1;
+    }
+
+    window.addEventListener('resize', onWindowResize, false);
+
+    function onWindowResize() {
+      windowHalfX = window.innerWidth / 2;
+      windowHalfY = window.innerHeight / 2;
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    // Animation Loop
+    let time = 0;
+    function animate() {
+      requestAnimationFrame(animate);
+      
+      time += 0.01;
+      
+      // Smooth mouse follow for camera
+      mouse.x += (targetMouse.x - mouse.x) * 0.05;
+      mouse.y += (targetMouse.y - mouse.y) * 0.05;
+      
+      camera.position.x += (mouse.x - camera.position.x) * 0.05;
+      camera.position.y += (-mouse.y - camera.position.y) * 0.05;
+      camera.lookAt(scene.position);
+
+      // Move particles
+      const positionsAttr = geometry.attributes.position;
+      let vertexpos = 0;
+      let colorpos = 0;
+      let numConnected = 0;
+      
+      const linePositions = [];
+      const lineColors = [];
+
+      for (let i = 0; i < particleCount; i++) {
+        const particleData = particlesData[i];
+        
+        positionsAttr.array[i * 3] += particleData.velocity.x;
+        positionsAttr.array[i * 3 + 1] += particleData.velocity.y;
+        positionsAttr.array[i * 3 + 2] += particleData.velocity.z;
+
+        // Bounding box bounce
+        if (positionsAttr.array[i * 3] < -300 || positionsAttr.array[i * 3] > 300) particleData.velocity.x = -particleData.velocity.x;
+        if (positionsAttr.array[i * 3 + 1] < -200 || positionsAttr.array[i * 3 + 1] > 200) particleData.velocity.y = -particleData.velocity.y;
+        if (positionsAttr.array[i * 3 + 2] < -150 || positionsAttr.array[i * 3 + 2] > 150) particleData.velocity.z = -particleData.velocity.z;
+
+        // Pulse effect (scale nodes slightly)
+        // Handled via material size usually, but here we keep it simple to save CPU
+
+        // Connect edges
+        for (let j = i + 1; j < particleCount; j++) {
+          const dx = positionsAttr.array[i * 3] - positionsAttr.array[j * 3];
+          const dy = positionsAttr.array[i * 3 + 1] - positionsAttr.array[j * 3 + 1];
+          const dz = positionsAttr.array[i * 3 + 2] - positionsAttr.array[j * 3 + 2];
+          const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+          if (dist < 60) {
+            linePositions.push(
+              positionsAttr.array[i * 3], positionsAttr.array[i * 3 + 1], positionsAttr.array[i * 3 + 2],
+              positionsAttr.array[j * 3], positionsAttr.array[j * 3 + 1], positionsAttr.array[j * 3 + 2]
+            );
+            numConnected++;
+          }
+        }
+      }
+      
+      positionsAttr.needsUpdate = true;
+      
+      // Update lines
+      lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
+      
+      // Rotate entire scene slowly
+      scene.rotation.y += 0.001;
+
+      renderer.render(scene, camera);
+    }
+    
+    animate();
   </script>
 </body>
 </html>
