@@ -16,9 +16,9 @@ real limitation.
 - [ ] **Merchant authentication** — `MERCHANT_API_TOKENS` per business; a
       token for one business cannot read another (verified with a 401/403 test)
 - [ ] **Stripe webhook endpoint** — public HTTPS URL that receives Stripe
-      events. ⚠️ GAP: `economic/stripe-webhook.mjs` has signature verification
-      + conservative event mapping, but the HTTP receiver that calls them does
-      not exist yet. This is pilot-necessary wiring, not a new subsystem.
+      events. Receiver built (`merchant/stripe-webhook-endpoint.mjs`, signature
+      verification + idempotent ledger writes, 11 tests); remaining: deploy it
+      and point Stripe at the public URL
 - [ ] **Webhook signature verification** — `verifyStripeSignature` enforced
       (timing-safe, replay window) on every received event
 - [ ] **Monitoring/logging** — structured logs for API + webhook + ledger;

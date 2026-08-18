@@ -24,6 +24,7 @@ const files = [
   'engines/growth-os/repositories/postgres-repository.mjs',
   'engines/growth-os/merchant/evidence-report.mjs',
   'engines/growth-os/merchant/merchant-api.mjs',
+  'engines/growth-os/merchant/stripe-webhook-endpoint.mjs',
   'website/api/leads.js',
 ];
 
@@ -39,6 +40,7 @@ await import(path.join(root, 'engines/growth-os/revenue-ledger.mjs'));
 await import(path.join(root, 'engines/growth-os/audit-trail.mjs'));
 await import(path.join(root, 'engines/growth-os/merchant/evidence-report.mjs'));
 await import(path.join(root, 'engines/growth-os/merchant/merchant-api.mjs'));
+await import(path.join(root, 'engines/growth-os/merchant/stripe-webhook-endpoint.mjs'));
 console.log('  ok engine modules import');
 
 console.log('3/4 MCP server fail-closed boot (no DATABASE_URL, no allow flag)');
