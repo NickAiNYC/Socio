@@ -1,5 +1,8 @@
 workflow:
-  name: socio-prospect-daily
+  name: socio-prospect-scraper-daily
+  trigger:
+    type: cron
+    schedule: "0 6 * * *"
   steps:
     - name: scrape-harlem
       agent: dsh-plugin-subagents
@@ -24,3 +27,6 @@ workflow:
     - name: merge-results
       agent: dsh-plugin-subagents
       tool: merge-json
+    - name: score-prospects
+      agent: dsh-plan-execute
+      params: "Apply Socio scoring algorithm to identify top 10 merchants based on digital footprint gaps."

@@ -1,0 +1,25 @@
+workflow:
+  name: socio-commission-calculator
+  trigger:
+    type: webhook
+    event: pos_transaction
+  steps:
+    - name: parse-transaction
+      agent: dsh-plugin-subagents
+      tool: json-parser
+      params: "Extract customer ID, amount, and timestamp from webhook payload"
+    - name: check-customer-history
+      agent: dsh-plugin-subagents
+      tool: supabase-query
+      params: "Query database to check if customer has transacted in last 12 months"
+    - name: calculate-revenue-type
+      agent: dsh-plan-execute
+      params: "If new customer: route to Net New Revenue. If existing: route to Expansion Revenue."
+    - name: apply-commission-rate
+      agent: dsh-plugin-subagents
+      tool: python-eval
+      params: "commission = amount * 0.15"
+    - name: generate-stripe-invoice
+      agent: dsh-plugin-subagents
+      tool: stripe-connect-api
+      params: "Create invoice line item for merchant based on calculated commission"

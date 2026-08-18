@@ -1,18 +1,25 @@
 workflow:
-  name: socio-listings-daily
+  name: socio-listings-sync-daily
+  trigger:
+    type: cron
+    schedule: "0 2 * * *"
   steps:
+    - name: get-active-merchants
+      agent: dsh-plugin-subagents
+      tool: taskade-genesis-api
+      params: "Fetch list of all active merchants"
     - name: sync-google-maps
       agent: dsh-plugin-subagents
       tool: synup-mcp
-      params: "Merchant A - Google Maps"
+      params: "Sync business hours and info to Google Maps for all active merchants"
     - name: sync-yelp
       agent: dsh-plugin-subagents
       tool: synup-mcp
-      params: "Merchant A - Yelp"
+      params: "Sync business info to Yelp"
     - name: sync-instagram
       agent: dsh-plugin-subagents
       tool: synup-mcp
-      params: "Merchant A - Instagram"
+      params: "Sync bio and contact info to Instagram"
     - name: generate-review-responses
       agent: dsh-plan-execute
-      params: "Draft responses to all new reviews"
+      params: "Fetch all new reviews across platforms. Draft personalized, context-aware responses and queue for human approval."
