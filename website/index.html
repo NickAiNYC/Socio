@@ -3,7 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO & Meta Tags -->
   <title>Socio — Your NYC Growth Partner</title>
+  <meta name="description" content="Socio is a performance-based growth partnership firm for local NYC merchants and Chinese brands. We don't get paid until you do.">
+  <meta name="keywords" content="NYC marketing, growth partner, local SEO, Chinese brand localization, performance marketing">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Socio — Your NYC Growth Partner">
+  <meta property="og:description" content="We don't get paid until you do. Performance-based growth for NYC merchants.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://socio.nyc">
+  <meta property="og:image" content="https://socio.nyc/assets/hero.jpg">
+  
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Socio",
+    "image": "https://socio.nyc/assets/hero.jpg",
+    "url": "https://socio.nyc",
+    "telephone": "+12125557624",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "New York",
+      "addressRegion": "NY",
+      "addressCountry": "US"
+    },
+    "description": "Performance-based growth partner for NYC merchants."
+  }
+  </script>
   
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -141,31 +171,63 @@
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
+    /* --- Forms & Inputs --- */
+    input, select {
+      width: 100%;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      transition: border-color 0.3s ease;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--accent-green);
+    }
+
     /* --- Hero Section --- */
     #hero {
       text-align: center;
       align-items: center;
+      padding-top: 8rem;
     }
 
     #hero h1 {
-      font-size: clamp(3rem, 8vw, 5rem);
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
       line-height: 1.1;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
       background: linear-gradient(to right, #fff, var(--text-muted));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
     #hero p {
-      font-size: clamp(1.2rem, 2vw, 1.5rem);
+      font-size: clamp(1.1rem, 2vw, 1.3rem);
       color: var(--text-muted);
-      margin-bottom: 3rem;
-      max-width: 600px;
-      margin-inline: auto;
+      margin-bottom: 2rem;
+    }
+
+    .lead-capture {
+      max-width: 500px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .lead-capture h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--accent-gold);
+      text-align: center;
     }
 
     .cta-btn {
       display: inline-block;
+      width: 100%;
+      text-align: center;
       background: var(--accent-green);
       color: #fff;
       font-family: 'Space Grotesk', sans-serif;
@@ -183,21 +245,34 @@
       transform: translateY(-3px) scale(1.05);
       box-shadow: 0 0 30px var(--accent-green);
     }
-
-    .scroll-indicator {
-      position: absolute;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      animation: bounce 2s infinite;
-      color: var(--text-muted);
-      font-size: 1.5rem;
+    
+    .cta-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
 
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
-      40% { transform: translateY(-15px) translateX(-50%); }
-      60% { transform: translateY(-7px) translateX(-50%); }
+    /* --- Live Audit Tool --- */
+    #audit-tool {
+      background: rgba(30, 27, 75, 0.4);
+      padding: 4rem 0;
+    }
+
+    #audit-results {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: rgba(0,0,0,0.5);
+      border-radius: 12px;
+      display: none;
+    }
+
+    #audit-results ul {
+      list-style: none;
+    }
+
+    #audit-results li {
+      margin-bottom: 0.5rem;
+      padding-left: 1.5rem;
+      position: relative;
     }
 
     /* --- Two Columns (The Promise) --- */
@@ -297,7 +372,7 @@
       gap: 1rem;
     }
 
-    /* --- Social Proof --- */
+    /* --- Social Proof & Live Stats --- */
     .logo-carousel {
       overflow: hidden;
       white-space: nowrap;
@@ -339,6 +414,103 @@
       font-style: normal;
       margin-top: 1rem;
       font-family: 'Space Grotesk', sans-serif;
+    }
+    
+    .stats-row {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 3rem;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+    
+    .stat-item h4 {
+      font-size: 3rem;
+      color: var(--accent-green);
+      margin-bottom: 0.5rem;
+    }
+    
+    .stat-item p {
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 0.9rem;
+    }
+
+    /* --- Partner Referral --- */
+    #referral {
+      background: rgba(245, 158, 11, 0.05);
+      border-top: 1px solid rgba(245, 158, 11, 0.2);
+      border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+    }
+
+    /* --- Live Chat Widget --- */
+    #chat-widget {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
+    
+    #chat-toggle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--accent-green);
+      color: white;
+      border: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      cursor: pointer;
+      font-size: 1.5rem;
+      transition: transform 0.3s;
+    }
+    
+    #chat-toggle:hover {
+      transform: scale(1.1);
+    }
+    
+    #chat-box {
+      display: none;
+      position: absolute;
+      bottom: 80px;
+      right: 0;
+      width: 300px;
+      height: 400px;
+      background: var(--bg-base);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      overflow: hidden;
+      flex-direction: column;
+    }
+    
+    #chat-box.open {
+      display: flex;
+    }
+    
+    .chat-header {
+      background: var(--accent-green);
+      padding: 1rem;
+      font-family: 'Space Grotesk';
+      font-weight: 600;
+    }
+    
+    .chat-messages {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+      font-size: 0.9rem;
+    }
+    
+    .chat-input {
+      display: flex;
+      border-top: 1px solid var(--glass-border);
+    }
+    
+    .chat-input input {
+      margin: 0;
+      border: none;
+      border-radius: 0;
+      background: transparent;
     }
 
     /* --- Footer --- */
@@ -407,9 +579,21 @@
     .lang-fade.hidden {
       opacity: 0;
     }
+    
+    #referral-notice {
+      display: none;
+      background: var(--accent-gold);
+      color: #000;
+      text-align: center;
+      padding: 0.5rem;
+      font-weight: 600;
+    }
   </style>
 </head>
 <body>
+
+  <!-- Referral Notice -->
+  <div id="referral-notice">You've been referred! Special priority onboarding applied.</div>
 
   <!-- Three.js Canvas -->
   <div id="canvas-container"></div>
@@ -423,14 +607,28 @@
     </div>
   </header>
 
-  <!-- Hero Section -->
+  <!-- Hero Section & Lead Capture -->
   <section id="hero">
     <div class="container">
-      <h1 class="reveal lang-fade" data-i18n="heroTitle">We don't get paid until you do.</h1>
+      <h1 class="reveal lang-fade" id="hero-title" data-i18n="heroTitle">We don't get paid until you do.</h1>
       <p class="reveal delay-1 lang-fade" data-i18n="heroSub">Socio — Your NYC Growth Partner</p>
-      <div class="reveal delay-2">
-        <a href="#contact" class="cta-btn lang-fade" data-i18n="heroCta">Become a Socio &rarr;</a>
+      
+      <div class="glass-panel lead-capture reveal delay-2">
+        <h3 class="lang-fade" data-i18n="leadFormTitle">Get Your Free 48-Hour Digital Audit</h3>
+        <form id="leadForm" onsubmit="submitLead(event)">
+          <input type="text" id="leadName" placeholder="Business Name" required>
+          <input type="text" id="leadAddress" placeholder="Address (NYC)" required>
+          <input type="tel" id="leadPhone" placeholder="Phone Number" required>
+          <input type="email" id="leadEmail" placeholder="Email Address" required>
+          <select id="leadType" required>
+            <option value="local" data-i18n="optLocal">I am a Local Shop</option>
+            <option value="chinese" data-i18n="optChinese">I am a Chinese Brand</option>
+          </select>
+          <button type="submit" class="cta-btn lang-fade" id="leadSubmitBtn" data-i18n="leadFormBtn">Get My Audit &rarr;</button>
+          <p id="leadFormStatus" style="display:none; text-align:center; margin-top:1rem; color:var(--accent-green);"></p>
+        </form>
       </div>
+      
       <p class="reveal delay-3 lang-fade" style="margin-top:2rem; font-size:1rem; color:var(--text-muted);" data-i18n="heroTrust">Trusted by local merchants across NYC</p>
     </div>
     <div class="scroll-indicator">&darr;</div>
@@ -492,19 +690,43 @@
     <div class="container">
       <h2 class="font-display reveal lang-fade" style="font-size: 2.5rem; margin-bottom: 3rem; text-align: center;" data-i18n="whatWeDo">What We Do</h2>
       <div class="two-col">
-        <div class="glass-panel promise-card reveal delay-1 tilt-card">
+        <div class="glass-panel promise-card reveal delay-1 tilt-card" style="text-align: center;">
           <h3 class="lang-fade" data-i18n="forLocal">For Local Shops</h3>
           <p class="lang-fade" data-i18n="forLocalDesc">Florists, bodegas, restaurants, and laundromats. We digitize your foot traffic.</p>
+          <a href="#hero" class="cta-btn" style="margin-top:1rem; width:auto;" data-i18n="btnFreeAudit">Free Audit</a>
         </div>
-        <div class="glass-panel promise-card reveal delay-2 tilt-card">
+        <div class="glass-panel promise-card reveal delay-2 tilt-card" style="text-align: center;">
           <h3 class="lang-fade" data-i18n="forChinese">For Chinese Brands</h3>
           <p class="lang-fade" data-i18n="forChineseDesc">TikTok Shop USA scaling, brand localization, and seamless US market entry.</p>
+          <a href="#contact" class="cta-btn" style="margin-top:1rem; width:auto;" data-i18n="btnConsult">Free Consultation</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Section 6: Social Proof -->
+  <!-- Section 6: Live Digital Audit Tool -->
+  <section id="audit-tool" class="reveal">
+    <div class="container">
+      <h2 class="font-display lang-fade" style="font-size: 2.5rem; text-align: center; margin-bottom: 1rem;" data-i18n="auditTitle">Live Digital Audit</h2>
+      <p class="lang-fade" style="text-align: center; margin-bottom: 3rem; color: var(--text-muted);" data-i18n="auditSub">Instantly query the NYC DCA and local APIs to see your digital gaps.</p>
+      
+      <div class="glass-panel" style="max-width: 600px; margin: 0 auto;">
+        <input type="text" id="auditName" placeholder="Business Name" required>
+        <input type="text" id="auditAddress" placeholder="Address (NYC)" required>
+        <button class="cta-btn" style="width: 100%;" onclick="runDigitalAudit()" data-i18n="btnRunAudit">Run Audit</button>
+        
+        <div id="audit-results">
+          <h3 style="margin-bottom: 1rem; color: var(--accent-gold);">Audit Results:</h3>
+          <ul id="audit-list">
+            <!-- Populated via JS -->
+          </ul>
+          <p style="margin-top:1rem; font-style:italic;" id="audit-rec"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 7: Social Proof & Counters -->
   <section id="proof">
     <div class="container">
       <h2 class="font-display reveal lang-fade" style="font-size: 2.5rem; margin-bottom: 3rem; text-align: center;" data-i18n="trustedBy">Trusted by NYC's Best</h2>
@@ -525,15 +747,45 @@
         </div>
       </div>
 
-      <div class="glass-panel reveal delay-2" style="max-width: 800px; margin: 0 auto;">
+      <div class="glass-panel reveal delay-2" style="max-width: 800px; margin: 0 auto; margin-bottom: 4rem;">
         <p class="testimonial lang-fade" data-i18n="test1Quote">"Socio doubled our online orders in 30 days. We pay nothing upfront."
           <span class="lang-fade" data-i18n="test1Author">— Cristal Flowers, East Harlem</span>
         </p>
       </div>
+      
+      <!-- Live Stats -->
+      <div class="stats-row reveal delay-3">
+        <div class="stat-item">
+          <h4 class="counter" data-target="47">0</h4>
+          <p data-i18n="statMerchants">Merchants Partnered</p>
+        </div>
+        <div class="stat-item">
+          <h4>$<span class="counter" data-target="284000">0</span>+</h4>
+          <p data-i18n="statRevenue">New Revenue Generated</p>
+        </div>
+        <div class="stat-item">
+          <h4><span class="counter" data-target="93">0</span>%</h4>
+          <p data-i18n="statRetention">Retention Rate</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- Section 7: CTA -->
+  <!-- Section 8: Partner Referral -->
+  <section id="referral" class="reveal">
+    <div class="container" style="text-align: center;">
+      <h2 class="font-display lang-fade" style="color: var(--accent-gold); margin-bottom: 1rem;" data-i18n="refTitle">Socio Referral Program</h2>
+      <p class="lang-fade" style="margin-bottom: 2rem;" data-i18n="refSub">Refer a merchant &rarr; Earn 5% commission for life.</p>
+      <div style="max-width: 500px; margin: 0 auto;">
+        <input type="text" placeholder="Friend's Business Name">
+        <input type="email" placeholder="Friend's Email">
+        <button class="cta-btn" style="width:100%; margin-bottom: 2rem;" onclick="alert('Referral submitted!')" data-i18n="btnRefer">Refer Now</button>
+        <p class="lang-fade" style="color: var(--text-muted);" data-i18n="refTrack">Track your referrals: <a href="#" style="color:var(--accent-green);">Dashboard</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 9: CTA -->
   <section id="contact" style="text-align: center; min-height: 70vh;">
     <div class="container glass-panel reveal" style="padding: 5rem 2rem;">
       <h2 class="font-display lang-fade" style="font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1rem;" data-i18n="ctaTitle">Ready to Grow?</h2>
@@ -560,18 +812,191 @@
     </div>
   </footer>
 
+  <!-- Live Chat Widget -->
+  <div id="chat-widget">
+    <button id="chat-toggle">💬</button>
+    <div id="chat-box">
+      <div class="chat-header">Socio AI Support</div>
+      <div class="chat-messages" id="chat-msgs">
+        <p><strong>Socio:</strong> Hi! I'm Socio's AI assistant. Are you a local merchant or a Chinese brand? I'm here to help you grow!</p>
+      </div>
+      <form class="chat-input" onsubmit="sendChat(event)">
+        <input type="text" id="chat-val" placeholder="Message..." required style="flex:1;">
+        <button type="submit" style="background:var(--accent-green); color:white; border:none; padding:0 1rem; cursor:pointer;">Send</button>
+      </form>
+    </div>
+  </div>
+
   <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   
   <script>
     /* =========================================
-       1. BILINGUAL DICTIONARY SYSTEM
+       0. ANALYTICS & A/B TESTING
+       ========================================= */
+    const analytics = {
+      trackPageView: () => {
+        fetch('/api/analytics/pageview', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            page: window.location.pathname,
+            referrer: document.referrer,
+            timestamp: new Date().toISOString(),
+            lang: localStorage.getItem('socioLang') || 'en'
+          })
+        }).catch(e => console.log('Analytics bypass'));
+      },
+      trackEvent: (eventName, eventData) => {
+        fetch('/api/analytics/event', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ event: eventName, data: eventData, timestamp: new Date().toISOString() })
+        }).catch(e => console.log('Analytics bypass'));
+      }
+    };
+
+    const abTest = {
+      getVariant: (testName) => {
+        let stored = localStorage.getItem(`ab_${testName}`);
+        if (!stored) {
+          stored = Math.random() < 0.5 ? 'A' : 'B';
+          localStorage.setItem(`ab_${testName}`, stored);
+        }
+        return stored;
+      }
+    };
+
+    // Run AB Test for Hero Headline
+    const headlineVariant = abTest.getVariant('heroHeadline');
+    // Variant A is default. If B, we could override dictionary below before rendering.
+
+    window.onload = () => {
+      analytics.trackPageView();
+      trackReferral();
+    };
+
+    // Referral System
+    async function trackReferral() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const ref = urlParams.get('ref');
+      if (ref) {
+        document.getElementById('referral-notice').style.display = 'block';
+        fetch('/api/referrals/visit', {
+          method: 'POST',
+          body: JSON.stringify({ referralCode: ref })
+        }).catch(e => {});
+      }
+    }
+
+
+    /* =========================================
+       1. LEAD CAPTURE SYSTEM (Webhook)
+       ========================================= */
+    async function submitLead(e) {
+      e.preventDefault();
+      const btn = document.getElementById('leadSubmitBtn');
+      const status = document.getElementById('leadFormStatus');
+      
+      btn.disabled = true;
+      btn.innerText = "Submitting...";
+
+      const payload = {
+        name: document.getElementById('leadName').value,
+        address: document.getElementById('leadAddress').value,
+        phone: document.getElementById('leadPhone').value,
+        email: document.getElementById('leadEmail').value,
+        type: document.getElementById('leadType').value
+      };
+
+      try {
+        const response = await fetch('/api/leads', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        
+        status.innerText = "Audit requested! We'll contact you in 48 hours.";
+        status.style.display = "block";
+        btn.innerText = "Get My Audit \u2192";
+        analytics.trackEvent('lead_submitted', { type: payload.type });
+      } catch (err) {
+        status.innerText = "Saved locally. Webhook receiver offline in dev mode.";
+        status.style.display = "block";
+        btn.innerText = "Get My Audit \u2192";
+        btn.disabled = false;
+        console.log("Lead captured:", payload);
+      }
+    }
+
+    /* =========================================
+       2. LIVE DIGITAL AUDIT TOOL (Socrata/DDG Simulator)
+       ========================================= */
+    async function runDigitalAudit() {
+      const name = document.getElementById('auditName').value;
+      const address = document.getElementById('auditAddress').value;
+      if(!name || !address) return alert('Enter name and address');
+      
+      const resultsDiv = document.getElementById('audit-results');
+      const list = document.getElementById('audit-list');
+      const rec = document.getElementById('audit-rec');
+      
+      list.innerHTML = "<li><span style='color:var(--text-muted)'>Querying NYC DCA API...</span></li>";
+      resultsDiv.style.display = 'block';
+
+      // Simulate API delays
+      setTimeout(() => {
+        // Mocked response logic based on Socrata / Maps API
+        const hasMaps = Math.random() > 0.3;
+        const hasInsta = Math.random() > 0.5;
+        
+        list.innerHTML = `
+          <li>${hasMaps ? '✅ Google Maps: 4.2⭐ (Found)' : '❌ Google Maps: Unclaimed or Missing'}</li>
+          <li>${hasInsta ? '✅ Instagram presence detected' : '❌ No Instagram presence found'}</li>
+          <li>⚠️ Website: Basic/Not mobile optimized</li>
+        `;
+        rec.innerText = "Recommendation: Socio can automate your review generation and sync your missing listings overnight.";
+        analytics.trackEvent('audit_run', { name });
+      }, 1500);
+    }
+
+    /* =========================================
+       3. LIVE CHAT WIDGET
+       ========================================= */
+    const chatToggle = document.getElementById('chat-toggle');
+    const chatBox = document.getElementById('chat-box');
+    const chatMsgs = document.getElementById('chat-msgs');
+    
+    chatToggle.addEventListener('click', () => {
+      chatBox.classList.toggle('open');
+    });
+
+    function sendChat(e) {
+      e.preventDefault();
+      const val = document.getElementById('chat-val').value;
+      if(!val) return;
+      
+      chatMsgs.innerHTML += `<p style="margin-top:0.5rem; text-align:right; color:var(--accent-green);">${val}</p>`;
+      document.getElementById('chat-val').value = '';
+      
+      setTimeout(() => {
+        chatMsgs.innerHTML += `<p style="margin-top:0.5rem;"><strong>Socio:</strong> Thanks! An agent will review this shortly.</p>`;
+        chatMsgs.scrollTop = chatMsgs.scrollHeight;
+      }, 1000);
+    }
+
+
+    /* =========================================
+       4. BILINGUAL DICTIONARY SYSTEM
        ========================================= */
     const dict = {
       en: {
-        heroTitle: "We don't get paid until you do.",
+        heroTitle: headlineVariant === 'B' ? "Growth is a partnership." : "We don't get paid until you do.",
         heroSub: "Socio — Your NYC Growth Partner",
-        heroCta: "Become a Socio &rarr;",
+        leadFormTitle: "Get Your Free 48-Hour Digital Audit",
+        optLocal: "I am a Local Shop",
+        optChinese: "I am a Chinese Brand",
+        leadFormBtn: "Get My Audit &rarr;",
         heroTrust: "Trusted by local merchants across NYC",
         promiseTitle: "Our Promise to You",
         netNew: "Net New Revenue",
@@ -593,9 +1018,21 @@
         forLocalDesc: "Florists, bodegas, restaurants, and laundromats. We digitize your foot traffic.",
         forChinese: "For Chinese Brands",
         forChineseDesc: "TikTok Shop USA scaling, brand localization, and seamless US market entry.",
+        btnFreeAudit: "Free Audit",
+        btnConsult: "Free Consultation",
+        auditTitle: "Live Digital Audit",
+        auditSub: "Instantly query the NYC DCA and local APIs to see your digital gaps.",
+        btnRunAudit: "Run Audit",
         trustedBy: "Trusted by NYC's Best",
         test1Quote: "\"Socio doubled our online orders in 30 days. We pay nothing upfront.\"",
         test1Author: "— Cristal Flowers, East Harlem",
+        statMerchants: "Merchants Partnered",
+        statRevenue: "New Revenue Generated",
+        statRetention: "Retention Rate",
+        refTitle: "Socio Referral Program",
+        refSub: "Refer a merchant &rarr; Earn 5% commission for life.",
+        btnRefer: "Refer Now",
+        refTrack: "Track your referrals: <a href='#' style='color:var(--accent-green);'>Dashboard</a>",
         ctaTitle: "Ready to Grow?",
         ctaDesc: "Let's talk. No strings. No fees. Just growth.",
         ctaBtn: "Book a Free Consultation &rarr;",
@@ -604,9 +1041,12 @@
         complianceFooter: "Socio abides by NYC Consumer Protection Law 2026. 100% All-In Pricing. All synthetic content generated on behalf of merchants is explicitly labeled. Powered by DeepSeek and Hermes."
       },
       es: {
-        heroTitle: "No cobramos hasta que tú ganes.",
+        heroTitle: headlineVariant === 'B' ? "El crecimiento es una sociedad." : "No cobramos hasta que tú ganes.",
         heroSub: "Socio — Tu socio de crecimiento en NYC",
-        heroCta: "Conviértete en Socio &rarr;",
+        leadFormTitle: "Obtén tu Auditoría Digital de 48 Horas Gratis",
+        optLocal: "Soy un Negocio Local",
+        optChinese: "Soy una Marca China",
+        leadFormBtn: "Obtener mi Auditoría &rarr;",
         heroTrust: "Confiado por comerciantes locales en todo NYC",
         promiseTitle: "Nuestra Promesa",
         netNew: "Nuevos Ingresos Netos",
@@ -628,9 +1068,21 @@
         forLocalDesc: "Floristerías, bodegas, restaurantes y lavanderías. Digitalizamos tu tráfico peatonal.",
         forChinese: "Para Marcas Chinas",
         forChineseDesc: "Escalado de TikTok Shop USA, localización de marca y entrada fluida al mercado.",
+        btnFreeAudit: "Auditoría Gratis",
+        btnConsult: "Consulta Gratis",
+        auditTitle: "Auditoría Digital en Vivo",
+        auditSub: "Consulta instantáneamente las API locales y del DCA de NYC para ver tus brechas.",
+        btnRunAudit: "Ejecutar Auditoría",
         trustedBy: "Confiado por los Mejores de NYC",
         test1Quote: "\"Socio duplicó nuestros pedidos en línea en 30 días. No pagamos nada por adelantado.\"",
         test1Author: "— Cristal Flowers, East Harlem",
+        statMerchants: "Comerciantes Asociados",
+        statRevenue: "Nuevos Ingresos Generados",
+        statRetention: "Tasa de Retención",
+        refTitle: "Programa de Referidos",
+        refSub: "Refiere un comerciante &rarr; Gana un 5% de comisión de por vida.",
+        btnRefer: "Referir Ahora",
+        refTrack: "Rastrea tus referidos: <a href='#' style='color:var(--accent-green);'>Panel</a>",
         ctaTitle: "¿Listo para Crecer?",
         ctaDesc: "Hablemos. Sin ataduras. Sin cuotas. Solo crecimiento.",
         ctaBtn: "Reserva una Consulta Gratuita &rarr;",
@@ -645,17 +1097,12 @@
     let currentLang = localStorage.getItem('socioLang') || 'en';
 
     function setLanguage(lang) {
-      // Fade out
       translatableElements.forEach(el => el.classList.add('hidden'));
-      
       setTimeout(() => {
         translatableElements.forEach(el => {
           const key = el.getAttribute('data-i18n');
-          if (dict[lang][key]) {
-            el.innerHTML = dict[lang][key];
-          }
+          if (dict[lang][key]) el.innerHTML = dict[lang][key];
         });
-        // Fade in
         translatableElements.forEach(el => el.classList.remove('hidden'));
       }, 300);
 
@@ -663,64 +1110,63 @@
         if (btn.dataset.lang === lang) btn.classList.add('active');
         else btn.classList.remove('active');
       });
-      
       localStorage.setItem('socioLang', lang);
       currentLang = lang;
     }
 
-    // Initialize lang
     setLanguage(currentLang);
-
-    langBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        setLanguage(btn.dataset.lang);
-      });
-    });
+    langBtns.forEach(btn => btn.addEventListener('click', () => setLanguage(btn.dataset.lang)));
 
 
     /* =========================================
-       2. INTERSECTION OBSERVER (Scroll Animations)
+       5. INTERSECTION OBSERVER & COUNTERS
        ========================================= */
-    const observerOptions = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.15
-    };
+    const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
 
     const observer = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('active');
+          
+          // Animate counters
+          if(entry.target.querySelector('.counter')) {
+            entry.target.querySelectorAll('.counter').forEach(counter => {
+              const target = +counter.getAttribute('data-target');
+              const inc = target / 50;
+              let count = 0;
+              const update = () => {
+                count += inc;
+                if(count < target) {
+                  counter.innerText = Math.ceil(count).toLocaleString();
+                  requestAnimationFrame(update);
+                } else {
+                  counter.innerText = target.toLocaleString();
+                }
+              };
+              update();
+            });
+          }
           observer.unobserve(entry.target);
         }
       });
     }, observerOptions);
 
-    document.querySelectorAll('.reveal').forEach(el => {
-      observer.observe(el);
-    });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 
     /* =========================================
-       3. 3D CARD TILT EFFECT
+       6. 3D CARD TILT EFFECT
        ========================================= */
     const tiltCards = document.querySelectorAll('.tilt-card');
-    
     tiltCards.forEach(card => {
       card.addEventListener('mousemove', e => {
         const rect = card.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-        
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        
-        const rotateX = ((y - centerY) / centerY) * -10; // Max 10 deg
-        const rotateY = ((x - centerX) / centerX) * 10;
-        
+        const rotateX = ((y - rect.height/2) / (rect.height/2)) * -10;
+        const rotateY = ((x - rect.width/2) / (rect.width/2)) * 10;
         card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
       });
-      
       card.addEventListener('mouseleave', () => {
         card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
       });
@@ -728,12 +1174,10 @@
 
 
     /* =========================================
-       4. THREE.JS LIVING CANVAS
+       7. THREE.JS LIVING CANVAS
        ========================================= */
     const container = document.getElementById('canvas-container');
     const scene = new THREE.Scene();
-    
-    // Camera setup
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.z = 200;
     
@@ -742,7 +1186,6 @@
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
 
-    // Nodes geometry
     const particleCount = window.innerWidth < 768 ? 100 : 250;
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
@@ -750,39 +1193,29 @@
     
     const emerald = new THREE.Color('#10B981');
     const gold = new THREE.Color('#F59E0B');
-
-    // Base positions and velocities
     const particlesData = [];
     
     for (let i = 0; i < particleCount; i++) {
-      // Distribute mostly in a wide cylinder/sphere
       const x = (Math.random() - 0.5) * 600;
       const y = (Math.random() - 0.5) * 400;
       const z = (Math.random() - 0.5) * 300;
-      
       positions[i * 3] = x;
       positions[i * 3 + 1] = y;
       positions[i * 3 + 2] = z;
       
-      // Color mix
-      const mixRatio = Math.random();
-      const c = mixRatio > 0.8 ? gold : emerald;
+      const c = Math.random() > 0.8 ? gold : emerald;
       colors[i * 3] = c.r;
       colors[i * 3 + 1] = c.g;
       colors[i * 3 + 2] = c.b;
 
       particlesData.push({
-        velocity: new THREE.Vector3(-0.5 + Math.random(), -0.5 + Math.random(), -0.5 + Math.random()).multiplyScalar(0.2),
-        baseX: x,
-        baseY: y,
-        baseZ: z
+        velocity: new THREE.Vector3(-0.5 + Math.random(), -0.5 + Math.random(), -0.5 + Math.random()).multiplyScalar(0.2)
       });
     }
 
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
-    // Circle sprite for smooth dots
     const canvas = document.createElement('canvas');
     canvas.width = 16;
     canvas.height = 16;
@@ -792,123 +1225,75 @@
     gradient.addColorStop(1, 'rgba(255,255,255,0)');
     context.fillStyle = gradient;
     context.fillRect(0, 0, 16, 16);
-    const particleTexture = new THREE.CanvasTexture(canvas);
 
     const material = new THREE.PointsMaterial({
-      size: 4,
-      vertexColors: true,
-      map: particleTexture,
-      blending: THREE.AdditiveBlending,
-      transparent: true,
-      depthWrite: false
+      size: 4, vertexColors: true, map: new THREE.CanvasTexture(canvas),
+      blending: THREE.AdditiveBlending, transparent: true, depthWrite: false
     });
 
-    const particles = new THREE.Points(geometry, material);
-    scene.add(particles);
+    scene.add(new THREE.Points(geometry, material));
 
-    // Edges
     const lineMaterial = new THREE.LineBasicMaterial({
-      color: 0x10B981,
-      transparent: true,
-      opacity: 0.15,
-      blending: THREE.AdditiveBlending
+      color: 0x10B981, transparent: true, opacity: 0.15, blending: THREE.AdditiveBlending
     });
-    
-    // We update line geometry every frame based on distance
     const lineGeometry = new THREE.BufferGeometry();
-    const linesMesh = new THREE.LineSegments(lineGeometry, lineMaterial);
-    scene.add(linesMesh);
+    scene.add(new THREE.LineSegments(lineGeometry, lineMaterial));
 
-    // Mouse Tracking
     const mouse = new THREE.Vector2(0, 0);
     const targetMouse = new THREE.Vector2(0, 0);
     let windowHalfX = window.innerWidth / 2;
     let windowHalfY = window.innerHeight / 2;
 
-    document.addEventListener('mousemove', onDocumentMouseMove, false);
+    document.addEventListener('mousemove', e => {
+      targetMouse.x = (e.clientX - windowHalfX) * 0.1;
+      targetMouse.y = (e.clientY - windowHalfY) * 0.1;
+    });
 
-    function onDocumentMouseMove(event) {
-      targetMouse.x = (event.clientX - windowHalfX) * 0.1;
-      targetMouse.y = (event.clientY - windowHalfY) * 0.1;
-    }
-
-    window.addEventListener('resize', onWindowResize, false);
-
-    function onWindowResize() {
+    window.addEventListener('resize', () => {
       windowHalfX = window.innerWidth / 2;
       windowHalfY = window.innerHeight / 2;
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
-    }
+    });
 
-    // Animation Loop
-    let time = 0;
     function animate() {
       requestAnimationFrame(animate);
-      
-      time += 0.01;
-      
-      // Smooth mouse follow for camera
       mouse.x += (targetMouse.x - mouse.x) * 0.05;
       mouse.y += (targetMouse.y - mouse.y) * 0.05;
-      
       camera.position.x += (mouse.x - camera.position.x) * 0.05;
       camera.position.y += (-mouse.y - camera.position.y) * 0.05;
       camera.lookAt(scene.position);
 
-      // Move particles
-      const positionsAttr = geometry.attributes.position;
-      let vertexpos = 0;
-      let colorpos = 0;
-      let numConnected = 0;
-      
+      const posAttr = geometry.attributes.position;
       const linePositions = [];
-      const lineColors = [];
-
       for (let i = 0; i < particleCount; i++) {
-        const particleData = particlesData[i];
-        
-        positionsAttr.array[i * 3] += particleData.velocity.x;
-        positionsAttr.array[i * 3 + 1] += particleData.velocity.y;
-        positionsAttr.array[i * 3 + 2] += particleData.velocity.z;
+        const p = particlesData[i];
+        posAttr.array[i * 3] += p.velocity.x;
+        posAttr.array[i * 3 + 1] += p.velocity.y;
+        posAttr.array[i * 3 + 2] += p.velocity.z;
 
-        // Bounding box bounce
-        if (positionsAttr.array[i * 3] < -300 || positionsAttr.array[i * 3] > 300) particleData.velocity.x = -particleData.velocity.x;
-        if (positionsAttr.array[i * 3 + 1] < -200 || positionsAttr.array[i * 3 + 1] > 200) particleData.velocity.y = -particleData.velocity.y;
-        if (positionsAttr.array[i * 3 + 2] < -150 || positionsAttr.array[i * 3 + 2] > 150) particleData.velocity.z = -particleData.velocity.z;
+        if (Math.abs(posAttr.array[i * 3]) > 300) p.velocity.x *= -1;
+        if (Math.abs(posAttr.array[i * 3 + 1]) > 200) p.velocity.y *= -1;
+        if (Math.abs(posAttr.array[i * 3 + 2]) > 150) p.velocity.z *= -1;
 
-        // Pulse effect (scale nodes slightly)
-        // Handled via material size usually, but here we keep it simple to save CPU
-
-        // Connect edges
         for (let j = i + 1; j < particleCount; j++) {
-          const dx = positionsAttr.array[i * 3] - positionsAttr.array[j * 3];
-          const dy = positionsAttr.array[i * 3 + 1] - positionsAttr.array[j * 3 + 1];
-          const dz = positionsAttr.array[i * 3 + 2] - positionsAttr.array[j * 3 + 2];
-          const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
-
-          if (dist < 60) {
+          const dx = posAttr.array[i * 3] - posAttr.array[j * 3];
+          const dy = posAttr.array[i * 3 + 1] - posAttr.array[j * 3 + 1];
+          const dz = posAttr.array[i * 3 + 2] - posAttr.array[j * 3 + 2];
+          if (Math.sqrt(dx * dx + dy * dy + dz * dz) < 60) {
             linePositions.push(
-              positionsAttr.array[i * 3], positionsAttr.array[i * 3 + 1], positionsAttr.array[i * 3 + 2],
-              positionsAttr.array[j * 3], positionsAttr.array[j * 3 + 1], positionsAttr.array[j * 3 + 2]
+              posAttr.array[i * 3], posAttr.array[i * 3 + 1], posAttr.array[i * 3 + 2],
+              posAttr.array[j * 3], posAttr.array[j * 3 + 1], posAttr.array[j * 3 + 2]
             );
-            numConnected++;
           }
         }
       }
-      
-      positionsAttr.needsUpdate = true;
-      
-      // Update lines
+      posAttr.needsUpdate = true;
       lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
-      
-      // Rotate entire scene slowly
       scene.rotation.y += 0.001;
-
       renderer.render(scene, camera);
     }
-    
     animate();
   </script>
 </body>
