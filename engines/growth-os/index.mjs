@@ -6,4 +6,6 @@ export { AgentGovernor } from './agent-governor.mjs';
 export { ExperimentEngine } from './experiment-engine.mjs';
 export { GrowthLoop } from './growth-loop.mjs';
 export { MemoryRepository, BusinessTwinMemoryRepository } from './repositories/memory-repository.mjs';
+export { PostgresRepository, BusinessTwinPostgresRepository } from './repositories/postgres-repository.mjs';
+export { AuditTrail } from './audit-trail.mjs';
 export * from './adapters/index.mjs';

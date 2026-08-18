@@ -9,7 +9,9 @@
     "test": "node --test 'engines/growth-os/tests/**/*.mjs'"
   },
   "dependencies": {
-    "@deepseek-ai/dsh": "^0.1.0-rc.7"
+    "@deepseek-ai/dsh": "^0.1.0-rc.7",
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "pg": "^8.23.0"
   },
   "author": "Socio",
   "license": "UNLICENSED"

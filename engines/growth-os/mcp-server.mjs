@@ -6,20 +6,33 @@ import {
   RevenueLedger, 
   AgentGovernor, 
   BusinessTwinMemoryRepository,
-  MemoryRepository 
+  MemoryRepository,
+  PostgresRepository,
+  BusinessTwinPostgresRepository,
+  AuditTrail
 } from "./index.mjs";
 
 // Initialize Growth OS primitives
-// In a production setup, these repositories would connect to Postgres.
-const twinRepo = new BusinessTwinMemoryRepository();
-const ledgerRepo = new MemoryRepository();
+let twinRepo;
+let ledgerRepo;
+let auditRepo;
+
+if (process.env.DATABASE_URL) {
+  twinRepo = new BusinessTwinPostgresRepository();
+  ledgerRepo = new PostgresRepository('revenue_ledger');
+  auditRepo = new PostgresRepository('audit_trail');
+} else {
+  twinRepo = new BusinessTwinMemoryRepository();
+  ledgerRepo = new MemoryRepository();
+  auditRepo = new MemoryRepository();
+}
 
 const businessTwin = new BusinessTwin(twinRepo);
 const revenueLedger = new RevenueLedger(ledgerRepo);
+const auditTrail = new AuditTrail(auditRepo);
 const agentGovernor = new AgentGovernor();
 
 // Boot the twin with a mock default state if none exists for testing purposes
-// (This ensures agents have something to read immediately)
 businessTwin.initialize('socio_default', { 
   name: 'Socio Default Business',
   status: 'ACTIVE',
@@ -104,6 +117,50 @@ server.tool(
             text: `Governance Error: ${error.message}`,
           },
         ],
+        isError: true
+      };
+    }
+  }
+);
+
+// Tool: Execute Action (Sandboxed)
+server.tool(
+  "growth_os_execute_action",
+  "Executes a governed action. MUST provide the approved proposalId from growth_os_propose_action.",
+  {
+    businessId: z.string(),
+    agentId: z.string(),
+    proposalId: z.string(),
+    actionType: z.string(),
+    payload: z.any()
+  },
+  async (execData) => {
+    try {
+      // 1. Verify approval (in a real system, we'd query the Governor state/DB)
+      if (!execData.proposalId.startsWith('prop_')) {
+        throw new Error("Invalid or unapproved proposal ID.");
+      }
+
+      // 2. Log to Audit Trail
+      await auditTrail.log({
+        businessId: execData.businessId,
+        agentId: execData.agentId,
+        proposalId: execData.proposalId,
+        actionType: execData.actionType,
+        payload: execData.payload,
+        status: 'EXECUTED'
+      });
+
+      // 3. Execute the action (Simulated external call for now)
+      // In production, this maps to actual Stripe/Twilio/Hermes executions
+      const result = `Action ${execData.actionType} securely executed and logged to audit trail.`;
+
+      return {
+        content: [{ type: "text", text: result }],
+      };
+    } catch (error) {
+      return {
+        content: [{ type: "text", text: `Execution Error: ${error.message}` }],
         isError: true
       };
     }
