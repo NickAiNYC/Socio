@@ -13,6 +13,7 @@
  * @property {string} currency
  * @property {string} [occurredAt] - ISO Date string; defaults to now
  * @property {string} source
+ * @property {string} [idempotencyKey] - dedupe key (e.g. Stripe event id); DB-enforced unique
  * @property {Object} [metadata]
  */
 

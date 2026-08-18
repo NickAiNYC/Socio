@@ -1,5 +1,6 @@
 import { randomUUID } from 'crypto';
 import { ExperimentError, ValidationError } from './errors.mjs';
+import { compareGroups, MIN_SAMPLE_PER_GROUP } from './economic/stats.mjs';
 
 /**
  * Experiment Engine
@@ -76,22 +77,70 @@ export class ExperimentEngine {
 
   /**
    * Evaluates current observations against the baseline.
-   * Simple statistical abstraction.
+   *
+   * When observations carry a `variant` (treatment/control), evaluation uses
+   * group comparison: insufficient samples return INCONCLUSIVE, and a verdict
+   * is only produced at adequate sample size. Without variants, the legacy
+   * baseline-ratio mode is used (kept for backward compatibility).
    */
   async evaluate(id) {
     const exp = await this.getExperiment(id);
-    
+
     if (!exp.observations || exp.observations.length === 0) {
       return { confidence: 0, result: 'INCONCLUSIVE', reason: 'No observations' };
     }
 
-    // A very naive statistical mock:
-    // In reality, this would use t-tests or bayesian inference based on exp.metric
+    const hasVariants = exp.observations.some((o) => o.variant);
+
+    if (hasVariants) {
+      const treatment = exp.observations.filter((o) => o.variant === 'treatment').map((o) => o.value);
+      const control = exp.observations.filter((o) => o.variant === 'control').map((o) => o.value);
+      if (treatment.length === 0 || control.length === 0) {
+        return { confidence: 0, result: 'INCONCLUSIVE', reason: 'Both control and treatment groups are required' };
+      }
+      const cmp = compareGroups(treatment, control);
+      if (!cmp.sufficient) {
+        return {
+          confidence: 0,
+          result: 'INCONCLUSIVE',
+          reason: `Insufficient sample (treatment n=${cmp.nTreatment}, control n=${cmp.nControl})`,
+          sampleSize: exp.observations.length,
+          stats: cmp,
+        };
+      }
+      if (cmp.verdict === 'significant_positive') {
+        return {
+          confidence: 1 - cmp.pApprox,
+          result: 'PROMOTABLE',
+          reason: `Significant positive lift (approx p=${cmp.pApprox.toFixed(4)})`,
+          sampleSize: exp.observations.length,
+          stats: cmp,
+        };
+      }
+      if (cmp.verdict === 'significant_negative') {
+        return {
+          confidence: 1 - cmp.pApprox,
+          result: 'KILLABLE',
+          reason: `Significant negative effect (approx p=${cmp.pApprox.toFixed(4)})`,
+          sampleSize: exp.observations.length,
+          stats: cmp,
+        };
+      }
+      return {
+        confidence: null,
+        result: 'INCONCLUSIVE',
+        reason: 'No detectable effect between groups',
+        sampleSize: exp.observations.length,
+        stats: cmp,
+      };
+    }
+
+    // Legacy baseline mode (backward compatible).
     const positiveOutcomes = exp.observations.filter(o => o.value > exp.baseline).length;
     const confidence = positiveOutcomes / exp.observations.length;
 
     let result = 'INCONCLUSIVE';
-    if (exp.observations.length > 100) { // arbitrary significance threshold
+    if (exp.observations.length >= MIN_SAMPLE_PER_GROUP) {
       if (confidence > 0.95) result = 'PROMOTABLE';
       if (confidence < 0.05) result = 'KILLABLE';
     }
@@ -138,6 +187,13 @@ export class ExperimentEngine {
     const exp = await this.repository.get(id);
     if (!exp) throw new ExperimentError(`Experiment ${id} not found`);
     return exp;
+  }
+
+  /**
+   * Lists experiments for a business.
+   */
+  async listExperiments(businessId) {
+    return await this.repository.findAll((e) => e.businessId === businessId);
   }
 
   _validateConfig(config) {

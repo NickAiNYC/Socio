@@ -37,8 +37,31 @@ export class RevenueLedger {
       await this._validateRefund(event);
     }
 
+    // DB-enforced idempotency: a replayed idempotencyKey (e.g. duplicate
+    // Stripe event delivery) must be rejected regardless of record id.
+    if (finalEvent.idempotencyKey) {
+      const existing = await this.repository.findAll(
+        (e) => e.idempotencyKey === finalEvent.idempotencyKey
+      );
+      if (existing.length > 0) {
+        throw new ValidationError(
+          `duplicate event: idempotencyKey ${finalEvent.idempotencyKey} already recorded`
+        );
+      }
+    }
+
     // Immutable append: a replayed id must fail, never overwrite or duplicate.
-    return await this.repository.saveIfAbsent(recordId, finalEvent);
+    try {
+      return await this.repository.saveIfAbsent(recordId, finalEvent);
+    } catch (err) {
+      // Postgres unique-violation (23505) from the idempotency index.
+      if (err?.code === '23505' || /23505/.test(err?.message || '')) {
+        throw new ValidationError(
+          `duplicate event: idempotencyKey ${finalEvent.idempotencyKey || recordId} already recorded`
+        );
+      }
+      throw err;
+    }
   }
 
   async _validateRefund(event) {

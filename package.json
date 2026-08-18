@@ -7,6 +7,7 @@
     "setup": "bash setup_dsh.sh",
     "init-hermes": "bash init_hermes_fleet.sh",
     "test": "node --test 'engines/growth-os/tests/**/*.mjs'",
+    "migrate": "node engines/growth-os/migrations/migrate.mjs",
     "lint": "eslint engines/growth-os website/api scripts/verify-build.mjs eslint.config.mjs",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "build": "node scripts/verify-build.mjs",

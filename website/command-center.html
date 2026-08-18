@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socio — Command Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;600;700&display=swap');
+
+        body {
+            background-color: #050507;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            background-image:
+                radial-gradient(circle at 15% 0%, rgba(16, 185, 129, 0.04) 0%, transparent 50%),
+                radial-gradient(circle at 85% 100%, rgba(99, 102, 241, 0.03) 0%, transparent 50%);
+        }
+
+        .font-mono { font-family: 'Roboto Mono', monospace; }
+
+        .glass-panel {
+            background-color: #0f0f14;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            backdrop-filter: blur(16px);
+        }
+
+        .accent { color: #10B981; }
+        .accent-gold { color: #F59E0B; }
+        .accent-blue { color: #6366F1; }
+        .accent-red { color: #EF4444; }
+
+        .btn-primary {
+            background-color: #10B981;
+            color: #000;
+            font-weight: 700;
+            transition: all 0.2s ease;
+        }
+        .btn-primary:hover {
+            box-shadow: 0 0 18px rgba(16, 185, 129, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .todo-checkbox {
+            appearance: none;
+            width: 18px; height: 18px;
+            border: 2px solid #333;
+            border-radius: 50%;
+            outline: none;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+        .todo-checkbox:checked { border-color: #10B981; background-color: rgba(16,185,129,0.1); }
+        .todo-checkbox:checked::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background-color: #10B981;
+        }
+
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 10px; }
+
+        .metric-value {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.05em;
+        }
+
+        .tab-active {
+            background-color: rgba(255,255,255,0.1);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .agent-status-online { color: #10B981; }
+        .agent-status-running { color: #6366F1; }
+        .agent-status-idle    { color: #F59E0B; }
+
+        .pulse-green {
+            animation: pulse-green 2s infinite;
+        }
+        @keyframes pulse-green {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.4); }
+            50% { box-shadow: 0 0 0 6px rgba(16,185,129,0); }
+        }
+
+        /* Ticker tape */
+        .ticker-wrap { overflow: hidden; white-space: nowrap; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .ticker-move { display: inline-block; animation: ticker-scroll 30s linear infinite; }
+        @keyframes ticker-scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* View tabs */
+        .view { display: none; }
+        .view.active { display: block; }
+
+        /* Agent pill badges */
+        .pill { font-family:'Roboto Mono',monospace; font-size:9px; font-weight:700; padding:2px 7px; border-radius:20px; letter-spacing:.5px; }
+        .pill-green { background:rgba(16,185,129,.12); color:#10B981; border:1px solid rgba(16,185,129,.25); }
+        .pill-blue  { background:rgba(99,102,241,.12); color:#6366F1; border:1px solid rgba(99,102,241,.25); }
+        .pill-gold  { background:rgba(245,158,11,.1); color:#F59E0B; border:1px solid rgba(245,158,11,.22); }
+        .pill-red   { background:rgba(239,68,68,.1); color:#EF4444; border:1px solid rgba(239,68,68,.22); }
+        .pill-gray  { background:rgba(100,116,139,.1); color:#64748B; border:1px solid rgba(100,116,139,.22); }
+
+        /* Terminal log block */
+        .terminal {
+            background: #000;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.06);
+            padding: 10px 12px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 10px;
+            line-height: 1.6;
+            color: #4ade80;
+            white-space: pre-wrap;
+            max-height: 80px;
+            overflow-y: auto;
+        }
+        .terminal .t-ts { color: #475569; }
+        .terminal .t-warn { color: #F59E0B; }
+        .terminal .t-info { color: #6366F1; }
+
+        /* Proposal cards */
+        .prop-card {
+            background: #0f0f14;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 10px;
+            padding: 14px;
+            transition: border-color .2s;
+        }
+        .prop-card:hover { border-color: rgba(245,158,11,.3); }
+
+        /* Risk badge */
+        .risk-low    { background:rgba(16,185,129,.1); color:#10B981; border:1px solid rgba(16,185,129,.25); }
+        .risk-medium { background:rgba(245,158,11,.1); color:#F59E0B; border:1px solid rgba(245,158,11,.25); }
+        .risk-high   { background:rgba(239,68,68,.1);  color:#EF4444; border:1px solid rgba(239,68,68,.25); }
+
+        /* Signal dot rating */
+        .sig-dot { width:7px; height:7px; border-radius:50%; }
+
+        /* Event feed item */
+        .eitem { display:flex; align-items:flex-start; gap:10px; padding:10px; border-radius:8px; background:rgba(0,0,0,.2); border:1px solid rgba(255,255,255,.04); margin-bottom:6px; transition:border-color .2s; }
+        .eitem:hover { border-color:rgba(255,255,255,.1); }
+        .eicon { width:26px; height:26px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:12px; flex-shrink:0; }
+
+        /* Pipeline stage counter */
+        .stage-node { width:28px; height:28px; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:11px; font-family:'Roboto Mono',monospace; font-weight:700; }
+
+        /* Infra health dot */
+        .hdot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+        .hdot-ok   { background:#10B981; box-shadow:0 0 8px rgba(16,185,129,.5); }
+        .hdot-warn { background:#F59E0B; box-shadow:0 0 8px rgba(245,158,11,.4); }
+    </style>
+</head>
+<body class="min-h-screen antialiased">
+
+<!-- ============================
+     HEADER
+     ============================ -->
+<header class="flex justify-between items-center px-6 pt-5 pb-4">
+    <div class="flex items-center gap-4">
+        <div class="font-mono text-sm text-gray-400">
+            <span class="text-white font-bold" id="hdr-time">--:--</span> • <span id="hdr-date">AUG 18, 2026</span>
+        </div>
+    </div>
+
+    <div class="text-2xl font-black tracking-tighter flex items-center gap-2" style="letter-spacing:-1px">
+        <span class="w-7 h-7 rounded-lg flex items-center justify-center text-black font-black text-sm" style="background:#10B981">S</span>
+        SOCIO <span class="accent">OS</span>
+    </div>
+
+    <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 bg-[#111] border border-white/10 rounded-full px-4 py-1.5 text-xs font-mono">
+            <i data-lucide="terminal" class="w-3 h-3 text-gray-400"></i>
+            <input type="text" placeholder="Quick capture..." class="bg-transparent border-none outline-none text-white w-40 placeholder-gray-600">
+        </div>
+        <div class="flex items-center gap-2 text-xs font-mono text-gray-400">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            Growth OS Live
+        </div>
+    </div>
+</header>
+
+<!-- LIVE TICKER -->
+<div class="ticker-wrap py-1.5 mb-4 px-0 bg-black/20">
+    <div class="ticker-move" id="ticker-el">
+        <!-- populated by JS -->
+    </div>
+</div>
+
+<!-- ============================
+     TOP NAV
+     ============================ -->
+<nav class="flex gap-2 px-6 mb-6 border-b border-white/5 pb-4 overflow-x-auto">
+    <button class="tab-active px-4 py-1.5 rounded-full text-xs font-bold font-mono tracking-widest transition-colors" onclick="setTab('overview',this)">TODAY</button>
+    <button class="px-4 py-1.5 rounded-full text-gray-500 hover:text-white text-xs font-bold font-mono tracking-widest transition-colors" onclick="setTab('agents',this)">AGENTS</button>
+    <button class="px-4 py-1.5 rounded-full text-gray-500 hover:text-white text-xs font-bold font-mono tracking-widest transition-colors" onclick="setTab('pipeline',this)">PIPELINE</button>
+    <button class="px-4 py-1.5 rounded-full text-gray-500 hover:text-white text-xs font-bold font-mono tracking-widest transition-colors" onclick="setTab('governor',this)">GOVERNOR</button>
+    <button class="px-4 py-1.5 rounded-full text-gray-500 hover:text-white text-xs font-bold font-mono tracking-widest transition-colors" onclick="setTab('ledger',this)">LEDGER</button>
+    <button class="px-4 py-1.5 rounded-full text-gray-500 hover:text-white text-xs font-bold font-mono tracking-widest transition-colors" onclick="setTab('experiments',this)">EXPERIMENTS</button>
+    <button class="px-4 py-1.5 rounded-full text-gray-500 hover:text-white text-xs font-bold font-mono tracking-widest transition-colors" onclick="setTab('infra',this)">INFRA</button>
+</nav>
+
+<main class="px-6 pb-10">
+
+<!-- ============================
+     VIEW: TODAY (OVERVIEW)
+     ============================ -->
+<div class="view active" id="view-overview">
+
+    <!-- HUD Metric Row -->
+    <div class="grid grid-cols-2 md:grid-cols-6 gap-3 mb-6">
+        <div class="glass-panel p-4 flex flex-col justify-between">
+            <div class="text-[10px] text-gray-500 font-mono uppercase font-bold">Net New Rev (MTD)</div>
+            <div class="mt-2 flex items-end justify-between">
+                <span class="metric-value accent" id="k-rev">$0</span>
+                <i data-lucide="trending-up" class="w-4 h-4 text-emerald-500"></i>
+            </div>
+        </div>
+        <div class="glass-panel p-4 flex flex-col justify-between border-l-2 border-l-[#10B981]">
+            <div class="text-[10px] text-gray-500 font-mono uppercase font-bold">Commission Earned</div>
+            <div class="mt-2 flex items-end justify-between">
+                <span class="metric-value accent" id="k-com">$0</span>
+                <span class="text-[10px] font-mono text-gray-600">10–15%</span>
+            </div>
+        </div>
+        <div class="glass-panel p-4 flex flex-col justify-between">
+            <div class="text-[10px] text-gray-500 font-mono uppercase font-bold">Expansion Rev</div>
+            <div class="mt-2 flex items-end justify-between">
+                <span class="metric-value accent-gold" id="k-exp">$0</span>
+                <i data-lucide="trending-up" class="w-4 h-4 text-yellow-500"></i>
+            </div>
+        </div>
+        <div class="glass-panel p-4 flex flex-col justify-between">
+            <div class="text-[10px] text-gray-500 font-mono uppercase font-bold">Active Partners</div>
+            <div class="mt-2 flex items-end justify-between">
+                <span class="metric-value accent-blue" id="k-par">0</span>
+                <i data-lucide="users" class="w-4 h-4 text-indigo-400"></i>
+            </div>
+        </div>
+        <div class="glass-panel p-4 flex flex-col justify-between">
+            <div class="text-[10px] text-gray-500 font-mono uppercase font-bold">Governor Pending</div>
+            <div class="mt-2 flex items-end justify-between">
+                <span class="metric-value text-[#F59E0B]">3</span>
+                <i data-lucide="shield" class="w-4 h-4 text-yellow-500"></i>
+            </div>
+        </div>
+        <div class="glass-panel p-4 flex flex-col justify-between">
+            <div class="text-[10px] text-gray-500 font-mono uppercase font-bold">Top Partner</div>
+            <div class="mt-2 flex items-center gap-2">
+                <svg width="24" height="24" class="-rotate-90">
+                    <circle cx="12" cy="12" r="10" stroke="#1a1a2e" stroke-width="3" fill="none"/>
+                    <circle cx="12" cy="12" r="10" stroke="#10B981" stroke-width="3" fill="none" stroke-dasharray="62.8" stroke-dashoffset="4"/>
+                </svg>
+                <span class="text-xs font-semibold truncate text-gray-300">Harlem Heritage</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3-Column Main Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+
+        <!-- LEFT: Agent Pipeline OS + Execution -->
+        <div class="lg:col-span-4 flex flex-col gap-5">
+
+            <!-- Agent Pipeline Stages (mirrors Ideas Pipeline) -->
+            <div class="glass-panel p-5">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="text-[10px] text-gray-500 font-mono uppercase font-bold flex items-center gap-2">
+                        <i data-lucide="workflow" class="w-3 h-3 accent"></i> Agent Pipeline
+                    </div>
+                    <button class="text-[10px] font-mono text-gray-500 hover:text-white" onclick="setTab('pipeline',document.querySelectorAll('nav button')[2])">View All →</button>
+                </div>
+
+                <!-- Stage nodes (like the Ideas OS nodes) -->
+                <div class="flex justify-between items-center mb-4 relative">
+                    <div class="absolute top-1/2 left-0 w-full h-[1px] bg-white/8 -z-10"></div>
+                    <div class="flex flex-col items-center gap-1 bg-[#0f0f14] px-1">
+                        <div class="stage-node border border-emerald-500/40 text-emerald-400 bg-emerald-500/10">2</div>
+                        <span class="text-[9px] text-gray-500 font-mono">Prospect</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-1 bg-[#0f0f14] px-1">
+                        <div class="stage-node border border-indigo-500/40 text-indigo-400 bg-indigo-500/10">2</div>
+                        <span class="text-[9px] text-gray-500 font-mono">Pitch</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-1 bg-[#0f0f14] px-1">
+                        <div class="stage-node border border-yellow-500/60 text-yellow-400 bg-yellow-500/15" style="box-shadow:0 0 10px rgba(245,158,11,.2)">2</div>
+                        <span class="text-[9px] text-yellow-400 font-mono font-bold">Onboard</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-1 bg-[#0f0f14] px-1">
+                        <div class="stage-node border border-emerald-500/40 text-emerald-400 bg-emerald-500/10">4</div>
+                        <span class="text-[9px] text-gray-500 font-mono">Execute</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-1 bg-[#0f0f14] px-1">
+                        <div class="stage-node border border-emerald-500/40 text-emerald-400 bg-emerald-500/10">2</div>
+                        <span class="text-[9px] text-gray-500 font-mono">Track</span>
+                    </div>
+                </div>
+
+                <!-- Active Gate Card (Onboarding) -->
+                <div class="bg-[#1a1a1a] border border-white/5 rounded-lg p-3">
+                    <div class="text-xs font-semibold text-white mb-1">El Nuevo Cafe · Onboarding</div>
+                    <div class="text-[10px] text-gray-400 mb-3">DocuSign signed. Awaiting Socio-Onboard to initialize Business Twin.</div>
+                    <button class="w-full btn-primary py-1.5 rounded text-[10px] font-mono font-bold uppercase" onclick="toast('Trigger sent to Socio-Onboard','success')">Initialize Twin → Socio-Onboard</button>
+                </div>
+            </div>
+
+            <!-- Execution / Today's Actions -->
+            <div class="glass-panel p-5 flex-1">
+                <div class="text-[10px] text-gray-500 font-mono uppercase font-bold flex items-center gap-2 mb-4">
+                    <i data-lucide="check-square" class="w-3 h-3 text-white"></i> Today's Execution
+                </div>
+
+                <!-- Quick Add -->
+                <div class="mb-5">
+                    <input type="text" placeholder="+ Type a task or command..." class="w-full bg-[#1a1a1a] border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-600 outline-none focus:border-white/30 transition-colors font-mono text-xs">
+                </div>
+
+                <!-- Focus / Active -->
+                <div class="mb-5">
+                    <div class="text-[10px] text-emerald-400 font-mono uppercase font-bold mb-2 flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Active Priorities (2/4)
+                    </div>
+                    <div class="space-y-2">
+                        <label class="flex items-start gap-3 group cursor-pointer p-2 hover:bg-white/5 rounded-lg transition-colors">
+                            <input type="checkbox" class="todo-checkbox mt-0.5">
+                            <div class="flex-1">
+                                <div class="text-sm text-gray-200 group-hover:text-white">Review 3 Governor proposals</div>
+                                <div class="text-[10px] font-mono text-gray-500 mt-1 flex gap-2">
+                                    <span class="bg-yellow-500/10 text-yellow-400 px-1.5 rounded">HIGH</span>
+                                    <span>@Socio-Governor</span>
+                                </div>
+                            </div>
+                        </label>
+                        <label class="flex items-start gap-3 group cursor-pointer p-2 hover:bg-white/5 rounded-lg transition-colors">
+                            <input type="checkbox" class="todo-checkbox mt-0.5" checked>
+                            <div class="flex-1">
+                                <div class="text-sm text-gray-500 line-through">Onboard El Nuevo Cafe</div>
+                            </div>
+                        </label>
+                        <label class="flex items-start gap-3 group cursor-pointer p-2 hover:bg-white/5 rounded-lg transition-colors">
+                            <input type="checkbox" class="todo-checkbox mt-0.5">
+                            <div class="flex-1">
+                                <div class="text-sm text-gray-200">Review Cristal Flowers monthly revenue report</div>
+                                <div class="text-[10px] font-mono text-gray-500 mt-1 flex gap-2">
+                                    <span class="bg-emerald-500/10 text-emerald-400 px-1.5 rounded">LOW</span>
+                                    <span>@Socio-Track</span>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Blocked -->
+                <div>
+                    <div class="text-[10px] text-red-400 font-mono uppercase font-bold mb-2">Blocked / Waiting For</div>
+                    <div class="space-y-2">
+                        <div class="flex items-start gap-3 p-2 bg-red-500/5 border border-red-500/10 rounded-lg">
+                            <i data-lucide="clock" class="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0"></i>
+                            <div class="flex-1">
+                                <div class="text-sm text-gray-300">Canva API key renewal</div>
+                                <div class="text-[10px] font-mono text-gray-500 mt-1">Affects Socio-Content · 2 days</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3 p-2 bg-red-500/5 border border-red-500/10 rounded-lg">
+                            <i data-lucide="clock" class="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0"></i>
+                            <div class="flex-1">
+                                <div class="text-sm text-gray-300">Synup MCP rate limit reset</div>
+                                <div class="text-[10px] font-mono text-gray-500 mt-1">Resets 00:00 UTC</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CENTER: Intelligence & Socio Stream -->
+        <div class="lg:col-span-4 flex flex-col gap-5">
+
+            <!-- Revenue Pulse + Session -->
+            <div class="glass-panel p-5 text-center flex flex-col items-center justify-center border-t-2 border-t-emerald-500">
+                <div class="text-[10px] text-gray-500 font-mono uppercase font-bold mb-2">Revenue Pulse</div>
+                <div class="text-4xl font-mono font-bold tracking-tighter text-white mb-1" id="ctr-rev">$0</div>
+                <div class="text-[11px] font-mono text-gray-500 mb-4">Net New + Expansion this month</div>
+                <div class="flex gap-6 mb-4">
+                    <div class="text-center">
+                        <div class="text-[10px] text-gray-600 font-mono uppercase">Net New</div>
+                        <div class="text-lg font-mono font-bold accent" id="ctr-nn">$0</div>
+                    </div>
+                    <div class="w-px bg-white/10"></div>
+                    <div class="text-center">
+                        <div class="text-[10px] text-gray-600 font-mono uppercase">Expansion</div>
+                        <div class="text-lg font-mono font-bold accent-gold" id="ctr-ex">$0</div>
+                    </div>
+                    <div class="w-px bg-white/10"></div>
+                    <div class="text-center">
+                        <div class="text-[10px] text-gray-600 font-mono uppercase">Commission</div>
+                        <div class="text-lg font-mono font-bold accent" id="ctr-cm">$0</div>
+                    </div>
+                </div>
+                <div class="w-full bg-white/5 rounded-full h-1.5 overflow-hidden">
+                    <div class="h-full rounded-full bg-gradient-to-r from-emerald-500 to-indigo-500 transition-all duration-1000" id="rev-bar" style="width:0%"></div>
+                </div>
+                <div class="text-[10px] font-mono text-gray-600 mt-1">$31,750 / $40,000 monthly target</div>
+            </div>
+
+            <!-- Daily Briefing (Jarvis-style) -->
+            <div class="glass-panel p-5">
+                <div class="text-[10px] text-gray-500 font-mono uppercase font-bold flex items-center gap-2 mb-3">
+                    <i data-lucide="sun" class="w-3 h-3 text-yellow-500"></i> Socio Daily Briefing
+                </div>
+                <p class="text-sm text-gray-300 leading-relaxed italic">
+                    "8 agents are active across 12 merchant accounts. 3 proposals await your Governor approval — including a HIGH-risk Instagram campaign for East Harlem Bites with projected 11x ROAS. Two experiments are running with statistically significant uplift. Revenue trend is ↑34% MTD."
+                </p>
+            </div>
+
+            <!-- Socio Agent Stream -->
+            <div class="glass-panel p-5 flex-1 flex flex-col">
+                <div class="text-[10px] text-gray-500 font-mono uppercase font-bold flex items-center gap-2 mb-4">
+                    <i data-lucide="cpu" class="w-3 h-3 accent-blue"></i> Agent Stream
+                </div>
+                <div class="flex-1 space-y-3 overflow-y-auto pr-1" id="agent-stream" style="max-height:200px">
+                    <!-- populated by JS -->
+                </div>
+                <div class="mt-4 pt-4 border-t border-white/5">
+                    <input type="text" placeholder="Command an agent..." class="w-full bg-[#1a1a1a] border border-white/10 rounded px-3 py-2 text-xs font-mono text-white placeholder-gray-600 outline-none focus:border-emerald-500/40 transition-colors">
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT: Agent Quick Launch + Signals -->
+        <div class="lg:col-span-4 flex flex-col gap-5">
+
+            <!-- Quick Agent Actions (mirrors Quick Agents grid) -->
+            <div class="grid grid-cols-2 gap-3">
+                <button class="glass-panel p-3 flex flex-col items-center justify-center gap-2 hover:bg-white/5 transition-colors border-white/5" onclick="toast('Socio-Prospect triggered','success')">
+                    <i data-lucide="search" class="w-4 h-4 accent-blue"></i>
+                    <span class="text-[10px] font-mono font-bold text-gray-400 uppercase">Prospect</span>
+                </button>
+                <button class="glass-panel p-3 flex flex-col items-center justify-center gap-2 hover:bg-white/5 transition-colors border-white/5" onclick="toast('Socio-Content triggered','success')">
+                    <i data-lucide="pen-tool" class="w-4 h-4 accent"></i>
+                    <span class="text-[10px] font-mono font-bold text-gray-400 uppercase">Content</span>
+                </button>
+                <button class="glass-panel p-3 flex flex-col items-center justify-center gap-2 hover:bg-white/5 transition-colors border-white/5" onclick="toast('Socio-Listings triggered','success')">
+                    <i data-lucide="map-pin" class="w-4 h-4 text-purple-400"></i>
+                    <span class="text-[10px] font-mono font-bold text-gray-400 uppercase">Listings</span>
+                </button>
+                <button class="glass-panel p-3 flex flex-col items-center justify-center gap-2 hover:bg-white/5 transition-colors bg-emerald-500/5" onclick="toast('Weekly review initiated','success')">
+                    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i>
+                    <span class="text-[10px] font-mono font-bold text-emerald-500 uppercase">Weekly Review</span>
+                </button>
+            </div>
+
+            <!-- Revenue Signals & Intel -->
+            <div class="glass-panel p-5 flex-1">
+                <div class="text-[10px] text-gray-500 font-mono uppercase font-bold flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="globe" class="w-3 h-3 text-white"></i> Signals & Intel
+                    </div>
+                    <span class="text-[9px] text-gray-600">Curated by Socio-Expand</span>
+                </div>
+
+                <div class="space-y-3" id="signals-list">
+                    <div class="bg-[#1a1a1a] rounded-lg p-3 border border-white/5">
+                        <div class="flex items-start justify-between mb-1">
+                            <span class="text-xs font-bold text-white">East Harlem Bites — 11x ROAS Signal</span>
+                            <div class="flex gap-0.5">
+                                <span class="sig-dot bg-emerald-500"></span>
+                                <span class="sig-dot bg-emerald-500"></span>
+                                <span class="sig-dot bg-emerald-500"></span>
+                            </div>
+                        </div>
+                        <div class="text-[11px] text-gray-400 mb-2 leading-relaxed">Organic posts averaging 4.2% engagement. Paid test sample yielded 11x ROAS on $50 spend.</div>
+                        <div class="bg-emerald-500/10 border border-emerald-500/20 text-[10px] text-emerald-400 p-1.5 rounded font-mono">
+                            → Impact: Governor PROP-0042 ($400 campaign) awaiting your approval.
+                        </div>
+                    </div>
+
+                    <div class="bg-[#1a1a1a] rounded-lg p-3 border border-white/5">
+                        <div class="flex items-start justify-between mb-1">
+                            <span class="text-xs font-bold text-white">Cristal Flowers — Referral Opportunity</span>
+                            <div class="flex gap-0.5">
+                                <span class="sig-dot bg-emerald-500"></span>
+                                <span class="sig-dot bg-emerald-500"></span>
+                                <span class="sig-dot bg-gray-700"></span>
+                            </div>
+                        </div>
+                        <div class="text-[11px] text-gray-400 mb-2 leading-relaxed">NPS 9/10. Partner is already referring informally. Formal referral activation = 2+ new merchants in 90 days.</div>
+                        <div class="bg-white/5 border border-white/10 text-[10px] text-gray-300 p-1.5 rounded font-mono">
+                            → Action: Approve PROP-0043 to activate 5% referral program.
+                        </div>
+                    </div>
+
+                    <div class="bg-[#1a1a1a] rounded-lg p-3 border border-white/5">
+                        <div class="flex items-start justify-between mb-1">
+                            <span class="text-xs font-bold text-white">NYC Florist Market — Gap Alert</span>
+                            <div class="flex gap-0.5">
+                                <span class="sig-dot bg-indigo-500"></span>
+                                <span class="sig-dot bg-gray-700"></span>
+                                <span class="sig-dot bg-gray-700"></span>
+                            </div>
+                        </div>
+                        <div class="text-[11px] text-gray-400 leading-relaxed">Socio-Prospect identified 6 unclaimed Google Business profiles in Washington Heights. Zero reviews. High capture probability.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================
+     VIEW: AGENTS
+     ============================ -->
+<div class="view" id="view-agents">
+    <div class="flex items-center justify-between mb-5">
+        <div>
+            <div class="text-lg font-bold">Agent Fleet</div>
+            <div class="text-xs text-gray-500 font-mono">DSH + Hermes Hybrid — 8 Specialized Agents</div>
+        </div>
+        <div class="flex gap-2">
+            <button class="text-xs font-mono border border-white/10 px-4 py-2 rounded-lg hover:bg-white/5 transition-colors" onclick="toast('All agents pinged','success')">Ping All</button>
+            <button class="btn-primary text-xs font-mono px-4 py-2 rounded-lg" onclick="toast('Fleet health check running','success')">Health Check</button>
+        </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4" id="agents-grid">
+        <!-- populated by JS -->
+    </div>
+</div>
+
+<!-- ============================
+     VIEW: PIPELINE
+     ============================ -->
+<div class="view" id="view-pipeline">
+    <div class="flex items-center justify-between mb-5">
+        <div>
+            <div class="text-lg font-bold">Merchant Pipeline</div>
+            <div class="text-xs text-gray-500 font-mono">10-Stage Journey — Prospect → Renew</div>
+        </div>
+        <button class="btn-primary text-xs font-mono px-4 py-2 rounded-lg" onclick="toast('Prospect slot added','success')">+ Add Prospect</button>
+    </div>
+    <!-- Stage counters -->
+    <div class="grid grid-cols-3 md:grid-cols-6 gap-3 mb-5" id="stage-hud"></div>
+    <!-- Table -->
+    <div class="glass-panel overflow-hidden">
+        <table class="w-full">
+            <thead>
+                <tr class="border-b border-white/5">
+                    <th class="text-left text-[10px] font-mono uppercase text-gray-500 px-4 py-3">Merchant</th>
+                    <th class="text-left text-[10px] font-mono uppercase text-gray-500 px-4 py-3">Stage</th>
+                    <th class="text-left text-[10px] font-mono uppercase text-gray-500 px-4 py-3">Agent</th>
+                    <th class="text-left text-[10px] font-mono uppercase text-gray-500 px-4 py-3">Net New</th>
+                    <th class="text-left text-[10px] font-mono uppercase text-gray-500 px-4 py-3">Expansion</th>
+                    <th class="text-left text-[10px] font-mono uppercase text-gray-500 px-4 py-3">Score</th>
+                    <th class="text-left text-[10px] font-mono uppercase text-gray-500 px-4 py-3">Next</th>
+                </tr>
+            </thead>
+            <tbody id="pipeline-tbody"></tbody>
+        </table>
+    </div>
+</div>
+
+<!-- ============================
+     VIEW: GOVERNOR
+     ============================ -->
+<div class="view" id="view-governor">
+    <div class="flex items-center justify-between mb-5">
+        <div>
+            <div class="text-lg font-bold">Agent Governor</div>
+            <div class="text-xs text-gray-500 font-mono">Policy Evaluation · Risk Scoring · Action Approval</div>
+        </div>
+        <span class="pill pill-gold">⚠ 3 PENDING REVIEW</span>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 mb-6">
+        <!-- Risk policy -->
+        <div class="lg:col-span-5 glass-panel p-5">
+            <div class="text-[10px] font-mono uppercase text-gray-500 font-bold mb-4">Risk Level Policy</div>
+            <div class="space-y-3">
+                <div class="eitem"><div class="eicon" style="background:rgba(16,185,129,.1)">🟢</div><div><div class="text-xs text-white font-semibold">LOW — Auto-approved</div><div class="text-[10px] text-gray-500 font-mono">Content drafts, analytics, read-only ops · default_risk_policy</div></div></div>
+                <div class="eitem"><div class="eicon" style="background:rgba(245,158,11,.1)">🟡</div><div><div class="text-xs text-white font-semibold">MEDIUM — AGENT_SUPERVISOR required</div><div class="text-[10px] text-gray-500 font-mono">Low-volume outreach to existing customers · supervisor_approval</div></div></div>
+                <div class="eitem"><div class="eicon" style="background:rgba(239,68,68,.1)">🔴</div><div><div class="text-xs text-white font-semibold">HIGH — BUSINESS_OWNER required</div><div class="text-[10px] text-gray-500 font-mono">Ad campaigns, pricing changes · owner_approval</div></div></div>
+                <div class="eitem" style="border-color:rgba(255,23,68,.2)"><div class="eicon" style="background:rgba(255,23,68,.08)">💀</div><div><div class="text-xs text-white font-semibold">CRITICAL — Blocked by default</div><div class="text-[10px] text-gray-500 font-mono">DB ops, mass spam · fail_closed</div></div></div>
+            </div>
+        </div>
+        <!-- Stats -->
+        <div class="lg:col-span-7 glass-panel p-5">
+            <div class="text-[10px] font-mono uppercase text-gray-500 font-bold mb-4">Governor Stats (24h)</div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
+                <div class="bg-[#1a1a1a] rounded-lg p-3 text-center"><div class="text-[10px] text-gray-500 font-mono uppercase mb-1">Approved</div><div class="text-2xl font-mono font-bold accent">47</div></div>
+                <div class="bg-[#1a1a1a] rounded-lg p-3 text-center"><div class="text-[10px] text-gray-500 font-mono uppercase mb-1">Rejected</div><div class="text-2xl font-mono font-bold accent-red">6</div></div>
+                <div class="bg-[#1a1a1a] rounded-lg p-3 text-center"><div class="text-[10px] text-gray-500 font-mono uppercase mb-1">Pending</div><div class="text-2xl font-mono font-bold accent-gold">3</div></div>
+                <div class="bg-[#1a1a1a] rounded-lg p-3 text-center"><div class="text-[10px] text-gray-500 font-mono uppercase mb-1">Auto</div><div class="text-2xl font-mono font-bold text-white">38</div></div>
+            </div>
+            <div class="text-[10px] font-mono uppercase text-gray-500 font-bold mb-3">Recent Decisions</div>
+            <div class="space-y-2" id="gov-decisions"></div>
+        </div>
+    </div>
+    <div class="text-[10px] font-mono uppercase text-gray-500 font-bold mb-3">⏳ Pending Proposals</div>
+    <div id="gov-props" class="space-y-3"></div>
+</div>
+
+<!-- ============================
+     VIEW: LEDGER
+     ============================ -->
+<div class="view" id="view-ledger">
+    <div class="flex items-center justify-between mb-5">
+        <div>
+            <div class="text-lg font-bold">Revenue Ledger</div>
+            <div class="text-xs text-gray-500 font-mono">Immutable event log · Supabase · PostgreSQL</div>
+        </div>
+        <span class="pill pill-green">IMMUTABLE</span>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
+        <div class="glass-panel p-4"><div class="text-[10px] text-gray-500 font-mono uppercase font-bold mb-2">Total Events</div><div class="metric-value accent">1,284</div></div>
+        <div class="glass-panel p-4"><div class="text-[10px] text-gray-500 font-mono uppercase font-bold mb-2">Revenue Events</div><div class="metric-value text-white">847</div></div>
+        <div class="glass-panel p-4"><div class="text-[10px] text-gray-500 font-mono uppercase font-bold mb-2">Campaign Costs</div><div class="metric-value accent-gold">$3,420</div></div>
+        <div class="glass-panel p-4"><div class="text-[10px] text-gray-500 font-mono uppercase font-bold mb-2">Net Margin</div><div class="metric-value accent">76.4%</div></div>
+    </div>
+    <div class="glass-panel p-5">
+        <div class="flex items-center justify-between mb-4">
+            <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Live Event Stream</div>
+            <div class="flex gap-2">
+                <span class="pill pill-gray">ALL</span>
+                <span class="pill pill-green">REVENUE</span>
+                <span class="pill pill-blue">AGENT_ACTION</span>
+                <span class="pill pill-gold">COST</span>
+            </div>
+        </div>
+        <div id="ledger-feed" class="space-y-1"></div>
+    </div>
+</div>
+
+<!-- ============================
+     VIEW: EXPERIMENTS
+     ============================ -->
+<div class="view" id="view-experiments">
+    <div class="flex items-center justify-between mb-5">
+        <div>
+            <div class="text-lg font-bold">Experiment Engine</div>
+            <div class="text-xs text-gray-500 font-mono">Growth hypotheses — lifecycle management and A/B analysis</div>
+        </div>
+        <button class="btn-primary text-xs font-mono px-4 py-2 rounded-lg" onclick="toast('New experiment draft created','success')">+ New Hypothesis</button>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="exp-grid"></div>
+</div>
+
+<!-- ============================
+     VIEW: INFRA
+     ============================ -->
+<div class="view" id="view-infra">
+    <div class="flex items-center justify-between mb-5">
+        <div>
+            <div class="text-lg font-bold">Infrastructure</div>
+            <div class="text-xs text-gray-500 font-mono">Lean tech stack · $166–$341/month total operating cost</div>
+        </div>
+        <div class="flex items-center gap-2 text-xs font-mono text-emerald-400">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            All Systems Nominal
+        </div>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-5">
+        <div class="glass-panel p-5"><div class="text-[10px] font-mono uppercase text-gray-500 font-bold mb-4">🧠 Operations Layer</div><div class="grid grid-cols-2 gap-3" id="i-ops"></div></div>
+        <div class="glass-panel p-5"><div class="text-[10px] font-mono uppercase text-gray-500 font-bold mb-4">⚙️ Execution Layer</div><div class="grid grid-cols-2 gap-3" id="i-exec"></div></div>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <div class="glass-panel p-5"><div class="text-[10px] font-mono uppercase text-gray-500 font-bold mb-4">💾 Data & Storage</div><div class="grid grid-cols-2 gap-3" id="i-data"></div></div>
+        <div class="glass-panel p-5">
+            <div class="text-[10px] font-mono uppercase text-gray-500 font-bold mb-4">💰 Cost Summary</div>
+            <div class="grid grid-cols-2 gap-2 text-xs font-mono">
+                <div class="bg-[#1a1a1a] rounded p-2"><span class="text-gray-500">Hermes Desktop</span><div class="text-white font-bold mt-1">$0/mo</div></div>
+                <div class="bg-[#1a1a1a] rounded p-2"><span class="text-gray-500">Taskade Genesis</span><div class="text-white font-bold mt-1">$16/mo</div></div>
+                <div class="bg-[#1a1a1a] rounded p-2"><span class="text-gray-500">Helio (DO VPS)</span><div class="text-white font-bold mt-1">$20/mo</div></div>
+                <div class="bg-[#1a1a1a] rounded p-2"><span class="text-gray-500">Synup MCP</span><div class="text-white font-bold mt-1">$50–100/mo</div></div>
+                <div class="bg-[#1a1a1a] rounded p-2"><span class="text-gray-500">Resend + Twilio</span><div class="text-white font-bold mt-1">$30–80/mo</div></div>
+                <div class="bg-[#1a1a1a] rounded p-2"><span class="text-gray-500">Supabase</span><div class="text-white font-bold mt-1">$0–25/mo</div></div>
+                <div class="col-span-2 bg-emerald-500/10 border border-emerald-500/20 rounded p-2 text-center"><span class="text-gray-400">Total Estimate</span><div class="text-emerald-400 font-bold text-sm mt-1">$166–341/mo</div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</main>
+
+<!-- TOAST -->
+<div id="toast-c" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2"></div>
+
+<!-- MODAL AGENT DETAIL -->
+<div id="agent-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden items-center justify-center">
+    <div class="bg-[#0f0f14] border border-white/10 rounded-2xl p-6 w-[90%] max-w-[520px]" style="animation:mIn .3s cubic-bezier(.22,1,.36,1)">
+        <div class="flex items-center gap-3 mb-4">
+            <span id="m-emoji" class="text-2xl">🕵️</span>
+            <span id="m-name" class="text-lg font-bold font-mono"></span>
+            <span id="m-status" class="pill"></span>
+        </div>
+        <div id="m-body" class="text-sm text-gray-400 leading-relaxed mb-4"></div>
+        <div class="flex gap-2 justify-end">
+            <button id="m-kill" class="text-xs font-mono border border-red-500/30 text-red-400 px-4 py-2 rounded-lg hover:bg-red-500/10 transition-colors">Kill Agent</button>
+            <button id="m-trig" class="btn-primary text-xs font-mono px-4 py-2 rounded-lg">Trigger Now</button>
+            <button onclick="closeModal()" class="text-xs font-mono border border-white/10 text-gray-400 px-4 py-2 rounded-lg hover:bg-white/5 transition-colors">Close</button>
+        </div>
+    </div>
+</div>
+
+<style>
+@keyframes mIn{from{opacity:0;transform:scale(.95) translateY(16px)}to{opacity:1;transform:scale(1) translateY(0)}}
+</style>
+
+<script>
+/* ===== DATA ===== */
+const AGENTS=[
+  {id:'prospect',name:'Socio-Prospect',role:'Lead Generation',emoji:'🕵️',status:'running',model:'deepseek-v4',trigger:'Daily 6AM cron',today:47,proposals:12,rate:88,log:'[06:02:14] Scanning East Harlem — 23 candidates\n[06:04:31] ✅ 10 prospects scored\n[06:05:00] → 3 proposals → Governor',tools:['growth_os_read_twin','growth_os_propose_action'],desc:'Daily scraping of NYC neighborhoods. Audits digital gaps, scores top 10 targets from Google Maps, Instagram, Yelp.'},
+  {id:'pitch',name:'Socio-Pitch',role:'Outreach & CRM',emoji:'📣',status:'idle',model:'deepseek-v4',trigger:'Webhook: new_prospect_scored',today:23,proposals:8,rate:71,log:'[09:14:22] ✅ Email → Bloom & Branch\n[09:15:01] WhatsApp queued (T+48h)\n[09:15:01] → SMS batch awaiting Governor',tools:['Resend','Twilio WhatsApp'],desc:'Multi-touch bilingual email/WhatsApp outreach sequences rooted in the Socio Manifesto.'},
+  {id:'onboard',name:'Socio-Onboard',role:'Agreements & Setup',emoji:'📋',status:'online',model:'deepseek-v4',trigger:'Webhook: partner_accepted',today:5,proposals:2,rate:96,log:'[11:30:00] ✅ Agreement → El Nuevo Cafe\n[11:45:12] DocuSign signed ✓\n[11:45:13] → Twin BIZ-0047 initialized',tools:['DocuSign','Typeform'],desc:'Generates partnership agreements, collects data, delivers 48-hour audit action plans.'},
+  {id:'content',name:'Socio-Content',role:'Content Generation',emoji:'✍️',status:'running',model:'deepseek-v4',trigger:'Daily 8AM cron',today:142,proposals:31,rate:94,log:'[08:01:00] Calendar generated → Cristal Flowers\n[08:03:44] ✅ 4 posts published via Helio\n[08:04:01] ⚠ Canva rate limit — 2 queued',tools:['Helio CDP','Canva'],desc:'Bilingual content generation & scheduling. 30-day calendars, Instagram management, review responses.'},
+  {id:'listings',name:'Socio-Listings',role:'Local SEO & Reviews',emoji:'📍',status:'online',model:'deepseek-v4',trigger:'Every 6h cron',today:38,proposals:9,rate:91,log:'[12:00:04] ✅ Google Business → La Bodega NYC\n[12:01:22] ✅ Yelp — 5 photos added\n[12:02:00] Review alert: 3★ response drafted',tools:['Synup MCP'],desc:'Local SEO optimization, listing sync across 12 directories, automated review management via Synup MCP.'},
+  {id:'track',name:'Socio-Track',role:'Revenue & Invoicing',emoji:'💳',status:'online',model:'deepseek-v4',trigger:'Webhook: pos_transaction',today:67,proposals:4,rate:99,log:'[14:22:01] ✅ Net New $1,240 (Cristal Flowers)\n[14:22:02] Commission: $186 (15%)\n[14:22:03] → Invoice #INV-0094 via Stripe',tools:['Stripe Connect','Square'],desc:'POS webhook processing, Net New & Expansion Revenue calculation, commission tracking, Stripe invoicing.'},
+  {id:'support',name:'Socio-Support',role:'Merchant Support',emoji:'💬',status:'online',model:'deepseek-v4',trigger:'Webhook: support_message',today:19,proposals:1,rate:87,log:'[15:10:44] ✅ WhatsApp resolved → Queens DC\n[15:32:00] Intercom #891 escalated\n[15:33:01] → Avg response: 2m 17s today',tools:['Intercom','Twilio WhatsApp'],desc:'Frontline support via Intercom & WhatsApp. Handles common issues, escalates edge cases.'},
+  {id:'expand',name:'Socio-Expand',role:'Growth & Referrals',emoji:'🚀',status:'idle',model:'deepseek-v4',trigger:'Weekly Monday 9AM',today:8,proposals:5,rate:79,log:'[Mon 09:00] Cross-sell: E.Harlem Bites → catering\n[Mon 09:04] ✅ Referral link → Cristal Flowers\n[Mon 09:05] → 5% commission-for-life activated',tools:['growth_os_read_twin','growth_os_propose_action'],desc:'Cross-sell analysis, referral program management, 5% lifetime commission activation per partner.'}
+];
+
+const MERCHANTS=[
+  {n:'Cristal Flowers',l:'East Harlem',s:'execute',a:'Socio-Content',nn:4820,ex:1240,sc:94,nx:'Monthly review call'},
+  {n:'El Nuevo Cafe',l:'Washington Heights',s:'onboard',a:'Socio-Onboard',nn:0,ex:0,sc:88,nx:'Agreement signing'},
+  {n:'La Bodega NYC',l:'South Bronx',s:'execute',a:'Socio-Listings',nn:2100,ex:780,sc:82,nx:'SEO audit week 3'},
+  {n:'Queens Dry Cleaners',l:'Flushing, Queens',s:'track',a:'Socio-Track',nn:3340,ex:1100,sc:91,nx:'Commission invoice due'},
+  {n:'East Harlem Bites',l:'East Harlem',s:'execute',a:'Socio-Content',nn:5610,ex:2200,sc:96,nx:'Cross-sell analysis'},
+  {n:'Bloom & Branch',l:'Astoria, Queens',s:'pitch',a:'Socio-Pitch',nn:0,ex:0,sc:79,nx:'WhatsApp follow-up T+48h'},
+  {n:'Park Slope Laundry',l:'Brooklyn',s:'prospect',a:'Socio-Prospect',nn:0,ex:0,sc:72,nx:'Digital audit scheduled'},
+  {n:'Harlem Heritage',l:'Harlem',s:'review',a:'Socio-Track',nn:7200,ex:3100,sc:98,nx:'Annual ROI call'},
+  {n:'Uptown Flowers',l:'Upper Manhattan',s:'pitch',a:'Socio-Pitch',nn:0,ex:0,sc:85,nx:'Email sequence day 2'},
+  {n:'BX Corner Deli',l:'Bronx',s:'prospect',a:'Socio-Prospect',nn:0,ex:0,sc:69,nx:'Instagram gap audit'},
+  {n:'Midtown Florist',l:'Midtown Manhattan',s:'onboard',a:'Socio-Onboard',nn:0,ex:0,sc:83,nx:'Typeform data collection'},
+  {n:'Sunnyside Market',l:'Sunnyside, Queens',s:'execute',a:'Socio-Content',nn:1820,ex:440,sc:77,nx:'Week 2 content deploy'}
+];
+
+const PROPOSALS=[
+  {id:'PROP-0041',agent:'Socio-Pitch',biz:'Bloom & Branch',type:'send_email_batch',risk:'MEDIUM',obj:'Send 3-touch email sequence to 47 prospects',ev:'Audit score ≥ 75, no prior contact in 7 days',exp:'~8% response rate → 4 consultation calls'},
+  {id:'PROP-0042',agent:'Socio-Content',biz:'East Harlem Bites',type:'launch_instagram_campaign',risk:'HIGH',obj:'Launch paid Instagram campaign — $400 budget',ev:'Organic posts 4.2% engagement; paid test 11x ROAS',exp:'+$4,400 attributable new revenue in 30 days'},
+  {id:'PROP-0043',agent:'Socio-Expand',biz:'Cristal Flowers',type:'activate_referral_program',risk:'LOW',obj:'Generate referral link and notify via WhatsApp',ev:'Partner NPS: 9/10. Already referring informally.',exp:'2+ new merchant referrals in 90 days'}
+];
+
+const EVENTS=[
+  {type:'revenue',icon:'💵',d:'<strong>Net New Revenue</strong> — Cristal Flowers · QR walk-in attributed',amt:'+$1,240',ag:'Socio-Track',t:'14:22:01',ch:'stripe'},
+  {type:'action',icon:'📣',d:'<strong>Email Sent</strong> — Bloom & Branch · Pitch sequence touch 2/3',amt:null,ag:'Socio-Pitch',t:'14:18:33',ch:'resend'},
+  {type:'revenue',icon:'💵',d:'<strong>Expansion Revenue</strong> — Queens Dry Cleaners · Repeat order',amt:'+$340',ag:'Socio-Track',t:'14:05:12',ch:'square'},
+  {type:'alert',icon:'⚠️',d:'<strong>Campaign Cost</strong> — East Harlem Bites · Instagram Paid',amt:'-$120',ag:'Socio-Content',t:'13:44:00',ch:'meta'},
+  {type:'action',icon:'📍',d:'<strong>Listing Synced</strong> — La Bodega NYC · 12 directories',amt:null,ag:'Socio-Listings',t:'13:30:05',ch:'synup'},
+  {type:'revenue',icon:'💵',d:'<strong>Net New Revenue</strong> — East Harlem Bites · Grubhub order',amt:'+$284',ag:'Socio-Track',t:'13:11:20',ch:'stripe'},
+  {type:'action',icon:'🤝',d:'<strong>Partner Onboarded</strong> — El Nuevo Cafe · DocuSign signed',amt:null,ag:'Socio-Onboard',t:'11:45:12',ch:'docusign'},
+  {type:'action',icon:'🕵️',d:'<strong>Prospect Scored</strong> — Park Slope Laundry · Score 72/100',amt:null,ag:'Socio-Prospect',t:'06:04:31',ch:'internal'}
+];
+
+const STREAM_ITEMS=[
+  {border:'#10B981',color:'#10B981',who:'Socio-Track · Revenue',ago:'2m ago',msg:'Net New $1,240 recorded for Cristal Flowers. Invoice #INV-0094 generated.'},
+  {border:'#6366F1',color:'#6366F1',who:'Socio-Content · Build',ago:'8m ago',msg:'Instagram calendar deployed for East Harlem Bites. 4 posts scheduled.'},
+  {border:'#F59E0B',color:'#F59E0B',who:'Socio-Prospect · Alert',ago:'15m ago',msg:'6 unclaimed Google Business profiles found in Washington Heights.'},
+  {border:'#10B981',color:'#10B981',who:'Socio-Listings · SEO',ago:'32m ago',msg:'La Bodega NYC synced to 12 directories. Avg rating: 4.1 → 4.4.'},
+];
+
+const EXPERIMENTS=[
+  {id:'EXP-001',hyp:'Bilingual WhatsApp outreach increases pitch response rate by 20%',metric:'response_rate',base:6.2,variants:['EN only','EN + ES'],status:'RUNNING',alloc:'50/50',obs:34,cur:9.1},
+  {id:'EXP-002',hyp:'Google review automation increases 30-day star rating by 0.3',metric:'avg_star_rating',base:3.8,variants:['Manual','Automated'],status:'PROMOTED',alloc:'0/100',obs:12,cur:4.3},
+  {id:'EXP-003',hyp:'Weekly content calendars outperform monthly batches for Instagram engagement',metric:'engagement_rate',base:3.1,variants:['Monthly batch','Weekly drip'],status:'RUNNING',alloc:'40/60',obs:18,cur:4.8},
+  {id:'EXP-004',hyp:'Catering cross-sell upsell adds $800+ MRR per restaurant partner',metric:'expansion_mrr',base:0,variants:['No upsell','Catering upsell'],status:'DRAFT',alloc:'50/50',obs:0,cur:null}
+];
+
+const INFRA_OPS=[{n:'Hermes Desktop',t:'Operations Layer',m:'v0.20.4',s:'8 agents · local',ok:true},{n:'DeepSeek Harness',t:'Build Layer (DSH)',m:'v0.1.0-rc.7',s:'MCP server active',ok:true},{n:'Taskade Genesis',t:'Command Center',m:'$16/mo',s:'Pro · Kanban active',ok:true},{n:'Growth OS MCP',t:'Internal Engine',m:'v1.0.0',s:'port 3100 · live',ok:true}];
+const INFRA_EXEC=[{n:'Helio CDP',t:'Marketing Automation',m:'99.8%',s:'DigitalOcean $20/mo',ok:true},{n:'Synup MCP',t:'Local SEO',m:'12 dirs',s:'$50-100/mo',ok:true},{n:'Resend',t:'Email API',m:'2,341',s:'Emails sent MTD',ok:true},{n:'Twilio WhatsApp',t:'Communications',m:'847',s:'Messages MTD',ok:true}];
+const INFRA_DATA=[{n:'Supabase',t:'PostgreSQL Database',m:'14.2 MB',s:'Revenue Ledger',ok:true},{n:'In-Memory Store',t:'Business Twin Cache',m:'12 twins',s:'→ Supabase pending',ok:false},{n:'JSON Outputs',t:'DSH Output Files',m:'48 files',s:'outputs/ ephemeral',ok:true},{n:'Hermes Kanban',t:'Task State',m:'203 tasks',s:'Workflow orchestration',ok:true}];
+
+const SM={prospect:{l:'Prospect',pc:'pill-blue'},pitch:{l:'Pitch',pc:'pill-gray'},onboard:{l:'Onboard',pc:'pill-gold'},execute:{l:'Execute',pc:'pill-green'},track:{l:'Track',pc:'pill-green'},review:{l:'Review',pc:'pill-gray'}};
+
+/* ===== CLOCK ===== */
+function tick(){
+  const n=new Date();
+  document.getElementById('hdr-time').textContent=n.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:true});
+  document.getElementById('hdr-date').textContent=n.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}).toUpperCase();
+}
+setInterval(tick,1000);tick();
+
+/* ===== TABS ===== */
+function setTab(id,btn){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b=>{b.classList.remove('tab-active');b.classList.add('text-gray-500');b.style.background='';b.style.border='';});
+  document.getElementById('view-'+id).classList.add('active');
+  if(btn){btn.classList.add('tab-active');btn.classList.remove('text-gray-500');}
+}
+
+/* ===== TOAST ===== */
+function toast(msg,type='success',dur=3200){
+  const c=document.getElementById('toast-c');
+  const t=document.createElement('div');
+  const col=type==='success'?'border-emerald-500':type==='warn'?'border-yellow-500':'border-red-500';
+  t.className=`bg-[#0f0f14] border border-white/10 ${col} border-l-2 rounded-xl px-4 py-3 text-sm font-mono flex items-center gap-2 shadow-xl`;
+  t.innerHTML=`<span>${type==='success'?'✅':type==='warn'?'⚠️':'❌'}</span><span class="text-gray-200">${msg}</span>`;
+  c.appendChild(t);
+  setTimeout(()=>{t.style.opacity='0';t.style.transition='opacity .3s';setTimeout(()=>t.remove(),300);},dur);
+}
+
+/* ===== MODAL ===== */
+let curA=null;
+function openModal(id){
+  curA=AGENTS.find(a=>a.id===id);if(!curA)return;
+  document.getElementById('m-emoji').textContent=curA.emoji;
+  document.getElementById('m-name').textContent=curA.name;
+  const ms=document.getElementById('m-status');
+  const sc={online:'pill-green',running:'pill-blue',idle:'pill-gold',offline:'pill-gray'}[curA.status];
+  ms.className=`pill ${sc}`;ms.textContent=curA.status.toUpperCase();
+  document.getElementById('m-body').innerHTML=`<p class="mb-3">${curA.desc}</p><div class="grid grid-cols-3 gap-2 mb-3 text-xs font-mono">${[['Model',curA.model],['Trigger',curA.trigger],['Success',curA.rate+'%'],['Today',curA.today],['Proposals',curA.proposals],['MCP','growth-os/mcp-server.mjs']].map(([l,v])=>`<div class="bg-[#1a1a1a] rounded p-2"><div class="text-gray-500 text-[10px] uppercase">${l}</div><div class="text-white font-bold truncate">${v}</div></div>`).join('')}</div><div class="mb-2 text-[10px] text-gray-500 uppercase font-mono font-bold">Tools</div><div class="flex flex-wrap gap-1.5 mb-3">${curA.tools.map(t=>`<span class="pill pill-gray">${t}</span>`).join('')}</div><div class="terminal">${curA.log}</div>`;
+  document.getElementById('agent-modal').classList.remove('hidden');
+  document.getElementById('agent-modal').classList.add('flex');
+}
+function closeModal(){document.getElementById('agent-modal').classList.add('hidden');document.getElementById('agent-modal').classList.remove('flex');}
+document.getElementById('agent-modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+document.getElementById('m-kill').addEventListener('click',()=>{if(curA){toast(`Kill signal sent to ${curA.name}`,'warn');closeModal();}});
+document.getElementById('m-trig').addEventListener('click',()=>{if(curA){toast(`${curA.name} triggered`,'success');closeModal();}});
+
+/* ===== COUNTER ===== */
+function counter(id,target,pre=''){
+  const el=document.getElementById(id);if(!el)return;
+  const dur=1400;const st=performance.now();
+  function u(n){const p=Math.min((n-st)/dur,1);const e=1-Math.pow(1-p,3);el.textContent=pre+Math.round(target*e).toLocaleString();if(p<1)requestAnimationFrame(u);}
+  requestAnimationFrame(u);
+}
+
+/* ===== TICKER ===== */
+function renderTicker(){
+  const items=[{l:'NET NEW (MTD)',v:'$22,890'},{l:'EXPANSION (MTD)',v:'$8,860'},{l:'COMMISSION',v:'$3,173'},{l:'PARTNERS',v:'8'},{l:'AGENTS ACTIVE',v:'6/8'},{l:'PROPOSALS PENDING',v:'3'},{l:'CONTENT PIECES (7d)',v:'142'},{l:'LISTINGS SYNCED (24h)',v:'38'},{l:'RETENTION RATE',v:'93%'},{l:'PROSPECTS SCORED (24h)',v:'47'},{l:'AVG RESPONSE TIME',v:'2m 17s'},{l:'EXPERIMENTS RUNNING',v:'2'}];
+  const db=[...items,...items];
+  document.getElementById('ticker-el').innerHTML=db.map(i=>`<span class="inline-block font-mono text-[11px] text-gray-500 px-6 border-r border-white/5">${i.l} <span class="text-emerald-400 font-bold">${i.v}</span></span>`).join('');
+}
+
+/* ===== OVERVIEW ===== */
+function renderOverview(){
+  counter('k-rev',22890,'$');counter('k-com',3173,'$');counter('k-exp',8860,'$');counter('k-par',8);
+  counter('ctr-rev',31750,'$');counter('ctr-nn',22890,'$');counter('ctr-ex',8860,'$');counter('ctr-cm',3173,'$');
+  setTimeout(()=>{const b=document.getElementById('rev-bar');if(b)b.style.width='79%';},200);
+
+  const as=document.getElementById('agent-stream');if(!as)return;
+  as.innerHTML=STREAM_ITEMS.map(s=>`<div class="border-l-2 pl-3" style="border-color:${s.border}"><div class="flex justify-between items-center mb-1"><span class="text-[10px] font-mono font-bold" style="color:${s.color}">${s.who}</span><span class="text-[9px] font-mono text-gray-600">${s.ago}</span></div><div class="text-xs text-gray-300 font-mono">${s.msg}</div></div>`).join('');
+}
+
+/* ===== AGENTS ===== */
+function renderAgents(){
+  const statusCls={online:'pill-green',running:'pill-blue',idle:'pill-gold',offline:'pill-gray'};
+  const g=document.getElementById('agents-grid');if(!g)return;
+  g.innerHTML=AGENTS.map(a=>`
+    <div class="glass-panel p-4 cursor-pointer hover:border-emerald-500/30 transition-colors border-white/6" style="border-left:3px solid ${a.status==='online'?'#10B981':a.status==='running'?'#6366F1':a.status==='idle'?'#F59E0B':'#475569'}" onclick="openModal('${a.id}')">
+      <div class="flex items-start justify-between mb-3">
+        <div class="flex items-center gap-2"><span class="text-2xl">${a.emoji}</span><div><div class="text-sm font-bold text-white">${a.name}</div><div class="text-[10px] text-gray-500 font-mono">${a.role}</div></div></div>
+        <span class="pill ${statusCls[a.status]}">${a.status.toUpperCase()}</span>
+      </div>
+      <div class="grid grid-cols-3 gap-2 text-center mb-3">
+        <div><div class="text-[10px] text-gray-600 font-mono">Actions</div><div class="text-sm font-mono font-bold text-emerald-400">${a.today}</div></div>
+        <div><div class="text-[10px] text-gray-600 font-mono">Props</div><div class="text-sm font-mono font-bold text-white">${a.proposals}</div></div>
+        <div><div class="text-[10px] text-gray-600 font-mono">Success</div><div class="text-sm font-mono font-bold text-emerald-400">${a.rate}%</div></div>
+      </div>
+      <div class="w-full bg-white/5 rounded-full h-1 mb-3"><div class="h-full rounded-full" style="width:${a.rate}%;background:${a.rate>=90?'#10B981':'#F59E0B'}"></div></div>
+      <div class="terminal" style="font-size:9px;max-height:60px">${a.log}</div>
+      <div class="flex gap-2 mt-3">
+        <button class="flex-1 text-[10px] font-mono font-bold border border-white/10 rounded py-1.5 hover:bg-white/5 transition-colors" onclick="event.stopPropagation();openModal('${a.id}')">Details</button>
+        <button class="flex-1 text-[10px] font-mono font-bold btn-primary rounded py-1.5" onclick="event.stopPropagation();toast('${a.name} triggered','success')">Trigger</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ===== PIPELINE ===== */
+function renderPipeline(){
+  const counts={};MERCHANTS.forEach(m=>{counts[m.s]=(counts[m.s]||0)+1;});
+  const sh=document.getElementById('stage-hud');if(!sh)return;
+  sh.innerHTML=Object.entries(SM).map(([k,v])=>`<div class="glass-panel p-4"><div class="text-[10px] text-gray-500 font-mono uppercase font-bold mb-2">${v.l}</div><div class="metric-value text-white">${counts[k]||0}</div></div>`).join('');
+
+  const tb=document.getElementById('pipeline-tbody');if(!tb)return;
+  tb.innerHTML=MERCHANTS.map(m=>{
+    const s=SM[m.s]||{l:m.s,pc:'pill-gray'};
+    const sc=m.sc>=90?'text-emerald-400':m.sc>=75?'text-yellow-400':'text-gray-400';
+    return `<tr class="border-b border-white/4 hover:bg-white/2 transition-colors">
+      <td class="px-4 py-3"><div class="text-sm font-semibold text-white">${m.n}</div><div class="text-[10px] text-gray-500 font-mono">📍 ${m.l}</div></td>
+      <td class="px-4 py-3"><span class="pill ${s.pc}">${s.l.toUpperCase()}</span></td>
+      <td class="px-4 py-3 text-xs text-gray-400 font-mono">${m.a}</td>
+      <td class="px-4 py-3 font-mono text-xs text-emerald-400 font-bold">${m.nn>0?'$'+m.nn.toLocaleString():'—'}</td>
+      <td class="px-4 py-3 font-mono text-xs text-yellow-400 font-bold">${m.ex>0?'$'+m.ex.toLocaleString():'—'}</td>
+      <td class="px-4 py-3 font-mono text-xs ${sc}">${m.sc}/100</td>
+      <td class="px-4 py-3 text-xs text-gray-500">${m.nx}</td>
+    </tr>`;
+  }).join('');
+}
+
+/* ===== GOVERNOR ===== */
+function mkProp(p){
+  const rc={LOW:'risk-low',MEDIUM:'risk-medium',HIGH:'risk-high'};
+  return `<div class="prop-card"><div class="flex items-center justify-between mb-2"><span class="text-[10px] font-mono text-gray-500">${p.id} · ${p.agent} → ${p.biz}</span><span class="pill ${rc[p.risk]}">${p.risk}</span></div><div class="text-sm font-bold text-white mb-1">${p.type.replace(/_/g,' ').toUpperCase()}</div><div class="text-xs text-gray-500 font-mono mb-1">${p.obj}</div><div class="text-[10px] text-gray-600 font-mono mb-1"><strong class="text-gray-500">Evidence:</strong> ${p.ev}</div><div class="text-[10px] text-gray-600 font-mono mb-3"><strong class="text-gray-500">Expected:</strong> ${p.exp}</div><div class="flex gap-2"><button class="text-xs font-mono font-bold btn-primary px-3 py-1.5 rounded-lg" onclick="toast('${p.id} approved','success')">✅ Approve</button><button class="text-xs font-mono font-bold border border-red-500/30 text-red-400 px-3 py-1.5 rounded-lg hover:bg-red-500/10 transition-colors" onclick="toast('${p.id} rejected','warn')">🚫 Reject</button></div></div>`;
+}
+
+function renderGovernor(){
+  const gp=document.getElementById('gov-props');if(gp)gp.innerHTML=PROPOSALS.map(mkProp).join('');
+  const gd=document.getElementById('gov-decisions');if(!gd)return;
+  const decs=[
+    {ok:true,d:'APPROVED · Socio-Track — Invoice #INV-0094 for Cristal Flowers',t:'14:22:03',pol:'default_risk_policy · LOW'},
+    {ok:true,d:'APPROVED · Socio-Listings — Yelp update for La Bodega NYC',t:'13:30:04',pol:'default_risk_policy · LOW'},
+    {ok:false,d:'REJECTED · Socio-Pitch — SMS blast 200 cold prospects (budget exceeded)',t:'12:14:10',pol:'budget_limit_policy · BLOCKED'},
+    {ok:true,d:'APPROVED · Socio-Content — Instagram post (Cristal Flowers)',t:'08:03:44',pol:'default_risk_policy · LOW'},
+  ];
+  gd.innerHTML=decs.map(d=>`<div class="eitem"><div class="eicon" style="background:${d.ok?'rgba(16,185,129,.1)':'rgba(239,68,68,.1)'}">${d.ok?'✅':'🚫'}</div><div><div class="text-xs text-gray-300">${d.d}</div><div class="text-[10px] text-gray-600 font-mono">${d.t} · ${d.pol}</div></div></div>`).join('');
+}
+
+/* ===== LEDGER ===== */
+function mkEvent(ev){
+  const ic={revenue:'rgba(16,185,129,.1)',action:'rgba(99,102,241,.1)',alert:'rgba(245,158,11,.1)',error:'rgba(239,68,68,.1)'};
+  return `<div class="eitem"><div class="eicon" style="background:${ic[ev.type]||ic.action}">${ev.icon}</div><div class="flex-1"><div class="text-xs text-gray-300">${ev.d}</div><div class="text-[10px] text-gray-600 font-mono">${ev.t} · ${ev.ag} · via ${ev.ch}</div></div>${ev.amt?`<div class="text-xs font-mono font-bold flex-shrink-0 ${ev.amt.startsWith('-')?'text-red-400':'text-emerald-400'}">${ev.amt}</div>`:''}</div>`;
+}
+function renderLedger(){const f=document.getElementById('ledger-feed');if(f)f.innerHTML=EVENTS.map(mkEvent).join('');}
+
+/* ===== EXPERIMENTS ===== */
+function renderExp(){
+  const g=document.getElementById('exp-grid');if(!g)return;
+  const ec={RUNNING:'pill-blue',DRAFT:'pill-gray',PROMOTED:'pill-green',KILLED:'pill-red'};
+  g.innerHTML=EXPERIMENTS.map(ex=>{
+    const ul=ex.cur&&ex.base?(((ex.cur-ex.base)/ex.base)*100).toFixed(1)+'%':'—';
+    const scls=ex.status==='RUNNING'?'border-indigo-500/30':ex.status==='PROMOTED'?'border-emerald-500/30':'border-white/6';
+    return `<div class="glass-panel p-5 ${scls} border">
+      <div class="flex items-start justify-between mb-3"><div class="text-[10px] font-mono text-gray-500">${ex.id} · ${ex.metric}</div><span class="pill ${ec[ex.status]}">${ex.status}</span></div>
+      <div class="text-sm text-gray-300 italic mb-4 leading-relaxed">"${ex.hyp}"</div>
+      <div class="grid grid-cols-3 gap-2 mb-4">
+        <div class="bg-[#1a1a1a] rounded p-2 text-center"><div class="text-[9px] text-gray-600 font-mono uppercase">Baseline</div><div class="text-sm font-mono font-bold text-white">${ex.base}${ex.metric.includes('rate')?'%':''}</div></div>
+        <div class="bg-[#1a1a1a] rounded p-2 text-center"><div class="text-[9px] text-gray-600 font-mono uppercase">Current</div><div class="text-sm font-mono font-bold text-emerald-400">${ex.cur!==null?ex.cur+(ex.metric.includes('rate')?'%':''):'—'}</div></div>
+        <div class="bg-[#1a1a1a] rounded p-2 text-center"><div class="text-[9px] text-gray-600 font-mono uppercase">Uplift</div><div class="text-sm font-mono font-bold text-emerald-400">${ul!=='—'?'↑ ':''} ${ul}</div></div>
+      </div>
+      <div class="text-[10px] text-gray-600 font-mono mb-3">${ex.obs} observations · Alloc: ${ex.alloc} · ${ex.variants.join(' vs ')}</div>
+      <div class="flex gap-2">
+        ${ex.status==='RUNNING'?`<button class="flex-1 btn-primary text-[10px] font-mono font-bold py-1.5 rounded-lg" onclick="toast('${ex.id} promoted','success')">Promote</button><button class="flex-1 text-[10px] font-mono border border-red-500/30 text-red-400 py-1.5 rounded-lg hover:bg-red-500/10 transition-colors" onclick="toast('${ex.id} killed','warn')">Kill</button>`:''}
+        ${ex.status==='DRAFT'?`<button class="flex-1 btn-primary text-[10px] font-mono font-bold py-1.5 rounded-lg" onclick="toast('${ex.id} launched','success')">Launch Experiment</button>`:''}
+        ${ex.status==='PROMOTED'?`<button class="flex-1 text-[10px] font-mono border border-white/10 text-gray-400 py-1.5 rounded-lg hover:bg-white/5 transition-colors">View Results</button>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ===== INFRA ===== */
+function mkInfra(items,id){
+  const c=document.getElementById(id);if(!c)return;
+  c.innerHTML=items.map(it=>`<div class="bg-[#1a1a1a] rounded-lg p-3 border border-white/5 hover:border-white/10 transition-colors"><div class="flex items-center justify-between mb-2"><div class="text-xs font-bold text-white">${it.n}</div><div class="hdot ${it.ok?'hdot-ok':'hdot-warn'}"></div></div><div class="text-[10px] text-gray-600 font-mono mb-1">${it.t}</div><div class="text-sm font-mono font-bold text-gray-200">${it.m}</div><div class="text-[10px] text-gray-600 font-mono">${it.s}</div></div>`).join('');
+}
+
+/* ===== LIVE FEED ===== */
+function startLive(){
+  const ne=[
+    {type:'revenue',icon:'💵',d:'<strong>Net New Revenue</strong> — Harlem Heritage · Loyalty redemption',amt:'+$180',ag:'Socio-Track',t:'',ch:'square'},
+    {type:'action',icon:'✍️',d:'<strong>Content Published</strong> — Sunnyside Market · 3 Instagram posts',amt:null,ag:'Socio-Content',t:'',ch:'helio'},
+    {type:'alert',icon:'🛡️',d:'<strong>Proposal Submitted</strong> — Socio-Expand → BIZ-0005 referral',amt:null,ag:'Socio-Expand',t:'',ch:'governor'}
+  ];
+  let idx=0;
+  setInterval(()=>{
+    const ev={...ne[idx%ne.length],t:new Date().toLocaleTimeString('en-US',{hour12:false})};
+    const f=document.getElementById('ledger-feed');
+    if(f){const el=document.createElement('div');el.innerHTML=mkEvent(ev);f.insertBefore(el.firstChild,f.firstChild);while(f.children.length>12)f.removeChild(f.lastChild);}
+    idx++;
+  },9000);
+}
+
+/* ===== INIT ===== */
+window.addEventListener('DOMContentLoaded',()=>{
+  renderTicker();renderOverview();renderAgents();renderPipeline();renderGovernor();renderLedger();renderExp();
+  mkInfra(INFRA_OPS,'i-ops');mkInfra(INFRA_EXEC,'i-exec');mkInfra(INFRA_DATA,'i-data');
+  lucide.createIcons();
+  startLive();
+  setTimeout(()=>toast('Growth OS v1.0 · All 8 agents nominal','success',4500),900);
+  setTimeout(()=>toast('3 proposals pending Governor review','warn',4000),2800);
+});
+</script>
+</body>
+</html>

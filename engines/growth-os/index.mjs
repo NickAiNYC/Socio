@@ -9,3 +9,9 @@ export { MemoryRepository, BusinessTwinMemoryRepository } from './repositories/m
 export { PostgresRepository, BusinessTwinPostgresRepository } from './repositories/postgres-repository.mjs';
 export { AuditTrail } from './audit-trail.mjs';
 export * from './adapters/index.mjs';
+export { verifyStripeSignature, mapStripeEvent } from './economic/stripe-webhook.mjs';
+export { MemoryEconomicStore, PostgresEconomicStore } from './economic/economic-store.mjs';
+export { attributeRevenue, LEVELS } from './economic/attribution.mjs';
+export { buildEconomicTrace } from './economic/economic-trace.mjs';
+export { compareGroups, summarize, MIN_SAMPLE_PER_GROUP } from './economic/stats.mjs';
+export { runMigrations } from './migrations/migrate.mjs';
