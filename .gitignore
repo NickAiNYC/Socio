@@ -14,6 +14,8 @@ id_rsa*
 backups/
 *.log
 *.sql
+# Migrations are source code — never ignore the schema.
+!engines/growth-os/migrations/*.sql
 
 # Node
 node_modules/

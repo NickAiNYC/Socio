@@ -22,6 +22,8 @@ const files = [
   'engines/growth-os/experiment-engine.mjs',
   'engines/growth-os/repositories/memory-repository.mjs',
   'engines/growth-os/repositories/postgres-repository.mjs',
+  'engines/growth-os/merchant/evidence-report.mjs',
+  'engines/growth-os/merchant/merchant-api.mjs',
   'website/api/leads.js',
 ];
 
@@ -35,9 +37,11 @@ console.log('2/3 module import smoke');
 await import(path.join(root, 'engines/growth-os/index.mjs'));
 await import(path.join(root, 'engines/growth-os/revenue-ledger.mjs'));
 await import(path.join(root, 'engines/growth-os/audit-trail.mjs'));
+await import(path.join(root, 'engines/growth-os/merchant/evidence-report.mjs'));
+await import(path.join(root, 'engines/growth-os/merchant/merchant-api.mjs'));
 console.log('  ok engine modules import');
 
-console.log('3/3 MCP server fail-closed boot (no DATABASE_URL, no allow flag)');
+console.log('3/4 MCP server fail-closed boot (no DATABASE_URL, no allow flag)');
 try {
   execFileSync(process.execPath, ['engines/growth-os/mcp-server.mjs'], {
     cwd: root,
@@ -54,6 +58,25 @@ try {
     process.exit(1);
   }
   console.log('  ok server fails closed without DATABASE_URL');
+}
+
+console.log('4/4 Merchant Evidence API fail-closed boot (no DATABASE_URL, no allow flag)');
+try {
+  execFileSync(process.execPath, ['engines/growth-os/merchant/merchant-api.mjs'], {
+    cwd: root,
+    env: { ...process.env, DATABASE_URL: '' },
+    stdio: 'pipe',
+    timeout: 10000,
+  });
+  console.error('FAIL: merchant api booted without DATABASE_URL (should have exited)');
+  process.exit(1);
+} catch (err) {
+  const out = String(err.stdout || '') + String(err.stderr || '');
+  if (!out.includes('fails closed')) {
+    console.error(`FAIL: unexpected merchant api boot behavior: ${out}`);
+    process.exit(1);
+  }
+  console.log('  ok merchant api fails closed without DATABASE_URL');
 }
 
 console.log('BUILD OK');

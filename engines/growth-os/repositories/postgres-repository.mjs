@@ -33,13 +33,17 @@ export class PostgresRepository {
   async save(id, data) {
     await this._ensureTable();
     const recordId = id || randomUUID();
+    // Mirrors MemoryRepository.save(): the id is part of the stored record so
+    // consumers that filter on record.id (e.g. AuditTrail's chain-head
+    // exclusion) behave identically on both backends.
+    const record = { ...data, id: recordId };
     const query = `
       INSERT INTO ${this.tableName} (id, data)
       VALUES ($1, $2)
       ON CONFLICT (id) DO UPDATE SET data = $2, updated_at = CURRENT_TIMESTAMP
       RETURNING *;
     `;
-    const res = await this.pool.query(query, [recordId, data]);
+    const res = await this.pool.query(query, [recordId, record]);
     return res.rows[0].data;
   }
 
@@ -51,13 +55,14 @@ export class PostgresRepository {
   async saveIfAbsent(id, data) {
     await this._ensureTable();
     const recordId = id || randomUUID();
+    const record = { ...data, id: recordId };
     const query = `
       INSERT INTO ${this.tableName} (id, data)
       VALUES ($1, $2)
       ON CONFLICT (id) DO NOTHING
       RETURNING *;
     `;
-    const res = await this.pool.query(query, [recordId, data]);
+    const res = await this.pool.query(query, [recordId, record]);
     if (res.rows.length === 0) {
       throw new Error(`Record ${recordId} already exists; duplicate writes are rejected.`);
     }

@@ -11,10 +11,38 @@ import { randomUUID, createHash } from 'crypto';
  * anchoring). Tampering is detectable in-place by recomputing the chain,
  * not provable to third parties.
  */
+/**
+ * Deterministic JSON serialization for hashing.
+ *
+ * Object keys are sorted recursively so the hash input is stable across a
+ * Postgres JSONB round-trip (jsonb canonicalizes key order on storage —
+ * hashing the raw insertion order would make a valid chain fail verification).
+ */
+function stableStringify(value) {
+  if (value === null || typeof value !== 'object') return JSON.stringify(value);
+  if (Array.isArray(value)) return `[${value.map(stableStringify).join(',')}]`;
+  const keys = Object.keys(value).sort();
+  return `{${keys.map((k) => `${JSON.stringify(k)}:${stableStringify(value[k])}`).join(',')}}`;
+}
+
 export class AuditTrail {
   constructor(repository) {
     this.repo = repository;
     this.chainHeadKey = '__audit_chain_head__';
+  }
+
+  _canonical(entry) {
+    return stableStringify({
+      id: entry.id,
+      timestamp: entry.timestamp,
+      prevHash: entry.prevHash,
+      businessId: entry.businessId,
+      agentId: entry.agentId,
+      proposalId: entry.proposalId,
+      actionType: entry.actionType,
+      payload: entry.payload,
+      status: entry.status,
+    });
   }
 
   /**
@@ -36,18 +64,7 @@ export class AuditTrail {
       ...eventData,
     };
 
-    const canonical = JSON.stringify({
-      id: logEntry.id,
-      timestamp: logEntry.timestamp,
-      prevHash: logEntry.prevHash,
-      businessId: logEntry.businessId,
-      agentId: logEntry.agentId,
-      proposalId: logEntry.proposalId,
-      actionType: logEntry.actionType,
-      payload: logEntry.payload,
-      status: logEntry.status,
-    });
-    logEntry.hash = createHash('sha256').update(canonical).digest('hex');
+    logEntry.hash = createHash('sha256').update(this._canonical(logEntry)).digest('hex');
 
     const saved = await this.repo.saveIfAbsent(logEntry.id, logEntry);
     // Advance the chain head.
@@ -88,18 +105,7 @@ export class AuditTrail {
     const brokenLinks = [];
     let prevHash = null;
     entries.forEach((entry, index) => {
-      const canonical = JSON.stringify({
-        id: entry.id,
-        timestamp: entry.timestamp,
-        prevHash: entry.prevHash,
-        businessId: entry.businessId,
-        agentId: entry.agentId,
-        proposalId: entry.proposalId,
-        actionType: entry.actionType,
-        payload: entry.payload,
-        status: entry.status,
-      });
-      const recomputed = createHash('sha256').update(canonical).digest('hex');
+      const recomputed = createHash('sha256').update(this._canonical(entry)).digest('hex');
       if (recomputed !== entry.hash) {
         brokenLinks.push({ id: entry.id, index, reason: 'hash_mismatch' });
       }

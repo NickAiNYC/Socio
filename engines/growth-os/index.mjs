@@ -15,3 +15,5 @@ export { attributeRevenue, LEVELS } from './economic/attribution.mjs';
 export { buildEconomicTrace } from './economic/economic-trace.mjs';
 export { compareGroups, summarize, MIN_SAMPLE_PER_GROUP } from './economic/stats.mjs';
 export { runMigrations } from './migrations/migrate.mjs';
+export { buildMerchantEvidenceReport, verifyMerchantAuditChain, computeStripeState } from './merchant/evidence-report.mjs';
+export { createMerchantApi } from './merchant/merchant-api.mjs';
