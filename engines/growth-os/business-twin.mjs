@@ -12,8 +12,10 @@ export class BusinessTwin {
 
   /**
    * Initializes a new Business Twin.
+   * @param {Object} [initialData]
+   * @returns {Promise<Object>}
    */
-  async initialize(businessId, initialData = {}, agentId = 'system') {
+  async initialize(businessId, initialData = {}, _agentId = 'system') {
     const existing = await this.repository.get(businessId);
     if (existing) {
       throw new BusinessTwinConflictError(`BusinessTwin for ${businessId} already exists.`);
@@ -43,7 +45,7 @@ export class BusinessTwin {
    * Completely replaces the state (rarely used).
    */
   async update(businessId, newState, agentId, reason) {
-    const current = await this.get(businessId);
+    await this.get(businessId);
     
     const updated = {
       ...newState,

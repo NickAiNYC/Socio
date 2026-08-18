@@ -81,7 +81,7 @@ export class PostgresRepository {
     return this.save(id, updated);
   }
 
-  async findAll(filterFn = (item) => true) {
+  async findAll(filterFn = (_item) => true) {
     await this._ensureTable();
     const query = `SELECT data FROM ${this.tableName};`;
     const res = await this.pool.query(query);
@@ -105,6 +105,37 @@ export class PostgresRepository {
     await this._ensureTable();
     const query = `TRUNCATE TABLE ${this.tableName};`;
     await this.pool.query(query);
+  }
+
+  /**
+   * Compare-and-swap on a top-level JSONB field.
+   * Atomically flips `field` from `expectedValue` to `newValue`; returns the
+   * updated record, or null if the expected value did not match (no write).
+   * Used to consume approvals exactly once under concurrency.
+   */
+  async compareAndSwap(id, field, expectedValue, newValue) {
+    if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(field)) {
+      throw new Error(`Invalid JSONB field name: ${field}`);
+    }
+    await this._ensureTable();
+    const query = `
+      UPDATE ${this.tableName}
+      SET data = jsonb_set(data, '{${field}}', $3::jsonb, true), updated_at = CURRENT_TIMESTAMP
+      WHERE id = $1 AND data->>'${field}' = $2
+      RETURNING *;
+    `;
+    const res = await this.pool.query(query, [id, String(expectedValue), JSON.stringify(newValue)]);
+    return res.rows.length > 0 ? res.rows[0].data : null;
+  }
+
+  /**
+   * Tenant-scoped read: filters at the database boundary, not in JS.
+   */
+  async findByBusiness(businessId) {
+    await this._ensureTable();
+    const query = `SELECT data FROM ${this.tableName} WHERE data->>'businessId' = $1;`;
+    const res = await this.pool.query(query, [businessId]);
+    return res.rows.map((row) => row.data);
   }
 }
 

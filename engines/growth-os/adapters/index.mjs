@@ -7,7 +7,7 @@
  * @interface RevenueAdapter
  */
 export class RevenueAdapter {
-  async getTransactions(businessId, dateRange) {
+  async getTransactions(_businessId, _dateRange) {
     throw new Error('Not implemented');
   }
 }
@@ -16,10 +16,10 @@ export class RevenueAdapter {
  * @interface CRMAdapter
  */
 export class CRMAdapter {
-  async getCustomers(businessId) {
+  async getCustomers(_businessId) {
     throw new Error('Not implemented');
   }
-  async updateCustomer(businessId, customerId, data) {
+  async updateCustomer(_businessId, _customerId, _data) {
     throw new Error('Not implemented');
   }
 }
@@ -28,7 +28,7 @@ export class CRMAdapter {
  * @interface CompetitiveIntelAdapter
  */
 export class CompetitiveIntelAdapter {
-  async getCompetitorEvents(businessId, dateRange) {
+  async getCompetitorEvents(_businessId, _dateRange) {
     throw new Error('Not implemented');
   }
 }

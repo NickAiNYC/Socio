@@ -1,5 +1,4 @@
 import { randomUUID } from 'crypto';
-import { BusinessTwinConflictError } from '../errors.mjs';
 
 /**
  * Generic In-Memory Repository interface for tests and portable setups.
@@ -43,7 +42,7 @@ export class MemoryRepository {
     return updated;
   }
 
-  async findAll(filterFn = (item) => true) {
+  async findAll(filterFn = (_item) => true) {
     const results = [];
     for (const item of this.store.values()) {
       if (filterFn(item)) {
@@ -55,6 +54,25 @@ export class MemoryRepository {
 
   async delete(id) {
     return this.store.delete(id);
+  }
+
+  /**
+   * Compare-and-swap on a top-level field (single-threaded: atomic within the
+   * event loop). Returns the updated record, or null if expected did not match.
+   */
+  async compareAndSwap(id, field, expectedValue, newValue) {
+    const current = this.store.get(id);
+    if (!current || current[field] !== expectedValue) return null;
+    const updated = { ...current, [field]: newValue, id };
+    this.store.set(id, updated);
+    return updated;
+  }
+
+  /**
+   * Tenant-scoped read at the repository boundary.
+   */
+  async findByBusiness(businessId) {
+    return this.findAll((item) => item.businessId === businessId);
   }
 
   async clear() {

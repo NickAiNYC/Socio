@@ -28,6 +28,36 @@ if (!DATABASE_URL && !ALLOW_MEMORY) {
   process.exit(1);
 }
 
+// Agent authentication map: { agentId: token }. When configured, every tool
+// call must come from a known agent id. Network transports MUST also validate
+// the bearer token (see below); stdio transport is local-only trust.
+const AUTH_TOKENS = (() => {
+  try {
+    return JSON.parse(process.env.GROWTH_OS_AUTH_TOKENS || 'null');
+  } catch {
+    console.error('Growth OS fails closed: GROWTH_OS_AUTH_TOKENS must be valid JSON ({"agentId":"token"}).');
+    process.exit(1);
+  }
+})();
+
+// Fail closed on network exposure: a remotely reachable MCP server without
+// per-agent credentials is an open API.
+const TRANSPORT = process.env.GROWTH_OS_TRANSPORT || 'stdio';
+if (TRANSPORT !== 'stdio' && !AUTH_TOKENS) {
+  console.error(
+    'Growth OS fails closed: non-stdio (network) transport requires GROWTH_OS_AUTH_TOKENS ' +
+    'with a token per authorized agentId.'
+  );
+  process.exit(1);
+}
+
+function authenticateAgent(agentId) {
+  if (!AUTH_TOKENS) return; // local stdio trust (documented)
+  if (!AUTH_TOKENS[agentId]) {
+    throw new Error(`agent ${agentId} is not authorized`);
+  }
+}
+
 let twinRepo;
 let ledgerRepo;
 let auditRepo;
@@ -136,6 +166,7 @@ server.tool(
   },
   async (proposalData) => {
     try {
+      authenticateAgent(proposalData.agentId);
       const proposal = {
         ...proposalData,
         id: `prop_${Date.now()}_${Math.floor(Math.random()*1000)}`,
@@ -178,6 +209,7 @@ server.tool(
   },
   async (execData) => {
     try {
+      authenticateAgent(execData.agentId);
       // 1. Enforce the approval — this is the boundary.
       await enforceApprovedProposal(execData.proposalId, {
         businessId: execData.businessId,
@@ -225,6 +257,7 @@ server.tool(
   },
   async (eventData) => {
     try {
+      if (eventData.agentId) authenticateAgent(eventData.agentId);
       if (FINANCIAL_EVENT_TYPES.has(eventData.type)) {
         if (!eventData.actionId) {
           throw new Error(`${eventData.type} events require actionId of an executed, approved action`);

@@ -62,9 +62,13 @@ export class RevenueLedger {
   }
 
   /**
-   * Get all events for a specific business
+   * Get all events for a specific business — filtered at the repository
+   * boundary (database-scoped SQL in Postgres), not in application JS.
    */
   async getByBusiness(businessId) {
+    if (this.repository.findByBusiness) {
+      return await this.repository.findByBusiness(businessId);
+    }
     return await this.repository.findAll(e => e.businessId === businessId);
   }
 

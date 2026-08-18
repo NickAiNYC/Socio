@@ -168,6 +168,58 @@ test('BOUNDARY: execute_action replay — same proposalId must not execute twice
   });
 });
 
+test('BOUNDARY: concurrent workers cannot double-execute (CAS)', async () => {
+  await withServer(async (client) => {
+    const p = await propose(client);
+    const proposalId = JSON.parse(p.text).proposalId;
+    const args = {
+      businessId: 'biz_A',
+      agentId: 'agent_a',
+      proposalId,
+      actionType: 'send_email',
+      payload: { to: 'merchant@example.com', template: 'welcome' },
+    };
+    const [r1, r2] = await Promise.all([
+      callTool(client, 'growth_os_execute_action', args),
+      callTool(client, 'growth_os_execute_action', args),
+    ]);
+    const okCount = [r1, r2].filter((r) => !r.isError).length;
+    assert.equal(okCount, 1, `exactly one concurrent execution must win, got ${okCount}`);
+  });
+});
+
+test('BOUNDARY: unknown agent is rejected when auth tokens are configured', async () => {
+  // Spawn a dedicated server with an auth token map.
+  const transport = new StdioClientTransport({
+    command: process.execPath,
+    args: [SERVER],
+    env: {
+      ...process.env,
+      DATABASE_URL: '',
+      GROWTH_OS_ALLOW_MEMORY: 'true',
+      GROWTH_OS_AUTH_TOKENS: JSON.stringify({ agent_known: 'tok_known' }),
+    },
+  });
+  const client = new Client({ name: 'boundary-test', version: '1.0.0' });
+  await client.connect(transport);
+  try {
+    const res = await callTool(client, 'growth_os_propose_action', {
+      businessId: 'biz_A',
+      agentId: 'agent_unknown',
+      type: 'send_email',
+      risk: 'LOW',
+      objective: 'x',
+      expectedOutcome: 'y',
+      payload: {},
+      evidence: 'none',
+    });
+    assert.equal(res.isError, true, `unknown agent proposed an action: ${res.text}`);
+    assert.match(res.text, /not authorized/);
+  } finally {
+    await client.close();
+  }
+});
+
 test('BOUNDARY: record_event financial without an executed action must fail', async () => {
   await withServer(async (client) => {
     const res = await callTool(client, 'growth_os_record_event', {

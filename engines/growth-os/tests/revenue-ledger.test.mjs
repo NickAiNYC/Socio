@@ -24,7 +24,7 @@ test('RevenueLedger - rejects invalid event', async () => {
   const ledger = new RevenueLedger(repo);
 
   await assert.rejects(
-    ledger.record({ type: 'revenue' }), 
+    ledger.record(/** @type {any} */ ({ type: 'revenue' })),
     /businessId is required/
   );
 });

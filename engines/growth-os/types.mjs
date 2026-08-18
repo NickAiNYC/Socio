@@ -1,6 +1,6 @@
 /**
  * @typedef {Object} RevenueEvent
- * @property {string} id
+ * @property {string} [id] - assigned by RevenueLedger.record() when omitted
  * @property {string} businessId
  * @property {string} [customerId]
  * @property {string} [agentId]
@@ -11,7 +11,7 @@
  * @property {string} type - e.g., 'revenue', 'campaign_cost', 'refund', 'lead_created'
  * @property {number} amount
  * @property {string} currency
- * @property {string} occurredAt - ISO Date string
+ * @property {string} [occurredAt] - ISO Date string; defaults to now
  * @property {string} source
  * @property {Object} [metadata]
  */
@@ -22,12 +22,12 @@
  * @property {string} businessId
  * @property {string} agentId
  * @property {string} type
- * @property {'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL'} risk
- * @property {string} objective
- * @property {string} expectedOutcome
- * @property {Object} payload
- * @property {string} evidence
- * @property {string} createdAt
+ * @property {string} risk - 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL' (validated at runtime)
+ * @property {string} [objective]
+ * @property {string} [expectedOutcome]
+ * @property {Object} [payload]
+ * @property {string} [evidence]
+ * @property {string} [createdAt]
  */
 
 /**

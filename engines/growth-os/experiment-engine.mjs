@@ -103,7 +103,7 @@ export class ExperimentEngine {
    * Promotes an experiment (winner).
    */
   async promote(id, rationale) {
-    const exp = await this.getExperiment(id);
+    await this.getExperiment(id);
     // The system should never automatically promote an experiment simply because of one positive observation.
     // Ensure sufficient data exists via evaluation
     const evaluation = await this.evaluate(id);
@@ -124,7 +124,7 @@ export class ExperimentEngine {
    * Kills an experiment (loser/aborted).
    */
   async kill(id, rationale) {
-    const exp = await this.getExperiment(id);
+    await this.getExperiment(id);
     
     return await this.repository.update(id, { 
       status: 'KILLED', 

@@ -1,4 +1,4 @@
-import { PolicyViolationError, ValidationError } from './errors.mjs';
+import { ValidationError } from './errors.mjs';
 
 const DEFAULT_APPROVAL_TTL_MS = 15 * 60 * 1000;
 
@@ -15,7 +15,7 @@ const DEFAULT_APPROVAL_TTL_MS = 15 * 60 * 1000;
 export class AgentGovernor {
   /**
    * @param {Array|Object} [policies] custom policy functions (array) or policy map
-   * @param {object} [approvalRepository] repository backing the approval registry (MemoryRepository / PostgresRepository)
+   * @param {import('./repositories/memory-repository.mjs').MemoryRepository|import('./repositories/postgres-repository.mjs').PostgresRepository} [approvalRepository] repository backing the approval registry
    */
   constructor(policies = {}, approvalRepository = null) {
     this.policies = policies;
@@ -27,7 +27,7 @@ export class AgentGovernor {
   /**
    * Evaluates an Action Proposal (policy layer only — does not persist).
    * @param {import('./types.mjs').ActionProposal} proposal
-   * @returns {import('./types.mjs').GovernanceDecision}
+   * @returns {Promise<import('./types.mjs').GovernanceDecision>}
    */
   async evaluate(proposal) {
     this._validateProposal(proposal);
@@ -73,19 +73,19 @@ export class AgentGovernor {
       }
     }
 
-    return {
+    return /** @type {import('./types.mjs').GovernanceDecision} */ ({
       decision,
       risk: proposal.risk,
       reason,
       policy: matchingPolicy,
       requiredApprover
-    };
+    });
   }
 
   /**
    * Proposes an action AND persists the governance decision as durable state.
    * @param {import('./types.mjs').ActionProposal} proposal
-   * @returns {Promise<object>} the persisted approval record
+   * @returns {Promise<{id: string, proposal: import('./types.mjs').ActionProposal, decision: string, risk: string, reason: string, policy: string, requiredApprover?: string, status: string, createdAt: string, expiresAt: string, executedAt: string|null}>} the persisted approval record
    */
   async propose(proposal) {
     this._validateProposal(proposal);
@@ -125,23 +125,36 @@ export class AgentGovernor {
 
   /**
    * Atomically consumes an approval: APPROVED -> EXECUTED.
-   * Replay (second execution of the same proposal) fails.
+   * Uses compare-and-swap when the repository supports it, so concurrent
+   * workers cannot double-consume the same approval. Replay fails.
    * @param {string} proposalId
    */
   async markExecuted(proposalId) {
     const approval = await this.getApprovalStatus(proposalId);
     if (!approval) throw new Error(`approval ${proposalId} not found`);
-    if (approval.status !== 'APPROVED') {
-      throw new Error(`proposal ${proposalId} is not APPROVED (status: ${approval.status}) — replay or unapproved execution rejected`);
-    }
     if (new Date(approval.expiresAt) < new Date()) {
       throw new Error(`approval ${proposalId} has expired`);
     }
 
+    if (this.approvalRepository?.compareAndSwap) {
+      // CAS: only one concurrent caller can flip APPROVED -> EXECUTED.
+      const updated = await this.approvalRepository.compareAndSwap(proposalId, 'status', 'APPROVED', 'EXECUTED');
+      if (!updated) {
+        throw new Error(`proposal ${proposalId} is not APPROVED — concurrent execution or replay rejected`);
+      }
+      // Owner of the CAS may stamp metadata (executedAt) — no race remains.
+      if (this.approvalRepository.update) {
+        await this.approvalRepository.update(proposalId, { executedAt: new Date().toISOString() });
+      }
+      return updated;
+    }
+
+    // Fallback (repository without CAS support): still reject non-APPROVED.
+    if (approval.status !== 'APPROVED') {
+      throw new Error(`proposal ${proposalId} is not APPROVED (status: ${approval.status}) — replay or unapproved execution rejected`);
+    }
     approval.status = 'EXECUTED';
     approval.executedAt = new Date().toISOString();
-    // NOTE: read-modify-write. A true compare-and-set (UPDATE ... WHERE status='APPROVED')
-    // is a listed hardening step for multi-worker concurrency on Postgres.
     await this.approvalRepository.save(approval.id, approval);
     return approval;
   }

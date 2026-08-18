@@ -57,13 +57,22 @@ export class AuditTrail {
 
   /**
    * Fetch all actions for a specific business or agent.
+   * businessId filtering happens at the repository boundary when supported.
    */
   async getLogs(filterOptions = {}) {
-    return this.repo.findAll((item) => {
-      if (item.id === this.chainHeadKey) return false;
-      let match = true;
-      if (filterOptions.businessId && item.businessId !== filterOptions.businessId) match = false;
-      if (filterOptions.agentId && item.agentId !== filterOptions.agentId) match = false;
+    const excludeHead = (item) => item.id !== this.chainHeadKey;
+    let items;
+    if (filterOptions.businessId && this.repo.findByBusiness) {
+      items = await this.repo.findByBusiness(filterOptions.businessId);
+      items = items.filter(excludeHead);
+    } else {
+      items = await this.repo.findAll(excludeHead);
+    }
+    let match = true;
+    const { agentId } = filterOptions;
+    return items.filter((item) => {
+      match = true;
+      if (agentId && item.agentId !== agentId) match = false;
       return match;
     });
   }
