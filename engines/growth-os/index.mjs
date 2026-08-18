@@ -17,3 +17,4 @@ export { compareGroups, summarize, MIN_SAMPLE_PER_GROUP } from './economic/stats
 export { runMigrations } from './migrations/migrate.mjs';
 export { buildMerchantEvidenceReport, verifyMerchantAuditChain, computeStripeState } from './merchant/evidence-report.mjs';
 export { createMerchantApi } from './merchant/merchant-api.mjs';
+export { createStripeWebhookServer } from './merchant/stripe-webhook-endpoint.mjs';

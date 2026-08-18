@@ -1,71 +1,96 @@
-# Pilot 001 — Readiness Checklist
+# Pilot 001 — Deployment & Validation Checklist
 
-One real merchant. One real Stripe account. One governed experiment.
-One evidence report. Then the merchant decides.
+One real business. One isolated environment. Stripe test mode first.
+One governed intervention. One evidence report. Then the merchant decides.
 
 **Architecture freeze:** no new subsystem gets built unless the pilot proves
-it is necessary. The next code written is driven by a real merchant hitting a
-real limitation.
+it is necessary. No Kubernetes, microservices, queues, or another cloud
+architecture — one isolated VPS + PostgreSQL is the entire pilot.
+
+```
+                  INTERNET
+                     │ HTTPS
+              Caddy / Nginx
+          ┌──────────┴──────────┐
+     Merchant API          Stripe Webhook
+        :8787                   :8789
+          └──────────┬──────────┘
+                     ▼
+                Growth OS
+                     ▼
+                PostgreSQL
+          ┌───────────┼───────────┐
+          ▼           ▼           ▼
+       Revenue      Audit      Business
+       Ledger       Trail        Twin
+          │
+          ▼
+    Merchant Evidence Dashboard
+```
 
 ## Infrastructure
 
-- [ ] **Production Postgres** — provisioned; `DATABASE_URL` set on the host;
-      migrations `001_economic_truth` + `002_merchant_evidence` applied
-- [ ] **Backups** — scheduled dump, one restore test documented
-- [ ] **HTTPS** — TLS in front of the merchant dashboard and webhook endpoint
-- [ ] **Merchant authentication** — `MERCHANT_API_TOKENS` per business; a
-      token for one business cannot read another (verified with a 401/403 test)
-- [ ] **Stripe webhook endpoint** — public HTTPS URL that receives Stripe
-      events. ⚠️ GAP: `economic/stripe-webhook.mjs` has signature verification
-      + conservative event mapping, but the HTTP receiver that calls them does
-      not exist yet. This is pilot-necessary wiring, not a new subsystem.
-- [ ] **Webhook signature verification** — `verifyStripeSignature` enforced
-      (timing-safe, replay window) on every received event
-- [ ] **Monitoring/logging** — structured logs for API + webhook + ledger;
-      uptime check on the dashboard
-- [ ] **Error alerting** — webhook failures, ledger rejects, and API 500s
-      reach a human (email/webhook channel)
-- [ ] **Rollback procedure** — documented: revert commit on the branch + DB
-      restore path; tested once
+- [ ] **Isolated host** — dedicated VPS for Socio only; nothing else on it
+- [ ] **Firewall** — UFW: SSH + 80/443 only
+- [ ] **HTTPS** — Caddy/Nginx terminating TLS for dashboard + webhook URL
+- [ ] **PostgreSQL** — provisioned; migrations `001` + `002` applied
+- [ ] **Backups** — scheduled `pg_dump` + **one restore test executed** (gate
+      for any production Stripe events)
 
-## Functional test pass (real data, no fixtures)
+## Socio
 
-- [ ] **One test transaction** — a real Stripe payment reaches the ledger
-      (idempotent: a redelivered event does not double-count)
-- [ ] **One test refund** — maps to the original payment; a second refund of
-      the same payment is rejected
-- [ ] **One governed action** — propose → approve → execute → audit entry,
-      chain verifies
-- [ ] **One evidence report** — the dashboard renders the six questions from
-      the merchant's real data: what Socio did, what happened, what revenue
-      followed, what we can attribute, what we can't prove, what's next
+- [ ] `DATABASE_URL` set on the host
+- [ ] `MERCHANT_API_TOKENS` per business
+- [ ] Stripe webhook secret set on the host
+- [ ] Migrations 001 + 002 applied (idempotent re-run confirmed)
+- [ ] **Production boot verification** — both servers fail-closed checks pass
+      (merchant API :8787, webhook receiver :8789) and health endpoints answer
 
-## Merchant acceptance criteria
+## Stripe — test mode first (hard gate)
 
-- [ ] Merchant opens the dashboard and reads the report without guidance
-- [ ] Merchant's verdict on the one question that matters:
+- [ ] Webhook URL registered in Stripe → `https://<host>/api/webhooks/stripe`
+- [ ] Signature verification — an invalid signature is rejected 401 and
+      nothing is recorded
+- [ ] Test payment → recorded on the ledger
+- [ ] Duplicate webhook test → `200 duplicate`, no double-count
+- [ ] Refund test → matched to the original payment
+- [ ] **Complete lifecycle in test mode: payment → duplicate webhook → refund
+      → evidence report**
+- [ ] Only after the test-mode lifecycle passes: switch to live mode
+
+## Merchant
+
+- [ ] Business Twin created
+- [ ] One real customer cohort
+- [ ] One experiment
+- [ ] One governed action
+- [ ] One evidence report (the six questions, from real data)
+
+## Product validation
+
+- [ ] Merchant reviews the report
+- [ ] Ask the only question that matters:
       **"Would you make a business decision based on this report?"**
-  - YES → the product hypothesis is real; iterate on what the merchant
-    actually used
-  - NO / "technically impressive, but I don't care" → equally valuable; learn
-    what they need, do not build more until the gap is specific
+- [ ] Capture the answer **verbatim**
+- [ ] Triage the feedback: is the limitation **structural** (the pilot
+      genuinely can't do what the business needs) or a **feature request**
+      (nice-to-have)? Do not build what they request until it is classified.
 
-## Pilot 001 runbook
+## Hard gates
 
-1. Deploy `feature/merchant-evidence-layer` to the isolated pilot host
-2. Provision Postgres, set `DATABASE_URL`, run migrations
-3. Set `MERCHANT_API_TOKENS` for the merchant's businessId
-4. Configure the Stripe webhook secret on the host + endpoint in Stripe
-5. Connect the merchant: create their business twin
-6. Let real Stripe events flow; watch the ledger
-7. Run one governed experiment
-8. Generate the evidence report
-9. Put it in front of the merchant
-10. Ask the acceptance question — record the answer verbatim
+1. **No production Stripe events** until backups + rollback are verified
+   (restore test passed) — this is financial data, not software testing
+2. **Test mode full lifecycle passes before live mode** — payment → duplicate
+   webhook → refund → report
+3. **No merge to main** until the first real-world run completes —
+   `feature/merchant-evidence-layer` stays the pilot branch
+4. **No new subsystem** unless the pilot proves it necessary
 
-## Definition of done for Pilot 001
+## The real milestone
 
-- [ ] All infrastructure checkboxes ticked
-- [ ] All functional test-pass checkboxes ticked with real output
-- [ ] Merchant verdict recorded verbatim
-- [ ] No new subsystem added during the pilot
+Not "does the code work?" — that's done and CI-verified. The milestone is:
+
+> Does a business owner care enough about the evidence to change what they do?
+
+If yes → build around that behavior. If no → find the actual wedge; do not
+blindly add features.

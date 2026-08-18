@@ -20,6 +20,8 @@ backups/
 # Node
 node_modules/
 package-lock.json
+# Lockfile is source — required for reproducible npm ci (CI depends on it).
+!/package-lock.json
 
 # OS
 .DS_Store

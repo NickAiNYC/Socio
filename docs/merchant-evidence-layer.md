@@ -69,7 +69,32 @@ Default bind `127.0.0.1:8787` (override `MERCHANT_API_PORT` /
 | POST | `/api/merchant/:businessId/audit/verify` | real hash-chain verification result |
 | GET | `/api/merchant/:businessId/system` | stripe state + system health |
 
-There are no mutation endpoints. The layer is read-only by design.
+There are no mutation endpoints on the reporting API. The layer is read-only
+by design.
+
+### Stripe webhook receiver (pilot wiring)
+
+`engines/growth-os/merchant/stripe-webhook-endpoint.mjs` — separate server,
+default `127.0.0.1:8789`, one public route:
+
+| Method | Path | Purpose |
+|---|---|---|
+| POST | `/api/webhooks/stripe` | ingest Stripe events (signature-verified) |
+| GET | `/api/health` | liveness |
+
+- Every payload requires a valid `stripe-signature` header
+  (`verifyStripeSignature`, timing-safe, 5-minute replay window); invalid →
+  401, nothing recorded.
+- Fails closed: no `STRIPE_WEBHOOK_SECRET` → 503; boot refuses to start.
+- Idempotent: a redelivered event returns `200 duplicate` and never
+  double-counts (ledger idempotency keys `stripe:<eventId>`).
+- Refunds are matched to the original payment by `paymentIntentId`; a missing
+  original is ignored with a reason, a second refund of the same payment is
+  rejected (no retry storm).
+- Events without `metadata.businessId` are ignored with a reason — unknown
+  stays unknown.
+- Put nginx/caddy in front for HTTPS; point Stripe at
+  `https://<host>/api/webhooks/stripe`.
 
 ## Data sources
 
