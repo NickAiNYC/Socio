@@ -1,24 +1,38 @@
-import { PolicyViolationError, ValidationError } from './errors.mjs';
+import { ValidationError } from './errors.mjs';
+
+const DEFAULT_APPROVAL_TTL_MS = 15 * 60 * 1000;
 
 /**
  * Agent Governor
  * Central governance layer evaluating action proposals.
+ *
+ * In addition to policy evaluation, the Governor maintains a durable
+ * approval registry: `propose()` persists the proposal + decision so that
+ * `growth_os_execute_action` can enforce that an approval EXISTS, is still
+ * valid (not expired), is bound to the same business/agent/action/payload,
+ * and has not already been consumed (replay protection).
  */
 export class AgentGovernor {
-  constructor(policies = {}) {
+  /**
+   * @param {Array|Object} [policies] custom policy functions (array) or policy map
+   * @param {import('./repositories/memory-repository.mjs').MemoryRepository|import('./repositories/postgres-repository.mjs').PostgresRepository} [approvalRepository] repository backing the approval registry
+   */
+  constructor(policies = {}, approvalRepository = null) {
     this.policies = policies;
+    this.approvalRepository = approvalRepository;
     this.defaultRiskLevels = ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL'];
+    this.approvalTtlMs = DEFAULT_APPROVAL_TTL_MS;
   }
 
   /**
-   * Evaluates an Action Proposal
+   * Evaluates an Action Proposal (policy layer only — does not persist).
    * @param {import('./types.mjs').ActionProposal} proposal
-   * @returns {import('./types.mjs').GovernanceDecision}
+   * @returns {Promise<import('./types.mjs').GovernanceDecision>}
    */
   async evaluate(proposal) {
     this._validateProposal(proposal);
 
-    // Default policy rules based on prompt
+    // Default policy rules based on risk
     let decision = 'approved';
     let reason = 'Action meets low risk criteria';
     let requiredApprover = undefined;
@@ -29,22 +43,21 @@ export class AgentGovernor {
       decision = 'blocked';
       reason = 'CRITICAL risk actions are blocked by default';
       requiredApprover = 'SYSTEM_ADMIN';
-    } 
+    }
     // 2. High risk requires approval
     else if (proposal.risk === 'HIGH') {
       decision = 'approval_required';
       reason = 'HIGH risk actions require explicit approval';
       requiredApprover = 'BUSINESS_OWNER';
-    } 
+    }
     // 3. Medium risk requires approval by default (can be overridden)
     else if (proposal.risk === 'MEDIUM') {
       decision = 'approval_required';
       reason = 'MEDIUM risk actions require approval by default';
       requiredApprover = 'AGENT_SUPERVISOR';
     }
-    
+
     // Evaluate custom policies
-    // Policies can be an array of functions that take the proposal and return a modification to the decision
     if (this.policies && Array.isArray(this.policies)) {
       for (const policyFn of this.policies) {
         const policyResult = await policyFn(proposal, { decision, reason, matchingPolicy, requiredApprover });
@@ -60,13 +73,90 @@ export class AgentGovernor {
       }
     }
 
-    return {
+    return /** @type {import('./types.mjs').GovernanceDecision} */ ({
       decision,
       risk: proposal.risk,
       reason,
       policy: matchingPolicy,
       requiredApprover
+    });
+  }
+
+  /**
+   * Proposes an action AND persists the governance decision as durable state.
+   * @param {import('./types.mjs').ActionProposal} proposal
+   * @returns {Promise<{id: string, proposal: import('./types.mjs').ActionProposal, decision: string, risk: string, reason: string, policy: string, requiredApprover?: string, status: string, createdAt: string, expiresAt: string, executedAt: string|null}>} the persisted approval record
+   */
+  async propose(proposal) {
+    this._validateProposal(proposal);
+    const decision = await this.evaluate(proposal);
+
+    const approval = {
+      id: proposal.id,
+      proposal,
+      decision: decision.decision,
+      risk: proposal.risk,
+      reason: decision.reason,
+      policy: decision.policy,
+      requiredApprover: decision.requiredApprover,
+      status: decision.decision === 'approved' ? 'APPROVED'
+        : decision.decision === 'blocked' ? 'BLOCKED' : 'PENDING',
+      createdAt: new Date().toISOString(),
+      expiresAt: new Date(Date.now() + this.approvalTtlMs).toISOString(),
+      executedAt: null,
     };
+
+    if (this.approvalRepository) {
+      // Duplicate proposal id must not silently overwrite a prior decision.
+      await this.approvalRepository.saveIfAbsent(approval.id, approval);
+    }
+
+    return approval;
+  }
+
+  /**
+   * Returns the durable approval state for a proposal, or null if never proposed.
+   * @param {string} proposalId
+   */
+  async getApprovalStatus(proposalId) {
+    if (!this.approvalRepository) return null;
+    return await this.approvalRepository.get(proposalId);
+  }
+
+  /**
+   * Atomically consumes an approval: APPROVED -> EXECUTED.
+   * Uses compare-and-swap when the repository supports it, so concurrent
+   * workers cannot double-consume the same approval. Replay fails.
+   * @param {string} proposalId
+   */
+  async markExecuted(proposalId) {
+    const approval = await this.getApprovalStatus(proposalId);
+    if (!approval) throw new Error(`approval ${proposalId} not found`);
+    if (new Date(approval.expiresAt) < new Date()) {
+      throw new Error(`approval ${proposalId} has expired`);
+    }
+
+    if (this.approvalRepository?.compareAndSwap) {
+      // CAS: only one concurrent caller can flip APPROVED -> EXECUTED.
+      const updated = await this.approvalRepository.compareAndSwap(proposalId, 'status', 'APPROVED', 'EXECUTED');
+      if (!updated) {
+        throw new Error(`proposal ${proposalId} is not APPROVED — concurrent execution or replay rejected`);
+      }
+      // Owner of the CAS may stamp metadata (executedAt) — no race remains.
+      if (this.approvalRepository.update) {
+        await this.approvalRepository.update(proposalId, { executedAt: new Date().toISOString() });
+      }
+      return updated;
+    }
+
+    // Fallback (repository without CAS support): still reject non-APPROVED.
+    if (approval.status !== 'APPROVED') {
+      throw new Error(`proposal ${proposalId} is not APPROVED (status: ${approval.status}) — replay or unapproved execution rejected`);
+    }
+    approval.status = 'EXECUTED';
+    approval.executedAt = new Date().toISOString();
+    await this.approvalRepository.save(approval.id, approval);
+    return approval;
   }
 
   _validateProposal(proposal) {

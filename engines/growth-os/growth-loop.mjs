@@ -10,7 +10,7 @@ export class GrowthLoop {
    * @param {import('./revenue-ledger.mjs').RevenueLedger} deps.revenueLedger
    * @param {import('./agent-governor.mjs').AgentGovernor} deps.agentGovernor
    * @param {import('./experiment-engine.mjs').ExperimentEngine} deps.experimentEngine
-   * @param {Array} deps.adapters
+   * @param {Array} [deps.adapters]
    */
   constructor({ businessTwin, revenueLedger, agentGovernor, experimentEngine, adapters = [] }) {
     this.businessTwin = businessTwin;
@@ -85,21 +85,21 @@ export class GrowthLoop {
 
   // --- Internals (Stubs for the logic layers that would normally use LLMs / Adapters) ---
 
-  async _gatherObservations(businessId) {
+  async _gatherObservations(_businessId) {
     // In a real system, this pulls from AnalyticsAdapter, CRMAdapter, etc.
     return [{ type: 'system_check', timestamp: new Date().toISOString() }];
   }
 
-  _identifyOpportunities(twin, observations) {
+  _identifyOpportunities(_twin, _observations) {
     // LLM or heuristic logic
     return [];
   }
 
-  _formulateExperiments(opportunities) {
+  _formulateExperiments(_opportunities) {
     return [];
   }
 
-  _generateActionProposals(businessId, opportunities) {
+  _generateActionProposals(_businessId, _opportunities) {
     // This is where agents propose work. 
     // For the loop, we might collect proposals queued by agents.
     return [];
@@ -110,7 +110,7 @@ export class GrowthLoop {
     return approvedActions.map(a => ({ actionId: a.proposal.id, status: 'dispatched' }));
   }
 
-  async _extractLearnings(businessId) {
+  async _extractLearnings(_businessId) {
     // Evaluates finished experiments and summarizes them
     return [];
   }

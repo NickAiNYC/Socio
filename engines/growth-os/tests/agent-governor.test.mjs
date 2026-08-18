@@ -10,6 +10,10 @@ test('AgentGovernor - default risk policies', async () => {
     businessId: 'biz_1',
     agentId: 'agent_1',
     type: 'send_email',
+    objective: 'test',
+    expectedOutcome: 'ok',
+    evidence: 'unit test',
+    createdAt: new Date().toISOString(),
   };
 
   const lowRisk = await governor.evaluate({ ...baseProposal, risk: 'LOW' });
@@ -29,7 +33,7 @@ test('AgentGovernor - default risk policies', async () => {
 });
 
 test('AgentGovernor - custom policy overrides', async () => {
-  const customPolicy = async (proposal, currentContext) => {
+  const customPolicy = async (proposal, _currentContext) => {
     if (proposal.payload?.spend > 100) {
       return { decision: 'blocked', reason: 'Spend exceeds $100 limit', policy: 'BUDGET_LIMIT' };
     }
@@ -43,7 +47,11 @@ test('AgentGovernor - custom policy overrides', async () => {
     agentId: 'agent_1',
     type: 'run_ads',
     risk: 'LOW',
-    payload: { spend: 150 }
+    payload: { spend: 150 },
+    objective: 'test',
+    expectedOutcome: 'ok',
+    evidence: 'unit test',
+    createdAt: new Date().toISOString(),
   };
 
   const result = await governor.evaluate(proposal);

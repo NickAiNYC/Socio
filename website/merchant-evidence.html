@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socio — Merchant Evidence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;600;700&display=swap');
+
+        body {
+            background-color: #050507;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            background-image:
+                radial-gradient(circle at 15% 0%, rgba(16, 185, 129, 0.04) 0%, transparent 50%),
+                radial-gradient(circle at 85% 100%, rgba(99, 102, 241, 0.03) 0%, transparent 50%);
+        }
+
+        .font-mono { font-family: 'Roboto Mono', monospace; }
+
+        .glass-panel {
+            background-color: #0f0f14;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            backdrop-filter: blur(16px);
+        }
+
+        .accent { color: #10B981; }
+        .accent-gold { color: #F59E0B; }
+        .accent-blue { color: #6366F1; }
+        .accent-red { color: #EF4444; }
+
+        .metric-value {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.05em;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .nav-link:hover { color: #fff; background: rgba(255, 255, 255, 0.06); }
+
+        .badge {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .badge-green  { background: rgba(16, 185, 129, 0.12); color: #34D399; border-color: rgba(16, 185, 129, 0.3); }
+        .badge-amber  { background: rgba(245, 158, 11, 0.12); color: #FBBF24; border-color: rgba(245, 158, 11, 0.3); }
+        .badge-red    { background: rgba(239, 68, 68, 0.12); color: #F87171; border-color: rgba(239, 68, 68, 0.3); }
+        .badge-blue   { background: rgba(99, 102, 241, 0.12); color: #A5B4FC; border-color: rgba(99, 102, 241, 0.3); }
+        .badge-gray   { background: rgba(255, 255, 255, 0.05); color: rgba(255, 255, 255, 0.5); border-color: rgba(255, 255, 255, 0.1); }
+
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.08); border-radius: 10px; }
+
+        .empty-hint {
+            color: rgba(255, 255, 255, 0.35);
+            font-size: 12px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <header class="sticky top-0 z-40 border-b border-white/5 bg-[#050507]/90 backdrop-blur-xl">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex flex-wrap items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center">
+                    <i data-lucide="scale" class="w-4 h-4 text-emerald-400"></i>
+                </div>
+                <div>
+                    <div class="text-sm font-bold tracking-tight">Merchant Evidence</div>
+                    <div class="text-[10px] text-white/40 font-mono">socio / growth-os / evidence</div>
+                </div>
+            </div>
+
+            <div class="flex-1"></div>
+
+            <div class="flex flex-wrap items-center gap-2 text-xs">
+                <input id="cfg-base" type="text" value="http://127.0.0.1:8787" placeholder="API base"
+                    class="bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 w-52 font-mono text-white/80 placeholder-white/30 outline-none focus:border-emerald-500/40">
+                <input id="cfg-business" type="text" value="socio_default" placeholder="businessId"
+                    class="bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 w-40 font-mono text-white/80 placeholder-white/30 outline-none focus:border-emerald-500/40">
+                <input id="cfg-token" type="password" placeholder="token (optional, session only)"
+                    class="bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 w-52 font-mono text-white/80 placeholder-white/30 outline-none focus:border-emerald-500/40">
+                <button id="btn-load" class="px-4 py-1.5 rounded-lg bg-emerald-500 text-black font-bold hover:shadow-[0_0_18px_rgba(16,185,129,0.4)] transition-all">
+                    Load
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="max-w-7xl mx-auto px-6 pt-6 flex flex-wrap items-center gap-1 border-b border-white/5 pb-4">
+        <span class="nav-link" data-scroll="overview">Overview</span>
+        <span class="nav-link" data-scroll="actions">Actions</span>
+        <span class="nav-link" data-scroll="revenue">Revenue</span>
+        <span class="nav-link" data-scroll="attribution">Attribution</span>
+        <span class="nav-link" data-scroll="experiments">Experiments</span>
+        <span class="nav-link" data-scroll="audit">Audit</span>
+        <span class="nav-link" data-scroll="system">System</span>
+        <span class="flex-1"></span>
+        <span id="stripe-pill" class="badge badge-gray">Stripe —</span>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-6 py-8 space-y-10">
+
+        <div id="error-banner" class="hidden glass-panel border-red-500/30 p-4 text-sm text-red-300"></div>
+
+        <!-- ===================== OVERVIEW ===================== -->
+        <section id="overview">
+            <h2 class="text-xs font-bold uppercase tracking-[0.18em] text-white/50 mb-4">What does the evidence say?</h2>
+            <div id="overview-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                <!-- rendered -->
+            </div>
+        </section>
+
+        <!-- ===================== ACTIONS ===================== -->
+        <section id="actions">
+            <h2 class="text-xs font-bold uppercase tracking-[0.18em] text-white/50 mb-4">What did Socio do?</h2>
+            <div class="glass-panel p-5">
+                <div id="actions-body" class="text-sm"></div>
+            </div>
+        </section>
+
+        <!-- ===================== REVENUE ===================== -->
+        <section id="revenue">
+            <h2 class="text-xs font-bold uppercase tracking-[0.18em] text-white/50 mb-4">What happened?</h2>
+            <div id="revenue-metrics" class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4 mb-4"></div>
+            <div class="glass-panel p-5">
+                <div class="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/40 mb-3">Revenue events</div>
+                <div id="revenue-body" class="text-sm"></div>
+            </div>
+        </section>
+
+        <!-- ===================== ATTRIBUTION ===================== -->
+        <section id="attribution">
+            <h2 class="text-xs font-bold uppercase tracking-[0.18em] text-white/50 mb-4">What can we attribute — and what can't we prove?</h2>
+            <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 mb-4">
+                <div class="glass-panel p-5">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="badge badge-green">Evidence-based</span>
+                        <span id="attr-count" class="text-[10px] text-white/40 font-mono"></span>
+                    </div>
+                    <div id="attr-body" class="text-sm space-y-3"></div>
+                </div>
+                <div class="glass-panel p-5">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="badge badge-red">Not provable</span>
+                        <span id="unknown-count" class="text-[10px] text-white/40 font-mono"></span>
+                    </div>
+                    <div id="unknown-body" class="text-sm space-y-3"></div>
+                </div>
+            </div>
+            <div class="glass-panel p-5">
+                <div class="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/40 mb-2">Methodology — evidence ladder</div>
+                <p id="methodology-ladder" class="text-xs text-white/60 font-mono leading-relaxed"></p>
+            </div>
+        </section>
+
+        <!-- ===================== EXPERIMENTS ===================== -->
+        <section id="experiments">
+            <h2 class="text-xs font-bold uppercase tracking-[0.18em] text-white/50 mb-4">What should Socio do next?</h2>
+            <div id="learnings" class="glass-panel p-5 mb-4 text-sm"></div>
+            <div id="experiments-content"></div>
+        </section>
+
+        <!-- ===================== AUDIT ===================== -->
+        <section id="audit">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-xs font-bold uppercase tracking-[0.18em] text-white/50">Audit chain</h2>
+                <button id="btn-verify" class="px-4 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs font-semibold text-white/80 hover:bg-white/10 transition-all">
+                    Verify audit chain
+                </button>
+            </div>
+            <div id="verify-result" class="hidden glass-panel p-4 mb-4 text-sm font-mono"></div>
+            <div class="glass-panel p-5">
+                <div id="audit-body" class="text-sm"></div>
+            </div>
+        </section>
+
+        <!-- ===================== SYSTEM ===================== -->
+        <section id="system">
+            <h2 class="text-xs font-bold uppercase tracking-[0.18em] text-white/50 mb-4">System & integrations</h2>
+            <div class="glass-panel p-5 text-sm space-y-3">
+                <div id="system-body"></div>
+            </div>
+        </section>
+
+        <footer class="border-t border-white/5 pt-6 pb-10 text-[10px] text-white/30 font-mono flex flex-wrap items-center gap-4">
+            <span>No fake data. Everything rendered here comes from the Growth OS evidence API.</span>
+            <span class="flex-1"></span>
+            <span id="generated-at"></span>
+        </footer>
+    </main>
+
+    <script>
+        // ------------------------------------------------------------------
+        // Merchant Evidence dashboard — reads ONLY the evidence API. No mock
+        // data, no fabricated fallbacks: $0 and empty lists are the correct
+        // production-empty state.
+        // ------------------------------------------------------------------
+
+        const $ = (id) => document.getElementById(id);
+
+        const state = {
+            base: 'http://127.0.0.1:8787',
+            businessId: 'socio_default',
+            token: '',
+            report: null,
+        };
+
+        function fmtMoney(amount, currency) {
+            try {
+                return new Intl.NumberFormat('en-US', { style: 'currency', currency: currency || 'USD' }).format(amount || 0);
+            } catch {
+                return `$${(amount || 0).toFixed(2)} ${currency || 'USD'}`;
+            }
+        }
+
+        function fmtDate(iso) {
+            if (!iso) return '—';
+            try {
+                return new Date(iso).toISOString().slice(0, 19).replace('T', ' ');
+            } catch {
+                return iso;
+            }
+        }
+
+        function statusBadge(status) {
+            const s = String(status || '').toUpperCase();
+            const cls = s === 'EXECUTED' || s === 'APPROVED' ? 'badge-green'
+                : s === 'BLOCKED' ? 'badge-red'
+                : s === 'PENDING' ? 'badge-amber'
+                : s === 'EXECUTED' ? 'badge-green'
+                : 'badge-gray';
+            return `<span class="badge ${cls}">${s || '—'}</span>`;
+        }
+
+        function levelBadge(level) {
+            const cls = level === 'attribution' ? 'badge-green'
+                : level === 'correlation' ? 'badge-amber'
+                : 'badge-gray';
+            return `<span class="badge ${cls}">${level || '—'}</span>`;
+        }
+
+        // Human label for the evidence level — never a naked probability.
+        function attributionLabel(level) {
+            if (level === 'attribution') return 'Experimental attribution';
+            if (level === 'correlation') return 'Correlational evidence';
+            return level || 'recorded';
+        }
+
+        // Statistical result straight from the recorded correlation hop
+        // (delta, approx p, group sizes) — shown instead of a bare confidence.
+        function statisticalResult(rec) {
+            const hop = (rec.evidence || []).find((e) => e.type === 'correlation');
+            if (!hop || hop.verdict === undefined) return null;
+            const parts = [];
+            if (hop.verdict) parts.push(hop.verdict.replace(/_/g, ' '));
+            if (typeof hop.delta === 'number') parts.push(`delta ${hop.delta >= 0 ? '+' : ''}${hop.delta.toFixed(4)}`);
+            if (typeof hop.pApprox === 'number') parts.push(`approx p ${hop.pApprox.toFixed(4)}`);
+            if (typeof hop.nTreatment === 'number' && typeof hop.nControl === 'number') parts.push(`n=${hop.nTreatment}/${hop.nControl}`);
+            return parts.join(' · ');
+        }
+
+        function emptyRow(text) {
+            return `<div class="empty-hint py-2">${text}</div>`;
+        }
+
+        async function api(path, options = {}) {
+            const headers = { ...(options.headers || {}) };
+            if (state.token) headers['Authorization'] = `Bearer ${state.token}`;
+            const res = await fetch(`${state.base}${path}`, { headers, cache: 'no-store', ...options, headers });
+            const body = await res.json().catch(() => ({}));
+            if (!res.ok) {
+                throw new Error(`${res.status} ${body.error?.code || res.statusText} — ${body.error?.message || ''}`.trim());
+            }
+            return body;
+        }
+
+        // ---- Renderers ---------------------------------------------------
+
+        function renderOverview(r) {
+            const q = r.questions;
+            const m = q.whatHappened.metrics;
+            const next = q.whatShouldSocioDoNext;
+            const running = next.experiments.filter((e) => e.status === 'RUNNING').length;
+            const cards = [
+                { label: 'What did Socio do?', value: String(q.whatDidSocioDo.count), sub: 'governed, audited actions', tone: 'text-emerald-400' },
+                { label: 'What happened?', value: fmtMoney(m.netRevenue), sub: `net of ${fmtMoney(m.refunds)} refunds · ${m.eventCount} events`, tone: 'text-emerald-400' },
+                { label: 'What revenue followed?', value: String(q.whatRevenueFollowed.count), sub: 'events on the ledger', tone: 'text-emerald-400' },
+                { label: 'What can we attribute?', value: String(q.whatCanWeAttribute.count), sub: 'attribution + correlation records', tone: 'text-emerald-400' },
+                { label: "What can't we prove?", value: String(q.whatCantWeProve.count), sub: `unattributed ${fmtMoney(q.whatCantWeProve.unattributedRevenue.amount)}`, tone: 'text-amber-400' },
+                { label: 'What should Socio do next?', value: String(next.experiments.length), sub: `${running} running · ${next.pendingApprovals.length} pending approval`, tone: 'text-emerald-400' },
+            ];
+            $('overview-grid').innerHTML = cards.map((c) => `
+                <div class="glass-panel p-5">
+                    <div class="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/40 mb-2">${c.label}</div>
+                    <div class="metric-value ${c.tone}">${c.value}</div>
+                    <div class="text-[11px] text-white/40 mt-1">${c.sub}</div>
+                </div>
+            `).join('');
+        }
+
+        function renderActions(r) {
+            const actions = r.questions.whatDidSocioDo.actions;
+            if (actions.length === 0) {
+                $('actions-body').innerHTML = emptyRow('No governed actions yet — Socio has not executed anything for this business.');
+                return;
+            }
+            $('actions-body').innerHTML = `
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="text-[10px] uppercase tracking-[0.15em] text-white/30 border-b border-white/5">
+                            <th class="py-2 pr-4">Time</th>
+                            <th class="py-2 pr-4">Agent</th>
+                            <th class="py-2 pr-4">Action</th>
+                            <th class="py-2 pr-4">Status</th>
+                            <th class="py-2">Proposal</th>
+                        </tr>
+                    </thead>
+                    <tbody class="font-mono text-xs">
+                        ${actions.map((a) => `
+                            <tr class="border-b border-white/5 last:border-0">
+                                <td class="py-2 pr-4 text-white/50">${fmtDate(a.timestamp)}</td>
+                                <td class="py-2 pr-4 text-white/80">${a.agentId}</td>
+                                <td class="py-2 pr-4 text-white/90">${a.actionType}</td>
+                                <td class="py-2 pr-4">${statusBadge(a.status)}</td>
+                                <td class="py-2 text-white/40">${a.proposalId}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+                <div class="text-[10px] text-white/30 mt-3">Source: hash-chained audit trail (append-only). Verify under Audit.</div>
+            `;
+        }
+
+        function renderRevenue(r) {
+            const m = r.questions.whatHappened.metrics;
+            const metrics = [
+                { label: 'Gross revenue', value: fmtMoney(m.grossRevenue) },
+                { label: 'Net revenue', value: fmtMoney(m.netRevenue) },
+                { label: 'Total cost', value: fmtMoney(m.totalCost) },
+                { label: 'Refunds', value: fmtMoney(m.refunds) },
+                { label: 'ROI', value: `${Number.isFinite(m.roi) ? m.roi.toFixed(1) : '—'}%`, sub: `(${fmtMoney(m.netRevenue)} net revenue − ${fmtMoney(m.totalCost)} attributed cost) ÷ ${fmtMoney(m.totalCost)}` },
+                { label: 'Events', value: String(m.eventCount) },
+            ];
+            $('revenue-metrics').innerHTML = metrics.map((x) => `
+                <div class="glass-panel p-4">
+                    <div class="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/40 mb-1">${x.label}</div>
+                    <div class="metric-value text-white">${x.value}</div>
+                    ${x.sub ? `<div class="text-[9px] text-white/35 font-mono mt-1 leading-snug">${x.sub}</div>` : ''}
+                </div>
+            `).join('');
+
+            const events = r.questions.whatRevenueFollowed.events;
+            let body;
+            if (events.length === 0) {
+                body = emptyRow('No revenue events on the ledger yet.');
+            } else {
+                body = `
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="text-[10px] uppercase tracking-[0.15em] text-white/30 border-b border-white/5">
+                                <th class="py-2 pr-4">Time</th>
+                                <th class="py-2 pr-4">Type</th>
+                                <th class="py-2 pr-4 text-right">Amount</th>
+                                <th class="py-2 pr-4">Source</th>
+                                <th class="py-2">Event</th>
+                            </tr>
+                        </thead>
+                        <tbody class="font-mono text-xs">
+                            ${events.map((e) => `
+                                <tr class="border-b border-white/5 last:border-0">
+                                    <td class="py-2 pr-4 text-white/50">${fmtDate(e.occurredAt)}</td>
+                                    <td class="py-2 pr-4">${statusBadge(e.type)}</td>
+                                    <td class="py-2 pr-4 text-right text-white/90">${fmtMoney(e.amount, e.currency)}</td>
+                                    <td class="py-2 pr-4 text-white/60">${e.source}</td>
+                                    <td class="py-2 text-white/40">${e.id}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+            }
+            if (m.mixedCurrencies) {
+                body += `<div class="text-[10px] text-amber-300/70 mt-3">Mixed currencies present — totals shown for ${m.currencies.join(', ')} primary; see byCurrency for the full breakdown.</div>`;
+            }
+            $('revenue-body').innerHTML = body;
+        }
+
+        function renderAttribution(r) {
+            const attr = r.questions.whatCanWeAttribute;
+            const unknown = r.questions.whatCantWeProve;
+
+            $('attr-count').textContent = `${attr.count} record(s)`;
+            $('unknown-count').textContent = `${unknown.count} record(s)`;
+
+            $('attr-body').innerHTML = attr.count === 0
+                ? emptyRow('No evidence-based attribution records yet — nothing is being claimed as caused by Socio.')
+                : attr.records.map((rec) => {
+                    const stats = statisticalResult(rec);
+                    const support = rec.level === 'attribution'
+                        ? 'Evidence supports attribution (designed experiment + control + adequate sample) — still not causation'
+                        : rec.level === 'correlation'
+                        ? 'Evidence supports correlation only — not a causal attribution'
+                        : '';
+                    return `
+                        <div class="border border-white/5 rounded-lg p-3">
+                            <div class="flex items-center gap-2 mb-1">
+                                ${levelBadge(rec.level)}
+                                <span class="text-[10px] text-white/40 font-mono">${attributionLabel(rec.level)}</span>
+                                <span class="text-[10px] text-white/40 font-mono ml-auto">${rec.variant ? 'variant: ' + rec.variant : ''}</span>
+                            </div>
+                            <div class="text-xs text-white/80 leading-relaxed">${rec.claim}</div>
+                            ${stats ? `<div class="text-[10px] text-white/45 font-mono mt-1">Statistical result: ${stats}</div>` : ''}
+                            ${support ? `<div class="text-[10px] text-emerald-300/60 mt-1">${support}</div>` : ''}
+                            <div class="text-[10px] text-white/30 font-mono mt-1">evidence: ${rec.evidence.map((e) => e.type).join(' → ')}</div>
+                        </div>
+                    `;
+                }).join('');
+
+            $('unknown-body').innerHTML = (unknown.count === 0
+                ? emptyRow('Nothing unknown right now — every recorded event has an attribution record.')
+                : unknown.records.map((rec) => `
+                    <div class="border border-red-500/10 rounded-lg p-3">
+                        <div class="flex items-center gap-2 mb-1">
+                            ${levelBadge(rec.level)}
+                            <span class="text-[10px] text-white/40 font-mono">no confidence</span>
+                        </div>
+                        <div class="text-xs text-white/80 leading-relaxed">${rec.claim}</div>
+                    </div>
+                `).join('')
+            ) + `
+                <div class="mt-3 pt-3 border-t border-white/5">
+                    <div class="text-xs text-white/80">Unattributed revenue: <span class="font-mono accent-gold">${fmtMoney(unknown.unattributedRevenue.amount)}</span></div>
+                    <div class="text-[10px] text-white/35 mt-1">${unknown.unattributedRevenue.note}</div>
+                </div>
+            `;
+
+            $('methodology-ladder').textContent = r.methodology.ladder;
+        }
+
+        function renderExperiments(r) {
+            const next = r.questions.whatShouldSocioDoNext;
+            $('learnings').innerHTML = `
+                <div class="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/40 mb-2">Learnings</div>
+                <div class="text-xs text-white/80 font-mono">${next.learnings.summary}</div>
+                <div class="flex gap-4 mt-3 text-[11px] text-white/50 font-mono">
+                    <span>attribution-level: <span class="text-emerald-400">${next.learnings.attributedCount}</span></span>
+                    <span>correlation-level: <span class="text-amber-400">${next.learnings.correlationalCount}</span></span>
+                    <span>unknown: <span class="text-red-400">${next.learnings.unknownCount}</span></span>
+                </div>
+            `;
+
+            const experiments = next.experiments;
+            let experimentsHtml = experiments.length === 0
+                ? `<div class="glass-panel p-5 col-span-full"><div class="empty-hint">No experiments yet — Socio has not run a designed test for this business.</div></div>`
+                : experiments.map((e) => `
+                    <div class="glass-panel p-5">
+                        <div class="flex items-center gap-2 mb-2">${statusBadge(e.status)}${e.decision ? `<span class="badge badge-blue">${e.decision}</span>` : ''}</div>
+                        <div class="text-sm font-semibold text-white/90 leading-snug mb-1">${e.hypothesis}</div>
+                        <div class="text-[11px] text-white/40 mb-2">objective: ${e.objective} · metric: ${e.metric}</div>
+                        <div class="text-[10px] text-white/35 font-mono">${e.observations} observation(s) · ${(e.variants || []).join(' / ')}</div>
+                        ${e.rationale ? `<div class="text-[10px] text-white/35 mt-2">${e.rationale}</div>` : ''}
+                    </div>
+                `).join('');
+
+            const pending = next.pendingApprovals;
+            const pendingHtml = `
+                <div class="glass-panel p-5 mt-4">
+                    <div class="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/40 mb-2">Awaiting merchant decision</div>
+                    ${pending.length === 0
+                        ? `<div class="empty-hint">No pending approvals.</div>`
+                        : `<div class="space-y-2 font-mono text-xs">
+                            ${pending.map((p) => `
+                                <div class="flex flex-wrap items-center gap-2 border border-white/5 rounded-lg px-3 py-2">
+                                    <span class="badge badge-amber">${p.risk}</span>
+                                    <span class="text-white/80">${p.type}</span>
+                                    <span class="text-white/40">${p.agentId}</span>
+                                    <span class="flex-1"></span>
+                                    <span class="text-white/30">expires ${fmtDate(p.expiresAt)}</span>
+                                </div>
+                            `).join('')}
+                        </div>`
+                    }
+                </div>`;
+
+            $('experiments-content').innerHTML = `
+                <div id="experiments-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">${experimentsHtml}</div>
+                ${pendingHtml}
+            `;
+        }
+
+        function renderSystem(r) {
+            const s = r.stripe;
+            const sys = r.system;
+            const stripeBadge = s.status === 'connected' ? 'badge-green'
+                : s.status === 'configured' ? 'badge-amber'
+                : 'badge-red';
+            $('stripe-pill').innerHTML = `Stripe — <span class="badge ${stripeBadge} ml-1">${s.status}</span>`;
+            $('system-body').innerHTML = `
+                <div class="flex items-center gap-2"><span class="text-white/40 w-40">Stripe state</span>${statusBadge(s.status)}<span class="text-[11px] text-white/50">${s.reason}</span></div>
+                <div class="flex items-center gap-2"><span class="text-white/40 w-40">Events received</span><span class="font-mono text-white/80">${s.eventsReceived}</span></div>
+                <div class="flex items-center gap-2"><span class="text-white/40 w-40">Persistence</span><span class="font-mono text-white/80">${sys.persistence}</span></div>
+                <div class="flex items-center gap-2"><span class="text-white/40 w-40">System health</span>${statusBadge(sys.health)}</div>
+            `;
+        }
+
+        // ---- Audit tab: dedicated fetch + verify --------------------------
+
+        async function loadAudit() {
+            const body = $('audit-body');
+            body.innerHTML = '<div class="empty-hint">Loading audit chain…</div>';
+            $('verify-result').classList.add('hidden');
+            try {
+                const data = await api(`/api/merchant/${state.businessId}/audit`);
+                if (data.entries.length === 0) {
+                    body.innerHTML = emptyRow('No audit entries yet.');
+                } else {
+                    body.innerHTML = `
+                        <table class="w-full text-left">
+                            <thead>
+                                <tr class="text-[10px] uppercase tracking-[0.15em] text-white/30 border-b border-white/5">
+                                    <th class="py-2 pr-4">Time</th>
+                                    <th class="py-2 pr-4">Agent</th>
+                                    <th class="py-2 pr-4">Action</th>
+                                    <th class="py-2 pr-4">Status</th>
+                                    <th class="py-2">Entry</th>
+                                </tr>
+                            </thead>
+                            <tbody class="font-mono text-xs">
+                                ${data.entries.map((a) => `
+                                    <tr class="border-b border-white/5 last:border-0">
+                                        <td class="py-2 pr-4 text-white/50">${fmtDate(a.timestamp)}</td>
+                                        <td class="py-2 pr-4 text-white/80">${a.agentId}</td>
+                                        <td class="py-2 pr-4 text-white/90">${a.actionType}</td>
+                                        <td class="py-2 pr-4">${statusBadge(a.status)}</td>
+                                        <td class="py-2 text-white/40">${a.id}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    `;
+                }
+                $('verify-result').classList.remove('hidden');
+                $('verify-result').innerHTML = `chain verification: <span class="${data.verify.valid ? 'text-emerald-400' : 'text-red-400'}">${data.verify.valid ? 'VALID' : 'BROKEN'}</span> <span class="text-white/30">(${data.verify.brokenLinks.length} broken link(s), checked ${fmtDate(data.verify.checkedAt)})</span>`;
+            } catch (err) {
+                body.innerHTML = `<div class="text-red-400 text-xs font-mono">${err.message}</div>`;
+            }
+        }
+
+        async function verifyAudit() {
+            const res = $('verify-result');
+            res.classList.remove('hidden');
+            res.innerHTML = 'verifying…';
+            try {
+                const data = await api(`/api/merchant/${state.businessId}/audit/verify`, { method: 'POST' });
+                const v = data.verify;
+                res.innerHTML = v.valid
+                    ? `<span class="text-emerald-400">CHAIN VALID</span> — every entry hash matches its content and the prevHash links are intact <span class="text-white/30">(checked ${fmtDate(v.checkedAt)})</span>`
+                    : `<span class="text-red-400">CHAIN BROKEN</span> — ${v.brokenLinks.map((b) => `${b.id} (${b.reason})`).join(', ')} <span class="text-white/30">(checked ${fmtDate(v.checkedAt)})</span>`;
+            } catch (err) {
+                res.innerHTML = `<span class="text-red-400">${err.message}</span>`;
+            }
+        }
+
+        // ---- Main load -----------------------------------------------------
+
+        async function load() {
+            state.base = $('cfg-base').value.trim().replace(/\/$/, '') || 'http://127.0.0.1:8787';
+            state.businessId = $('cfg-business').value.trim() || 'socio_default';
+            state.token = $('cfg-token').value.trim();
+
+            const banner = $('error-banner');
+            banner.classList.add('hidden');
+
+            try {
+                const r = await api(`/api/merchant/${state.businessId}/evidence`);
+                state.report = r;
+                renderOverview(r);
+                renderActions(r);
+                renderRevenue(r);
+                renderAttribution(r);
+                renderExperiments(r);
+                renderSystem(r);
+                loadAudit();
+                $('generated-at').textContent = `generated ${fmtDate(r.generatedAt)} · business ${r.businessId}`;
+                document.title = `Merchant Evidence — ${r.businessId}`;
+            } catch (err) {
+                banner.classList.remove('hidden');
+                banner.innerHTML = `
+                    <div class="flex items-start gap-3">
+                        <i data-lucide="alert-triangle" class="w-4 h-4 mt-0.5 shrink-0"></i>
+                        <div>
+                            <div class="font-bold mb-1">Could not load evidence</div>
+                            <div class="font-mono text-xs text-red-400">${err.message}</div>
+                            <div class="text-xs text-white/50 mt-2">Start the API: <span class="font-mono">GROWTH_OS_ALLOW_MEMORY=true MERCHANT_API_TOKENS='{"socio_default":"dev-token"}' node engines/growth-os/merchant/merchant-api.mjs</span></div>
+                        </div>
+                    </div>`;
+                lucide.createIcons();
+            }
+        }
+
+        // ---- Wiring ---------------------------------------------------------
+
+        $('btn-load').addEventListener('click', load);
+        $('btn-verify').addEventListener('click', verifyAudit);
+        document.querySelectorAll('[data-scroll]').forEach((el) => {
+            el.addEventListener('click', () => {
+                document.getElementById(el.dataset.scroll).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        load();
+    </script>
+</body>
+</html>
