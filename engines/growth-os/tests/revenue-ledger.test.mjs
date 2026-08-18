@@ -33,8 +33,8 @@ test('RevenueLedger - aggregation and calculations', async () => {
   const repo = new MemoryRepository();
   const ledger = new RevenueLedger(repo);
 
-  await ledger.record({ businessId: 'biz_1', type: 'revenue', amount: 500, currency: 'USD', source: 'stripe' });
-  await ledger.record({ businessId: 'biz_1', type: 'refund', amount: 50, currency: 'USD', source: 'stripe' });
+  await ledger.record({ id: 'evt_orig', businessId: 'biz_1', type: 'revenue', amount: 500, currency: 'USD', source: 'stripe' });
+  await ledger.record({ businessId: 'biz_1', type: 'refund', amount: 50, currency: 'USD', source: 'stripe', metadata: { originalEventId: 'evt_orig' } });
   await ledger.record({ businessId: 'biz_1', type: 'campaign_cost', amount: 100, currency: 'USD', source: 'stripe' });
 
   const metrics = await ledger.calculateMetrics({ businessId: 'biz_1' });

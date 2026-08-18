@@ -15,6 +15,20 @@ export class MemoryRepository {
     return this.store.get(recordId);
   }
 
+  /**
+   * Append-only save: rejects if the id already exists.
+   * Used by the Revenue Ledger and Audit Trail to keep history immutable.
+   */
+  async saveIfAbsent(id, data) {
+    const recordId = id || randomUUID();
+    if (this.store.has(recordId)) {
+      throw new Error(`Record ${recordId} already exists; duplicate writes are rejected.`);
+    }
+    const record = { ...data, id: recordId };
+    this.store.set(recordId, record);
+    return record;
+  }
+
   async get(id) {
     return this.store.get(id) || null;
   }

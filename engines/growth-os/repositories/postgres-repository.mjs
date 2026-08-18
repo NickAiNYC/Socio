@@ -6,7 +6,12 @@ import { randomUUID } from 'crypto';
  * PostgreSQL Repository implementation for durable persistence.
  */
 export class PostgresRepository {
+  static TABLE_NAME_RE = /^[a-z_][a-z0-9_]*$/;
+
   constructor(tableName) {
+    if (!PostgresRepository.TABLE_NAME_RE.test(tableName)) {
+      throw new Error(`Invalid table name: ${tableName}`);
+    }
     this.tableName = tableName;
     this.pool = new Pool({
       connectionString: process.env.DATABASE_URL,
@@ -35,6 +40,27 @@ export class PostgresRepository {
       RETURNING *;
     `;
     const res = await this.pool.query(query, [recordId, data]);
+    return res.rows[0].data;
+  }
+
+  /**
+   * Append-only save: INSERT with ON CONFLICT DO NOTHING; throws if the id
+   * already exists. Used by the Revenue Ledger and Audit Trail so economic
+   * history and chain-of-custody records cannot be silently overwritten.
+   */
+  async saveIfAbsent(id, data) {
+    await this._ensureTable();
+    const recordId = id || randomUUID();
+    const query = `
+      INSERT INTO ${this.tableName} (id, data)
+      VALUES ($1, $2)
+      ON CONFLICT (id) DO NOTHING
+      RETURNING *;
+    `;
+    const res = await this.pool.query(query, [recordId, data]);
+    if (res.rows.length === 0) {
+      throw new Error(`Record ${recordId} already exists; duplicate writes are rejected.`);
+    }
     return res.rows[0].data;
   }
 
@@ -108,14 +134,30 @@ export class BusinessTwinPostgresRepository extends PostgresRepository {
     await this._ensureTable();
     const snapshotId = randomUUID();
     const record = { ...snapshot, _snapshotId: snapshotId, _savedAt: new Date().toISOString() };
-    
-    const query = `
-      INSERT INTO ${this.historyTable} (snapshot_id, business_id, data)
-      VALUES ($1, $2, $3);
-    `;
-    await this.pool.query(query, [snapshotId, businessId, record]);
-    
-    return super.save(businessId, snapshot);
+
+    const client = await this.pool.connect();
+    try {
+      await client.query('BEGIN');
+      await client.query(
+        `INSERT INTO ${this.historyTable} (snapshot_id, business_id, data)
+         VALUES ($1, $2, $3);`,
+        [snapshotId, businessId, record]
+      );
+      await client.query(
+        `INSERT INTO ${this.tableName} (id, data)
+         VALUES ($1, $2)
+         ON CONFLICT (id) DO UPDATE SET data = $2, updated_at = CURRENT_TIMESTAMP;`,
+        [businessId, snapshot]
+      );
+      await client.query('COMMIT');
+    } catch (err) {
+      await client.query('ROLLBACK');
+      throw err;
+    } finally {
+      client.release();
+    }
+
+    return snapshot;
   }
 
   async getHistory(businessId) {
