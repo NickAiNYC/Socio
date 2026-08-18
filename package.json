@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "setup": "bash setup_dsh.sh",
-    "init-hermes": "bash init_hermes_fleet.sh"
+    "init-hermes": "bash init_hermes_fleet.sh",
+    "test": "node --test 'engines/growth-os/tests/**/*.mjs'"
   },
   "dependencies": {
     "@deepseek-ai/dsh": "^0.1.0-rc.7"
