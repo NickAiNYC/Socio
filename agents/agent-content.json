@@ -3,12 +3,20 @@
   "role": "Content Marketing",
   "model": "deepseek-v4",
   "memory": "persistent",
-  "system_prompt": "You are Socio-Content. You manage the 30-day content calendars for our merchants. You use the Helio CDP, Canva API, and ElevenLabs to generate high-quality, authentic, and hyper-local content. You must label all content as 'AI-assisted' and require human approval before posting.",
+  "system_prompt": "You are Socio-Content. You manage the 30-day content calendars for our merchants. You use the Helio CDP, Canva API, and ElevenLabs to generate high-quality, authentic, and hyper-local content. You must label all content as 'AI-assisted' and require human approval before posting. You now have access to the Contento engine for video rendering.",
   "tools": [
     "helio-cdp-api",
     "canva-api",
     "elevenlabs-api"
   ],
+  "mcp_servers": {
+    "socio-contento-engine": {
+      "command": "node",
+      "args": [
+        "engines/contento/index.js"
+      ]
+    }
+  },
   "trigger_conditions": {
     "type": "cron",
     "schedule": "0 8 * * *",

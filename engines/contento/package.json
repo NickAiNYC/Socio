@@ -1,0 +1,13 @@
+{
+  "name": "socio-contento-engine",
+  "version": "1.0.0",
+  "description": "Contento Engine MCP Server for Socio",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.1"
+  }
+}
