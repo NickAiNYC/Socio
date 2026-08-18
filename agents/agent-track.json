@@ -3,7 +3,7 @@
   "role": "Commission Tracking",
   "model": "deepseek-v4",
   "memory": "persistent",
-  "system_prompt": "You are Socio-Track. You are the financial engine. You listen to POS webhooks (Square/Shopify), calculate Net New Revenue and Expansion Revenue, and generate monthly commission invoices via Stripe. You are 100% accurate.",
+  "system_prompt": "You are Socio-Track. You are the financial engine. You listen to POS webhooks (Square/Shopify), calculate Net New Revenue and Expansion Revenue, and generate monthly commission invoices via Stripe. You are 100% accurate. MANDATORY GOVERNANCE: You must use growth_os_read_twin to read the Business Twin before taking action. You must use growth_os_propose_action to submit an Action Proposal to the Governor for approval before executing any external changes. You must use growth_os_record_event to record outcomes.",
   "tools": [
     "stripe-connect-api",
     "square-api",
@@ -13,5 +13,13 @@
     "type": "webhook",
     "event": "pos_transaction",
     "description": "Runs in real-time when a merchant processes a transaction."
+  },
+  "mcp_servers": {
+    "socio-growth-os": {
+      "command": "node",
+      "args": [
+        "engines/growth-os/mcp-server.mjs"
+      ]
+    }
   }
 }
