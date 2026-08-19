@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socio Contratistas — Adquisición de Contratos de Construcción en NYC</title>
+    <meta name="description" content="Sistema de gestión de prospectos bilingüe para contratistas generales en NYC. Cero pagos por adelantado. Comisión solo cuando su cliente paga el depósito.">
+    <meta property="og:title" content="Socio Contratistas · Más Contratos en NYC">
+    <meta property="og:description" content="Adquisición de proyectos de remodelación y construcción. Conectado a WhatsApp y QuickBooks.">
+    <meta property="og:type" content="website">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        blueprint: '#1E40AF',
+                        safety: '#EAB308',
+                        industrial: '#111827',
+                        concrete: '#F3F4F6',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --bg-page: #F9FAFB;
+            --blueprint: #1E40AF;
+            --safety: #EAB308;
+            --dark: #111827;
+        }
+        body {
+            background-color: var(--bg-page);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--dark);
+        }
+        .hazard-stripe {
+            background: repeating-linear-gradient(
+                45deg,
+                #EAB308,
+                #EAB308 10px,
+                #111827 10px,
+                #111827 20px
+            );
+        }
+        .clean-card {
+            background: #ffffff;
+            border: 1px solid #E5E7EB;
+            border-radius: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02), 0 8px 24px -6px rgba(0,0,0,0.04);
+            transition: all 0.25s ease;
+        }
+        .clean-card:hover {
+            border-color: #CBD5E1;
+            box-shadow: 0 12px 32px -8px rgba(0,0,0,0.08);
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 24px;
+            width: 24px;
+            border-radius: 6px;
+            background: #1E40AF;
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 0 2px #EAB308, 0 4px 8px rgba(0,0,0,0.15);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- Industrial Top Bar -->
+    <div class="h-2 w-full hazard-stripe"></div>
+
+    <!-- Main Navigation -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-xl border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="/contratistas" class="flex items-center gap-3 text-decoration-none">
+                <div class="w-10 h-10 rounded-xl bg-industrial flex items-center justify-center text-safety shadow-sm">
+                    <i data-lucide="hard-hat" class="w-6 h-6"></i>
+                </div>
+                <div class="flex items-center">
+                    <span class="text-2xl font-black tracking-tight text-industrial">Socio</span>
+                    <span class="w-1.5 h-1.5 rounded-[1px] bg-blueprint ml-[1.5px] self-end mb-1 inline-block"></span>
+                    <span class="ml-2.5 px-2.5 py-0.5 rounded bg-slate-100 border border-slate-200 text-[10px] font-mono font-extrabold uppercase tracking-wider text-slate-600">
+                        CONTRATISTAS
+                    </span>
+                </div>
+            </a>
+
+            <div class="flex items-center gap-4">
+                <!-- Language Selector -->
+                <button id="lang-toggle" onclick="toggleLanguage()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-300 text-xs font-bold text-slate-700 hover:bg-slate-50 transition-all">
+                    <i data-lucide="globe" class="w-4 h-4 text-blueprint"></i>
+                    <span id="lang-label">English</span>
+                </button>
+
+                <!-- WhatsApp Direct Dispatch CTA -->
+                <a href="https://wa.me/19175550199?text=Hola%20Socio,%20soy%20contratista%20en%20NYC%20y%20quiero%20m%C3%A1s%20contratos%20de%20construcci%C3%B3n." target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#25D366] text-white text-xs font-black tracking-wide uppercase hover:bg-[#20ba5a] shadow-sm transition-all">
+                    <i data-lucide="message-square" class="w-4 h-4"></i>
+                    <span id="nav-cta">WhatsApp Directo</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="py-16 md:py-24 px-6 bg-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <!-- Left Copy -->
+            <div class="lg:col-span-7 space-y-6">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded bg-yellow-50 border border-yellow-200 text-yellow-800 text-xs font-mono font-black uppercase tracking-wider">
+                    <span class="w-2 h-2 rounded-full bg-safety animate-ping"></span>
+                    <span id="hero-badge">SISTEMA DE ADQUISICIÓN DE PROYECTOS · NYC</span>
+                </div>
+
+                <h1 class="text-4xl sm:text-6xl font-black tracking-tight text-industrial leading-[1.08]" id="hero-headline">
+                    Más Contratos de Remodelación y Construcción.<br>
+                    <span class="text-blueprint underline decoration-safety decoration-4 underline-offset-8">Sin cobrarle por adelantado.</span>
+                </h1>
+
+                <p class="text-lg text-slate-600 font-normal leading-relaxed max-w-2xl" id="hero-desc">
+                    Socio implementa un <strong>Sistema de Gestión de Prospectos Bilingüe</strong> que conecta llamadas y dueños de propiedades directamente a su WhatsApp. Solo cobramos comisión cuando su cliente deposita el anticipo en QuickBooks.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                    <a href="https://wa.me/19175550199?text=Hola%20Socio,%20quiero%20activar%20el%20sistema%20de%20prospectos%20de%20construccion." target="_blank" class="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-blueprint text-white text-base font-extrabold hover:bg-blue-900 shadow-lg shadow-blue-900/10 transition-all group">
+                        <i data-lucide="message-square" class="w-5 h-5 text-safety"></i>
+                        <span id="hero-cta-main">Cotizar Proyecto por WhatsApp</span>
+                        <i data-lucide="arrow-up-right" class="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
+                    </a>
+
+                    <a href="#calculator" class="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-slate-100 text-industrial border border-slate-300 text-base font-bold hover:bg-slate-200 transition-all">
+                        <i data-lucide="calculator" class="w-5 h-5 text-slate-500"></i>
+                        <span id="hero-cta-sub">Ver Calculadora de Comisión</span>
+                    </a>
+                </div>
+
+                <!-- Verified Stats Grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 border-t border-slate-200">
+                    <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                        <div class="text-2xl font-black font-mono text-industrial">$2.4M+</div>
+                        <div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mt-0.5" id="stat-1">Depósitos Verificados</div>
+                    </div>
+                    <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                        <div class="text-2xl font-black font-mono text-industrial">&lt; 90 seg</div>
+                        <div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mt-0.5" id="stat-2">Tiempo Respuesta</div>
+                    </div>
+                    <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                        <div class="text-2xl font-black font-mono text-industrial">1,200/mes</div>
+                        <div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mt-0.5" id="stat-3">Permisos DOB NYC</div>
+                    </div>
+                    <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                        <div class="text-2xl font-black font-mono text-emerald-600">$0.00</div>
+                        <div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mt-0.5" id="stat-4">Costo por Adelantado</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Master Pipeline Console Card -->
+            <div class="lg:col-span-5 bg-industrial p-7 rounded-2xl border border-slate-700 text-white shadow-2xl space-y-6">
+                <div class="flex items-center justify-between border-b border-slate-700 pb-4">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="hammer" class="w-5 h-5 text-safety"></i>
+                        <span class="font-mono text-xs font-bold uppercase tracking-widest text-slate-300">
+                            Master Project Pipeline
+                        </span>
+                    </div>
+                    <span class="text-[10px] font-mono bg-emerald-950 text-emerald-400 px-2 py-0.5 rounded border border-emerald-700 font-bold">
+                        QUICKBOOKS DEPOSIT SYNC
+                    </span>
+                </div>
+
+                <div class="space-y-3 font-mono text-xs">
+                    <div class="p-3.5 bg-slate-800 rounded-xl border-l-4 border-l-safety">
+                        <div class="text-slate-400 text-[10px] font-bold">DOB PERMIT RADAR · QUEENS</div>
+                        <div class="text-white font-bold mt-0.5">31-28 30th Ave, Astoria · Gut Rehab</div>
+                        <div class="text-yellow-400 text-[10px] mt-1">✓ WhatsApp Toque 1 enviado: $85,000 estimado</div>
+                    </div>
+
+                    <div class="p-3.5 bg-slate-800 rounded-xl border-l-4 border-l-blue-500">
+                        <div class="text-slate-400 text-[10px] font-bold">COTIZACIÓN EN PROCESO · BROOKLYN</div>
+                        <div class="text-white font-bold mt-0.5">142 Bedford Ave · Storefront & Framing</div>
+                        <div class="text-blue-400 text-[10px] mt-1">✓ Presupuesto $120,000 en revisión por cliente</div>
+                    </div>
+
+                    <div class="p-3.5 bg-emerald-950/80 rounded-xl border-l-4 border-l-emerald-500 border border-emerald-800/40">
+                        <div class="text-emerald-400 text-[10px] font-bold">DEPÓSITO COBRADO (QBO INVOICE)</div>
+                        <div class="text-white font-bold mt-0.5">Anticipo 30% Pagado en Banco: $25,500.00</div>
+                        <div class="text-emerald-300 text-[10px] mt-1">✓ Comisión Socio activada (8%): $6,800.00</div>
+                    </div>
+                </div>
+
+                <div class="pt-2 text-center text-xs font-mono text-slate-400">
+                    🔒 Cero hardware POS · 100% Contratos Bancarios Reales
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Operational Reality Features -->
+    <section class="py-20 px-6 max-w-7xl mx-auto">
+        <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+            <h2 class="text-3xl font-black text-industrial" id="feat-main-title">Diseñado para el Flujo de Caja Real del Contratista</h2>
+            <p class="text-base text-slate-600" id="feat-main-sub">
+                Eliminamos software inútil para enfocar cuadrillas en proyectos comerciales y residenciales de alto margen.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="clean-card p-8 space-y-4">
+                <div class="w-12 h-12 rounded-xl bg-blue-50 text-blueprint flex items-center justify-center">
+                    <i data-lucide="message-square" class="w-6 h-6"></i>
+                </div>
+                <h3 class="text-lg font-bold text-industrial" id="feat-1-title">Cierre Rápido vía WhatsApp</h3>
+                <p class="text-sm text-slate-600 leading-relaxed" id="feat-1-desc">
+                    Propietarios en NYC no abren correos electrónicos. Enviamos cotizaciones y seguimiento en 3 toques bilingües directo a WhatsApp en menos de 90 segundos.
+                </p>
+            </div>
+
+            <div class="clean-card p-8 space-y-4">
+                <div class="w-12 h-12 rounded-xl bg-yellow-50 text-yellow-700 flex items-center justify-center">
+                    <i data-lucide="file-check-2" class="w-6 h-6"></i>
+                </div>
+                <h3 class="text-lg font-bold text-industrial" id="feat-2-title">Atribución Contra Depósito QuickBooks</h3>
+                <p class="text-sm text-slate-600 leading-relaxed" id="feat-2-desc">
+                    La comisión solo se dispara cuando el anticipo inicial del 20–30% se acredita en su cuenta bancaria. Cero cobros por estimados perdidos.
+                </p>
+            </div>
+
+            <div class="clean-card p-8 space-y-4">
+                <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
+                    <i data-lucide="building-2" class="w-6 h-6"></i>
+                </div>
+                <h3 class="text-lg font-bold text-industrial" id="feat-3-title">Radar de Permisos DOB de NYC</h3>
+                <p class="text-sm text-slate-600 leading-relaxed" id="feat-3-desc">
+                    Monitoreamos en tiempo real las emisiones de permisos del DOB NOW / BIS en Queens, Brooklyn, Bronx y Manhattan para contactar propietarios antes que nadie.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Commission Calculator -->
+    <section id="calculator" class="py-20 bg-slate-100 border-y border-slate-200">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="bg-white rounded-2xl p-8 md:p-10 border border-slate-300 shadow-xl space-y-8">
+                
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-6">
+                    <div>
+                        <h3 class="text-2xl font-black text-industrial" id="calc-title">Calculadora de Comisión por Tramos</h3>
+                        <p class="text-xs font-mono text-slate-500 mt-1">
+                            Tramos: 12% (&lt;$10k) · 8% ($10k–$50k) · 5% (&gt;$50k) | Tope Anual: $40,000
+                        </p>
+                    </div>
+                    <div class="px-3.5 py-1.5 bg-blue-50 border border-blue-200 text-blueprint font-mono text-xs font-extrabold rounded-xl self-start md:self-auto">
+                        <span id="calc-effective-label">Tasa Efectiva:</span> <span id="calc-rate-val">8.3%</span>
+                    </div>
+                </div>
+
+                <!-- Range Slider -->
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center">
+                        <label class="text-sm font-bold text-slate-700" id="calc-slider-label">Valor Total del Contrato de Construcción:</label>
+                        <span class="text-3xl font-black font-mono text-blueprint" id="calc-amount-display">$45,000</span>
+                    </div>
+                    <input type="range" id="contract-slider" min="5000" max="150000" step="2500" value="45000" class="w-full h-3 bg-slate-200 rounded-lg appearance-none cursor-pointer">
+                    <div class="flex justify-between text-[11px] font-mono text-slate-400">
+                        <span>$5,000 (Trabajo Menor)</span>
+                        <span>$50,000 (Remodelación Casa)</span>
+                        <span>$150,000+ (Comercial / Gut Rehab)</span>
+                    </div>
+                </div>
+
+                <!-- Breakdown Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                    <div class="p-5 rounded-xl bg-slate-50 border border-slate-200">
+                        <div class="text-xs text-slate-500 font-bold uppercase" id="calc-card-1-t">Depósito Estimado (30%)</div>
+                        <div class="text-2xl font-black font-mono text-industrial mt-1" id="calc-deposit-val">$13,500</div>
+                        <div class="text-[10px] text-emerald-600 font-bold mt-1">✓ Condición para activar comisión</div>
+                    </div>
+
+                    <div class="p-5 rounded-xl bg-red-50 border border-red-200">
+                        <div class="text-xs text-red-800 font-bold uppercase" id="calc-card-2-t">Comisión Socio</div>
+                        <div class="text-2xl font-black font-mono text-red-600 mt-1" id="calc-fee-val">$4,000</div>
+                        <div class="text-[10px] text-red-700 font-medium mt-1">✓ Solo cuando el anticipo se cobra</div>
+                    </div>
+
+                    <div class="p-5 rounded-xl bg-emerald-50 border border-emerald-200">
+                        <div class="text-xs text-emerald-800 font-bold uppercase" id="calc-card-3-t">Neto para su Empresa</div>
+                        <div class="text-2xl font-black font-mono text-emerald-700 mt-1" id="calc-net-val">$41,000</div>
+                        <div class="text-[10px] text-emerald-800 font-bold mt-1">✓ 100% para materiales y mano de obra</div>
+                    </div>
+                </div>
+
+                <div class="p-4 rounded-xl bg-yellow-50 border border-yellow-200 flex items-center gap-3 text-xs text-yellow-900 font-medium">
+                    <i data-lucide="shield-check" class="w-5 h-5 text-yellow-700 shrink-0"></i>
+                    <span><strong>Tope Anual Protegido ($40,000):</strong> Una vez alcanzado el tope, la comisión se reduce a $0 y usted pasa a una tarifa plana SaaS para evitar cargos excesivos.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Guarantee & Contact -->
+    <footer class="bg-industrial text-white py-16 px-6">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-4">
+                <div class="flex items-center gap-2">
+                    <span class="text-2xl font-black text-white">Socio</span>
+                    <span class="w-1.5 h-1.5 rounded-[1px] bg-safety self-end mb-1 inline-block"></span>
+                    <span class="text-xs font-mono text-slate-400 ml-2">NYC CONSTRUCTION PLATFORM</span>
+                </div>
+                <h4 class="text-xl font-bold text-slate-100" id="foot-title">La Regla de Oro de Socio</h4>
+                <p class="text-sm text-slate-400 leading-relaxed max-w-md" id="foot-desc">
+                    Si el cliente no deposita el anticipo en su cuenta bancaria comercial, Socio cobra $0.00. Usted mantiene el control total de sus licencias, seguros y cuadrillas.
+                </p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-end">
+                <a href="https://wa.me/19175550199?text=Hola%20Socio,%20quiero%20hablar%20con%20un%20operador%20de%20construccion%20en%20NYC." target="_blank" class="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-[#25D366] text-white font-black text-sm uppercase hover:bg-[#20ba5a] shadow-lg transition-all">
+                    <i data-lucide="message-square" class="w-5 h-5"></i>
+                    <span id="foot-cta">Hablar con un Operador en NYC</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Logic Script: Calculator + Language Toggle -->
+    <script>
+        let currentLang = 'es';
+
+        const DICT = {
+            es: {
+                toggle: 'English',
+                navCta: 'WhatsApp Directo',
+                heroBadge: 'SISTEMA DE ADQUISICIÓN DE PROYECTOS · NYC',
+                headline: 'Más Contratos de Remodelación y Construcción.<br><span class="text-blueprint underline decoration-safety decoration-4 underline-offset-8">Sin cobrarle por adelantado.</span>',
+                desc: 'Socio implementa un <strong>Sistema de Gestión de Prospectos Bilingüe</strong> que conecta llamadas y dueños de propiedades directamente a su WhatsApp. Solo cobramos comisión cuando su cliente deposita el anticipo en QuickBooks.',
+                ctaMain: 'Cotizar Proyecto por WhatsApp',
+                ctaSub: 'Ver Calculadora de Comisión',
+                stat1: 'Depósitos Verificados',
+                stat2: 'Tiempo Respuesta',
+                stat3: 'Permisos DOB NYC',
+                stat4: 'Costo por Adelantado',
+                featMainTitle: 'Diseñado para el Flujo de Caja Real del Contratista',
+                featMainSub: 'Eliminamos software inútil para enfocar cuadrillas en proyectos comerciales y residenciales de alto margen.',
+                feat1Title: 'Cierre Rápido vía WhatsApp',
+                feat1Desc: 'Propietarios en NYC no abren correos electrónicos. Enviamos cotizaciones y seguimiento en 3 toques bilingües directo a WhatsApp en menos de 90 segundos.',
+                feat2Title: 'Atribución Contra Depósito QuickBooks',
+                feat2Desc: 'La comisión solo se dispara cuando el anticipo inicial del 20–30% se acredita en su cuenta bancaria. Cero cobros por estimados perdidos.',
+                feat3Title: 'Radar de Permisos DOB de NYC',
+                feat3Desc: 'Monitoreamos en tiempo real las emisiones de permisos del DOB NOW / BIS en Queens, Brooklyn, Bronx y Manhattan para contactar propietarios antes que nadie.',
+                calcTitle: 'Calculadora de Comisión por Tramos',
+                calcSliderLabel: 'Valor Total del Contrato de Construcción:',
+                calcRateLabel: 'Tasa Efectiva:',
+                card1T: 'Depósito Estimado (30%)',
+                card2T: 'Comisión Socio',
+                card3T: 'Neto para su Empresa',
+                footTitle: 'La Regla de Oro de Socio',
+                footDesc: 'Si el cliente no deposita el anticipo en su cuenta bancaria comercial, Socio cobra $0.00. Usted mantiene el control total de sus licencias, seguros y cuadrillas.',
+                footCta: 'Hablar con un Operador en NYC',
+            },
+            en: {
+                toggle: 'Español',
+                navCta: 'Launch WhatsApp',
+                heroBadge: 'PROJECT ACQUISITION ENGINE · NYC',
+                headline: 'High-Ticket Renovation & Framing Contracts.<br><span class="text-blueprint underline decoration-safety decoration-4 underline-offset-8">Zero upfront fees. Paid on deposits.</span>',
+                desc: 'Socio deploys a <strong>Bilingual Lead Management System</strong> connecting property owners directly to your WhatsApp. We only earn our commission once the client clears the initial project deposit in QuickBooks.',
+                ctaMain: 'Launch WhatsApp Dispatch',
+                ctaSub: 'Simulate Commission Tiers',
+                stat1: 'Contract Volume',
+                stat2: 'Lead Response Time',
+                stat3: 'DOB Permits Scanned',
+                stat4: 'Upfront Cost',
+                featMainTitle: 'Engineered for Real Contractor Cash Flow',
+                featMainSub: 'No SaaS bloat. Just direct high-ticket renovation and commercial drywall contracts.',
+                feat1Title: 'WhatsApp-First Estimating',
+                feat1Desc: 'Homeowners in NYC ignore email. We deliver 3-touch follow-ups directly to WhatsApp within 90 seconds.',
+                feat2Title: 'QuickBooks Cleared-Deposit Ledger',
+                feat2Desc: 'Performance proof requires cleared bank deposits. Zero fees for lost bids, ghost leads, or delays.',
+                feat3Title: 'NYC DOB Permit Feeds',
+                feat3Desc: 'Ingesting daily DOB NOW filings to identify high-budget additions and full gut renovations across NYC.',
+                calcTitle: 'Tiered Project Commission Simulator',
+                calcSliderLabel: 'Total Construction Contract Value:',
+                calcRateLabel: 'Effective Fee:',
+                card1T: 'Deposit Required (30%)',
+                card2T: 'Socio Commission',
+                card3T: 'Contractor Retained',
+                footTitle: 'The Socio Contractor Pact',
+                footDesc: 'No retainer. No setup fee. If your customer deposit does not clear in your bank account, you pay $0.00.',
+                footCta: 'Speak with an NYC Operator',
+            }
+        };
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'es' ? 'en' : 'es';
+            const t = DICT[currentLang];
+
+            document.getElementById('lang-label').textContent = t.toggle;
+            document.getElementById('nav-cta').textContent = t.navCta;
+            document.getElementById('hero-badge').textContent = t.heroBadge;
+            document.getElementById('hero-headline').innerHTML = t.headline;
+            document.getElementById('hero-desc').innerHTML = t.desc;
+            document.getElementById('hero-cta-main').textContent = t.ctaMain;
+            document.getElementById('hero-cta-sub').textContent = t.ctaSub;
+            document.getElementById('stat-1').textContent = t.stat1;
+            document.getElementById('stat-2').textContent = t.stat2;
+            document.getElementById('stat-3').textContent = t.stat3;
+            document.getElementById('stat-4').textContent = t.stat4;
+            document.getElementById('feat-main-title').textContent = t.featMainTitle;
+            document.getElementById('feat-main-sub').textContent = t.featMainSub;
+            document.getElementById('feat-1-title').textContent = t.feat1Title;
+            document.getElementById('feat-1-desc').textContent = t.feat1Desc;
+            document.getElementById('feat-2-title').textContent = t.feat2Title;
+            document.getElementById('feat-2-desc').textContent = t.feat2Desc;
+            document.getElementById('feat-3-title').textContent = t.feat3Title;
+            document.getElementById('feat-3-desc').textContent = t.feat3Desc;
+            document.getElementById('calc-title').textContent = t.calcTitle;
+            document.getElementById('calc-slider-label').textContent = t.calcSliderLabel;
+            document.getElementById('calc-effective-label').textContent = t.calcRateLabel;
+            document.getElementById('calc-card-1-t').textContent = t.card1T;
+            document.getElementById('calc-card-2-t').textContent = t.card2T;
+            document.getElementById('calc-card-3-t').textContent = t.card3T;
+            document.getElementById('foot-title').textContent = t.footTitle;
+            document.getElementById('foot-desc').textContent = t.footDesc;
+            document.getElementById('foot-cta').textContent = t.footCta;
+        }
+
+        // Tiered Calculation (12% <$10k, 8% $10k-$50k, 5% >$50k)
+        function calculateCommission(val) {
+            let fee = 0;
+            if (val <= 10000) {
+                fee = val * 0.12;
+            } else if (val <= 50000) {
+                fee = (10000 * 0.12) + ((val - 10000) * 0.08);
+            } else {
+                fee = (10000 * 0.12) + (40000 * 0.08) + ((val - 50000) * 0.05);
+            }
+            return fee;
+        }
+
+        const slider = document.getElementById('contract-slider');
+        function updateCalc() {
+            const val = Number(slider.value);
+            const fee = calculateCommission(val);
+            const deposit = val * 0.30;
+            const net = val - fee;
+            const rate = ((fee / val) * 100).toFixed(1);
+
+            document.getElementById('calc-amount-display').textContent = '$' + val.toLocaleString();
+            document.getElementById('calc-deposit-val').textContent = '$' + Math.round(deposit).toLocaleString();
+            document.getElementById('calc-fee-val').textContent = '$' + Math.round(fee).toLocaleString();
+            document.getElementById('calc-net-val').textContent = '$' + Math.round(net).toLocaleString();
+            document.getElementById('calc-rate-val').textContent = rate + '%';
+        }
+
+        slider.addEventListener('input', updateCalc);
+        updateCalc();
+        lucide.createIcons();
+    </script>
+</body>
+</html>

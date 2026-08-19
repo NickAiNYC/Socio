@@ -1359,6 +1359,9 @@ app.get('/api/rli/export', (req, res) => {
   return res.send([header.join(','), ...lines].join('\n'));
 });
 
+// Construction Vertical (Contratistas) API Routes
+require('./lib/construction-routes.cjs')(app, getDb, saveDb);
+
 // Admin login: POST key, verify with timing-safe compare, issue 12h httpOnly session cookie.
 // The key is never accepted as a URL query parameter — that pattern leaked in older builds.
 app.post('/admin/analytics/login', (req, res) => {

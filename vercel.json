@@ -32,6 +32,10 @@
       "dest": "website/recovery-index.html"
     },
     {
+      "src": "/contratistas/?",
+      "dest": "website/contratistas.html"
+    },
+    {
       "src": "/(.*)",
       "dest": "website/$1"
     }
