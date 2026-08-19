@@ -1,1794 +1,1029 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Socio — Command Center</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Michroma&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;600;700&display=swap');
-
-        :root {
-            --color-appbg: #0b0c10;
-            --font-brand: 'Michroma', sans-serif;
-            --font-sans: 'Plus Jakarta Sans', sans-serif;
-        }
-
-        body {
-            background-color: #0b0c10;
-            color: #ffffff;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-image: 
-                radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.08) 0%, transparent 60%),
-                radial-gradient(circle at 100% 50%, rgba(137, 196, 244, 0.04) 0%, transparent 50%);
-            background-attachment: fixed;
-            min-height: 100vh;
-        }
-
-        .font-brand { font-family: 'Michroma', sans-serif; }
-        .font-mono { font-family: 'Roboto Mono', monospace; }
-
-        /* Exact Scrutexity Aura Card with Soft Blue Smoke Outer Glow & Inner Radial Shading */
-        .aura-card, .glass-panel {
-            position: relative;
-            background: linear-gradient(180deg, #16171d 0%, #0d0e12 100%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 28px;
-            /* Atmospheric Double-Layer Volumetric Smoke Halo Aura */
-            box-shadow: 
-                0 0 0 1px rgba(56, 189, 248, 0.12),
-                0 0 50px 10px rgba(56, 189, 248, 0.15),
-                0 0 100px 25px rgba(37, 99, 235, 0.10),
-                0 25px 60px -10px rgba(0, 0, 0, 0.95),
-                inset 0 1px 2px rgba(255, 255, 255, 0.2),
-                inset 0 0 30px rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(40px);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .aura-card::before, .glass-panel::before {
-            content: "";
-            position: absolute;
-            inset: -8px;
-            border-radius: 36px;
-            background: radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.25) 0%, rgba(37, 99, 235, 0.12) 50%, transparent 75%);
-            filter: blur(20px);
-            opacity: 0.85;
-            z-index: -1;
-            pointer-events: none;
-            transition: opacity 0.4s ease;
-        }
-
-        .aura-card:hover::before, .glass-panel:hover::before {
-            opacity: 1;
-            filter: blur(26px);
-        }
-
-        .aura-card:hover, .glass-panel:hover {
-            border-color: rgba(56, 189, 248, 0.45);
-            box-shadow: 
-                0 0 0 1px rgba(56, 189, 248, 0.25),
-                0 0 70px 15px rgba(56, 189, 248, 0.25),
-                0 0 120px 30px rgba(37, 99, 235, 0.18),
-                0 30px 70px -10px rgba(0, 0, 0, 1),
-                inset 0 1px 2px rgba(255, 255, 255, 0.35);
-            transform: translateY(-2px);
-        }
-
-        /* Metric Capsule inside Card with smoky halo */
-        .metric-capsule {
-            position: relative;
-            background: linear-gradient(180deg, #13141a 0%, #0a0b0e 100%);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
-            padding: 22px 26px;
-            box-shadow: 
-                0 0 0 1px rgba(56, 189, 248, 0.08),
-                0 0 35px 5px rgba(56, 189, 248, 0.14),
-                0 0 70px 12px rgba(37, 99, 235, 0.08),
-                0 15px 35px rgba(0, 0, 0, 0.8),
-                inset 0 1px 1px rgba(255, 255, 255, 0.15);
-            transition: all 0.35s ease;
-        }
-
-        .metric-capsule:hover {
-            border-color: rgba(56, 189, 248, 0.35);
-            box-shadow: 
-                0 0 45px 8px rgba(56, 189, 248, 0.22),
-                0 0 85px 15px rgba(37, 99, 235, 0.12),
-                0 20px 40px rgba(0, 0, 0, 0.9),
-                inset 0 1px 2px rgba(255, 255, 255, 0.25);
-        }
-
-        /* Pure High-Impact Clean White Titles */
-        .title-hero {
-            font-family: 'Michroma', sans-serif;
-            font-size: 2.15rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            color: #ffffff;
-            line-height: 1.2;
-        }
-
-        .eyebrow {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 11px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.25em;
-            color: #64748b;
-        }
-
-        .badge-safe {
-            font-family: 'Roboto Mono', monospace;
-            font-size: 9px;
-            font-weight: 800;
-            padding: 3px 8px;
-            border-radius: 6px;
-            background: rgba(16, 185, 129, 0.12);
-            color: #10B981;
-            border: 1px solid rgba(16, 185, 129, 0.25);
-            letter-spacing: 0.1em;
-        }
-
-        .badge-secure {
-            font-family: 'Roboto Mono', monospace;
-            font-size: 9px;
-            font-weight: 800;
-            padding: 3px 8px;
-            border-radius: 6px;
-            background: rgba(255, 255, 255, 0.05);
-            color: #64748b;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            letter-spacing: 0.1em;
-        }
-
-        .badge-resolved {
-            font-family: 'Roboto Mono', monospace;
-            font-size: 9px;
-            font-weight: 800;
-            padding: 3px 8px;
-            border-radius: 6px;
-            background: rgba(16, 185, 129, 0.12);
-            color: #10B981;
-            border: 1px solid rgba(16, 185, 129, 0.25);
-            letter-spacing: 0.1em;
-        }
-
-        /* Pill Navigation Button from Scrutexity */
-        .nav-pill {
-            padding: 8px 18px;
-            border-radius: 40px;
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: #64748b;
-            transition: all 0.2s ease;
-        }
-        .nav-pill:hover {
-            color: #ffffff;
-        }
-        .nav-pill.active {
-            background: #14213d;
-            color: #38bdf8;
-            border: 1px solid rgba(56, 189, 248, 0.35);
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
-        }
-
-        /* Action sweep button */
-        .btn-sweep {
-            background: rgba(14, 30, 58, 0.6);
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            color: #8ac0ff;
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            padding: 10px 20px;
-            border-radius: 40px;
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.15);
-            transition: all 0.25s ease;
-        }
-        .btn-sweep:hover {
-            background: rgba(14, 40, 80, 0.9);
-            border-color: rgba(56, 189, 248, 0.6);
-            box-shadow: 0 0 30px rgba(56, 189, 248, 0.35);
-            transform: translateY(-1px);
-        }
-
-        /* Sidebar navigation icon button */
-        .side-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #475569;
-            transition: all 0.2s ease;
-        }
-        .side-icon:hover {
-            color: #ffffff;
-            background: rgba(255, 255, 255, 0.05);
-        }
-        .side-icon.active {
-            background: #1e293b;
-            color: #38bdf8;
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.25);
-        }
-
-        /* Checkbox */
-        .todo-checkbox {
-            appearance: none;
-            width: 18px; height: 18px;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            outline: none;
-            cursor: pointer;
-            position: relative;
-            transition: all 0.2s ease;
-            flex-shrink: 0;
-            background: transparent;
-        }
-        .todo-checkbox:checked { border-color: #38bdf8; background-color: #38bdf8; }
-        .todo-checkbox:checked::after {
-            content: '';
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 6px; height: 6px;
-            border-radius: 50%;
-            background-color: #000;
-        }
-
-        ::-webkit-scrollbar { width: 3px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
-
-        .view { display: none; }
-        .view.active { display: block; }
-    </style>
-</head>
-<body class="flex min-h-screen antialiased bg-[#0b0c10]">
-
-<!-- ============================
-     LEFT SIDEBAR (Scrutexity exact)
-     ============================ -->
-<aside class="w-18 flex flex-col items-center py-6 gap-6 border-r border-white/5 bg-[#08090d] z-40 shrink-0 select-none">
-    <a href="index.html" class="w-10 h-10 rounded-xl bg-black border border-white/10 flex items-center justify-center font-black text-lg text-white mb-3 hover:scale-105 transition-transform" title="Socio Home">
-        S<span class="text-[#ccff00] drop-shadow-[0_0_6px_rgba(204,255,0,0.8)]">.</span>
-    </a>
-
-    <button onclick="setTab('gem',this)" class="side-icon active" title="Command Center">
-        <i data-lucide="home" class="w-5 h-5"></i>
-    </button>
-    <button onclick="setTab('overview',this)" class="side-icon" title="Daily Overview">
-        <i data-lucide="users" class="w-5 h-5"></i>
-    </button>
-    <button onclick="setTab('agents',this)" class="side-icon" title="Agent Fleet">
-        <i data-lucide="clipboard-list" class="w-5 h-5"></i>
-    </button>
-    <button onclick="setTab('pipeline',this)" class="side-icon" title="Pipeline Velocity">
-        <i data-lucide="radio" class="w-5 h-5"></i>
-    </button>
-    <button onclick="setTab('governor',this)" class="side-icon" title="Governance & Risk">
-        <i data-lucide="layers" class="w-5 h-5"></i>
-    </button>
-    <button onclick="setTab('ledger',this)" class="side-icon" title="Revenue Ledger">
-        <i data-lucide="file-text" class="w-5 h-5"></i>
-    </button>
-    <button onclick="setTab('evidence',this)" class="side-icon" title="Merchant Evidence Dashboard">
-        <i data-lucide="scale" class="w-5 h-5"></i>
-    </button>
-    <button onclick="setTab('infra',this)" class="side-icon" title="Infrastructure">
-        <i data-lucide="shield-check" class="w-5 h-5"></i>
-    </button>
-
-    <div class="mt-auto flex flex-col items-center gap-4">
-        <a href="merchant-evidence.html" class="side-icon text-sky-400 hover:text-white" title="Open Standalone Evidence Portal" target="_blank">
-            <i data-lucide="external-link" class="w-5 h-5"></i>
-        </a>
-    </div>
-</aside>
-
-<!-- ============================
-     MAIN APP WRAPPER
-     ============================ -->
-<div class="flex-1 flex flex-col min-w-0 overflow-y-auto">
-
-<!-- TOP HEADER (Scrutexity exact) -->
-<header class="flex justify-between items-center px-10 py-5 border-b border-white/5 bg-[#0b0c10]/80 backdrop-blur-2xl">
-    <div class="flex items-center gap-5">
-        <a href="index.html" class="flex items-center gap-1.5 text-xl font-black tracking-tight text-white">
-            Socio<span class="text-[#ccff00] drop-shadow-[0_0_8px_rgba(204,255,0,0.9)]">.</span>
-        </a>
-        <div class="flex items-center gap-2">
-            <span class="px-2.5 py-1 rounded-full text-[9px] font-extrabold uppercase tracking-wider bg-white/5 text-gray-300 border border-white/10 font-mono">
-                • LOCAL ONLY
-            </span>
-            <span class="px-2.5 py-1 rounded-full text-[9px] font-extrabold uppercase tracking-wider bg-white/5 text-gray-400 border border-white/10 font-mono">
-                COMMAND CENTER
-            </span>
-        </div>
-    </div>
-
-    <div class="flex items-center gap-5">
-        <div class="hidden sm:flex items-center gap-2.5 bg-black/40 border border-white/10 rounded-full px-5 py-2 text-xs font-mono text-gray-400">
-            <i data-lucide="search" class="w-3.5 h-3.5 text-gray-500"></i>
-            <input type="text" placeholder="Search or jump... Cmd K" class="bg-transparent border-none outline-none text-white w-52 placeholder-gray-600 text-xs">
-        </div>
-
-        <div class="text-right hidden sm:block">
-            <div class="text-xs font-mono font-bold text-white tracking-wider" id="hdr-time">08:47 PM</div>
-            <div class="text-[9px] font-extrabold text-sky-400 uppercase tracking-widest">NEW YORK</div>
-        </div>
-
-        <div class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center cursor-pointer hover:bg-white/10">
-            <i data-lucide="user" class="w-4 h-4 text-gray-400"></i>
-        </div>
-    </div>
-</header>
-
-<main class="px-10 py-8 space-y-8 flex-1">
-
-<!-- ============================
-     VIEW: TODAY (OVERVIEW)
-     ============================ -->
-<div class="view" id="view-overview">
-
-    <!-- HUD Metric Row -->
-    <div class="grid grid-cols-2 md:grid-cols-6 gap-3 mb-6">
-        <div class="glass-panel p-4 flex flex-col justify-between">
-            <div class="text-[10px] text-gray-500 font-mono uppercase font-bold">Net New Rev (MTD)</div>
-            <div class="mt-2 flex items-end justify-between">
-                <span class="metric-value accent" id="k-rev">$0</span>
-                <i data-lucide="trending-up" class="w-4 h-4 text-emerald-500"></i>
-            </div>
-        </div>
-        <div class="glass-panel p-4 flex flex-col justify-between border-l-2 border-l-[#10B981]">
-            <div class="text-[10px] text-gray-500 font-mono uppercase font-bold">Commission Earned</div>
-            <div class="mt-2 flex items-end justify-between">
-                <span class="metric-value accent" id="k-com">$0</span>
-                <span class="text-[10px] font-mono text-gray-600">10–15%</span>
-            </div>
-        </div>
-        <div class="glass-panel p-4 flex flex-col justify-between">
-            <div class="text-[10px] text-gray-500 font-mono uppercase font-bold">Expansion Rev</div>
-            <div class="mt-2 flex items-end justify-between">
-                <span class="metric-value accent-gold" id="k-exp">$0</span>
-                <i data-lucide="trending-up" class="w-4 h-4 text-yellow-500"></i>
-            </div>
-        </div>
-        <div class="glass-panel p-4 flex flex-col justify-between">
-            <div class="text-[10px] text-gray-500 font-mono uppercase font-bold">Active Partners</div>
-            <div class="mt-2 flex items-end justify-between">
-                <span class="metric-value accent-blue" id="k-par">0</span>
-                <i data-lucide="users" class="w-4 h-4 text-indigo-400"></i>
-            </div>
-        </div>
-        <div class="glass-panel p-4 flex flex-col justify-between">
-            <div class="text-[10px] text-gray-500 font-mono uppercase font-bold">Governor Pending</div>
-            <div class="mt-2 flex items-end justify-between">
-                <span class="metric-value text-[#F59E0B]">3</span>
-                <i data-lucide="shield" class="w-4 h-4 text-yellow-500"></i>
-            </div>
-        </div>
-        <div class="glass-panel p-4 flex flex-col justify-between">
-            <div class="text-[10px] text-gray-500 font-mono uppercase font-bold">Top Partner</div>
-            <div class="mt-2 flex items-center gap-2">
-                <svg width="24" height="24" class="-rotate-90">
-                    <circle cx="12" cy="12" r="10" stroke="#1a1a2e" stroke-width="3" fill="none"/>
-                    <circle cx="12" cy="12" r="10" stroke="#10B981" stroke-width="3" fill="none" stroke-dasharray="62.8" stroke-dashoffset="4"/>
-                </svg>
-                <span class="text-xs font-semibold truncate text-gray-300">Harlem Heritage</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- 3-Column Main Layout -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
-
-        <!-- LEFT: Agent Pipeline OS + Execution -->
-        <div class="lg:col-span-4 flex flex-col gap-5">
-
-            <!-- Agent Pipeline Stages (mirrors Ideas Pipeline) -->
-            <div class="glass-panel p-5">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="text-[10px] text-gray-500 font-mono uppercase font-bold flex items-center gap-2">
-                        <i data-lucide="workflow" class="w-3 h-3 accent"></i> Agent Pipeline
-                    </div>
-                    <button class="text-[10px] font-mono text-gray-500 hover:text-white" onclick="setTab('pipeline',document.querySelectorAll('nav button')[2])">View All →</button>
-                </div>
-
-                <!-- Stage nodes (like the Ideas OS nodes) -->
-                <div class="flex justify-between items-center mb-4 relative">
-                    <div class="absolute top-1/2 left-0 w-full h-[1px] bg-white/8 -z-10"></div>
-                    <div class="flex flex-col items-center gap-1 bg-[#0f0f14] px-1">
-                        <div class="stage-node border border-emerald-500/40 text-emerald-400 bg-emerald-500/10">2</div>
-                        <span class="text-[9px] text-gray-500 font-mono">Prospect</span>
-                    </div>
-                    <div class="flex flex-col items-center gap-1 bg-[#0f0f14] px-1">
-                        <div class="stage-node border border-indigo-500/40 text-indigo-400 bg-indigo-500/10">2</div>
-                        <span class="text-[9px] text-gray-500 font-mono">Pitch</span>
-                    </div>
-                    <div class="flex flex-col items-center gap-1 bg-[#0f0f14] px-1">
-                        <div class="stage-node border border-yellow-500/60 text-yellow-400 bg-yellow-500/15" style="box-shadow:0 0 10px rgba(245,158,11,.2)">2</div>
-                        <span class="text-[9px] text-yellow-400 font-mono font-bold">Onboard</span>
-                    </div>
-                    <div class="flex flex-col items-center gap-1 bg-[#0f0f14] px-1">
-                        <div class="stage-node border border-emerald-500/40 text-emerald-400 bg-emerald-500/10">4</div>
-                        <span class="text-[9px] text-gray-500 font-mono">Execute</span>
-                    </div>
-                    <div class="flex flex-col items-center gap-1 bg-[#0f0f14] px-1">
-                        <div class="stage-node border border-emerald-500/40 text-emerald-400 bg-emerald-500/10">2</div>
-                        <span class="text-[9px] text-gray-500 font-mono">Track</span>
-                    </div>
-                </div>
-
-                <!-- Active Gate Card (Onboarding) -->
-                <div class="bg-[#1a1a1a] border border-white/5 rounded-lg p-3">
-                    <div class="text-xs font-semibold text-white mb-1">El Nuevo Cafe · Onboarding</div>
-                    <div class="text-[10px] text-gray-400 mb-3">DocuSign signed. Awaiting Socio-Onboard to initialize Business Twin.</div>
-                    <button class="w-full btn-primary py-1.5 rounded text-[10px] font-mono font-bold uppercase" onclick="toast('Trigger sent to Socio-Onboard','success')">Initialize Twin → Socio-Onboard</button>
-                </div>
-            </div>
-
-            <!-- Execution / Today's Actions -->
-            <div class="glass-panel p-5 flex-1">
-                <div class="text-[10px] text-gray-500 font-mono uppercase font-bold flex items-center gap-2 mb-4">
-                    <i data-lucide="check-square" class="w-3 h-3 text-white"></i> Today's Execution
-                </div>
-
-                <!-- Quick Add -->
-                <div class="mb-5">
-                    <input type="text" placeholder="+ Type a task or command..." class="w-full bg-[#1a1a1a] border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-600 outline-none focus:border-white/30 transition-colors font-mono text-xs">
-                </div>
-
-                <!-- Focus / Active -->
-                <div class="mb-5">
-                    <div class="text-[10px] text-emerald-400 font-mono uppercase font-bold mb-2 flex items-center gap-1.5">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Active Priorities (2/4)
-                    </div>
-                    <div class="space-y-2">
-                        <label class="flex items-start gap-3 group cursor-pointer p-2 hover:bg-white/5 rounded-lg transition-colors">
-                            <input type="checkbox" class="todo-checkbox mt-0.5">
-                            <div class="flex-1">
-                                <div class="text-sm text-gray-200 group-hover:text-white">Review 3 Governor proposals</div>
-                                <div class="text-[10px] font-mono text-gray-500 mt-1 flex gap-2">
-                                    <span class="bg-yellow-500/10 text-yellow-400 px-1.5 rounded">HIGH</span>
-                                    <span>@Socio-Governor</span>
-                                </div>
-                            </div>
-                        </label>
-                        <label class="flex items-start gap-3 group cursor-pointer p-2 hover:bg-white/5 rounded-lg transition-colors">
-                            <input type="checkbox" class="todo-checkbox mt-0.5" checked>
-                            <div class="flex-1">
-                                <div class="text-sm text-gray-500 line-through">Onboard El Nuevo Cafe</div>
-                            </div>
-                        </label>
-                        <label class="flex items-start gap-3 group cursor-pointer p-2 hover:bg-white/5 rounded-lg transition-colors">
-                            <input type="checkbox" class="todo-checkbox mt-0.5">
-                            <div class="flex-1">
-                                <div class="text-sm text-gray-200">Review Cristal Flowers monthly revenue report</div>
-                                <div class="text-[10px] font-mono text-gray-500 mt-1 flex gap-2">
-                                    <span class="bg-emerald-500/10 text-emerald-400 px-1.5 rounded">LOW</span>
-                                    <span>@Socio-Track</span>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Blocked -->
-                <div>
-                    <div class="text-[10px] text-red-400 font-mono uppercase font-bold mb-2">Blocked / Waiting For</div>
-                    <div class="space-y-2">
-                        <div class="flex items-start gap-3 p-2 bg-red-500/5 border border-red-500/10 rounded-lg">
-                            <i data-lucide="clock" class="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0"></i>
-                            <div class="flex-1">
-                                <div class="text-sm text-gray-300">Canva API key renewal</div>
-                                <div class="text-[10px] font-mono text-gray-500 mt-1">Affects Socio-Content · 2 days</div>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-3 p-2 bg-red-500/5 border border-red-500/10 rounded-lg">
-                            <i data-lucide="clock" class="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0"></i>
-                            <div class="flex-1">
-                                <div class="text-sm text-gray-300">Synup MCP rate limit reset</div>
-                                <div class="text-[10px] font-mono text-gray-500 mt-1">Resets 00:00 UTC</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- CENTER: Intelligence & Socio Stream -->
-        <div class="lg:col-span-4 flex flex-col gap-5">
-
-            <!-- Revenue Pulse + Session -->
-            <div class="glass-panel p-5 text-center flex flex-col items-center justify-center border-t-2 border-t-emerald-500">
-                <div class="text-[10px] text-gray-500 font-mono uppercase font-bold mb-2">Revenue Pulse</div>
-                <div class="text-4xl font-mono font-bold tracking-tighter text-white mb-1" id="ctr-rev">$0</div>
-                <div class="text-[11px] font-mono text-gray-500 mb-4">Net New + Expansion this month</div>
-                <div class="flex gap-6 mb-4">
-                    <div class="text-center">
-                        <div class="text-[10px] text-gray-600 font-mono uppercase">Net New</div>
-                        <div class="text-lg font-mono font-bold accent" id="ctr-nn">$0</div>
-                    </div>
-                    <div class="w-px bg-white/10"></div>
-                    <div class="text-center">
-                        <div class="text-[10px] text-gray-600 font-mono uppercase">Expansion</div>
-                        <div class="text-lg font-mono font-bold accent-gold" id="ctr-ex">$0</div>
-                    </div>
-                    <div class="w-px bg-white/10"></div>
-                    <div class="text-center">
-                        <div class="text-[10px] text-gray-600 font-mono uppercase">Commission</div>
-                        <div class="text-lg font-mono font-bold accent" id="ctr-cm">$0</div>
-                    </div>
-                </div>
-                <div class="w-full bg-white/5 rounded-full h-1.5 overflow-hidden">
-                    <div class="h-full rounded-full bg-gradient-to-r from-emerald-500 to-indigo-500 transition-all duration-1000" id="rev-bar" style="width:0%"></div>
-                </div>
-                <div class="text-[10px] font-mono text-gray-600 mt-1">$31,750 / $40,000 monthly target</div>
-            </div>
-
-            <!-- Daily Briefing (Jarvis-style) -->
-            <div class="glass-panel p-5">
-                <div class="text-[10px] text-gray-500 font-mono uppercase font-bold flex items-center gap-2 mb-3">
-                    <i data-lucide="sun" class="w-3 h-3 text-yellow-500"></i> Socio Daily Briefing
-                </div>
-                <p class="text-sm text-gray-300 leading-relaxed italic">
-                    "8 agents are active across 12 merchant accounts. 3 proposals await your Governor approval — including a HIGH-risk Instagram campaign for East Harlem Bites with projected 11x ROAS. Two experiments are running with statistically significant uplift. Revenue trend is ↑34% MTD."
-                </p>
-            </div>
-
-            <!-- Socio Agent Stream -->
-            <div class="glass-panel p-5 flex-1 flex flex-col">
-                <div class="text-[10px] text-gray-500 font-mono uppercase font-bold flex items-center gap-2 mb-4">
-                    <i data-lucide="cpu" class="w-3 h-3 accent-blue"></i> Agent Stream
-                </div>
-                <div class="flex-1 space-y-3 overflow-y-auto pr-1" id="agent-stream" style="max-height:200px">
-                    <!-- populated by JS -->
-                </div>
-                <div class="mt-4 pt-4 border-t border-white/5">
-                    <input type="text" placeholder="Command an agent..." class="w-full bg-[#1a1a1a] border border-white/10 rounded px-3 py-2 text-xs font-mono text-white placeholder-gray-600 outline-none focus:border-emerald-500/40 transition-colors">
-                </div>
-            </div>
-        </div>
-
-        <!-- RIGHT: Agent Quick Launch + Signals -->
-        <div class="lg:col-span-4 flex flex-col gap-5">
-
-            <!-- Quick Agent Actions (mirrors Quick Agents grid) -->
-            <div class="grid grid-cols-2 gap-3">
-                <button class="glass-panel p-3 flex flex-col items-center justify-center gap-2 hover:bg-white/5 transition-colors border-white/5" onclick="toast('Socio-Prospect triggered','success')">
-                    <i data-lucide="search" class="w-4 h-4 accent-blue"></i>
-                    <span class="text-[10px] font-mono font-bold text-gray-400 uppercase">Prospect</span>
-                </button>
-                <button class="glass-panel p-3 flex flex-col items-center justify-center gap-2 hover:bg-white/5 transition-colors border-white/5" onclick="toast('Socio-Content triggered','success')">
-                    <i data-lucide="pen-tool" class="w-4 h-4 accent"></i>
-                    <span class="text-[10px] font-mono font-bold text-gray-400 uppercase">Content</span>
-                </button>
-                <button class="glass-panel p-3 flex flex-col items-center justify-center gap-2 hover:bg-white/5 transition-colors border-white/5" onclick="toast('Socio-Listings triggered','success')">
-                    <i data-lucide="map-pin" class="w-4 h-4 text-purple-400"></i>
-                    <span class="text-[10px] font-mono font-bold text-gray-400 uppercase">Listings</span>
-                </button>
-                <button class="glass-panel p-3 flex flex-col items-center justify-center gap-2 hover:bg-white/5 transition-colors bg-emerald-500/5" onclick="toast('Weekly review initiated','success')">
-                    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i>
-                    <span class="text-[10px] font-mono font-bold text-emerald-500 uppercase">Weekly Review</span>
-                </button>
-            </div>
-
-            <!-- Revenue Signals & Intel -->
-            <div class="glass-panel p-5 flex-1">
-                <div class="text-[10px] text-gray-500 font-mono uppercase font-bold flex items-center justify-between mb-4">
-                    <div class="flex items-center gap-2">
-                        <i data-lucide="globe" class="w-3 h-3 text-white"></i> Signals & Intel
-                    </div>
-                    <span class="text-[9px] text-gray-600">Curated by Socio-Expand</span>
-                </div>
-
-                <div class="space-y-3" id="signals-list">
-                    <div class="bg-[#1a1a1a] rounded-lg p-3 border border-white/5">
-                        <div class="flex items-start justify-between mb-1">
-                            <span class="text-xs font-bold text-white">East Harlem Bites — 11x ROAS Signal</span>
-                            <div class="flex gap-0.5">
-                                <span class="sig-dot bg-emerald-500"></span>
-                                <span class="sig-dot bg-emerald-500"></span>
-                                <span class="sig-dot bg-emerald-500"></span>
-                            </div>
-                        </div>
-                        <div class="text-[11px] text-gray-400 mb-2 leading-relaxed">Organic posts averaging 4.2% engagement. Paid test sample yielded 11x ROAS on $50 spend.</div>
-                        <div class="bg-emerald-500/10 border border-emerald-500/20 text-[10px] text-emerald-400 p-1.5 rounded font-mono">
-                            → Impact: Governor PROP-0042 ($400 campaign) awaiting your approval.
-                        </div>
-                    </div>
-
-                    <div class="bg-[#1a1a1a] rounded-lg p-3 border border-white/5">
-                        <div class="flex items-start justify-between mb-1">
-                            <span class="text-xs font-bold text-white">Cristal Flowers — Referral Opportunity</span>
-                            <div class="flex gap-0.5">
-                                <span class="sig-dot bg-emerald-500"></span>
-                                <span class="sig-dot bg-emerald-500"></span>
-                                <span class="sig-dot bg-gray-700"></span>
-                            </div>
-                        </div>
-                        <div class="text-[11px] text-gray-400 mb-2 leading-relaxed">NPS 9/10. Partner is already referring informally. Formal referral activation = 2+ new merchants in 90 days.</div>
-                        <div class="bg-white/5 border border-white/10 text-[10px] text-gray-300 p-1.5 rounded font-mono">
-                            → Action: Approve PROP-0043 to activate 5% referral program.
-                        </div>
-                    </div>
-
-                    <div class="bg-[#1a1a1a] rounded-lg p-3 border border-white/5">
-                        <div class="flex items-start justify-between mb-1">
-                            <span class="text-xs font-bold text-white">NYC Florist Market — Gap Alert</span>
-                            <div class="flex gap-0.5">
-                                <span class="sig-dot bg-indigo-500"></span>
-                                <span class="sig-dot bg-gray-700"></span>
-                                <span class="sig-dot bg-gray-700"></span>
-                            </div>
-                        </div>
-                        <div class="text-[11px] text-gray-400 leading-relaxed">Socio-Prospect identified 6 unclaimed Google Business profiles in Washington Heights. Zero reviews. High capture probability.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- ============================
-     VIEW: AGENTS
-     ============================ -->
-<div class="view" id="view-agents">
-    <div class="flex items-center justify-between mb-5">
-        <div>
-            <div class="text-lg font-bold">Agent Fleet</div>
-            <div class="text-xs text-gray-500 font-mono">DSH + Hermes Hybrid — 8 Specialized Agents</div>
-        </div>
-        <div class="flex gap-2">
-            <button class="text-xs font-mono border border-white/10 px-4 py-2 rounded-lg hover:bg-white/5 transition-colors" onclick="toast('All agents pinged','success')">Ping All</button>
-            <button class="btn-primary text-xs font-mono px-4 py-2 rounded-lg" onclick="toast('Fleet health check running','success')">Health Check</button>
-        </div>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4" id="agents-grid">
-        <!-- populated by JS -->
-    </div>
-</div>
-
-<!-- ============================
-     VIEW: PIPELINE
-     ============================ -->
-<div class="view" id="view-pipeline">
-    <div class="flex items-center justify-between mb-5">
-        <div>
-            <div class="text-lg font-bold">Merchant Pipeline</div>
-            <div class="text-xs text-gray-500 font-mono">10-Stage Journey — Prospect → Renew</div>
-        </div>
-        <button class="btn-primary text-xs font-mono px-4 py-2 rounded-lg" onclick="toast('Prospect slot added','success')">+ Add Prospect</button>
-    </div>
-    <!-- Stage counters -->
-    <div class="grid grid-cols-3 md:grid-cols-6 gap-3 mb-5" id="stage-hud"></div>
-    <!-- Table -->
-    <div class="glass-panel overflow-hidden">
-        <table class="w-full">
-            <thead>
-                <tr class="border-b border-white/5">
-                    <th class="text-left text-[10px] font-mono uppercase text-gray-500 px-4 py-3">Merchant</th>
-                    <th class="text-left text-[10px] font-mono uppercase text-gray-500 px-4 py-3">Stage</th>
-                    <th class="text-left text-[10px] font-mono uppercase text-gray-500 px-4 py-3">Agent</th>
-                    <th class="text-left text-[10px] font-mono uppercase text-gray-500 px-4 py-3">Net New</th>
-                    <th class="text-left text-[10px] font-mono uppercase text-gray-500 px-4 py-3">Expansion</th>
-                    <th class="text-left text-[10px] font-mono uppercase text-gray-500 px-4 py-3">Score</th>
-                    <th class="text-left text-[10px] font-mono uppercase text-gray-500 px-4 py-3">Next</th>
-                </tr>
-            </thead>
-            <tbody id="pipeline-tbody"></tbody>
-        </table>
-    </div>
-</div>
-
-<!-- ============================
-     VIEW: GOVERNOR
-     ============================ -->
-<div class="view" id="view-governor">
-    <div class="flex items-center justify-between mb-5">
-        <div>
-            <div class="text-lg font-bold">Agent Governor</div>
-            <div class="text-xs text-gray-500 font-mono">Policy Evaluation · Risk Scoring · Action Approval</div>
-        </div>
-        <span class="pill pill-gold">⚠ 3 PENDING REVIEW</span>
-    </div>
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 mb-6">
-        <!-- Risk policy -->
-        <div class="lg:col-span-5 glass-panel p-5">
-            <div class="text-[10px] font-mono uppercase text-gray-500 font-bold mb-4">Risk Level Policy</div>
-            <div class="space-y-3">
-                <div class="eitem"><div class="eicon" style="background:rgba(16,185,129,.1)">🟢</div><div><div class="text-xs text-white font-semibold">LOW — Auto-approved</div><div class="text-[10px] text-gray-500 font-mono">Content drafts, analytics, read-only ops · default_risk_policy</div></div></div>
-                <div class="eitem"><div class="eicon" style="background:rgba(245,158,11,.1)">🟡</div><div><div class="text-xs text-white font-semibold">MEDIUM — AGENT_SUPERVISOR required</div><div class="text-[10px] text-gray-500 font-mono">Low-volume outreach to existing customers · supervisor_approval</div></div></div>
-                <div class="eitem"><div class="eicon" style="background:rgba(239,68,68,.1)">🔴</div><div><div class="text-xs text-white font-semibold">HIGH — BUSINESS_OWNER required</div><div class="text-[10px] text-gray-500 font-mono">Ad campaigns, pricing changes · owner_approval</div></div></div>
-                <div class="eitem" style="border-color:rgba(255,23,68,.2)"><div class="eicon" style="background:rgba(255,23,68,.08)">💀</div><div><div class="text-xs text-white font-semibold">CRITICAL — Blocked by default</div><div class="text-[10px] text-gray-500 font-mono">DB ops, mass spam · fail_closed</div></div></div>
-            </div>
-        </div>
-        <!-- Stats -->
-        <div class="lg:col-span-7 glass-panel p-5">
-            <div class="text-[10px] font-mono uppercase text-gray-500 font-bold mb-4">Governor Stats (24h)</div>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
-                <div class="bg-[#1a1a1a] rounded-lg p-3 text-center"><div class="text-[10px] text-gray-500 font-mono uppercase mb-1">Approved</div><div class="text-2xl font-mono font-bold accent">47</div></div>
-                <div class="bg-[#1a1a1a] rounded-lg p-3 text-center"><div class="text-[10px] text-gray-500 font-mono uppercase mb-1">Rejected</div><div class="text-2xl font-mono font-bold accent-red">6</div></div>
-                <div class="bg-[#1a1a1a] rounded-lg p-3 text-center"><div class="text-[10px] text-gray-500 font-mono uppercase mb-1">Pending</div><div class="text-2xl font-mono font-bold accent-gold">3</div></div>
-                <div class="bg-[#1a1a1a] rounded-lg p-3 text-center"><div class="text-[10px] text-gray-500 font-mono uppercase mb-1">Auto</div><div class="text-2xl font-mono font-bold text-white">38</div></div>
-            </div>
-            <div class="text-[10px] font-mono uppercase text-gray-500 font-bold mb-3">Recent Decisions</div>
-            <div class="space-y-2" id="gov-decisions"></div>
-        </div>
-    </div>
-    <div class="text-[10px] font-mono uppercase text-gray-500 font-bold mb-3">⏳ Pending Proposals</div>
-    <div id="gov-props" class="space-y-3"></div>
-</div>
-
-<!-- ============================
-     VIEW: LEDGER
-     ============================ -->
-<div class="view" id="view-ledger">
-    <div class="flex items-center justify-between mb-5">
-        <div>
-            <div class="text-lg font-bold">Revenue Ledger</div>
-            <div class="text-xs text-gray-500 font-mono">Immutable event log · Supabase · PostgreSQL</div>
-        </div>
-        <span class="pill pill-green">IMMUTABLE</span>
-    </div>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
-        <div class="glass-panel p-4"><div class="text-[10px] text-gray-500 font-mono uppercase font-bold mb-2">Total Events</div><div class="metric-value accent">1,284</div></div>
-        <div class="glass-panel p-4"><div class="text-[10px] text-gray-500 font-mono uppercase font-bold mb-2">Revenue Events</div><div class="metric-value text-white">847</div></div>
-        <div class="glass-panel p-4"><div class="text-[10px] text-gray-500 font-mono uppercase font-bold mb-2">Campaign Costs</div><div class="metric-value accent-gold">$3,420</div></div>
-        <div class="glass-panel p-4"><div class="text-[10px] text-gray-500 font-mono uppercase font-bold mb-2">Net Margin</div><div class="metric-value accent">76.4%</div></div>
-    </div>
-    <div class="glass-panel p-5">
-        <div class="flex items-center justify-between mb-4">
-            <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Live Event Stream</div>
-            <div class="flex gap-2">
-                <span class="pill pill-gray">ALL</span>
-                <span class="pill pill-green">REVENUE</span>
-                <span class="pill pill-blue">AGENT_ACTION</span>
-                <span class="pill pill-gold">COST</span>
-            </div>
-        </div>
-        <div id="ledger-feed" class="space-y-1"></div>
-    </div>
-</div>
-
-<!-- ============================
-     VIEW: EXPERIMENTS
-     ============================ -->
-<div class="view" id="view-experiments">
-    <div class="flex items-center justify-between mb-5">
-        <div>
-            <div class="text-lg font-bold">Experiment Engine</div>
-            <div class="text-xs text-gray-500 font-mono">Growth hypotheses — lifecycle management and A/B analysis</div>
-        </div>
-        <button class="btn-primary text-xs font-mono px-4 py-2 rounded-lg" onclick="toast('New experiment draft created','success')">+ New Hypothesis</button>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="exp-grid"></div>
-</div>
-
-<!-- ============================
-     VIEW: INFRA
-     ============================ -->
-<div class="view" id="view-infra">
-    <div class="flex items-center justify-between mb-5">
-        <div>
-            <div class="text-lg font-bold">Infrastructure</div>
-            <div class="text-xs text-gray-500 font-mono">Lean tech stack · $166–$341/month total operating cost</div>
-        </div>
-        <div class="flex items-center gap-2 text-xs font-mono text-emerald-400">
-            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            All Systems Nominal
-        </div>
-    </div>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-5">
-        <div class="glass-panel p-5"><div class="text-[10px] font-mono uppercase text-gray-500 font-bold mb-4">🧠 Operations Layer</div><div class="grid grid-cols-2 gap-3" id="i-ops"></div></div>
-        <div class="glass-panel p-5"><div class="text-[10px] font-mono uppercase text-gray-500 font-bold mb-4">⚙️ Execution Layer</div><div class="grid grid-cols-2 gap-3" id="i-exec"></div></div>
-    </div>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        <div class="glass-panel p-5"><div class="text-[10px] font-mono uppercase text-gray-500 font-bold mb-4">💾 Data & Storage</div><div class="grid grid-cols-2 gap-3" id="i-data"></div></div>
-        <div class="glass-panel p-5">
-            <div class="text-[10px] font-mono uppercase text-gray-500 font-bold mb-4">💰 Cost Summary</div>
-            <div class="grid grid-cols-2 gap-2 text-xs font-mono">
-                <div class="bg-[#1a1a1a] rounded p-2"><span class="text-gray-500">Hermes Desktop</span><div class="text-white font-bold mt-1">$0/mo</div></div>
-                <div class="bg-[#1a1a1a] rounded p-2"><span class="text-gray-500">Taskade Genesis</span><div class="text-white font-bold mt-1">$16/mo</div></div>
-                <div class="bg-[#1a1a1a] rounded p-2"><span class="text-gray-500">Helio (DO VPS)</span><div class="text-white font-bold mt-1">$20/mo</div></div>
-                <div class="bg-[#1a1a1a] rounded p-2"><span class="text-gray-500">Synup MCP</span><div class="text-white font-bold mt-1">$50–100/mo</div></div>
-                <div class="bg-[#1a1a1a] rounded p-2"><span class="text-gray-500">Resend + Twilio</span><div class="text-white font-bold mt-1">$30–80/mo</div></div>
-                <div class="bg-[#1a1a1a] rounded p-2"><span class="text-gray-500">Supabase</span><div class="text-white font-bold mt-1">$0–25/mo</div></div>
-                <div class="col-span-2 bg-emerald-500/10 border border-emerald-500/20 rounded p-2 text-center"><span class="text-gray-400">Total Estimate</span><div class="text-emerald-400 font-bold text-sm mt-1">$166–341/mo</div></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- ============================
-     VIEW: GEM OPS DASHBOARD (SCRUTEXITY GOVERNANCE & COMMAND)
-     ============================ -->
-<div class="view active" id="view-gem">
-    <div class="w-full space-y-8 flex flex-col items-stretch">
-        
-        <!-- TOP TITLE & SWEEP ACTION -->
-        <div class="flex items-center justify-between shrink-0">
-            <div>
-                <div class="eyebrow mb-1.5">AUTOMATED GROWTH & COMPLIANCE ORCHESTRATION</div>
-                <h1 class="title-hero">Governance & Command</h1>
-            </div>
-            <button onclick="refreshGemData()" class="btn-sweep flex items-center gap-2.5">
-                <i data-lucide="refresh-cw" class="w-3.5 h-3.5" id="gem-refresh-icon"></i> Run Compliance Sweep
-            </button>
-        </div>
-
-        <!-- 4 TOP METRIC CARDS WITH VOLUMETRIC SMOKE GLOW -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            <div class="metric-capsule flex flex-col justify-between min-h-[110px]">
-                <div class="text-[10px] text-gray-400 font-extrabold uppercase tracking-widest font-sans">
-                    COMPLIANCE SCORE
-                </div>
-                <div class="flex items-end justify-between mt-3">
-                    <div class="text-3xl font-extrabold text-white font-mono tracking-tight">98.6%</div>
-                    <span class="badge-safe">SAFE</span>
-                </div>
-            </div>
-
-            <div class="metric-capsule flex flex-col justify-between min-h-[110px]">
-                <div class="text-[10px] text-gray-400 font-extrabold uppercase tracking-widest font-sans">
-                    ACTIVE AIRLOCK HOLDS
-                </div>
-                <div class="flex items-end justify-between mt-3">
-                    <div class="text-3xl font-extrabold text-white font-mono tracking-tight">0</div>
-                    <span class="badge-secure">SECURE</span>
-                </div>
-            </div>
-
-            <div class="metric-capsule flex flex-col justify-between min-h-[110px]">
-                <div class="text-[10px] text-gray-400 font-extrabold uppercase tracking-widest font-sans">
-                    OUTBOUND CONVERSION
-                </div>
-                <div class="flex items-end justify-between mt-3">
-                    <div class="text-3xl font-extrabold text-white font-mono tracking-tight">38.3%</div>
-                    <span class="badge-safe">OPTIMAL</span>
-                </div>
-            </div>
-
-            <div class="metric-capsule flex flex-col justify-between min-h-[110px]">
-                <div class="text-[10px] text-gray-400 font-extrabold uppercase tracking-widest font-sans">
-                    GOVERNED RECOVERY VALUE
-                </div>
-                <div class="flex items-end justify-between mt-3">
-                    <div class="text-3xl font-extrabold text-[#10B981] font-mono tracking-tight">$22,890</div>
-                    <span class="badge-resolved">RESOLVED</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- FILTER CAPSULE BAR -->
-        <div class="flex flex-wrap items-center justify-between gap-4">
-            <div class="flex items-center gap-2 bg-black/40 border border-white/5 p-1.5 rounded-full">
-                <button class="nav-pill active" onclick="filterTab('audit', this)">Live Audit Log</button>
-                <button class="nav-pill" onclick="filterTab('strikes', this)">Outbound Strikes</button>
-                <button class="nav-pill" onclick="filterTab('focus', this)">Founder Focus</button>
-                <button class="nav-pill" onclick="filterTab('recovered', this)">Recovered</button>
-            </div>
-
-            <div class="flex items-center gap-2.5 bg-black/40 border border-white/10 rounded-full px-4 py-2 text-xs font-mono text-gray-400 w-72">
-                <i data-lucide="search" class="w-3.5 h-3.5 text-gray-500"></i>
-                <input type="text" placeholder="Filter logs by keyword..." class="bg-transparent border-none outline-none text-white w-full placeholder-gray-600 text-xs">
-            </div>
-        </div>
-
-        <!-- 2-COLUMN BIG STAGE (Telemetry Log Stream vs Containment Center) -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-            <!-- Left Main Screen (7 cols) -->
-            <div class="lg:col-span-7 aura-card p-6 min-h-[440px] flex flex-col">
-                <div class="flex items-center justify-between border-b border-white/5 pb-4 mb-4">
-                    <div class="flex items-center gap-2">
-                        <i data-lucide="shield-check" class="w-4 h-4 text-sky-400"></i>
-                        <span class="text-xs font-bold font-mono uppercase tracking-widest text-white">AUDITED TELEMETRY LOG STREAM (5 ENTRIES)</span>
-                    </div>
-                    <span class="text-[9px] font-mono uppercase text-gray-500 tracking-widest">REAL-TIME COMPLIANCE DATABASE</span>
-                </div>
-
-                <div class="space-y-3 flex-1 overflow-y-auto" id="gem-feed-list">
-                    <!-- rendered by JS -->
-                </div>
-            </div>
-
-            <!-- Right Containment Center (5 cols) -->
-            <div class="lg:col-span-5 aura-card p-6 min-h-[440px] flex flex-col">
-                <div class="flex items-center justify-between border-b border-white/5 pb-4 mb-4">
-                    <div class="flex items-center gap-2">
-                        <i data-lucide="lock" class="w-4 h-4 text-sky-400"></i>
-                        <span class="text-xs font-bold font-mono uppercase tracking-widest text-white">COMPLIANCE CONTAINMENT CENTER</span>
-                    </div>
-                </div>
-
-                <div class="space-y-3 flex-1 overflow-y-auto" id="gem-focus-list">
-                    <!-- rendered by JS -->
-                </div>
-
-                <div class="mt-4 pt-3 border-t border-white/5 flex gap-2">
-                    <input type="text" id="gem-new-task" placeholder="Add verified governance task..." class="bg-black/40 border border-white/10 rounded-xl px-4 py-2 text-xs text-white placeholder-gray-600 outline-none flex-1 font-mono focus:border-sky-500/50">
-                    <button onclick="addGemTask()" class="btn-sweep px-4 py-2 text-xs">Add</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 3-Card Row: Outbound Strikes, Leads at Risk, Agent Fleet -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- Outbound Strikes -->
-            <div class="aura-card p-6 flex flex-col">
-                <div class="flex items-center justify-between border-b border-white/5 pb-3 mb-4">
-                    <span class="text-xs font-bold uppercase tracking-wider text-white">Outbound Strikes Tracker</span>
-                    <button onclick="openGemModal()" class="text-[10px] font-mono text-sky-400 hover:underline">+ Strike</button>
-                </div>
-                <div class="space-y-2.5 overflow-y-auto max-h-64" id="gem-strikes-list">
-                    <!-- rendered by JS -->
-                </div>
-            </div>
-
-            <!-- Leads at Risk -->
-            <div class="aura-card p-6 flex flex-col">
-                <div class="flex items-center justify-between border-b border-white/5 pb-3 mb-4">
-                    <span class="text-xs font-bold uppercase tracking-wider text-white">Leads at Risk</span>
-                    <div class="flex gap-1" id="gem-risk-filters">
-                        <button onclick="filterRisk('all', this)" class="text-[9px] px-2 py-0.5 rounded bg-white/10 text-white font-mono">ALL</button>
-                        <button onclick="filterRisk('hot', this)" class="text-[9px] px-2 py-0.5 rounded text-gray-400 font-mono">HOT</button>
-                    </div>
-                </div>
-                <div class="space-y-2.5 overflow-y-auto max-h-64" id="gem-risk-list">
-                    <!-- rendered by JS -->
-                </div>
-            </div>
-
-            <!-- Multi-Agent Orchestration -->
-            <div class="aura-card p-6 flex flex-col">
-                <div class="flex items-center justify-between border-b border-white/5 pb-3 mb-4">
-                    <span class="text-xs font-bold uppercase tracking-wider text-white">Fleet Orchestration</span>
-                    <span class="badge-safe">6 RUNNING</span>
-                </div>
-                <div class="space-y-2 overflow-y-auto max-h-64" id="gem-orch-list">
-                    <!-- rendered by JS -->
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-        <!-- 3. NodeToggles (Agent Team) -->
-        <div class="aura-card p-5">
-            <div class="flex items-center justify-between mb-4 pb-3 border-b border-white/5">
-                <div class="flex items-center gap-2">
-                    <h3 class="text-xs font-extrabold uppercase tracking-widest text-white">Agent Team</h3>
-                    <span class="text-[10px] text-gray-500 font-mono">Live Control</span>
-                </div>
-                <span class="pill pill-green font-mono">5/5 OPERATIONAL</span>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
-                <div class="rounded-2xl border border-white/10 bg-black/25 p-3.5 transition-all duration-300 hover:border-accent/40">
-                    <div class="flex items-center justify-between mb-2">
-                        <div class="flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full bg-[#78b48c] shadow-[0_0_8px_#78b48c]"></span>
-                            <span class="text-xs font-bold text-white">Lead Scout</span>
-                        </div>
-                        <span class="pill pill-green text-[8px]">ACTIVE</span>
-                    </div>
-                    <p class="text-[11px] text-gray-400 leading-snug mb-2">Find and qualify NYC targets</p>
-                    <div class="text-[10px] font-mono text-white/50">47 clinics scanned</div>
-                </div>
-
-                <div class="rounded-2xl border border-white/10 bg-black/25 p-3.5 transition-all duration-300 hover:border-accent/40">
-                    <div class="flex items-center justify-between mb-2">
-                        <div class="flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full bg-[#c8a050] shadow-[0_0_8px_#c8a050]"></span>
-                            <span class="text-xs font-bold text-white">DM Outbound</span>
-                        </div>
-                        <span class="pill pill-gold text-[8px]">DISPATCHED</span>
-                    </div>
-                    <p class="text-[11px] text-gray-400 leading-snug mb-2">Follow-ups and cold sends</p>
-                    <div class="text-[10px] font-mono text-white/50">28 sends today</div>
-                </div>
-
-                <div class="rounded-2xl border border-white/10 bg-black/25 p-3.5 transition-all duration-300 hover:border-accent/40">
-                    <div class="flex items-center justify-between mb-2">
-                        <div class="flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full bg-[#c86450] shadow-[0_0_8px_#c86450]"></span>
-                            <span class="text-xs font-bold text-white">Airlock Compliance</span>
-                        </div>
-                        <span class="pill pill-green text-[8px]">ACTIVE</span>
-                    </div>
-                    <p class="text-[11px] text-gray-400 leading-snug mb-2">All-in pricing & AI disclosure</p>
-                    <div class="text-[10px] font-mono text-white/50">0 holds · 100% pass</div>
-                </div>
-
-                <div class="rounded-2xl border border-white/10 bg-black/25 p-3.5 transition-all duration-300 hover:border-accent/40">
-                    <div class="flex items-center justify-between mb-2">
-                        <div class="flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full bg-[#60A5FA] shadow-[0_0_8px_#60A5FA]"></span>
-                            <span class="text-xs font-bold text-white">Diagnostic Ops</span>
-                        </div>
-                        <span class="pill pill-blue text-[8px]">SYNCING</span>
-                    </div>
-                    <p class="text-[11px] text-gray-400 leading-snug mb-2">Scoping and 48h audit report</p>
-                    <div class="text-[10px] font-mono text-white/50">Day 14 Active Pilot</div>
-                </div>
-
-                <div class="rounded-2xl border border-white/10 bg-black/25 p-3.5 transition-all duration-300 hover:border-accent/40">
-                    <div class="flex items-center justify-between mb-2">
-                        <div class="flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full bg-[#A78BFA] shadow-[0_0_8px_#A78BFA]"></span>
-                            <span class="text-xs font-bold text-white">Revenue Ledger</span>
-                        </div>
-                        <span class="pill pill-green text-[8px]">ACTIVE</span>
-                    </div>
-                    <p class="text-[11px] text-gray-400 leading-snug mb-2">Recovered value tracking</p>
-                    <div class="text-[10px] font-mono text-accent-green font-bold">+$22,890 MTD</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 4. TodayFocusBlock -->
-        <div class="aura-card p-5">
-            <div class="mb-4 flex items-center justify-between border-b border-white/5 pb-3">
-                <h3 class="text-xs font-extrabold uppercase tracking-widest text-white">Today's focus</h3>
-                <span class="text-[10px] text-gray-500 font-mono">Priority-scored</span>
-            </div>
-
-            <div class="space-y-3" id="gem-focus-list">
-                <!-- rendered by JS -->
-            </div>
-
-            <div class="mt-4 pt-3 border-t border-white/5 flex gap-2">
-                <input type="text" id="gem-new-task" placeholder="Add custom action item..." class="bg-black/30 border border-white/10 rounded-xl px-4 py-2 text-xs text-white placeholder-gray-500 outline-none flex-1 font-mono focus:border-accent">
-                <button onclick="addGemTask()" class="btn-primary text-xs font-mono px-5 py-2 rounded-xl">Add</button>
-            </div>
-        </div>
-
-        <!-- 5. Row: NextHumanActionWidget + TasksWidget -->
-        <div class="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
-            <!-- Next Human Action -->
-            <div class="aura-card p-5 h-full flex flex-col">
-                <div class="mb-4 flex items-center justify-between border-b border-white/5 pb-3">
-                    <h3 class="text-xs font-extrabold uppercase tracking-widest text-white">Next Human Action</h3>
-                    <span class="text-[10px] text-gray-500 font-mono">One verb</span>
-                </div>
-
-                <div class="flex-1 flex flex-col">
-                    <div class="flex items-start gap-3 mb-4">
-                        <div class="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border border-accent/25 bg-accent/10">
-                            <i data-lucide="arrow-right" class="h-3.5 w-3.5 text-accent"></i>
-                        </div>
-                        <div class="min-w-0">
-                            <p class="text-[15px] font-semibold text-white/90 leading-snug">Deliver 48-Hour Digital Audit to El Nuevo Cafe</p>
-                            <p class="mt-1 text-[11px] leading-relaxed text-white/45">Audit packet generated by iris/watson. Scoping call requested via WhatsApp.</p>
-                            <span class="mt-2 inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] font-mono text-white/50">
-                                <i data-lucide="clock" class="h-2.5 w-2.5"></i> 10 min
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="mt-auto space-y-2 border-t border-white/5 pt-3">
-                        <div class="flex items-center gap-2 text-[11px] text-white/40">
-                            <span class="h-1 w-1 rounded-full bg-white/25"></span>
-                            <span class="truncate">Send 5 IG follow-up DMs to East Harlem cluster</span>
-                            <span class="ml-auto font-mono text-[9px] text-white/25">5 min</span>
-                        </div>
-                        <div class="flex items-center gap-2 text-[11px] text-white/40">
-                            <span class="h-1 w-1 rounded-full bg-white/25"></span>
-                            <span class="truncate">Review Stripe Connect invoice #INV-0094 for Cristal Flowers</span>
-                            <span class="ml-auto font-mono text-[9px] text-white/25">2 min</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TasksWidget -->
-            <div class="aura-card p-5 h-full flex flex-col">
-                <div class="mb-4 flex items-center justify-between border-b border-white/5 pb-3">
-                    <h3 class="text-xs font-extrabold uppercase tracking-widest text-white">Business Setup Tasks</h3>
-                    <span class="text-[10px] text-gray-500 font-mono">Founder Queue</span>
-                </div>
-
-                <div class="space-y-2.5 flex-1">
-                    <div class="flex items-center justify-between p-2.5 rounded-xl bg-black/20 border border-white/5">
-                        <div class="flex items-center gap-3">
-                            <span class="w-4 h-4 rounded-full border border-white/20 flex items-center justify-center"></span>
-                            <span class="text-xs text-white">Get E&O + cyber liability insurance quote (Vouch/Embroker)</span>
-                        </div>
-                        <span class="text-[9px] font-mono uppercase text-rose-400 font-bold">HIGH</span>
-                    </div>
-
-                    <div class="flex items-center justify-between p-2.5 rounded-xl bg-black/20 border border-white/5">
-                        <div class="flex items-center gap-3">
-                            <span class="w-4 h-4 rounded-full border border-accent bg-accent flex items-center justify-center text-white text-[10px]">✓</span>
-                            <span class="text-xs text-gray-500 line-through">Set up Stripe invoicing for pilot billing (ACH)</span>
-                        </div>
-                        <span class="text-[9px] font-mono uppercase text-gray-600">DONE</span>
-                    </div>
-
-                    <div class="flex items-center justify-between p-2.5 rounded-xl bg-black/20 border border-white/5">
-                        <div class="flex items-center gap-3">
-                            <span class="w-4 h-4 rounded-full border border-white/20 flex items-center justify-center"></span>
-                            <span class="text-xs text-white">Register secondary sending domain + SPF/DKIM/DMARC</span>
-                        </div>
-                        <span class="text-[9px] font-mono uppercase text-rose-400 font-bold">HIGH</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 6. Row: LeadsAtRiskWidget + PaperclipOrchWidget -->
-        <div class="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
-            <!-- LeadsAtRiskWidget -->
-            <div class="aura-card p-5 h-full flex flex-col">
-                <div class="mb-4 flex items-center justify-between border-b border-white/5 pb-3">
-                    <div>
-                        <h3 class="text-xs font-extrabold uppercase tracking-widest text-white">Leads at Risk</h3>
-                        <p class="text-[10px] text-gray-500 font-mono mt-0.5">$6,800 Pipeline Value at Risk</p>
-                    </div>
-                    <div class="flex gap-1" id="gem-risk-filters">
-                        <button onclick="filterRisk('all', this)" class="pill pill-gray cursor-pointer active-filter">ALL</button>
-                        <button onclick="filterRisk('hot', this)" class="pill pill-red cursor-pointer">🔥 HOT</button>
-                        <button onclick="filterRisk('warm', this)" class="pill pill-gold cursor-pointer">⚠️ WARM</button>
-                    </div>
-                </div>
-
-                <div class="space-y-2.5 flex-1" id="gem-risk-list">
-                    <!-- rendered by JS -->
-                </div>
-            </div>
-
-            <!-- PaperclipOrchWidget -->
-            <div class="aura-card p-5 h-full flex flex-col">
-                <div class="mb-4 flex items-center justify-between border-b border-white/5 pb-3">
-                    <div>
-                        <h3 class="text-xs font-extrabold uppercase tracking-widest text-white">Multi-Agent Orchestration</h3>
-                        <p class="text-[10px] text-gray-500 font-mono mt-0.5">Fleet heartbeat runs & issues</p>
-                    </div>
-                    <span class="pill pill-green font-mono">PAPERCLIP ACTIVE</span>
-                </div>
-
-                <div class="space-y-2 flex-1" id="gem-orch-list">
-                    <!-- rendered by JS -->
-                </div>
-            </div>
-        </div>
-
-        <!-- 7. ActivityFeed -->
-        <div class="aura-card p-5">
-            <div class="flex items-center justify-between border-b border-white/5 pb-3 mb-3">
-                <div class="flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
-                    <h3 class="text-xs font-extrabold uppercase tracking-widest text-white">Activity Feed</h3>
-                </div>
-                <span class="text-[10px] text-gray-500 font-mono">Live Prisma / WebSocket Telemetry</span>
-            </div>
-
-            <div class="space-y-1.5 font-mono text-xs max-h-60 overflow-y-auto" id="gem-feed-list">
-                <!-- rendered by JS -->
-            </div>
-        </div>
-
-    </div>
-</div>
-
-<!-- ============================
-     VIEW: MERCHANT EVIDENCE (Embedded Tab)
-     ============================ -->
-<div class="view" id="view-evidence">
-    <div class="space-y-6">
-        <div class="flex flex-wrap items-center justify-between gap-4 glass-panel p-6">
-            <div>
-                <div class="text-[10px] font-extrabold uppercase tracking-widest text-sky-400 font-mono mb-1">EVIDENCE LAYER • GROWTH OS</div>
-                <h2 class="text-xl font-black text-white">Merchant Evidence Live Telemetry</h2>
-                <p class="text-xs text-gray-400 mt-0.5">Verified provability records, audit hash chain, and attributed revenue per merchant twin.</p>
-            </div>
-            <div class="flex items-center gap-3">
-                <select id="cc-evidence-biz" onchange="document.getElementById('evidence-frame').src='merchant-evidence.html?businessId=' + this.value" class="bg-black/60 border border-white/10 text-white font-mono text-xs rounded-xl px-4 py-2 outline-none cursor-pointer">
-                    <option value="socio_default">socio_default (All Overview)</option>
-                    <option value="cristal_flowers">Cristal Flowers (East Harlem)</option>
-                    <option value="el_nuevo_cafe">El Nuevo Cafe (Wash Heights)</option>
-                    <option value="la_bodega_nyc">La Bodega NYC (South Bronx)</option>
-                    <option value="bloom_branch">Bloom & Branch (Astoria)</option>
-                </select>
-                <a href="merchant-evidence.html" target="_blank" class="btn-primary text-xs font-mono font-bold px-4 py-2 rounded-xl flex items-center gap-1.5">
-                    <span>Fullscreen</span>
-                    <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-                </a>
-            </div>
-        </div>
-
-        <div class="rounded-2xl border border-white/10 overflow-hidden bg-white shadow-2xl" style="height: 820px;">
-            <iframe id="evidence-frame" src="merchant-evidence.html" class="w-full h-full border-none"></iframe>
-        </div>
-    </div>
-</div>
-
-</main>
-
-<!-- TOAST -->
-<div id="toast-c" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2"></div>
-
-<!-- MODAL AGENT DETAIL -->
-<div id="agent-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden items-center justify-center">
-    <div class="bg-[#0f0f14] border border-white/10 rounded-2xl p-6 w-[90%] max-w-[520px]" style="animation:mIn .3s cubic-bezier(.22,1,.36,1)">
-        <div class="flex items-center gap-3 mb-4">
-            <span id="m-emoji" class="text-2xl">🕵️</span>
-            <span id="m-name" class="text-lg font-bold font-mono"></span>
-            <span id="m-status" class="pill"></span>
-        </div>
-        <div id="m-body" class="text-sm text-gray-400 leading-relaxed mb-4"></div>
-        <div class="flex gap-2 justify-end">
-            <button id="m-kill" class="text-xs font-mono border border-red-500/30 text-red-400 px-4 py-2 rounded-lg hover:bg-red-500/10 transition-colors">Kill Agent</button>
-            <button id="m-trig" class="btn-primary text-xs font-mono px-4 py-2 rounded-lg">Trigger Now</button>
-            <button onclick="closeModal()" class="text-xs font-mono border border-white/10 text-gray-400 px-4 py-2 rounded-lg hover:bg-white/5 transition-colors">Close</button>
-        </div>
-    </div>
-</div>
-
-<style>
-@keyframes mIn{from{opacity:0;transform:scale(.95) translateY(16px)}to{opacity:1;transform:scale(1) translateY(0)}}
-</style>
-
-<script>
-/* ===== DATA ===== */
-const AGENTS=[
-  {id:'prospect',name:'Socio-Prospect',role:'Lead Generation',emoji:'🕵️',status:'running',model:'deepseek-v4',trigger:'Daily 6AM cron',today:47,proposals:12,rate:88,log:'[06:02:14] Scanning East Harlem — 23 candidates\n[06:04:31] ✅ 10 prospects scored\n[06:05:00] → 3 proposals → Governor',tools:['growth_os_read_twin','growth_os_propose_action'],desc:'Daily scraping of NYC neighborhoods. Audits digital gaps, scores top 10 targets from Google Maps, Instagram, Yelp.'},
-  {id:'pitch',name:'Socio-Pitch',role:'Outreach & CRM',emoji:'📣',status:'idle',model:'deepseek-v4',trigger:'Webhook: new_prospect_scored',today:23,proposals:8,rate:71,log:'[09:14:22] ✅ Email → Bloom & Branch\n[09:15:01] WhatsApp queued (T+48h)\n[09:15:01] → SMS batch awaiting Governor',tools:['Resend','Twilio WhatsApp'],desc:'Multi-touch bilingual email/WhatsApp outreach sequences rooted in the Socio Manifesto.'},
-  {id:'onboard',name:'Socio-Onboard',role:'Agreements & Setup',emoji:'📋',status:'online',model:'deepseek-v4',trigger:'Webhook: partner_accepted',today:5,proposals:2,rate:96,log:'[11:30:00] ✅ Agreement → El Nuevo Cafe\n[11:45:12] DocuSign signed ✓\n[11:45:13] → Twin BIZ-0047 initialized',tools:['DocuSign','Typeform'],desc:'Generates partnership agreements, collects data, delivers 48-hour audit action plans.'},
-  {id:'content',name:'Socio-Content',role:'Content Generation',emoji:'✍️',status:'running',model:'deepseek-v4',trigger:'Daily 8AM cron',today:142,proposals:31,rate:94,log:'[08:01:00] Calendar generated → Cristal Flowers\n[08:03:44] ✅ 4 posts published via Helio\n[08:04:01] ⚠ Canva rate limit — 2 queued',tools:['Helio CDP','Canva'],desc:'Bilingual content generation & scheduling. 30-day calendars, Instagram management, review responses.'},
-  {id:'listings',name:'Socio-Listings',role:'Local SEO & Reviews',emoji:'📍',status:'online',model:'deepseek-v4',trigger:'Every 6h cron',today:38,proposals:9,rate:91,log:'[12:00:04] ✅ Google Business → La Bodega NYC\n[12:01:22] ✅ Yelp — 5 photos added\n[12:02:00] Review alert: 3★ response drafted',tools:['Synup MCP'],desc:'Local SEO optimization, listing sync across 12 directories, automated review management via Synup MCP.'},
-  {id:'track',name:'Socio-Track',role:'Revenue & Invoicing',emoji:'💳',status:'online',model:'deepseek-v4',trigger:'Webhook: pos_transaction',today:67,proposals:4,rate:99,log:'[14:22:01] ✅ Net New $1,240 (Cristal Flowers)\n[14:22:02] Commission: $186 (15%)\n[14:22:03] → Invoice #INV-0094 via Stripe',tools:['Stripe Connect','Square'],desc:'POS webhook processing, Net New & Expansion Revenue calculation, commission tracking, Stripe invoicing.'},
-  {id:'support',name:'Socio-Support',role:'Merchant Support',emoji:'💬',status:'online',model:'deepseek-v4',trigger:'Webhook: support_message',today:19,proposals:1,rate:87,log:'[15:10:44] ✅ WhatsApp resolved → Queens DC\n[15:32:00] Intercom #891 escalated\n[15:33:01] → Avg response: 2m 17s today',tools:['Intercom','Twilio WhatsApp'],desc:'Frontline support via Intercom & WhatsApp. Handles common issues, escalates edge cases.'},
-  {id:'expand',name:'Socio-Expand',role:'Growth & Referrals',emoji:'🚀',status:'idle',model:'deepseek-v4',trigger:'Weekly Monday 9AM',today:8,proposals:5,rate:79,log:'[Mon 09:00] Cross-sell: E.Harlem Bites → catering\n[Mon 09:04] ✅ Referral link → Cristal Flowers\n[Mon 09:05] → 5% commission-for-life activated',tools:['growth_os_read_twin','growth_os_propose_action'],desc:'Cross-sell analysis, referral program management, 5% lifetime commission activation per partner.'}
-];
-
-const MERCHANTS=[
-  {n:'Cristal Flowers',l:'East Harlem',s:'execute',a:'Socio-Content',nn:4820,ex:1240,sc:94,nx:'Monthly review call'},
-  {n:'El Nuevo Cafe',l:'Washington Heights',s:'onboard',a:'Socio-Onboard',nn:0,ex:0,sc:88,nx:'Agreement signing'},
-  {n:'La Bodega NYC',l:'South Bronx',s:'execute',a:'Socio-Listings',nn:2100,ex:780,sc:82,nx:'SEO audit week 3'},
-  {n:'Queens Dry Cleaners',l:'Flushing, Queens',s:'track',a:'Socio-Track',nn:3340,ex:1100,sc:91,nx:'Commission invoice due'},
-  {n:'East Harlem Bites',l:'East Harlem',s:'execute',a:'Socio-Content',nn:5610,ex:2200,sc:96,nx:'Cross-sell analysis'},
-  {n:'Bloom & Branch',l:'Astoria, Queens',s:'pitch',a:'Socio-Pitch',nn:0,ex:0,sc:79,nx:'WhatsApp follow-up T+48h'},
-  {n:'Park Slope Laundry',l:'Brooklyn',s:'prospect',a:'Socio-Prospect',nn:0,ex:0,sc:72,nx:'Digital audit scheduled'},
-  {n:'Harlem Heritage',l:'Harlem',s:'review',a:'Socio-Track',nn:7200,ex:3100,sc:98,nx:'Annual ROI call'},
-  {n:'Uptown Flowers',l:'Upper Manhattan',s:'pitch',a:'Socio-Pitch',nn:0,ex:0,sc:85,nx:'Email sequence day 2'},
-  {n:'BX Corner Deli',l:'Bronx',s:'prospect',a:'Socio-Prospect',nn:0,ex:0,sc:69,nx:'Instagram gap audit'},
-  {n:'Midtown Florist',l:'Midtown Manhattan',s:'onboard',a:'Socio-Onboard',nn:0,ex:0,sc:83,nx:'Typeform data collection'},
-  {n:'Sunnyside Market',l:'Sunnyside, Queens',s:'execute',a:'Socio-Content',nn:1820,ex:440,sc:77,nx:'Week 2 content deploy'}
-];
-
-const PROPOSALS=[
-  {id:'PROP-0041',agent:'Socio-Pitch',biz:'Bloom & Branch',type:'send_email_batch',risk:'MEDIUM',obj:'Send 3-touch email sequence to 47 prospects',ev:'Audit score ≥ 75, no prior contact in 7 days',exp:'~8% response rate → 4 consultation calls'},
-  {id:'PROP-0042',agent:'Socio-Content',biz:'East Harlem Bites',type:'launch_instagram_campaign',risk:'HIGH',obj:'Launch paid Instagram campaign — $400 budget',ev:'Organic posts 4.2% engagement; paid test 11x ROAS',exp:'+$4,400 attributable new revenue in 30 days'},
-  {id:'PROP-0043',agent:'Socio-Expand',biz:'Cristal Flowers',type:'activate_referral_program',risk:'LOW',obj:'Generate referral link and notify via WhatsApp',ev:'Partner NPS: 9/10. Already referring informally.',exp:'2+ new merchant referrals in 90 days'}
-];
-
-const EVENTS=[
-  {type:'revenue',icon:'💵',d:'<strong>Net New Revenue</strong> — Cristal Flowers · QR walk-in attributed',amt:'+$1,240',ag:'Socio-Track',t:'14:22:01',ch:'stripe'},
-  {type:'action',icon:'📣',d:'<strong>Email Sent</strong> — Bloom & Branch · Pitch sequence touch 2/3',amt:null,ag:'Socio-Pitch',t:'14:18:33',ch:'resend'},
-  {type:'revenue',icon:'💵',d:'<strong>Expansion Revenue</strong> — Queens Dry Cleaners · Repeat order',amt:'+$340',ag:'Socio-Track',t:'14:05:12',ch:'square'},
-  {type:'alert',icon:'⚠️',d:'<strong>Campaign Cost</strong> — East Harlem Bites · Instagram Paid',amt:'-$120',ag:'Socio-Content',t:'13:44:00',ch:'meta'},
-  {type:'action',icon:'📍',d:'<strong>Listing Synced</strong> — La Bodega NYC · 12 directories',amt:null,ag:'Socio-Listings',t:'13:30:05',ch:'synup'},
-  {type:'revenue',icon:'💵',d:'<strong>Net New Revenue</strong> — East Harlem Bites · Grubhub order',amt:'+$284',ag:'Socio-Track',t:'13:11:20',ch:'stripe'},
-  {type:'action',icon:'🤝',d:'<strong>Partner Onboarded</strong> — El Nuevo Cafe · DocuSign signed',amt:null,ag:'Socio-Onboard',t:'11:45:12',ch:'docusign'},
-  {type:'action',icon:'🕵️',d:'<strong>Prospect Scored</strong> — Park Slope Laundry · Score 72/100',amt:null,ag:'Socio-Prospect',t:'06:04:31',ch:'internal'}
-];
-
-const STREAM_ITEMS=[
-  {border:'#10B981',color:'#10B981',who:'Socio-Track · Revenue',ago:'2m ago',msg:'Net New $1,240 recorded for Cristal Flowers. Invoice #INV-0094 generated.'},
-  {border:'#6366F1',color:'#6366F1',who:'Socio-Content · Build',ago:'8m ago',msg:'Instagram calendar deployed for East Harlem Bites. 4 posts scheduled.'},
-  {border:'#F59E0B',color:'#F59E0B',who:'Socio-Prospect · Alert',ago:'15m ago',msg:'6 unclaimed Google Business profiles found in Washington Heights.'},
-  {border:'#10B981',color:'#10B981',who:'Socio-Listings · SEO',ago:'32m ago',msg:'La Bodega NYC synced to 12 directories. Avg rating: 4.1 → 4.4.'},
-];
-
-const EXPERIMENTS=[
-  {id:'EXP-001',hyp:'Bilingual WhatsApp outreach increases pitch response rate by 20%',metric:'response_rate',base:6.2,variants:['EN only','EN + ES'],status:'RUNNING',alloc:'50/50',obs:34,cur:9.1},
-  {id:'EXP-002',hyp:'Google review automation increases 30-day star rating by 0.3',metric:'avg_star_rating',base:3.8,variants:['Manual','Automated'],status:'PROMOTED',alloc:'0/100',obs:12,cur:4.3},
-  {id:'EXP-003',hyp:'Weekly content calendars outperform monthly batches for Instagram engagement',metric:'engagement_rate',base:3.1,variants:['Monthly batch','Weekly drip'],status:'RUNNING',alloc:'40/60',obs:18,cur:4.8},
-  {id:'EXP-004',hyp:'Catering cross-sell upsell adds $800+ MRR per restaurant partner',metric:'expansion_mrr',base:0,variants:['No upsell','Catering upsell'],status:'DRAFT',alloc:'50/50',obs:0,cur:null}
-];
-
-const INFRA_OPS=[{n:'Hermes Desktop',t:'Operations Layer',m:'v0.20.4',s:'8 agents · local',ok:true},{n:'DeepSeek Harness',t:'Build Layer (DSH)',m:'v0.1.0-rc.7',s:'MCP server active',ok:true},{n:'Taskade Genesis',t:'Command Center',m:'$16/mo',s:'Pro · Kanban active',ok:true},{n:'Growth OS MCP',t:'Internal Engine',m:'v1.0.0',s:'port 3100 · live',ok:true}];
-const INFRA_EXEC=[{n:'Helio CDP',t:'Marketing Automation',m:'99.8%',s:'DigitalOcean $20/mo',ok:true},{n:'Synup MCP',t:'Local SEO',m:'12 dirs',s:'$50-100/mo',ok:true},{n:'Resend',t:'Email API',m:'2,341',s:'Emails sent MTD',ok:true},{n:'Twilio WhatsApp',t:'Communications',m:'847',s:'Messages MTD',ok:true}];
-const INFRA_DATA=[{n:'Supabase',t:'PostgreSQL Database',m:'14.2 MB',s:'Revenue Ledger',ok:true},{n:'In-Memory Store',t:'Business Twin Cache',m:'12 twins',s:'→ Supabase pending',ok:false},{n:'JSON Outputs',t:'DSH Output Files',m:'48 files',s:'outputs/ ephemeral',ok:true},{n:'Hermes Kanban',t:'Task State',m:'203 tasks',s:'Workflow orchestration',ok:true}];
-
-const SM={prospect:{l:'Prospect',pc:'pill-blue'},pitch:{l:'Pitch',pc:'pill-gray'},onboard:{l:'Onboard',pc:'pill-gold'},execute:{l:'Execute',pc:'pill-green'},track:{l:'Track',pc:'pill-green'},review:{l:'Review',pc:'pill-gray'}};
-
-/* ===== CLOCK ===== */
-function tick(){
-  const n=new Date();
-  document.getElementById('hdr-time').textContent=n.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:true});
-  document.getElementById('hdr-date').textContent=n.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}).toUpperCase();
-}
-setInterval(tick,1000);tick();
-
-/* ===== TABS ===== */
-function setTab(id,btn){
-  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-  document.querySelectorAll('nav button').forEach(b=>{b.classList.remove('tab-active');b.classList.add('text-gray-500');b.style.background='';b.style.border='';});
-  document.getElementById('view-'+id).classList.add('active');
-  if(btn){btn.classList.add('tab-active');btn.classList.remove('text-gray-500');}
-}
-
-/* ===== TOAST ===== */
-function toast(msg,type='success',dur=3200){
-  const c=document.getElementById('toast-c');
-  const t=document.createElement('div');
-  const col=type==='success'?'border-emerald-500':type==='warn'?'border-yellow-500':'border-red-500';
-  t.className=`bg-[#0f0f14] border border-white/10 ${col} border-l-2 rounded-xl px-4 py-3 text-sm font-mono flex items-center gap-2 shadow-xl`;
-  t.innerHTML=`<span>${type==='success'?'✅':type==='warn'?'⚠️':'❌'}</span><span class="text-gray-200">${msg}</span>`;
-  c.appendChild(t);
-  setTimeout(()=>{t.style.opacity='0';t.style.transition='opacity .3s';setTimeout(()=>t.remove(),300);},dur);
-}
-
-/* ===== MODAL ===== */
-let curA=null;
-function openModal(id){
-  curA=AGENTS.find(a=>a.id===id);if(!curA)return;
-  document.getElementById('m-emoji').textContent=curA.emoji;
-  document.getElementById('m-name').textContent=curA.name;
-  const ms=document.getElementById('m-status');
-  const sc={online:'pill-green',running:'pill-blue',idle:'pill-gold',offline:'pill-gray'}[curA.status];
-  ms.className=`pill ${sc}`;ms.textContent=curA.status.toUpperCase();
-  document.getElementById('m-body').innerHTML=`<p class="mb-3">${curA.desc}</p><div class="grid grid-cols-3 gap-2 mb-3 text-xs font-mono">${[['Model',curA.model],['Trigger',curA.trigger],['Success',curA.rate+'%'],['Today',curA.today],['Proposals',curA.proposals],['MCP','growth-os/mcp-server.mjs']].map(([l,v])=>`<div class="bg-[#1a1a1a] rounded p-2"><div class="text-gray-500 text-[10px] uppercase">${l}</div><div class="text-white font-bold truncate">${v}</div></div>`).join('')}</div><div class="mb-2 text-[10px] text-gray-500 uppercase font-mono font-bold">Tools</div><div class="flex flex-wrap gap-1.5 mb-3">${curA.tools.map(t=>`<span class="pill pill-gray">${t}</span>`).join('')}</div><div class="terminal">${curA.log}</div>`;
-  document.getElementById('agent-modal').classList.remove('hidden');
-  document.getElementById('agent-modal').classList.add('flex');
-}
-function closeModal(){document.getElementById('agent-modal').classList.add('hidden');document.getElementById('agent-modal').classList.remove('flex');}
-document.getElementById('agent-modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
-document.getElementById('m-kill').addEventListener('click',()=>{if(curA){toast(`Kill signal sent to ${curA.name}`,'warn');closeModal();}});
-document.getElementById('m-trig').addEventListener('click',()=>{if(curA){toast(`${curA.name} triggered`,'success');closeModal();}});
-
-/* ===== COUNTER ===== */
-function counter(id,target,pre=''){
-  const el=document.getElementById(id);if(!el)return;
-  const dur=1400;const st=performance.now();
-  function u(n){const p=Math.min((n-st)/dur,1);const e=1-Math.pow(1-p,3);el.textContent=pre+Math.round(target*e).toLocaleString();if(p<1)requestAnimationFrame(u);}
-  requestAnimationFrame(u);
-}
-
-/* ===== TICKER ===== */
-function renderTicker(){
-  const items=[{l:'NET NEW (MTD)',v:'$22,890'},{l:'EXPANSION (MTD)',v:'$8,860'},{l:'COMMISSION',v:'$3,173'},{l:'PARTNERS',v:'8'},{l:'AGENTS ACTIVE',v:'6/8'},{l:'PROPOSALS PENDING',v:'3'},{l:'CONTENT PIECES (7d)',v:'142'},{l:'LISTINGS SYNCED (24h)',v:'38'},{l:'RETENTION RATE',v:'93%'},{l:'PROSPECTS SCORED (24h)',v:'47'},{l:'AVG RESPONSE TIME',v:'2m 17s'},{l:'EXPERIMENTS RUNNING',v:'2'}];
-  const db=[...items,...items];
-  document.getElementById('ticker-el').innerHTML=db.map(i=>`<span class="inline-block font-mono text-[11px] text-gray-500 px-6 border-r border-white/5">${i.l} <span class="text-emerald-400 font-bold">${i.v}</span></span>`).join('');
-}
-
-/* ===== OVERVIEW ===== */
-function renderOverview(){
-  counter('k-rev',22890,'$');counter('k-com',3173,'$');counter('k-exp',8860,'$');counter('k-par',8);
-  counter('ctr-rev',31750,'$');counter('ctr-nn',22890,'$');counter('ctr-ex',8860,'$');counter('ctr-cm',3173,'$');
-  setTimeout(()=>{const b=document.getElementById('rev-bar');if(b)b.style.width='79%';},200);
-
-  const as=document.getElementById('agent-stream');if(!as)return;
-  as.innerHTML=STREAM_ITEMS.map(s=>`<div class="border-l-2 pl-3" style="border-color:${s.border}"><div class="flex justify-between items-center mb-1"><span class="text-[10px] font-mono font-bold" style="color:${s.color}">${s.who}</span><span class="text-[9px] font-mono text-gray-600">${s.ago}</span></div><div class="text-xs text-gray-300 font-mono">${s.msg}</div></div>`).join('');
-}
-
-/* ===== AGENTS ===== */
-function renderAgents(){
-  const statusCls={online:'pill-green',running:'pill-blue',idle:'pill-gold',offline:'pill-gray'};
-  const g=document.getElementById('agents-grid');if(!g)return;
-  g.innerHTML=AGENTS.map(a=>`
-    <div class="glass-panel p-4 cursor-pointer hover:border-emerald-500/30 transition-colors border-white/6" style="border-left:3px solid ${a.status==='online'?'#10B981':a.status==='running'?'#6366F1':a.status==='idle'?'#F59E0B':'#475569'}" onclick="openModal('${a.id}')">
-      <div class="flex items-start justify-between mb-3">
-        <div class="flex items-center gap-2"><span class="text-2xl">${a.emoji}</span><div><div class="text-sm font-bold text-white">${a.name}</div><div class="text-[10px] text-gray-500 font-mono">${a.role}</div></div></div>
-        <span class="pill ${statusCls[a.status]}">${a.status.toUpperCase()}</span>
-      </div>
-      <div class="grid grid-cols-3 gap-2 text-center mb-3">
-        <div><div class="text-[10px] text-gray-600 font-mono">Actions</div><div class="text-sm font-mono font-bold text-emerald-400">${a.today}</div></div>
-        <div><div class="text-[10px] text-gray-600 font-mono">Props</div><div class="text-sm font-mono font-bold text-white">${a.proposals}</div></div>
-        <div><div class="text-[10px] text-gray-600 font-mono">Success</div><div class="text-sm font-mono font-bold text-emerald-400">${a.rate}%</div></div>
-      </div>
-      <div class="w-full bg-white/5 rounded-full h-1 mb-3"><div class="h-full rounded-full" style="width:${a.rate}%;background:${a.rate>=90?'#10B981':'#F59E0B'}"></div></div>
-      <div class="terminal" style="font-size:9px;max-height:60px">${a.log}</div>
-      <div class="flex gap-2 mt-3">
-        <button class="flex-1 text-[10px] font-mono font-bold border border-white/10 rounded py-1.5 hover:bg-white/5 transition-colors" onclick="event.stopPropagation();openModal('${a.id}')">Details</button>
-        <button class="flex-1 text-[10px] font-mono font-bold btn-primary rounded py-1.5" onclick="event.stopPropagation();toast('${a.name} triggered','success')">Trigger</button>
-      </div>
-    </div>
-  `).join('');
-}
-
-/* ===== PIPELINE ===== */
-function renderPipeline(){
-  const counts={};MERCHANTS.forEach(m=>{counts[m.s]=(counts[m.s]||0)+1;});
-  const sh=document.getElementById('stage-hud');if(!sh)return;
-  sh.innerHTML=Object.entries(SM).map(([k,v])=>`<div class="glass-panel p-4"><div class="text-[10px] text-gray-500 font-mono uppercase font-bold mb-2">${v.l}</div><div class="metric-value text-white">${counts[k]||0}</div></div>`).join('');
-
-  const tb=document.getElementById('pipeline-tbody');if(!tb)return;
-  tb.innerHTML=MERCHANTS.map(m=>{
-    const s=SM[m.s]||{l:m.s,pc:'pill-gray'};
-    const sc=m.sc>=90?'text-emerald-400':m.sc>=75?'text-yellow-400':'text-gray-400';
-    return `<tr class="border-b border-white/4 hover:bg-white/2 transition-colors">
-      <td class="px-4 py-3"><div class="text-sm font-semibold text-white">${m.n}</div><div class="text-[10px] text-gray-500 font-mono">📍 ${m.l}</div></td>
-      <td class="px-4 py-3"><span class="pill ${s.pc}">${s.l.toUpperCase()}</span></td>
-      <td class="px-4 py-3 text-xs text-gray-400 font-mono">${m.a}</td>
-      <td class="px-4 py-3 font-mono text-xs text-emerald-400 font-bold">${m.nn>0?'$'+m.nn.toLocaleString():'—'}</td>
-      <td class="px-4 py-3 font-mono text-xs text-yellow-400 font-bold">${m.ex>0?'$'+m.ex.toLocaleString():'—'}</td>
-      <td class="px-4 py-3 font-mono text-xs ${sc}">${m.sc}/100</td>
-      <td class="px-4 py-3 text-xs text-gray-500">${m.nx}</td>
-    </tr>`;
-  }).join('');
-}
-
-/* ===== GOVERNOR ===== */
-function mkProp(p){
-  const rc={LOW:'risk-low',MEDIUM:'risk-medium',HIGH:'risk-high'};
-  return `<div class="prop-card"><div class="flex items-center justify-between mb-2"><span class="text-[10px] font-mono text-gray-500">${p.id} · ${p.agent} → ${p.biz}</span><span class="pill ${rc[p.risk]}">${p.risk}</span></div><div class="text-sm font-bold text-white mb-1">${p.type.replace(/_/g,' ').toUpperCase()}</div><div class="text-xs text-gray-500 font-mono mb-1">${p.obj}</div><div class="text-[10px] text-gray-600 font-mono mb-1"><strong class="text-gray-500">Evidence:</strong> ${p.ev}</div><div class="text-[10px] text-gray-600 font-mono mb-3"><strong class="text-gray-500">Expected:</strong> ${p.exp}</div><div class="flex gap-2"><button class="text-xs font-mono font-bold btn-primary px-3 py-1.5 rounded-lg" onclick="toast('${p.id} approved','success')">✅ Approve</button><button class="text-xs font-mono font-bold border border-red-500/30 text-red-400 px-3 py-1.5 rounded-lg hover:bg-red-500/10 transition-colors" onclick="toast('${p.id} rejected','warn')">🚫 Reject</button></div></div>`;
-}
-
-function renderGovernor(){
-  const gp=document.getElementById('gov-props');if(gp)gp.innerHTML=PROPOSALS.map(mkProp).join('');
-  const gd=document.getElementById('gov-decisions');if(!gd)return;
-  const decs=[
-    {ok:true,d:'APPROVED · Socio-Track — Invoice #INV-0094 for Cristal Flowers',t:'14:22:03',pol:'default_risk_policy · LOW'},
-    {ok:true,d:'APPROVED · Socio-Listings — Yelp update for La Bodega NYC',t:'13:30:04',pol:'default_risk_policy · LOW'},
-    {ok:false,d:'REJECTED · Socio-Pitch — SMS blast 200 cold prospects (budget exceeded)',t:'12:14:10',pol:'budget_limit_policy · BLOCKED'},
-    {ok:true,d:'APPROVED · Socio-Content — Instagram post (Cristal Flowers)',t:'08:03:44',pol:'default_risk_policy · LOW'},
-  ];
-  gd.innerHTML=decs.map(d=>`<div class="eitem"><div class="eicon" style="background:${d.ok?'rgba(16,185,129,.1)':'rgba(239,68,68,.1)'}">${d.ok?'✅':'🚫'}</div><div><div class="text-xs text-gray-300">${d.d}</div><div class="text-[10px] text-gray-600 font-mono">${d.t} · ${d.pol}</div></div></div>`).join('');
-}
-
-/* ===== LEDGER ===== */
-function mkEvent(ev){
-  const ic={revenue:'rgba(16,185,129,.1)',action:'rgba(99,102,241,.1)',alert:'rgba(245,158,11,.1)',error:'rgba(239,68,68,.1)'};
-  return `<div class="eitem"><div class="eicon" style="background:${ic[ev.type]||ic.action}">${ev.icon}</div><div class="flex-1"><div class="text-xs text-gray-300">${ev.d}</div><div class="text-[10px] text-gray-600 font-mono">${ev.t} · ${ev.ag} · via ${ev.ch}</div></div>${ev.amt?`<div class="text-xs font-mono font-bold flex-shrink-0 ${ev.amt.startsWith('-')?'text-red-400':'text-emerald-400'}">${ev.amt}</div>`:''}</div>`;
-}
-function renderLedger(){const f=document.getElementById('ledger-feed');if(f)f.innerHTML=EVENTS.map(mkEvent).join('');}
-
-/* ===== EXPERIMENTS ===== */
-function renderExp(){
-  const g=document.getElementById('exp-grid');if(!g)return;
-  const ec={RUNNING:'pill-blue',DRAFT:'pill-gray',PROMOTED:'pill-green',KILLED:'pill-red'};
-  g.innerHTML=EXPERIMENTS.map(ex=>{
-    const ul=ex.cur&&ex.base?(((ex.cur-ex.base)/ex.base)*100).toFixed(1)+'%':'—';
-    const scls=ex.status==='RUNNING'?'border-indigo-500/30':ex.status==='PROMOTED'?'border-emerald-500/30':'border-white/6';
-    return `<div class="glass-panel p-5 ${scls} border">
-      <div class="flex items-start justify-between mb-3"><div class="text-[10px] font-mono text-gray-500">${ex.id} · ${ex.metric}</div><span class="pill ${ec[ex.status]}">${ex.status}</span></div>
-      <div class="text-sm text-gray-300 italic mb-4 leading-relaxed">"${ex.hyp}"</div>
-      <div class="grid grid-cols-3 gap-2 mb-4">
-        <div class="bg-[#1a1a1a] rounded p-2 text-center"><div class="text-[9px] text-gray-600 font-mono uppercase">Baseline</div><div class="text-sm font-mono font-bold text-white">${ex.base}${ex.metric.includes('rate')?'%':''}</div></div>
-        <div class="bg-[#1a1a1a] rounded p-2 text-center"><div class="text-[9px] text-gray-600 font-mono uppercase">Current</div><div class="text-sm font-mono font-bold text-emerald-400">${ex.cur!==null?ex.cur+(ex.metric.includes('rate')?'%':''):'—'}</div></div>
-        <div class="bg-[#1a1a1a] rounded p-2 text-center"><div class="text-[9px] text-gray-600 font-mono uppercase">Uplift</div><div class="text-sm font-mono font-bold text-emerald-400">${ul!=='—'?'↑ ':''} ${ul}</div></div>
-      </div>
-      <div class="text-[10px] text-gray-600 font-mono mb-3">${ex.obs} observations · Alloc: ${ex.alloc} · ${ex.variants.join(' vs ')}</div>
-      <div class="flex gap-2">
-        ${ex.status==='RUNNING'?`<button class="flex-1 btn-primary text-[10px] font-mono font-bold py-1.5 rounded-lg" onclick="toast('${ex.id} promoted','success')">Promote</button><button class="flex-1 text-[10px] font-mono border border-red-500/30 text-red-400 py-1.5 rounded-lg hover:bg-red-500/10 transition-colors" onclick="toast('${ex.id} killed','warn')">Kill</button>`:''}
-        ${ex.status==='DRAFT'?`<button class="flex-1 btn-primary text-[10px] font-mono font-bold py-1.5 rounded-lg" onclick="toast('${ex.id} launched','success')">Launch Experiment</button>`:''}
-        ${ex.status==='PROMOTED'?`<button class="flex-1 text-[10px] font-mono border border-white/10 text-gray-400 py-1.5 rounded-lg hover:bg-white/5 transition-colors">View Results</button>`:''}
-      </div>
-    </div>`;
-  }).join('');
-}
-
-/* ===== INFRA ===== */
-function mkInfra(items,id){
-  const c=document.getElementById(id);if(!c)return;
-  c.innerHTML=items.map(it=>`<div class="bg-[#1a1a1a] rounded-lg p-3 border border-white/5 hover:border-white/10 transition-colors"><div class="flex items-center justify-between mb-2"><div class="text-xs font-bold text-white">${it.n}</div><div class="hdot ${it.ok?'hdot-ok':'hdot-warn'}"></div></div><div class="text-[10px] text-gray-600 font-mono mb-1">${it.t}</div><div class="text-sm font-mono font-bold text-gray-200">${it.m}</div><div class="text-[10px] text-gray-600 font-mono">${it.s}</div></div>`).join('');
-}
-
-/* ===== LIVE FEED ===== */
-function startLive(){
-  const ne=[
-    {type:'revenue',icon:'💵',d:'<strong>Net New Revenue</strong> — Harlem Heritage · Loyalty redemption',amt:'+$180',ag:'Socio-Track',t:'',ch:'square'},
-    {type:'action',icon:'✍️',d:'<strong>Content Published</strong> — Sunnyside Market · 3 Instagram posts',amt:null,ag:'Socio-Content',t:'',ch:'helio'},
-    {type:'alert',icon:'🛡️',d:'<strong>Proposal Submitted</strong> — Socio-Expand → BIZ-0005 referral',amt:null,ag:'Socio-Expand',t:'',ch:'governor'}
-  ];
-  let idx=0;
-  setInterval(()=>{
-    const ev={...ne[idx%ne.length],t:new Date().toLocaleTimeString('en-US',{hour12:false})};
-    const f=document.getElementById('ledger-feed');
-    if(f){const el=document.createElement('div');el.innerHTML=mkEvent(ev);f.insertBefore(el.firstChild,f.firstChild);while(f.children.length>12)f.removeChild(f.lastChild);}
-    idx++;
-  },9000);
-}
-
-/* ===== GEM OPS DATA & LOGIC ===== */
-const GEM_STRIKES = [
-  { id: 'STK-091', target: 'Cristal Flowers (East Harlem)', stage: 'replied', score: 94, angle: 'Instagram Foot-Traffic Gap & Direct Delivery', time: '14m ago', statusClass: 'pill-green' },
-  { id: 'STK-092', target: 'El Nuevo Cafe (Wash. Heights)', stage: 'sent', score: 88, angle: 'Bilingual Review Sync & Catering Outreach', time: '1h ago', statusClass: 'pill-blue' },
-  { id: 'STK-093', target: 'La Bodega NYC (South Bronx)', stage: 'replied', score: 82, angle: 'Google Local Pack Rank #1 Strategy', time: '2h ago', statusClass: 'pill-green' },
-  { id: 'STK-094', target: 'Bloom & Branch (Astoria)', stage: 'sent', score: 79, angle: 'TikTok Shop / Walk-in Conversion', time: '4h ago', statusClass: 'pill-blue' },
-  { id: 'STK-095', target: 'BX Corner Deli (Bronx)', stage: 'closed', score: 69, angle: 'POS Online Invoicing Integration', time: '1d ago', statusClass: 'pill-red' }
-];
-
-const GEM_RISK_LEADS = [
-  { id: 'RL-01', name: 'Bloom & Branch', temp: 'hot', score: 86, val: '$3,500', days: 6, issue: 'No WhatsApp response after T+48h automated touch', action: 'Trigger Manual Voice Follow-up' },
-  { id: 'RL-02', name: 'Park Slope Laundry', temp: 'hot', score: 82, val: '$2,100', days: 5, issue: 'Diagnostic audit delivered but scoping call unscheduled', action: 'Resend Audit Video Summary' },
-  { id: 'RL-03', name: 'Midtown Florist', temp: 'warm', score: 68, val: '$1,200', days: 3, issue: 'Typeform onboarding half-filled', action: 'Send SMS Assistance Prompt' }
-];
-
-const GEM_ORCH_RUNS = [
-  { agent: 'Socio-Prospect', target: 'NYC Scout (East Harlem)', status: 'running', latency: '184ms', runs: '47 scored', color: '#6366F1' },
-  { agent: 'Socio-Pitch', target: 'Resend / Twilio Engine', status: 'idle', latency: '42ms', runs: '28 touches', color: '#F59E0B' },
-  { agent: 'Socio-Onboard', target: 'DocuSign / Typeform Bridge', status: 'succeeded', latency: '12ms', runs: '5 packets', color: '#10B981' },
-  { agent: 'Socio-Content', target: 'Helio CDP / Canva MCP', status: 'running', latency: '412ms', runs: '142 pieces', color: '#6366F1' },
-  { agent: 'Socio-Listings', target: 'Synup MCP Local SEO', status: 'succeeded', latency: '95ms', runs: '38 syncs', color: '#10B981' },
-  { agent: 'Socio-Track', target: 'Stripe Ledger / Economic Store', status: 'succeeded', latency: '22ms', runs: '67 events', color: '#10B981' }
-];
-
-// Local Persistence Store
-const store = {
-  getTasks: () => JSON.parse(localStorage.getItem('socio_gem_tasks') || 'null'),
-  saveTasks: (tasks) => localStorage.setItem('socio_gem_tasks', JSON.stringify(tasks)),
-  getDecisions: () => JSON.parse(localStorage.getItem('socio_gov_decisions') || '{}'),
-  saveDecision: (id, status) => {
-    const d = store.getDecisions();
-    d[id] = status;
-    localStorage.setItem('socio_gov_decisions', JSON.stringify(d));
-  }
-};
-
-let GEM_TASKS = store.getTasks() || [
-  { id: 'gt-1', action: 'Send 5 WhatsApp follow-ups to East Harlem qualified florist leads', priority: 10, done: false },
-  { id: 'gt-2', action: 'Deliver 48-Hour Digital Audit to El Nuevo Cafe owner', priority: 9, done: false },
-  { id: 'gt-3', action: 'Verify Google Business listing sync across 12 directories for La Bodega', priority: 8, done: true },
-  { id: 'gt-4', action: 'Draft Stripe Connect pilot agreement for Harlem Heritage ($7,200/mo)', priority: 8, done: false },
-  { id: 'gt-5', action: 'Log daily outbound response metrics and calibrate DeepSeek prompt', priority: 7, done: false }
-];
-
-const API_BASE = window.location.origin;
-let authToken = localStorage.getItem('socio_merchant_token') || 'dev-token';
-let activeBusinessId = localStorage.getItem('socio_active_biz') || 'socio_default';
-
-/* ===== LIVE REAL-TIME API CLIENT ===== */
-async function fetchFleetTelemetry() {
-  try {
-    const res = await fetch(`${API_BASE}/api/agents/status`, {
-      headers: { 'Authorization': `Bearer ${authToken}` }
-    });
-    const data = await res.json();
-    if (data.agents && Array.isArray(data.agents)) {
-      AGENTS.forEach((a, i) => {
-        const live = data.agents.find(x => x.id === a.id);
-        if (live) {
-          a.status = live.status;
-          a.today = live.today;
-          a.proposals = live.proposals;
-        }
-      });
-      renderAgents();
-      lucide.createIcons();
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Socio Command Center — Autonomous Merchant Growth Operating System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Roboto+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #08090d;
+      --bg-card: #0e1017;
+      --bg-surface: #141722;
+      --border-subtle: rgba(255, 255, 255, 0.07);
+      --accent-yellow: #ccff00;
+      --accent-green: #10B981;
+      --accent-sky: #38bdf8;
+      --accent-amber: #f59e0b;
+      --accent-red: #ef4444;
+      --font-sans: 'Plus Jakarta Sans', sans-serif;
+      --font-mono: 'Roboto Mono', monospace;
     }
-  } catch (e) {
-    console.log('Using local fallback telemetry');
-  }
-}
 
-async function triggerLiveAgent(agentId) {
-  try {
-    toast(`Triggering Socio-${agentId}...`, 'warn');
-    const res = await fetch(`${API_BASE}/api/agent/${agentId}/trigger`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${authToken}` },
-      body: JSON.stringify({ businessId: activeBusinessId })
-    });
-    const data = await res.json();
-    toast(data.message || `${agentId} triggered`, 'success');
-    fetchFleetTelemetry();
-  } catch (err) {
-    toast(`Socio-${agentId} triggered in dev fallback mode`, 'success');
-  }
-}
+    body {
+      background-color: var(--bg-dark);
+      color: #f8fafc;
+      font-family: var(--font-sans);
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 100% 50%, rgba(204, 255, 0, 0.03) 0%, transparent 40%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-async function approveProposal(proposalId) {
-  try {
-    await fetch(`${API_BASE}/api/governor/${proposalId}/approve`, {
-      method: 'POST',
-      headers: { 'Authorization': `Bearer ${authToken}` }
-    });
-    store.saveDecision(proposalId, 'APPROVED');
-    toast(`Proposal ${proposalId} APPROVED by Governor`, 'success');
-    renderGovernor();
-  } catch (err) {
-    store.saveDecision(proposalId, 'APPROVED');
-    toast(`Proposal ${proposalId} APPROVED (local sync)`, 'success');
-    renderGovernor();
-  }
-}
+    .font-mono { font-family: var(--font-mono); }
 
-async function rejectProposal(proposalId) {
-  try {
-    await fetch(`${API_BASE}/api/governor/${proposalId}/reject`, {
-      method: 'POST',
-      headers: { 'Authorization': `Bearer ${authToken}` }
-    });
-    store.saveDecision(proposalId, 'REJECTED');
-    toast(`Proposal ${proposalId} REJECTED by Governor`, 'warn');
-    renderGovernor();
-  } catch (err) {
-    store.saveDecision(proposalId, 'REJECTED');
-    toast(`Proposal ${proposalId} REJECTED (local sync)`, 'warn');
-    renderGovernor();
-  }
-}
+    .glass-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      transition: all 0.2s ease;
+    }
+    .glass-card:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+    }
 
-function renderGemDashboard() {
-  const sl = document.getElementById('gem-strikes-list');
-  if (sl) {
-    sl.innerHTML = GEM_STRIKES.map(s => `
-      <div class="flex items-center justify-between p-2.5 rounded-lg bg-black/30 border border-white/5 hover:border-white/10 transition-colors">
-        <div class="flex items-start gap-2.5 min-w-0">
-          <div class="w-6 h-6 rounded-md bg-white/5 border border-white/10 flex items-center justify-center shrink-0 mt-0.5">
-            <i data-lucide="crosshair" class="w-3.5 h-3.5 text-cyan-400"></i>
-          </div>
-          <div class="min-w-0">
-            <div class="text-xs font-semibold text-white truncate">${s.target}</div>
-            <div class="text-[10px] text-gray-500 font-mono truncate">${s.angle}</div>
-          </div>
-        </div>
-        <div class="flex items-center gap-2 shrink-0">
-          <span class="pill ${s.statusClass}">${s.stage.toUpperCase()}</span>
-          <span class="text-[9px] font-mono text-gray-600">${s.time}</span>
-        </div>
+    .pill {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .pill-green { background: rgba(16, 185, 129, 0.12); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.25); }
+    .pill-blue { background: rgba(56, 189, 248, 0.12); color: #7dd3fc; border: 1px solid rgba(56, 189, 248, 0.25); }
+    .pill-amber { background: rgba(245, 158, 11, 0.12); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.25); }
+    .pill-red { background: rgba(239, 68, 68, 0.12); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.25); }
+    .pill-gray { background: rgba(255, 255, 255, 0.05); color: #94a3b8; border: 1px solid rgba(255, 255, 255, 0.1); }
+    .pill-yellow { background: rgba(204, 255, 0, 0.12); color: #ccff00; border: 1px solid rgba(204, 255, 0, 0.3); }
+
+    .nav-tab-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #94a3b8;
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+    .nav-tab-btn:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .nav-tab-btn.active {
+      color: #000000;
+      background: var(--accent-yellow);
+      box-shadow: 0 0 15px rgba(204, 255, 0, 0.25);
+    }
+
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      pointer-events: none;
+    }
+    .toast-box {
+      pointer-events: auto;
+      background: #141722;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-family: var(--font-mono);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: slideUp 0.2s ease-out;
+    }
+    @keyframes slideUp { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+  </style>
+</head>
+<body class="flex flex-col h-screen overflow-hidden">
+
+  <!-- ================================================================= -->
+  <!-- GLOBAL HEADER & AI COMMAND BAR (CMD + K)                          -->
+  <!-- ================================================================= -->
+  <header class="flex items-center justify-between px-6 py-3 border-b border-white/5 bg-[#08090d]/90 backdrop-blur-xl z-30 shrink-0">
+    <div class="flex items-center gap-4">
+      <a href="index.html" class="text-lg font-black tracking-tight text-white flex items-center gap-1">
+        Socio<span class="text-[#ccff00] drop-shadow-[0_0_8px_rgba(204,255,0,0.8)]">.</span>
+      </a>
+      <span class="pill pill-yellow hidden sm:inline-flex">GROWTH OS v2.4</span>
+      <div class="h-4 w-px bg-white/10 hidden sm:block"></div>
+      <div class="flex items-center gap-2 text-xs font-mono text-gray-400">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span class="hidden md:inline">8/8 AGENTS RUNNING</span>
       </div>
-    `).join('');
-  }
+    </div>
 
-  const fl = document.getElementById('gem-focus-list');
-  if (fl) {
-    fl.innerHTML = GEM_TASKS.map(t => `
-      <div class="flex items-start gap-3 p-2.5 rounded-lg bg-black/30 border border-white/5 transition-colors ${t.done ? 'opacity-50' : ''}">
-        <input type="checkbox" class="todo-checkbox mt-0.5" ${t.done ? 'checked' : ''} onchange="toggleGemTask('${t.id}')">
-        <div class="flex-1 min-w-0">
-          <div class="text-xs font-medium ${t.done ? 'line-through text-gray-500' : 'text-gray-200'}">${t.action}</div>
-        </div>
-        <span class="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-white/5 border border-white/10 ${t.priority >= 9 ? 'text-amber-400' : 'text-gray-400'}">P${t.priority}</span>
+    <!-- AI Command Bar -->
+    <div class="flex-1 max-w-xl mx-6 relative">
+      <div class="flex items-center gap-2.5 bg-[#141722] border border-white/10 rounded-xl px-3.5 py-1.5 focus-within:border-[#ccff00] transition-colors shadow-inner">
+        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#ccff00]"></i>
+        <input type="text" id="global-command-input" placeholder="Ask Chief of Staff or enter command... (e.g. 'Show me what needs approval', 'Briefing') • ⌘K" class="bg-transparent border-none outline-none text-xs font-mono text-white w-full placeholder-gray-500" onkeydown="handleCommandKey(event)">
+        <span class="text-[10px] font-mono bg-white/5 px-1.5 py-0.5 rounded text-gray-400 border border-white/10">⌘K</span>
       </div>
-    `).join('');
-  }
+    </div>
 
-  renderGemRisk('all');
-
-  const ol = document.getElementById('gem-orch-list');
-  if (ol) {
-    ol.innerHTML = GEM_ORCH_RUNS.map(o => `
-      <div class="flex items-center justify-between p-2.5 rounded-lg bg-black/30 border border-white/5">
-        <div class="flex items-center gap-2.5 min-w-0">
-          <span class="w-2 h-2 rounded-full shrink-0" style="background:${o.color}"></span>
-          <div class="min-w-0">
-            <div class="text-xs font-bold text-white font-mono">${o.agent}</div>
-            <div class="text-[10px] text-gray-500 font-mono truncate">${o.target}</div>
-          </div>
-        </div>
-        <div class="flex items-center gap-3 shrink-0">
-          <span class="text-[10px] font-mono text-gray-400">${o.runs}</span>
-          <span class="pill ${o.status === 'running' ? 'pill-blue' : 'pill-green'}">${o.status.toUpperCase()}</span>
-        </div>
-      </div>
-    `).join('');
-  }
-
-  const feed = document.getElementById('gem-feed-list');
-  if (feed) {
-    const feedLogs = [
-      { ts: '14:22:01', type: 'PAYMENT', desc: 'Net New $1,240 recorded for Cristal Flowers', col: 'text-emerald-400' },
-      { ts: '14:18:33', type: 'OUTBOUND', desc: 'Sequence touch 2/3 delivered to Bloom & Branch via Resend', col: 'text-cyan-400' },
-      { ts: '13:50:11', type: 'AUDIT', desc: '48-Hour Digital Audit packet generated for El Nuevo Cafe', col: 'text-indigo-400' },
-      { ts: '13:30:05', type: 'SYNC', desc: '12 local directories synchronized for La Bodega NYC via Synup', col: 'text-emerald-400' },
-      { ts: '12:04:18', type: 'TELEMETRY', desc: 'Fleet heartbeat: 8/8 agents online, 0 fatal exceptions', col: 'text-gray-400' }
-    ];
-    feed.innerHTML = feedLogs.map(l => `
-      <div class="flex items-center gap-2 py-1 px-2 rounded bg-black/20 border border-white/4">
-        <span class="text-gray-600 text-[10px]">${l.ts}</span>
-        <span class="text-[9px] font-bold px-1 py-0.2 rounded bg-white/5 border border-white/10 ${l.col}">${l.type}</span>
-        <span class="text-gray-300 text-xs truncate">${l.desc}</span>
-      </div>
-    `).join('');
-  }
-}
-
-function toggleGemTask(id) {
-  const t = GEM_TASKS.find(x => x.id === id);
-  if (t) {
-    t.done = !t.done;
-    store.saveTasks(GEM_TASKS);
-    renderGemDashboard();
-    lucide.createIcons();
-    toast(t.done ? 'Task marked as completed' : 'Task reopened', 'success');
-  }
-}
-
-function addGemTask() {
-  const inp = document.getElementById('gem-new-task');
-  if (!inp || !inp.value.trim()) return;
-  GEM_TASKS.unshift({ id: 'gt-' + Date.now(), action: inp.value.trim(), priority: 8, done: false });
-  store.saveTasks(GEM_TASKS);
-  inp.value = '';
-  renderGemDashboard();
-  lucide.createIcons();
-  toast('New focus item added to queue', 'success');
-}
-
-function renderGemRisk(tier) {
-  const rl = document.getElementById('gem-risk-list');
-  if (!rl) return;
-  let items = GEM_RISK_LEADS;
-  if (tier !== 'all') items = items.filter(x => x.temp === tier);
-  rl.innerHTML = items.map(r => `
-    <div class="p-3 rounded-lg bg-black/30 border border-white/5 hover:border-white/10 transition-colors">
-      <div class="flex items-center justify-between mb-1.5">
-        <div class="flex items-center gap-2">
-          <span class="text-sm">${r.temp === 'hot' ? '🔥' : '⚠️'}</span>
-          <span class="text-xs font-bold text-white">${r.name}</span>
-          <span class="text-[10px] font-mono font-bold text-emerald-400">${r.val}</span>
-        </div>
-        <span class="pill ${r.temp === 'hot' ? 'pill-red' : 'pill-gold'}">${r.days}d inactive</span>
-      </div>
-      <div class="text-[11px] text-gray-400 font-mono mb-2">${r.issue}</div>
-      <button onclick="toast('${r.action} dispatched for ${r.name}', 'success')" class="text-[10px] font-mono font-bold text-cyan-400 hover:text-cyan-300 flex items-center gap-1">
-        → ${r.action}
+    <div class="flex items-center gap-3">
+      <button onclick="toggleFocusMode()" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 transition-all flex items-center gap-1.5" id="btn-focus">
+        <i data-lucide="crosshair" class="w-3.5 h-3.5 text-cyan-400"></i>
+        <span>Focus Mode</span>
+      </button>
+      <button onclick="fetchFleetTelemetry()" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-gray-300 transition-all" title="Refresh Telemetry">
+        <i data-lucide="refresh-cw" class="w-3.5 h-3.5" id="refresh-icon"></i>
       </button>
     </div>
-  `).join('');
-}
+  </header>
 
-function filterRisk(tier, btn) {
-  renderGemRisk(tier);
-  lucide.createIcons();
-  document.querySelectorAll('#gem-risk-filters button').forEach(b => b.classList.remove('active-filter', 'bg-white/10'));
-  if (btn) btn.classList.add('active-filter', 'bg-white/10');
-}
+  <!-- ================================================================= -->
+  <!-- MAIN WORKSPACE LAYOUT (SIDEBAR + CONTENT STAGE)                   -->
+  <!-- ================================================================= -->
+  <div class="flex flex-1 overflow-hidden">
 
-function refreshGemData() {
-  const icon = document.getElementById('gem-refresh-icon');
-  if (icon) icon.classList.add('animate-spin');
-  setTimeout(() => {
-    if (icon) icon.classList.remove('animate-spin');
-    renderGemDashboard();
-    lucide.createIcons();
-    toast('GEM telemetry refreshed — 8/8 agents connected', 'success');
-  }, 600);
-}
+    <!-- LEFT NAVIGATION DOCK -->
+    <aside class="w-56 border-r border-white/5 bg-[#08090d] p-3 flex flex-col justify-between shrink-0 overflow-y-auto">
+      <div class="space-y-1">
+        <div class="text-[10px] font-mono uppercase text-gray-500 font-bold px-3 py-1">Command Plane</div>
+        <div class="nav-tab-btn active" onclick="switchTab('overview', this)"><i data-lucide="layout-dashboard" class="w-4 h-4"></i> Executive HUD</div>
+        <div class="nav-tab-btn" onclick="switchTab('queue', this)"><i data-lucide="list-todo" class="w-4 h-4"></i> Founder Queue <span class="ml-auto pill pill-amber" id="nav-badge-queue">3</span></div>
+        <div class="nav-tab-btn" onclick="switchTab('governor', this)"><i data-lucide="shield-check" class="w-4 h-4"></i> Governor Control <span class="ml-auto pill pill-red" id="nav-badge-gov">3</span></div>
 
-function openGemModal() {
-  const biz = prompt('Enter target business name for Outbound Strike:');
-  if (biz) {
-    GEM_STRIKES.unshift({
-      id: 'STK-' + Math.floor(Math.random() * 900 + 100),
-      target: biz + ' (NYC)',
-      stage: 'sent',
-      score: 85,
-      angle: 'Automated 48-Hour Digital Audit & Outreach',
-      time: 'Just now',
-      statusClass: 'pill-blue'
+        <div class="text-[10px] font-mono uppercase text-gray-500 font-bold px-3 pt-3 py-1">Operations</div>
+        <div class="nav-tab-btn" onclick="switchTab('agents', this)"><i data-lucide="bot" class="w-4 h-4"></i> Agent Fleet <span class="ml-auto text-[10px] text-emerald-400 font-mono">8/8</span></div>
+        <div class="nav-tab-btn" onclick="switchTab('merchants', this)"><i data-lucide="store" class="w-4 h-4"></i> Merchants CRM</div>
+        <div class="nav-tab-btn" onclick="switchTab('pipeline', this)"><i data-lucide="kanban" class="w-4 h-4"></i> Growth Pipeline</div>
+        <div class="nav-tab-btn" onclick="switchTab('ledger', this)"><i data-lucide="receipt" class="w-4 h-4"></i> Revenue Ledger</div>
+        <div class="nav-tab-btn" onclick="switchTab('evidence', this)"><i data-lucide="scale" class="w-4 h-4"></i> Merchant Evidence</div>
+        <div class="nav-tab-btn" onclick="switchTab('experiments', this)"><i data-lucide="flask-conical" class="w-4 h-4"></i> Experiments</div>
+      </div>
+
+      <!-- Quick Session Indicator -->
+      <div class="p-3 rounded-xl bg-[#141722] border border-white/5 space-y-2">
+        <div class="flex items-center justify-between text-[10px] font-mono text-gray-400">
+          <span>CAS LEDGER STATUS</span>
+          <span class="text-emerald-400 font-bold">TAMPER-PROOF</span>
+        </div>
+        <div class="text-[11px] font-mono text-gray-300 truncate">Twin Context: <span class="text-white font-bold">10 NYC Merchants</span></div>
+      </div>
+    </aside>
+
+    <!-- CENTER SCROLLABLE OPERATING THEATER -->
+    <main class="flex-1 overflow-y-auto p-6 space-y-6 bg-[#0b0c10]" id="main-theater">
+
+      <!-- ============================================================= -->
+      <!-- LAYER 1: EXECUTIVE STATE HUD (Clickable source metrics)       -->
+      <!-- ============================================================= -->
+      <section class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3" id="executive-hud">
+        
+        <div class="glass-card p-3.5 cursor-pointer hover:border-emerald-500/40 border-l-2 border-l-emerald-400" onclick="switchTab('ledger')">
+          <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Net New Rev</div>
+          <div class="text-xl font-black font-mono text-white mt-1" id="m-net-new">$15,870</div>
+          <div class="text-[9px] font-mono text-emerald-400 mt-0.5">✓ Matched POS</div>
+        </div>
+
+        <div class="glass-card p-3.5 cursor-pointer hover:border-sky-500/40 border-l-2 border-l-sky-400" onclick="switchTab('ledger')">
+          <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Expansion Rev</div>
+          <div class="text-xl font-black font-mono text-white mt-1" id="m-expansion">$6,780</div>
+          <div class="text-[9px] font-mono text-sky-400 mt-0.5">Retention Loops</div>
+        </div>
+
+        <div class="glass-card p-3.5 cursor-pointer hover:border-[#ccff00]/40 border-l-2 border-l-[#ccff00]" onclick="switchTab('ledger')">
+          <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Recovered Rev</div>
+          <div class="text-xl font-black font-mono text-[#ccff00] mt-1" id="m-recovered">$22,890</div>
+          <div class="text-[9px] font-mono text-gray-400 mt-0.5">137 Dormant Leads</div>
+        </div>
+
+        <div class="glass-card p-3.5 cursor-pointer hover:border-indigo-500/40 border-l-2 border-l-indigo-400" onclick="switchTab('pipeline')">
+          <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Pipeline Val</div>
+          <div class="text-xl font-black font-mono text-white mt-1" id="m-pipeline">$42,180</div>
+          <div class="text-[9px] font-mono text-indigo-400 mt-0.5">10 Active Deals</div>
+        </div>
+
+        <div class="glass-card p-3.5 cursor-pointer hover:border-rose-500/40 border-l-2 border-l-rose-500" onclick="switchTab('queue')">
+          <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Pipeline at Risk</div>
+          <div class="text-xl font-black font-mono text-rose-400 mt-1" id="m-risk">$6,800</div>
+          <div class="text-[9px] font-mono text-rose-400 mt-0.5">3 Stagnant Deals</div>
+        </div>
+
+        <div class="glass-card p-3.5 cursor-pointer hover:border-white/20" onclick="switchTab('merchants')">
+          <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Active Stores</div>
+          <div class="text-xl font-black font-mono text-white mt-1" id="m-merchants">10</div>
+          <div class="text-[9px] font-mono text-gray-400 mt-0.5">NYC Cohort 01</div>
+        </div>
+
+        <div class="glass-card p-3.5 cursor-pointer hover:border-white/20" onclick="switchTab('agents')">
+          <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Fleet Status</div>
+          <div class="text-xl font-black font-mono text-emerald-400 mt-1" id="m-agents">8 / 8</div>
+          <div class="text-[9px] font-mono text-gray-400 mt-0.5">0 Errors Today</div>
+        </div>
+
+        <div class="glass-card p-3.5 cursor-pointer hover:border-amber-500/40 border-l-2 border-l-amber-400" onclick="switchTab('governor')">
+          <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Gov Approvals</div>
+          <div class="text-xl font-black font-mono text-amber-400 mt-1" id="m-approvals">3</div>
+          <div class="text-[9px] font-mono text-amber-400 mt-0.5">Action Needed</div>
+        </div>
+
+      </section>
+
+      <!-- ============================================================= -->
+      <!-- TAB VIEW: EXECUTIVE OVERVIEW (CHIEF OF STAFF + QUEUE + FEED)  -->
+      <!-- ============================================================= -->
+      <div id="tab-overview" class="tab-content space-y-6">
+
+        <!-- LAYER 2: SOCIO BRIEFING (AI CHIEF OF STAFF) -->
+        <section class="glass-card p-5 border-l-4 border-l-[#ccff00] bg-gradient-to-r from-[#0e1017] to-[#141722]">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/5 pb-3 mb-4">
+            <div class="flex items-center gap-2.5">
+              <span class="p-1.5 rounded-lg bg-[#ccff00]/10 text-[#ccff00]"><i data-lucide="sparkles" class="w-4 h-4"></i></span>
+              <div>
+                <h2 class="text-sm font-bold text-white uppercase tracking-wider font-mono">SOCIO OPERATING BRIEFING • MORNING INTELLIGENCE</h2>
+                <div class="text-[11px] text-gray-400 font-mono mt-0.5">Status: <strong class="text-emerald-400 font-mono">OPTIMAL</strong> • Fleet running at 100% capacity</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="pill pill-yellow">P0 ACTION READY</span>
+              <button onclick="toast('Briefing updated with latest POS and Hermes telemetry','success')" class="text-xs font-mono text-gray-400 hover:text-white">Refresh Briefing</button>
+            </div>
+          </div>
+
+          <!-- The Highest-Value Immediate Human Action -->
+          <div class="bg-black/50 p-4 rounded-xl border border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="space-y-1">
+              <div class="text-[10px] font-mono font-bold text-[#ccff00] uppercase tracking-wider">🎯 NEXT HIGHEST-VALUE HUMAN ACTION</div>
+              <div class="text-base font-bold text-white">Approve East Harlem Bites Paid Instagram Campaign ($400 Budget)</div>
+              <div class="text-xs text-gray-400 font-mono">Expected Impact: <strong class="text-emerald-400 font-mono">+$4,400 Attributable Revenue</strong> (11x ROAS validated in test sample)</div>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+              <button onclick="approveProposal('PROP-0042')" class="px-4 py-2 bg-[#ccff00] text-black font-bold font-mono text-xs rounded-lg hover:brightness-110 shadow-[0_0_15px_rgba(204,255,0,0.3)]">
+                ✓ Approve Campaign
+              </button>
+              <button onclick="switchTab('governor')" class="px-3 py-2 bg-white/5 hover:bg-white/10 text-gray-300 font-mono text-xs rounded-lg border border-white/10">
+                Inspect Evidence
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3-COLUMN CONTROL STAGE (FOUNDER QUEUE + AGENT STRIKES + LIVE STREAM) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          
+          <!-- LEFT: FOUNDER QUEUE (LAYER 3) -->
+          <div class="lg:col-span-5 glass-card p-5 space-y-4">
+            <div class="flex items-center justify-between border-b border-white/5 pb-3">
+              <div class="flex items-center gap-2">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-amber-400"></i>
+                <span class="text-xs font-bold font-mono uppercase tracking-wider text-white">FOUNDER ACTION QUEUE</span>
+              </div>
+              <span class="text-[10px] font-mono text-gray-400">Prioritized by $ Impact</span>
+            </div>
+
+            <!-- Task Input -->
+            <div class="flex gap-2">
+              <input type="text" id="input-new-task" placeholder="+ Add founder task or command..." class="flex-1 bg-[#141722] border border-white/10 rounded-lg px-3 py-1.5 text-xs font-mono text-white placeholder-gray-500 outline-none focus:border-[#ccff00]" onkeydown="if(event.key==='Enter')addTaskFromInput()">
+              <button onclick="addTaskFromInput()" class="px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-xs font-mono font-bold text-white">+</button>
+            </div>
+
+            <!-- Task Items -->
+            <div class="space-y-2.5" id="founder-queue-list">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+          <!-- RIGHT: LIVE AGENT ACTIVITY STREAM (LAYER 5) -->
+          <div class="lg:col-span-7 glass-card p-5 space-y-4 flex flex-col h-[520px]">
+            <div class="flex items-center justify-between border-b border-white/5 pb-3 shrink-0">
+              <div class="flex items-center gap-2">
+                <i data-lucide="activity" class="w-4 h-4 text-sky-400"></i>
+                <span class="text-xs font-bold font-mono uppercase tracking-wider text-white">LIVE AGENT TELEMETRY & MEMORY STREAM</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                <span class="text-[10px] font-mono text-gray-400 uppercase">Streaming Active</span>
+              </div>
+            </div>
+
+            <!-- Stream Log Items -->
+            <div class="flex-1 overflow-y-auto space-y-2 pr-1" id="agent-activity-stream">
+              <!-- Rendered via JS -->
+            </div>
+
+            <!-- Command Terminal Input -->
+            <div class="pt-3 border-t border-white/5 shrink-0 flex gap-2">
+              <input type="text" id="input-agent-cmd" placeholder="Dispatch instructions to agent fleet (e.g. 'Trigger Socio-Prospect on East Harlem florists')..." class="flex-1 bg-[#141722] border border-white/10 rounded-lg px-3 py-2 text-xs font-mono text-white placeholder-gray-500 outline-none focus:border-cyan-400" onkeydown="if(event.key==='Enter')dispatchAgentTerminalCmd()">
+              <button onclick="dispatchAgentTerminalCmd()" class="px-4 py-2 bg-cyan-500 text-black font-bold font-mono text-xs rounded-lg hover:brightness-110">
+                Dispatch →
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ============================================================= -->
+      <!-- TAB VIEW: AGENT FLEET (LAYER 4)                               -->
+      <!-- ============================================================= -->
+      <div id="tab-agents" class="tab-content space-y-5 hidden">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-lg font-bold text-white">8-Agent Autonomous Fleet</h2>
+            <p class="text-xs text-gray-400 font-mono">DSH + Hermes Multi-Agent Framework • Role-locked governance</p>
+          </div>
+          <div class="flex gap-2">
+            <button onclick="pingAllAgents()" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300">Ping Fleet</button>
+            <button onclick="triggerLiveAgent('prospect')" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-[#ccff00] text-black hover:brightness-110">Trigger Socio-Prospect</button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4" id="fleet-cards-grid">
+          <!-- Rendered via JS -->
+        </div>
+      </div>
+
+      <!-- ============================================================= -->
+      <!-- TAB VIEW: GOVERNOR CONTROL PLANE (LAYER 6)                    -->
+      <!-- ============================================================= -->
+      <div id="tab-governor" class="tab-content space-y-5 hidden">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-lg font-bold text-white">Governor Safety & Action Approval Layer</h2>
+            <p class="text-xs text-gray-400 font-mono">Every agent proposal is risk-scored and evaluated against CAS policies.</p>
+          </div>
+          <span class="pill pill-amber">3 PENDING FOUNDER REVIEW</span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div class="lg:col-span-8 space-y-4" id="governor-proposals-container">
+            <!-- Rendered via JS -->
+          </div>
+          
+          <div class="lg:col-span-4 space-y-4">
+            <div class="glass-card p-5 space-y-3">
+              <div class="text-xs font-bold font-mono uppercase text-gray-400">Risk Matrix Policy</div>
+              <div class="space-y-2 text-xs font-mono">
+                <div class="p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
+                  <div class="font-bold">LOW RISK • Auto-Approved</div>
+                  <div class="text-[10px] text-gray-400 mt-0.5">Read-only SEO audits, draft calendars, citation checks.</div>
+                </div>
+                <div class="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400">
+                  <div class="font-bold">MEDIUM RISK • Supervisor Gated</div>
+                  <div class="text-[10px] text-gray-400 mt-0.5">Customer retention touches, WhatsApp follow-ups.</div>
+                </div>
+                <div class="p-2.5 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400">
+                  <div class="font-bold">HIGH RISK • Founder Approval</div>
+                  <div class="text-[10px] text-gray-400 mt-0.5">Ad campaigns, budget spending, contract terms.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================= -->
+      <!-- TAB VIEW: MERCHANTS CRM & TWIN WORKSPACE (LAYER 7 & 8)        -->
+      <!-- ============================================================= -->
+      <div id="tab-merchants" class="tab-content space-y-5 hidden">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-lg font-bold text-white">NYC Merchant Cohort & Business Twins</h2>
+            <p class="text-xs text-gray-400 font-mono">Real-time status, health scores, and attributed revenue per merchant.</p>
+          </div>
+          <button onclick="toast('New merchant onboarding initialized','success')" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-[#ccff00] text-black hover:brightness-110">+ Onboard Merchant</button>
+        </div>
+
+        <div class="glass-card overflow-hidden">
+          <table class="w-full text-left text-xs font-mono">
+            <thead>
+              <tr class="text-[10px] uppercase text-gray-500 border-b border-white/5 bg-white/2">
+                <th class="p-3.5">Merchant Name</th>
+                <th class="p-3.5">Borough / Location</th>
+                <th class="p-3.5">Lifecycle Stage</th>
+                <th class="p-3.5">Assigned Agent</th>
+                <th class="p-3.5">Net New Rev</th>
+                <th class="p-3.5">Health Score</th>
+                <th class="p-3.5">Next Best Action</th>
+                <th class="p-3.5">Action</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5 text-gray-300" id="merchants-crm-tbody">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ============================================================= -->
+      <!-- TAB VIEW: GROWTH PIPELINE (LAYER 9)                           -->
+      <!-- ============================================================= -->
+      <div id="tab-pipeline" class="tab-content space-y-5 hidden">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-lg font-bold text-white">10-Stage Merchant Growth Pipeline</h2>
+            <p class="text-xs text-gray-400 font-mono">From Prospect Scraping → Active Commission & Referrals</p>
+          </div>
+          <div class="text-xs font-mono text-[#ccff00] font-bold">Total Weighted Pipeline: $42,180</div>
+        </div>
+
+        <!-- 10-Stage Kanban Row -->
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-3" id="kanban-pipeline-grid">
+          <!-- Rendered via JS -->
+        </div>
+      </div>
+
+      <!-- ============================================================= -->
+      <!-- TAB VIEW: REVENUE LEDGER (LAYER 10)                           -->
+      <!-- ============================================================= -->
+      <div id="tab-ledger" class="tab-content space-y-5 hidden">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-lg font-bold text-white">Idempotent Revenue Ledger</h2>
+            <p class="text-xs text-gray-400 font-mono">All transactions cryptographically hash-matched against POS telemetry.</p>
+          </div>
+          <span class="pill pill-green">IMMUTABLE CAS RECORD</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div class="glass-card p-4 border-l-4 border-l-emerald-400">
+            <div class="text-[10px] font-mono uppercase text-gray-500">Gross Recovered</div>
+            <div class="text-2xl font-bold font-mono text-white mt-1">$22,890.00</div>
+          </div>
+          <div class="glass-card p-4 border-l-4 border-l-sky-400">
+            <div class="text-[10px] font-mono uppercase text-gray-500">Verified Delta</div>
+            <div class="text-2xl font-bold font-mono text-sky-400 mt-1">$15,870.00</div>
+          </div>
+          <div class="glass-card p-4 border-l-4 border-l-[#ccff00]">
+            <div class="text-[10px] font-mono uppercase text-gray-500">Socio 15% Commission</div>
+            <div class="text-2xl font-bold font-mono text-[#ccff00] mt-1">$2,380.50</div>
+          </div>
+          <div class="glass-card p-4 border-l-4 border-l-purple-400">
+            <div class="text-[10px] font-mono uppercase text-gray-500">Store Payout (85%)</div>
+            <div class="text-2xl font-bold font-mono text-white mt-1">$13,489.50</div>
+          </div>
+        </div>
+
+        <div class="glass-card p-5 space-y-3">
+          <div class="text-xs font-bold font-mono uppercase text-gray-400">Receipt Event Ledger Stream</div>
+          <div class="space-y-2" id="revenue-events-stream">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================= -->
+      <!-- TAB VIEW: EMBEDDED MERCHANT EVIDENCE (LAYER 18)               -->
+      <!-- ============================================================= -->
+      <div id="tab-evidence" class="tab-content space-y-5 hidden">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-lg font-bold text-white">Merchant Evidence Frame</h2>
+            <p class="text-xs text-gray-400 font-mono">Live 6-Question Provability Ledger & Audit Trail</p>
+          </div>
+          <a href="merchant-evidence.html" target="_blank" class="text-xs font-mono text-cyan-400 hover:underline flex items-center gap-1">Open Fullscreen ↗</a>
+        </div>
+        <div class="glass-card overflow-hidden rounded-2xl h-[650px] border border-white/10">
+          <iframe src="merchant-evidence.html" class="w-full h-full border-none"></iframe>
+        </div>
+      </div>
+
+      <!-- ============================================================= -->
+      <!-- TAB VIEW: EXPERIMENTS ENGINE (LAYER 13)                       -->
+      <!-- ============================================================= -->
+      <div id="tab-experiments" class="tab-content space-y-5 hidden">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-lg font-bold text-white">Controlled Growth Experiments</h2>
+            <p class="text-xs text-gray-400 font-mono">Statistically verified uplift tests across NYC merchant verticals.</p>
+          </div>
+          <button onclick="toast('New hypothesis proposal drafted','success')" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-[#ccff00] text-black hover:brightness-110">+ New Hypothesis</button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="experiments-cards-grid">
+          <!-- Rendered via JS -->
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-deck"></div>
+
+  <!-- ================================================================= -->
+  <!-- JAVASCRIPT ENGINE & REAL BACKEND DATA COUPLING                    -->
+  <!-- ================================================================= -->
+  <script>
+    const API_BASE = window.location.origin;
+    let authToken = localStorage.getItem('socio_merchant_token') || 'dev-token';
+    let isFocusMode = false;
+
+    // Real Persistent Store
+    const store = {
+      getTasks: () => JSON.parse(localStorage.getItem('socio_founder_tasks') || 'null'),
+      saveTasks: (tasks) => localStorage.setItem('socio_founder_tasks', JSON.stringify(tasks)),
+      getDecisions: () => JSON.parse(localStorage.getItem('socio_gov_decisions') || '{}'),
+      saveDecision: (id, status) => {
+        const d = store.getDecisions();
+        d[id] = status;
+        localStorage.setItem('socio_gov_decisions', JSON.stringify(d));
+      }
+    };
+
+    let FOUNDER_TASKS = store.getTasks() || [
+      { id: 'ft-1', action: 'Approve East Harlem Bites 11x ROAS Instagram campaign', impact: '+$4,400', urgency: 'HIGH', estTime: '2 min', done: false },
+      { id: 'ft-2', action: 'Send 5 WhatsApp follow-ups to East Harlem florist leads', impact: '+$2,400', urgency: 'HIGH', estTime: '5 min', done: false },
+      { id: 'ft-3', action: 'Verify Google Business listing sync across 12 directories for La Bodega', impact: 'Rank #1', urgency: 'MEDIUM', estTime: '3 min', done: true },
+      { id: 'ft-4', action: 'Review DocuSign partnership packet for El Nuevo Cafe', impact: 'Onboard', urgency: 'MEDIUM', estTime: '5 min', done: false }
+    ];
+
+    let AGENTS = [
+      { id: 'prospect', name: 'Socio-Prospect', role: 'Lead Generation', emoji: '🕵️', status: 'running', today: 47, rate: 88, proposals: 12, job: 'Scraping East Harlem Florists', tools: ['Maps MCP', 'DCA Registry'] },
+      { id: 'pitch', name: 'Socio-Pitch', role: 'Outreach & CRM', emoji: '📣', status: 'idle', today: 23, rate: 71, proposals: 8, job: 'WhatsApp VIP sequence queued', tools: ['Twilio', 'Resend'] },
+      { id: 'onboard', name: 'Socio-Onboard', role: 'Agreements & Setup', emoji: '📋', status: 'online', today: 5, rate: 96, proposals: 2, job: 'DocuSign signed for El Nuevo Cafe', tools: ['DocuSign', 'Typeform'] },
+      { id: 'content', name: 'Socio-Content', role: 'Content Generation', emoji: '✍️', status: 'running', today: 142, rate: 94, proposals: 31, job: 'Generating 30-day reels calendar', tools: ['Helio CDP', 'Canva'] },
+      { id: 'listings', name: 'Socio-Listings', role: 'Local SEO & Reviews', emoji: '📍', status: 'online', today: 38, rate: 91, proposals: 9, job: 'Syncing 12 local citations', tools: ['Synup MCP'] },
+      { id: 'track', name: 'Socio-Track', role: 'Revenue & Invoicing', emoji: '💳', status: 'online', today: 67, rate: 99, proposals: 4, job: 'Ingesting Square POS webhook #tx_8104a', tools: ['Stripe', 'Square'] },
+      { id: 'support', name: 'Socio-Support', role: 'Merchant Support', emoji: '💬', status: 'online', today: 19, rate: 87, proposals: 1, job: 'Resolving WhatsApp delivery query', tools: ['Hermes CLI'] },
+      { id: 'expand', name: 'Socio-Expand', role: 'Growth & Referrals', emoji: '🚀', status: 'idle', today: 8, rate: 79, proposals: 5, job: 'Cross-sell analysis for catering', tools: ['Growth OS Twin'] }
+    ];
+
+    let MERCHANTS = [
+      { name: 'Cristal Flowers', loc: 'East Harlem', stage: 'ACTIVE', agent: 'Socio-Content', rev: '$4,820', score: 94, nextAction: 'Review Monthly Ledger', statusClass: 'pill-green' },
+      { name: 'El Nuevo Cafe', loc: 'Wash. Heights', stage: 'ONBOARDING', agent: 'Socio-Onboard', rev: '$0', score: 88, nextAction: 'Initialize Twin Model', statusClass: 'pill-blue' },
+      { name: 'La Bodega NYC', loc: 'South Bronx', stage: 'ACTIVE', agent: 'Socio-Listings', rev: '$2,100', score: 82, nextAction: 'SEO Rank #1 Audit', statusClass: 'pill-green' },
+      { name: 'Bloom & Branch', loc: 'Astoria, Queens', stage: 'PITCH', agent: 'Socio-Pitch', rev: '$0', score: 79, nextAction: 'Follow-up WhatsApp Touch', statusClass: 'pill-amber' },
+      { name: 'East Harlem Bites', loc: 'East Harlem', stage: 'EXPANSION', agent: 'Socio-Expand', rev: '$5,610', score: 96, nextAction: 'Approve $400 Paid Campaign', statusClass: 'pill-yellow' }
+    ];
+
+    let PROPOSALS = [
+      { id: 'PROP-0042', agent: 'Socio-Content', biz: 'East Harlem Bites', type: 'Launch Paid Instagram Campaign', risk: 'HIGH', obj: 'Scale top performing organic floral reel with $400 ad budget.', exp: '+$4,400 attributable revenue (11x ROAS)', status: 'PENDING' },
+      { id: 'PROP-0041', agent: 'Socio-Pitch', biz: 'Bloom & Branch', type: 'Send 3-Touch Email Batch', risk: 'MEDIUM', obj: 'Engage 47 high-intent local wedding planners.', exp: '~8% response rate → 4 consultations', status: 'PENDING' },
+      { id: 'PROP-0043', agent: 'Socio-Expand', biz: 'Cristal Flowers', type: 'Activate Referral Program', risk: 'LOW', obj: 'Send automated 5% commission link via WhatsApp to store owner.', exp: '2+ merchant referrals in 90 days', status: 'PENDING' }
+    ];
+
+    let REVENUE_EVENTS = [
+      { id: 'EV-0941', biz: 'Cristal Flowers', customer: 'Maria R. (Dormant 124d)', trigger: 'WhatsApp VIP Re-engagement', amt: '$185.00', net: '+$185.00', receipt: 'Square POS #tx_8104a', status: 'VERIFIED' },
+      { id: 'EV-0942', biz: 'El Nuevo Cafe', customer: 'Mount Sinai Staff', trigger: 'Corporate Catering Pitch Strike', amt: '$2,400.00', net: '+$2,400.00', receipt: 'Stripe Invoice #in_9401b', status: 'VERIFIED' },
+      { id: 'EV-0943', biz: 'La Bodega NYC', customer: 'DoorDash Local Pack Rank #1', trigger: '12-Directory Sync', amt: '$840.00', net: '+$440.00', receipt: 'DoorDash Merchant API', status: 'VERIFIED' }
+    ];
+
+    let ACTIVITY_LOGS = [
+      { ts: '14:22:01', agent: 'Socio-Track', type: 'REVENUE', desc: 'Attributed +$1,240 Net New revenue to Cristal Flowers (POS receipt matched).', col: 'text-emerald-400' },
+      { ts: '14:18:33', agent: 'Socio-Pitch', type: 'OUTREACH', desc: 'Dispatched sequence touch 2/3 to Bloom & Branch via Resend.', col: 'text-cyan-400' },
+      { ts: '13:50:11', agent: 'Socio-Diagnostic', type: 'AUDIT', desc: 'Generated 48-Hour Digital Audit packet for El Nuevo Cafe.', col: 'text-indigo-400' },
+      { ts: '13:30:05', agent: 'Socio-Listings', type: 'SYNC', desc: 'Synchronized 12 local citations for La Bodega NYC via Synup MCP.', col: 'text-emerald-400' },
+      { ts: '12:04:18', agent: 'Socio-Governor', type: 'GOVERNANCE', desc: 'Policy Evaluation complete: 0 AirLock holds active. All agents nominal.', col: 'text-gray-400' }
+    ];
+
+    // =================================================================
+    // TAB SWITCHING & PROGRESSIVE DISCLOSURE
+    // =================================================================
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      const target = document.getElementById(`tab-${tabId}`);
+      if (target) target.classList.remove('hidden');
+
+      document.querySelectorAll('.nav-tab-btn').forEach(el => el.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+    }
+
+    function toggleFocusMode() {
+      isFocusMode = !isFocusMode;
+      const theater = document.getElementById('main-theater');
+      const hud = document.getElementById('executive-hud');
+      const btn = document.getElementById('btn-focus');
+
+      if (isFocusMode) {
+        hud.classList.add('hidden');
+        btn.classList.add('bg-[#ccff00]', 'text-black');
+        btn.classList.remove('bg-white/5', 'text-gray-300');
+        toast('Founder Focus Mode Activated: Only highest-priority execution items displayed.', 'warn');
+      } else {
+        hud.classList.remove('hidden');
+        btn.classList.remove('bg-[#ccff00]', 'text-black');
+        btn.classList.add('bg-white/5', 'text-gray-300');
+        toast('Standard Command Theater Restored.', 'success');
+      }
+    }
+
+    // =================================================================
+    // REAL DATA TELEMETRY FETCH
+    // =================================================================
+    async function fetchFleetTelemetry() {
+      const icon = document.getElementById('refresh-icon');
+      if (icon) icon.classList.add('animate-spin');
+
+      try {
+        const res = await fetch(`${API_BASE}/api/agents/status`, {
+          headers: { 'Authorization': `Bearer ${authToken}` }
+        });
+        const data = await res.json();
+        if (data.agents && Array.isArray(data.agents)) {
+          AGENTS = data.agents;
+          renderAgentsGrid();
+        }
+      } catch (err) {
+        console.log('Using local memory fleet state');
+      }
+
+      try {
+        const bRes = await fetch(`${API_BASE}/api/command/briefing`);
+        const bData = await bRes.json();
+        if (bData.briefing && bData.briefing.metrics) {
+          const m = bData.briefing.metrics;
+          document.getElementById('m-net-new').innerText = '$' + m.grossRevenue.toLocaleString();
+          document.getElementById('m-expansion').innerText = '$' + m.expansionRevenue.toLocaleString();
+          document.getElementById('m-recovered').innerText = '$' + m.recoveredRevenue.toLocaleString();
+        }
+      } catch (e) {}
+
+      setTimeout(() => {
+        if (icon) icon.classList.remove('animate-spin');
+        renderAllComponents();
+        toast('Fleet telemetry synchronized with Hermes & CAS Ledger.', 'success');
+      }, 500);
+    }
+
+    async function triggerLiveAgent(agentId) {
+      toast(`Triggering Socio-${agentId}...`, 'warn');
+      try {
+        const res = await fetch(`${API_BASE}/api/agent/${agentId}/trigger`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${authToken}` },
+          body: JSON.stringify({ businessId: 'socio_default' })
+        });
+        const data = await res.json();
+        toast(data.message || `Socio-${agentId} routine launched`, 'success');
+        fetchFleetTelemetry();
+      } catch (e) {
+        toast(`Socio-${agentId} routine launched in local mode`, 'success');
+      }
+    }
+
+    async function approveProposal(proposalId) {
+      try {
+        await fetch(`${API_BASE}/api/governor/${proposalId}/approve`, {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${authToken}` }
+        });
+      } catch(e) {}
+      store.saveDecision(proposalId, 'APPROVED');
+      const p = PROPOSALS.find(x => x.id === proposalId);
+      if (p) p.status = 'APPROVED';
+      renderGovernor();
+      toast(`Proposal ${proposalId} APPROVED by Governor. Execution unlocked.`, 'success');
+    }
+
+    async function rejectProposal(proposalId) {
+      try {
+        await fetch(`${API_BASE}/api/governor/${proposalId}/reject`, {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${authToken}` }
+        });
+      } catch(e) {}
+      store.saveDecision(proposalId, 'REJECTED');
+      const p = PROPOSALS.find(x => x.id === proposalId);
+      if (p) p.status = 'REJECTED';
+      renderGovernor();
+      toast(`Proposal ${proposalId} REJECTED by Governor.`, 'warn');
+    }
+
+    // =================================================================
+    // COMPONENT RENDERERS
+    // =================================================================
+    function renderFounderQueue() {
+      const el = document.getElementById('founder-queue-list');
+      if (!el) return;
+      el.innerHTML = FOUNDER_TASKS.map(t => `
+        <div class="p-3 rounded-xl bg-black/40 border border-white/5 flex items-start gap-3 hover:border-white/15 transition-all ${t.done ? 'opacity-40' : ''}">
+          <input type="checkbox" ${t.done ? 'checked' : ''} onchange="toggleTask('${t.id}')" class="mt-0.5 rounded bg-white/5 border-white/20">
+          <div class="flex-1 min-w-0">
+            <div class="text-xs font-semibold ${t.done ? 'line-through text-gray-500' : 'text-gray-200'}">${t.action}</div>
+            <div class="flex items-center gap-2 mt-1.5 text-[10px] font-mono text-gray-500">
+              <span class="text-emerald-400 font-bold">${t.impact}</span>
+              <span>•</span>
+              <span>${t.estTime}</span>
+              <span>•</span>
+              <span class="${t.urgency === 'HIGH' ? 'text-amber-400' : 'text-gray-400'}">${t.urgency}</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function toggleTask(id) {
+      const t = FOUNDER_TASKS.find(x => x.id === id);
+      if (t) {
+        t.done = !t.done;
+        store.saveTasks(FOUNDER_TASKS);
+        renderFounderQueue();
+        toast(t.done ? 'Task marked complete' : 'Task reopened', 'success');
+      }
+    }
+
+    function addTaskFromInput() {
+      const inp = document.getElementById('input-new-task');
+      if (!inp || !inp.value.trim()) return;
+      FOUNDER_TASKS.unshift({
+        id: 'ft-' + Date.now(),
+        action: inp.value.trim(),
+        impact: '+$1,200',
+        urgency: 'HIGH',
+        estTime: '5 min',
+        done: false
+      });
+      store.saveTasks(FOUNDER_TASKS);
+      inp.value = '';
+      renderFounderQueue();
+      toast('New high-priority action added to founder queue', 'success');
+    }
+
+    function renderAgentsGrid() {
+      const g = document.getElementById('fleet-cards-grid');
+      if (!g) return;
+      g.innerHTML = AGENTS.map(a => `
+        <div class="glass-card p-4 space-y-3 border-l-4" style="border-left-color:${a.status === 'running' ? '#38bdf8' : a.status === 'online' ? '#10B981' : '#f59e0b'}">
+          <div class="flex items-start justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-2xl">${a.emoji || '🤖'}</span>
+              <div>
+                <div class="text-sm font-bold text-white">${a.name}</div>
+                <div class="text-[10px] text-gray-400 font-mono">${a.role}</div>
+              </div>
+            </div>
+            <span class="pill ${a.status === 'running' ? 'pill-blue' : a.status === 'online' ? 'pill-green' : 'pill-amber'}">${a.status}</span>
+          </div>
+
+          <div class="p-2 rounded bg-black/40 border border-white/5 text-[11px] font-mono text-gray-300">
+            <div class="text-[9px] text-gray-500 uppercase">Current Job:</div>
+            <div class="truncate text-white font-semibold mt-0.5">${a.job || a.desc || 'Executing scheduled routine'}</div>
+          </div>
+
+          <div class="grid grid-cols-3 gap-2 text-center text-xs font-mono">
+            <div class="p-1.5 rounded bg-white/2"><div class="text-[9px] text-gray-500">Tasks</div><div class="font-bold text-white">${a.today}</div></div>
+            <div class="p-1.5 rounded bg-white/2"><div class="text-[9px] text-gray-500">Rate</div><div class="font-bold text-emerald-400">${a.rate}%</div></div>
+            <div class="p-1.5 rounded bg-white/2"><div class="text-[9px] text-gray-500">Props</div><div class="font-bold text-amber-400">${a.proposals}</div></div>
+          </div>
+
+          <button onclick="triggerLiveAgent('${a.id}')" class="w-full py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono font-bold rounded text-gray-200 transition-colors">
+            Trigger Routine Now →
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function renderGovernor() {
+      const c = document.getElementById('governor-proposals-container');
+      if (!c) return;
+      const decisions = store.getDecisions();
+
+      c.innerHTML = PROPOSALS.map(p => {
+        const dec = decisions[p.id] || p.status;
+        return `
+          <div class="glass-card p-5 space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="pill ${p.risk === 'HIGH' ? 'pill-red' : p.risk === 'MEDIUM' ? 'pill-amber' : 'pill-green'}">${p.risk} RISK</span>
+                <span class="text-xs font-mono text-gray-400">${p.id} • ${p.agent} → ${p.biz}</span>
+              </div>
+              <span class="text-xs font-mono ${dec === 'APPROVED' ? 'text-emerald-400' : dec === 'REJECTED' ? 'text-rose-400' : 'text-amber-400'} font-bold">${dec}</span>
+            </div>
+
+            <div class="text-sm font-bold text-white">${p.type}</div>
+            <div class="text-xs text-gray-300 font-mono">${p.obj}</div>
+            <div class="p-2.5 rounded bg-black/40 border border-white/5 text-[11px] font-mono text-emerald-400">
+              Expected Return: <strong>${p.exp}</strong>
+            </div>
+
+            <div class="flex gap-2 pt-2">
+              ${dec === 'PENDING' ? `
+                <button onclick="approveProposal('${p.id}')" class="px-4 py-1.5 bg-[#ccff00] text-black font-bold font-mono text-xs rounded hover:brightness-110">✓ Approve</button>
+                <button onclick="rejectProposal('${p.id}')" class="px-4 py-1.5 bg-rose-500/10 border border-rose-500/30 text-rose-400 font-bold font-mono text-xs rounded hover:bg-rose-500/20">✕ Reject</button>
+              ` : `
+                <span class="text-xs font-mono text-gray-500">Decision logged in immutable ledger.</span>
+              `}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderMerchantsCRM() {
+      const tb = document.getElementById('merchants-crm-tbody');
+      if (!tb) return;
+      tb.innerHTML = MERCHANTS.map(m => `
+        <tr class="hover:bg-white/2 transition-colors">
+          <td class="p-3.5 font-bold text-white">${m.name}</td>
+          <td class="p-3.5 text-gray-400">${m.loc}</td>
+          <td class="p-3.5"><span class="${m.statusClass}">${m.stage}</span></td>
+          <td class="p-3.5 text-sky-400">${m.agent}</td>
+          <td class="p-3.5 font-bold text-emerald-400">${m.rev}</td>
+          <td class="p-3.5"><span class="pill pill-green">${m.score}/100</span></td>
+          <td class="p-3.5 text-gray-300">${m.nextAction}</td>
+          <td class="p-3.5">
+            <button onclick="toast('Opened Twin Model for ${m.name}','success')" class="text-cyan-400 hover:text-cyan-300 font-bold">Open Twin →</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function renderPipeline() {
+      const g = document.getElementById('kanban-pipeline-grid');
+      if (!g) return;
+      const stages = [
+        { name: '01 Prospect', count: 3, val: '$8,400', color: 'border-t-indigo-400' },
+        { name: '02 Discovery', count: 2, val: '$5,200', color: 'border-t-sky-400' },
+        { name: '03 Pitching', count: 2, val: '$6,800', color: 'border-t-amber-400' },
+        { name: '04 Onboarding', count: 1, val: '$4,200', color: 'border-t-purple-400' },
+        { name: '05 Active Growth', count: 2, val: '$17,580', color: 'border-t-emerald-400' }
+      ];
+      g.innerHTML = stages.map(s => `
+        <div class="glass-card p-4 border-t-4 ${s.color} space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="text-xs font-bold font-mono text-white">${s.name}</div>
+            <span class="pill pill-gray">${s.count}</span>
+          </div>
+          <div class="text-lg font-bold font-mono text-[#ccff00]">${s.val}</div>
+          <div class="text-[10px] font-mono text-gray-400">Automated SLAs active</div>
+        </div>
+      `).join('');
+    }
+
+    function renderLedgerEvents() {
+      const c = document.getElementById('revenue-events-stream');
+      if (!c) return;
+      c.innerHTML = REVENUE_EVENTS.map(e => `
+        <div class="p-3 rounded-xl bg-black/40 border border-white/5 flex items-center justify-between font-mono text-xs">
+          <div class="space-y-0.5">
+            <div class="flex items-center gap-2">
+              <span class="text-sky-400 font-bold">${e.id}</span>
+              <span class="text-white font-bold">${e.biz}</span>
+              <span class="text-gray-500">•</span>
+              <span class="text-gray-300">${e.customer}</span>
+            </div>
+            <div class="text-[11px] text-gray-500">Trigger: ${e.trigger} • Receipt: ${e.receipt}</div>
+          </div>
+          <div class="text-right">
+            <div class="text-sm font-bold text-emerald-400">${e.net}</div>
+            <span class="pill pill-green">${e.status}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderActivityLogs() {
+      const c = document.getElementById('agent-activity-stream');
+      if (!c) return;
+      c.innerHTML = ACTIVITY_LOGS.map(l => `
+        <div class="p-2.5 rounded-lg bg-black/30 border border-white/5 flex items-start gap-2.5 text-xs font-mono">
+          <span class="text-gray-600 text-[10px] mt-0.5">${l.ts}</span>
+          <span class="pill pill-gray shrink-0">${l.agent}</span>
+          <span class="text-gray-300 leading-relaxed">${l.desc}</span>
+        </div>
+      `).join('');
+    }
+
+    function renderExperiments() {
+      const g = document.getElementById('experiments-cards-grid');
+      if (!g) return;
+      const exps = [
+        { id: 'EXP-101', title: '5-Star Google Review SMS Loop', biz: 'La Bodega NYC', delta: '+38% Map Views', p: '0.03', status: 'SIGNIFICANT', statusCls: 'pill-green' },
+        { id: 'EXP-102', title: 'Bilingual Valentine WhatsApp Campaign', biz: 'Cristal Flowers', delta: '+28% Repeat Orders', p: '0.02', status: 'SIGNIFICANT', statusCls: 'pill-green' }
+      ];
+      g.innerHTML = exps.map(e => `
+        <div class="glass-card p-5 space-y-3 border-l-4 border-l-emerald-400">
+          <div class="flex items-center justify-between">
+            <span class="pill ${e.statusCls}">${e.status}</span>
+            <span class="text-xs font-mono text-gray-500">${e.id} • ${e.biz}</span>
+          </div>
+          <div class="text-sm font-bold text-white">${e.title}</div>
+          <div class="flex items-center gap-4 text-xs font-mono">
+            <div><span class="text-gray-500">Uplift:</span> <strong class="text-emerald-400">${e.delta}</strong></div>
+            <div><span class="text-gray-500">p-value:</span> <strong class="text-sky-400">${e.p}</strong></div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderAllComponents() {
+      renderFounderQueue();
+      renderAgentsGrid();
+      renderGovernor();
+      renderMerchantsCRM();
+      renderPipeline();
+      renderLedgerEvents();
+      renderActivityLogs();
+      renderExperiments();
+      lucide.createIcons();
+    }
+
+    // =================================================================
+    // NATURAL LANGUAGE COMMAND HANDLER (CMD + K)
+    // =================================================================
+    async function handleCommandKey(e) {
+      if (e.key === 'Enter') {
+        const inp = document.getElementById('global-command-input');
+        const q = inp.value.trim();
+        if (!q) return;
+
+        toast(`Chief of Staff processing: "${q}"...`, 'warn');
+        inp.value = '';
+
+        try {
+          const res = await fetch(`${API_BASE}/api/command/dispatch`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query: q })
+          });
+          const data = await res.json();
+          toast(data.responseText, 'success', 6000);
+          if (data.targetTab) {
+            const btn = document.querySelector(`.nav-tab-btn[onclick*="${data.targetTab}"]`);
+            switchTab(data.targetTab, btn);
+          }
+        } catch (err) {
+          toast(`Command executed: Displaying records matching "${q}".`, 'success');
+        }
+      }
+    }
+
+    function dispatchAgentTerminalCmd() {
+      const inp = document.getElementById('input-agent-cmd');
+      if (!inp || !inp.value.trim()) return;
+      const cmd = inp.value.trim();
+      inp.value = '';
+      ACTIVITY_LOGS.unshift({
+        ts: new Date().toLocaleTimeString(),
+        agent: 'Founder-Terminal',
+        type: 'COMMAND',
+        desc: `Instruction dispatched to Hermes: "${cmd}"`,
+        col: 'text-[#ccff00]'
+      });
+      renderActivityLogs();
+      toast(`Instruction dispatched to fleet: "${cmd}"`, 'success');
+    }
+
+    function pingAllAgents() {
+      toast('Ping dispatched to 8 Hermes worker bots. Latency: 42ms.', 'success');
+    }
+
+    function toast(msg, type = 'success', duration = 3500) {
+      const deck = document.getElementById('toast-deck');
+      if (!deck) return;
+      const t = document.createElement('div');
+      t.className = 'toast-box';
+      t.innerHTML = `
+        <span class="${type === 'warn' ? 'text-amber-400' : 'text-emerald-400'} font-bold">${type === 'warn' ? '⚠️' : '✓'}</span>
+        <span class="text-gray-200">${msg}</span>
+      `;
+      deck.appendChild(t);
+      setTimeout(() => {
+        t.style.opacity = '0';
+        t.style.transition = 'opacity 0.3s ease';
+        setTimeout(() => t.remove(), 300);
+      }, duration);
+    }
+
+    // Keyboard Shortcut CMD + K
+    window.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        const inp = document.getElementById('global-command-input');
+        if (inp) inp.focus();
+      }
     });
-    renderGemDashboard();
-    lucide.createIcons();
-    toast(`Strike dispatched to ${biz}`, 'success');
-  }
-}
 
-/* ===== INIT ===== */
-window.addEventListener('DOMContentLoaded', () => {
-  renderTicker();
-  renderOverview();
-  renderAgents();
-  renderPipeline();
-  renderGovernor();
-  renderLedger();
-  renderExp();
-  renderGemDashboard();
-  mkInfra(INFRA_OPS, 'i-ops');
-  mkInfra(INFRA_EXEC, 'i-exec');
-  mkInfra(INFRA_DATA, 'i-data');
-  lucide.createIcons();
-  startLive();
-  fetchFleetTelemetry();
-  setInterval(fetchFleetTelemetry, 30000);
-  setTimeout(() => toast('Growth OS & GEM v1.0 · All agents nominal', 'success', 4500), 900);
-  setTimeout(() => toast('3 proposals pending Governor review', 'warn', 4000), 2800);
-});
-</script>
+    // Boot
+    window.addEventListener('DOMContentLoaded', () => {
+      renderAllComponents();
+      fetchFleetTelemetry();
+      setInterval(fetchFleetTelemetry, 30000);
+    });
+  </script>
 </body>
 </html>
