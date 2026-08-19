@@ -344,6 +344,41 @@ server.tool(
   }
 );
 
+// Tool: Prospect conversion feedback (read-only) — the data-network-effect seed.
+server.tool(
+  "prospect_feedback_stats",
+  "Reads prospect_outcome events from the Growth OS ledger and returns conversion stats per vertical: outcome counts, conversion rate, whether the vertical has enough outcomes to be 'learned' (>= 10), and the feedback-adjusted monthly base for estimates. Read-only — no approval needed. Below the sample threshold the scorer stays on priors and says so.",
+  {
+    vertical: z.enum(['florist', 'cafe', 'bodega', 'restaurant', 'clinic']).optional().describe("Optional: filter feedback stats to one vertical")
+  },
+  async ({ vertical }) => {
+    try {
+      const events = await ledgerRepo.findAll((e) => e.type === 'prospect_outcome');
+      const filtered = vertical ? events.filter((e) => (e.metadata || {}).vertical === vertical) : events;
+      const { computeFeedbackStats, adjustedVerticalBase } = await import('../prospect/score.mjs');
+      const stats = computeFeedbackStats(filtered);
+      const bases = {};
+      for (const v of Object.keys(stats)) {
+        bases[v] = adjustedVerticalBase(v, stats);
+      }
+      return {
+        content: [{
+          type: "text",
+          text: JSON.stringify({
+            source: 'growth-os-ledger',
+            outcomesRead: filtered.length,
+            learnedThreshold: 10,
+            stats,
+            adjustedBases: bases
+          }, null, 2)
+        }]
+      };
+    } catch (error) {
+      return { content: [{ type: "text", text: `Feedback Error: ${error.message}` }], isError: true };
+    }
+  }
+);
+
 // Tool: Record Event — financial events must reference an executed governed action
 // AND the approval's proposal payload must declare the authorized event types
 // (allowedEventTypes) and a numeric maxAmount; amounts beyond the bound are rejected.
@@ -354,7 +389,7 @@ server.tool(
     businessId: z.string(),
     agentId: z.string().optional(),
     actionId: z.string().optional().describe("Required for financial events: proposalId of the executed, approved action"),
-    type: z.enum(['revenue', 'campaign_cost', 'refund', 'lead_created', 'agent_action']),
+    type: z.enum(['revenue', 'campaign_cost', 'refund', 'lead_created', 'agent_action', 'prospect_outcome']),
     amount: z.number().describe("The financial amount (use 0 for non-financial events like lead_created)"),
     currency: z.string().default('USD'),
     source: z.string(),
@@ -400,6 +435,19 @@ server.tool(
           throw new Error(
             `event amount ${eventData.amount} exceeds the approved maxAmount ${maxAmount} of proposal ${eventData.actionId}`
           );
+        }
+      }
+
+      // Prospect outcomes (non-financial): Pitch records per-prospect results so
+      // the scorer can learn from conversions. Require the prospect reference and
+      // a valid outcome label — keeps the feedback signal clean and auditable.
+      if (eventData.type === 'prospect_outcome') {
+        const meta = eventData.metadata || {};
+        if (!meta.prospectId) {
+          throw new Error('prospect_outcome events require metadata.prospectId');
+        }
+        if (!['meeting_booked', 'no_response', 'opted_out', 'partner_signed', 'unsubscribed', 'followup_needed'].includes(meta.outcome)) {
+          throw new Error(`prospect_outcome events require metadata.outcome in {meeting_booked, no_response, opted_out, partner_signed, unsubscribed, followup_needed} — got ${JSON.stringify(meta.outcome)}`);
         }
       }
 

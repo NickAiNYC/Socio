@@ -1,6 +1,9 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { scoreProspects, recoverableEstimate, MAX_LIMIT } from '../score.mjs';
+import {
+  scoreProspects, recoverableEstimate, MAX_LIMIT,
+  computeFeedbackStats, adjustedVerticalBase, MIN_FEEDBACK_SAMPLE
+} from '../score.mjs';
 
 const baseRecord = {
   name: 'Test Florist',
@@ -78,4 +81,54 @@ test('recoverableEstimate is a labeled estimate, never a promise', () => {
   assert.equal(est.estimate, true);
   assert.ok(est.monthly.low <= est.monthly.mid && est.monthly.mid <= est.monthly.high);
   assert.match(est.note, /[Nn]ot a promise/);
+});
+
+// --- conversion feedback ----------------------------------------------------
+
+function outcomeEvent(vertical, outcome, i) {
+  return {
+    type: 'prospect_outcome',
+    amount: 0,
+    occurredAt: new Date(Date.now() - i * 86400000).toISOString(),
+    metadata: { prospectId: `p${i}`, vertical, outcome }
+  };
+}
+
+test('feedback: below sample threshold stays on priors and says so', () => {
+  const outcomes = Array.from({ length: 5 }, (_, i) => outcomeEvent('florist', 'meeting_booked', i));
+  const stats = computeFeedbackStats(outcomes);
+  assert.equal(stats.florist.nOutcomes, 5);
+  assert.equal(stats.florist.learned, false);
+  const base = adjustedVerticalBase('florist', stats);
+  assert.equal(base.adjusted, false);
+  assert.equal(base.monthlyBase, 1900); // unchanged prior
+  assert.match(base.reason, /insufficient outcomes/);
+});
+
+test('feedback: learned vertical adjusts the estimate base with clamp', () => {
+  // 20 outcomes, 9 positive -> 45% conversion (well above the 3% prior)
+  const outcomes = Array.from({ length: 20 }, (_, i) =>
+    outcomeEvent('florist', i < 9 ? 'meeting_booked' : 'no_response', i)
+  );
+  const stats = computeFeedbackStats(outcomes);
+  assert.equal(stats.florist.learned, true);
+  assert.equal(stats.florist.conversionRate, 0.45);
+  const base = adjustedVerticalBase('florist', stats);
+  assert.equal(base.adjusted, true);
+  assert.ok(base.monthlyBase > 1900, `expected uplift, got ${base.monthlyBase}`);
+  assert.ok(base.factor <= 1.4, 'clamped to max 1.4x');
+  assert.equal(base.estimate, true);
+});
+
+test('feedback: invalid outcomes are ignored, stats never fabricate', () => {
+  const outcomes = [
+    outcomeEvent('cafe', 'meeting_booked', 1),
+    { type: 'prospect_outcome', metadata: { vertical: 'cafe', outcome: 'not_a_real_outcome' } },
+    { type: 'revenue', amount: 100 } // not an outcome at all
+  ];
+  const stats = computeFeedbackStats(outcomes);
+  assert.equal(stats.cafe.nOutcomes, 1);
+  assert.equal(stats.cafe.nPositive, 1);
+  assert.equal(stats.cafe.learned, false);
+  assert.equal(MIN_FEEDBACK_SAMPLE, 10);
 });
