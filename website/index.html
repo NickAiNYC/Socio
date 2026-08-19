@@ -966,10 +966,10 @@
                         <span class="text-[10px] px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-slate-400">No-shows</span>
                         <span class="text-[10px] px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-slate-400">Lapsed plans</span>
                     </div>
-                    <button type="button" data-vertical="Aesthetic Clinic / Med Spa" class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-sm text-white font-light hover:bg-[#669BD2]/20 hover:border-[#669BD2]/40 transition-all cursor-pointer">
+                    <a href="/recovery-index?vertical=aesthetic-clinic" class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-sm text-white font-light hover:bg-[#669BD2]/20 hover:border-[#669BD2]/40 transition-all">
                         See your recovery opportunity
                         <iconify-icon icon="solar:arrow-right-linear" width="14"></iconify-icon>
-                    </button>
+                    </a>
                 </div>
 
                 <!-- Premium Salons & Wellness -->
@@ -984,10 +984,10 @@
                         <span class="text-[10px] px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-slate-400">Lapsed guests</span>
                         <span class="text-[10px] px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-slate-400">Referrals</span>
                     </div>
-                    <button type="button" data-vertical="Wellness / Spa" class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-sm text-white font-light hover:bg-[#669BD2]/20 hover:border-[#669BD2]/40 transition-all cursor-pointer">
+                    <a href="/recovery-index?vertical=salon-wellness" class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-sm text-white font-light hover:bg-[#669BD2]/20 hover:border-[#669BD2]/40 transition-all">
                         See your recovery opportunity
                         <iconify-icon icon="solar:arrow-right-linear" width="14"></iconify-icon>
-                    </button>
+                    </a>
                 </div>
 
                 <!-- Florists -->
@@ -1001,10 +1001,10 @@
                         <span class="text-[10px] px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-slate-400">Gifting moments</span>
                         <span class="text-[10px] px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-slate-400">Event orders</span>
                     </div>
-                    <button type="button" data-vertical="Florist" class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-sm text-white font-light hover:bg-[#669BD2]/20 hover:border-[#669BD2]/40 transition-all cursor-pointer">
+                    <a href="/recovery-index?vertical=florist" class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-sm text-white font-light hover:bg-[#669BD2]/20 hover:border-[#669BD2]/40 transition-all">
                         See your recovery opportunity
                         <iconify-icon icon="solar:arrow-right-linear" width="14"></iconify-icon>
-                    </button>
+                    </a>
                 </div>
 
                 <!-- Cafés -->
@@ -1019,10 +1019,10 @@
                         <span class="text-[10px] px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-slate-400">Catering</span>
                         <span class="text-[10px] px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-slate-400">Office demand</span>
                     </div>
-                    <button type="button" data-vertical="Café" class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-sm text-white font-light hover:bg-[#669BD2]/20 hover:border-[#669BD2]/40 transition-all cursor-pointer">
+                    <a href="/recovery-index?vertical=cafe" class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-sm text-white font-light hover:bg-[#669BD2]/20 hover:border-[#669BD2]/40 transition-all">
                         See your recovery opportunity
                         <iconify-icon icon="solar:arrow-right-linear" width="14"></iconify-icon>
-                    </button>
+                    </a>
                 </div>
 
             </div>
@@ -1868,6 +1868,10 @@
                         <li class="flex items-center gap-2"><iconify-icon icon="solar:verified-check-linear" width="16" class="text-green-400"></iconify-icon> Audit delivered within 48 hours</li>
                         <li class="flex items-center gap-2"><iconify-icon icon="solar:verified-check-linear" width="16" class="text-green-400"></iconify-icon> Hablamos español — bilingual team</li>
                     </ul>
+                    <a href="/recovery-index" class="inline-flex items-center gap-2 text-sm text-accent font-light hover:text-blue-700 transition-colors mt-8">
+                        Prefer a deeper look? Run the 3-minute Revenue Leakage Index
+                        <iconify-icon icon="solar:arrow-right-up-linear" width="14"></iconify-icon>
+                    </a>
                 </div>
 
                 <div class="bg-white rounded-3xl p-8 lg:p-10 shadow-2xl shadow-black/30">
@@ -2311,16 +2315,6 @@
             calcRange.addEventListener('input', () => { calcRevenue.value = calcRange.value; updateCalculator(); });
             updateCalculator();
         }
-
-        // Vertical path CTAs → pre-select business type, scroll to the map form
-        document.querySelectorAll('[data-vertical]').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const sel = document.getElementById('lead-type');
-                if (sel) sel.value = btn.dataset.vertical;
-                const target = document.getElementById('lead-capture');
-                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-        });
 
         // Lead capture form → POST /api/leads (same origin, Vercel server.js)
         const leadForm = document.getElementById('lead-form');

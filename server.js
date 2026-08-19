@@ -37,7 +37,8 @@ function getDb() {
       referral_clicks: [],
       referral_conversions: [],
       analytics_pageviews: [],
-      analytics_events: []
+      analytics_events: [],
+      rli_leads: []
     };
     fs.writeFileSync(DB_FILE, JSON.stringify(initial, null, 2));
     return initial;
@@ -45,7 +46,7 @@ function getDb() {
   try {
     return JSON.parse(fs.readFileSync(DB_FILE, 'utf8'));
   } catch {
-    return { leads: [], referrals: {}, referral_clicks: [], referral_conversions: [], analytics_pageviews: [], analytics_events: [] };
+    return { leads: [], referrals: {}, referral_clicks: [], referral_conversions: [], analytics_pageviews: [], analytics_events: [], rli_leads: [] };
   }
 }
 
@@ -690,6 +691,81 @@ app.post('/api/leads', (req, res) => {
     message: 'Audit requested! Our NYC team is reviewing your digital gap map.',
     leadId: lead.id
   });
+});
+
+// --------------------------------------------------------------------------
+// 1.5 REVENUE LEAKAGE INDEX (RLI) — merchant qualification protocol
+// --------------------------------------------------------------------------
+app.post('/api/recovery-index', (req, res) => {
+  const b = req.body || {};
+
+  if (!b.merchant || typeof b.merchant.business_name !== 'string' || !b.merchant.business_name.trim()) {
+    return res.status(400).json({ status: 'error', message: 'Business name is required' });
+  }
+  if (!b.merchant.vertical) {
+    return res.status(400).json({ status: 'error', message: 'Category is required' });
+  }
+
+  const record = {
+    lead_id: 'rli_' + crypto.randomBytes(8).toString('hex'),
+    submitted_at: new Date().toISOString(),
+    merchant: {
+      business_name: String(b.merchant.business_name || '').slice(0, 200),
+      website: String(b.merchant.website || '').slice(0, 300),
+      zip_code: String(b.merchant.zip_code || '').slice(0, 20),
+      vertical: String(b.merchant.vertical || '').slice(0, 100),
+      locations: Number(b.merchant.locations) || 1
+    },
+    economics: {
+      monthly_revenue_band: String(b.economics?.monthly_revenue_band || ''),
+      average_ticket: b.economics?.average_ticket == null ? null : Number(b.economics.average_ticket),
+      monthly_customers_or_leads: b.economics?.monthly_customers_or_leads == null ? null : Number(b.economics.monthly_customers_or_leads),
+      repeat_cycle: String(b.economics?.repeat_cycle || '')
+    },
+    systems: {
+      has_customer_history: Boolean(b.systems?.has_customer_history),
+      systems: Array.isArray(b.systems?.systems) ? b.systems.systems.map(String).slice(0, 10) : [],
+      contactable_history: Boolean(b.systems?.contactable_history)
+    },
+    operations: {
+      dormant_share_band: String(b.operations?.dormant_share_band || ''),
+      lead_response_sla: String(b.operations?.lead_response_sla || ''),
+      growth_priority: String(b.operations?.growth_priority || '')
+    },
+    assessment: {
+      recovery_score: Math.max(0, Math.min(100, Math.round(Number(b.assessment?.recovery_score) || 0))),
+      leak_type: String(b.assessment?.leak_type || ''),
+      data_confidence: String(b.assessment?.data_confidence || ''),
+      sales_tier: String(b.assessment?.sales_tier || '')
+    },
+    consent: {
+      follow_up_opt_in: Boolean(b.consent?.follow_up_opt_in),
+      consent_timestamp: String(b.consent?.consent_timestamp || ''),
+      consent_copy_version: String(b.consent?.consent_copy_version || 'v1.0')
+    },
+    attribution: {
+      landing_path: String(b.attribution?.landing_path || '').slice(0, 300),
+      utm_source: String(b.attribution?.utm_source || '').slice(0, 100),
+      utm_medium: String(b.attribution?.utm_medium || '').slice(0, 100),
+      utm_campaign: String(b.attribution?.utm_campaign || '').slice(0, 100),
+      referrer: String(b.attribution?.referrer || '').slice(0, 300)
+    }
+  };
+
+  const db = getDb();
+  if (!Array.isArray(db.rli_leads)) db.rli_leads = [];
+  db.rli_leads.push(record);
+  saveDb(db);
+
+  console.log('[RLI] Qualified lead:', record.merchant.business_name, '|', record.merchant.vertical, '| score', record.assessment.recovery_score, '|', record.assessment.sales_tier);
+
+  // Dispatch Kanban task (safe execFile, no shell)
+  const hermesArgs = ['kanban', 'create', `RLI Lead: ${record.merchant.business_name} (${record.merchant.vertical}) — score ${record.assessment.recovery_score} [${record.assessment.sales_tier}]`, '--assignee', 'socio-prospect', '--board', 'socio'];
+  execFile('hermes', hermesArgs, (err) => {
+    if (err) console.log('[Hermes Kanban] Fallback / Hermes not active in local env:', err.message);
+  });
+
+  return res.json({ status: 'success', message: 'Revenue Leakage Index recorded.', lead_id: record.lead_id });
 });
 
 // --------------------------------------------------------------------------
