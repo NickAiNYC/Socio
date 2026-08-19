@@ -40,6 +40,22 @@
       "dest": "website/floristas.html"
     },
     {
+      "src": "/floristas/como-funciona/?",
+      "dest": "website/floristas/como-funciona.html"
+    },
+    {
+      "src": "/floristas/casos-de-exito/?",
+      "dest": "website/floristas/casos-de-exito.html"
+    },
+    {
+      "src": "/floristas/radar-floral/?",
+      "dest": "website/floristas/radar-floral.html"
+    },
+    {
+      "src": "/floristas/preguntas-frecuentes/?",
+      "dest": "website/floristas/preguntas-frecuentes.html"
+    },
+    {
       "src": "/restaurantes/?",
       "dest": "website/restaurantes.html"
     },

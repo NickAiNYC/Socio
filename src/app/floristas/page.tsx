@@ -49,10 +49,10 @@ export default function FloristasPage() {
           </Link>
 
           <nav className="hidden md:flex items-center gap-6 text-xs font-bold uppercase tracking-wider text-slate-600">
-            <a href="#como-funciona" className="hover:text-[#E11D48] transition-colors">Cómo Funciona</a>
-            <a href="#calculadora" className="hover:text-[#E11D48] transition-colors">Calculadora</a>
-            <a href="#b2b-radar" className="hover:text-[#E11D48] transition-colors">Radar B2B</a>
-            <a href="#garantia" className="hover:text-[#E11D48] transition-colors">La Regla de Oro</a>
+            <Link href="/floristas/como-funciona" className="hover:text-[#E11D48] transition-colors">Cómo Funciona</Link>
+            <Link href="/floristas/casos-de-exito" className="hover:text-[#E11D48] transition-colors">Casos de Éxito</Link>
+            <Link href="/floristas/radar-floral" className="hover:text-[#E11D48] transition-colors">Radar Floral</Link>
+            <Link href="/floristas/preguntas-frecuentes" className="hover:text-[#E11D48] transition-colors">Preguntas</Link>
           </nav>
 
           <a

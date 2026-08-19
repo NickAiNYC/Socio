@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radar Floral en Tiempo Real | Socio para Floristas en NYC</title>
+    <meta name="description" content="Feed en vivo de eventos, registros de bodas y licitaciones de hoteles en NYC para abastecimiento de arreglos florales y suscripciones B2B.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #FCFBF7; color: #1F2937; }
+        .rose-stripe { background: linear-gradient(90deg, #E11D48, #F43F5E, #F59E0B); }
+    </style>
+</head>
+<body class="min-h-screen pb-24">
+    <div class="h-2 w-full rose-stripe"></div>
+
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-rose-100 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="/floristas" class="flex items-center text-2xl font-black tracking-tight text-slate-900">
+                <span>Socio</span>
+                <span class="w-1.5 h-1.5 rounded-[1px] bg-[#E11D48] inline-block shadow-[0_0_8px_rgba(225,29,72,0.8)] ml-[1.5px] self-end mb-1"></span>
+                <span class="ml-2.5 px-2.5 py-0.5 rounded-full bg-rose-50 border border-rose-200 text-[10px] font-mono font-bold uppercase tracking-wider text-rose-700">FLORISTAS</span>
+            </a>
+
+            <nav class="hidden md:flex items-center gap-6 text-xs font-bold uppercase tracking-wider text-slate-600">
+                <a href="/floristas/como-funciona" class="hover:text-[#E11D48] transition-colors">Cómo Funciona</a>
+                <a href="/floristas/casos-de-exito" class="hover:text-[#E11D48] transition-colors">Casos de Éxito</a>
+                <a href="/floristas/radar-floral" class="text-[#E11D48]">Radar Floral</a>
+                <a href="/floristas/preguntas-frecuentes" class="hover:text-[#E11D48] transition-colors">Preguntas</a>
+            </nav>
+
+            <a href="https://wa.me/19175550199?text=Hola%20Socio,%20quiero%20conectar%20mi%20florister%C3%ADa%20al%20Radar%20Floral%20de%20NYC." target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#25D366] text-white text-xs font-black tracking-wide uppercase hover:bg-[#20ba5a] shadow-sm">
+                <i data-lucide="message-square" class="w-4 h-4"></i>
+                <span>WhatsApp</span>
+            </a>
+        </div>
+    </header>
+
+    <section class="py-16 px-6 bg-white border-b border-rose-100">
+        <div class="max-w-4xl mx-auto text-center space-y-4">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-800 text-xs font-mono font-black uppercase">
+                <i data-lucide="radar" class="w-3.5 h-3.5 text-[#E11D48] animate-pulse"></i>
+                <span>SISTEMA DE INTELIGENCIA DE EVENTOS FLORALES</span>
+            </div>
+            <h1 class="text-4xl sm:text-5xl font-black text-slate-950 tracking-tight">
+                Radar Floral en Tiempo Real (NYC)
+            </h1>
+            <p class="text-slate-600 text-base max-w-2xl mx-auto leading-relaxed">
+                Monitoreamos permisos de eventos de la ciudad, registros de bodas en venues exclusivos y calendarios de compras de hoteles para conectar a su floristería con pedidos de alto presupuesto.
+            </p>
+        </div>
+    </section>
+
+    <!-- Live HUD -->
+    <section class="py-8 px-6 bg-slate-900 text-white border-y border-slate-800">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 font-mono text-xs">
+            <div class="flex items-center gap-3 p-3 bg-slate-800/80 rounded-xl border border-slate-700">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping shrink-0"></span>
+                <div>
+                    <div class="text-slate-400">Eventos & Bodas Hoy:</div>
+                    <div class="text-sm font-black text-emerald-400">14 Oportunidades Activas</div>
+                </div>
+            </div>
+            <div class="flex items-center gap-3 p-3 bg-slate-800/80 rounded-xl border border-slate-700">
+                <i data-lucide="hotel" class="w-4 h-4 text-rose-400 shrink-0"></i>
+                <div>
+                    <div class="text-slate-400">Hoteles Buscando Proveedor:</div>
+                    <div class="text-sm font-black text-rose-400">3 Lobbies en Manhattan</div>
+                </div>
+            </div>
+            <div class="flex items-center gap-3 p-3 bg-slate-800/80 rounded-xl border border-slate-700">
+                <i data-lucide="zap" class="w-4 h-4 text-amber-400 shrink-0"></i>
+                <div>
+                    <div class="text-slate-400">Filtro de Rentabilidad:</div>
+                    <div class="text-sm font-black text-amber-400">Presupuestos &gt;$1,500</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Table -->
+    <section class="py-16 px-6 max-w-6xl mx-auto space-y-8">
+        <div class="bg-white rounded-3xl border border-rose-200 shadow-xl overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left font-mono text-xs">
+                    <thead class="bg-rose-50/70 border-b border-rose-200 text-slate-700">
+                        <tr>
+                            <th class="p-4">ID & Ubicación</th>
+                            <th class="p-4">Tipo de Contrato</th>
+                            <th class="p-4">Presupuesto Estimado</th>
+                            <th class="p-4">Acción Automatizada</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        <tr class="hover:bg-rose-50/30">
+                            <td class="p-4 font-bold text-slate-900">
+                                <div class="text-[10px] text-rose-600 font-bold">NYC-EVT-9821</div>
+                                <div>SoHo Grand Hotel · 310 W Broadway</div>
+                            </td>
+                            <td class="p-4 text-slate-700">Suscripción Semanal Lobby</td>
+                            <td class="p-4 font-black text-slate-900">$1,400 / semana ($5,600/mes)</td>
+                            <td class="p-4 text-emerald-700 font-bold">Cotización enviada por Asistente Rosa (48s)</td>
+                        </tr>
+                        <tr class="hover:bg-rose-50/30">
+                            <td class="p-4 font-bold text-slate-900">
+                                <div class="text-[10px] text-rose-600 font-bold">NYC-WED-4102</div>
+                                <div>The Green Building · Gowanus, BK</div>
+                            </td>
+                            <td class="p-4 text-slate-700">Decoración Floral Boda (120 Pax)</td>
+                            <td class="p-4 font-black text-slate-900">$7,200.00</td>
+                            <td class="p-4 text-emerald-700 font-bold">Catálogo enviado a la novia ✓</td>
+                        </tr>
+                        <tr class="hover:bg-rose-50/30">
+                            <td class="p-4 font-bold text-slate-900">
+                                <div class="text-[10px] text-rose-600 font-bold">NYC-CORP-1094</div>
+                                <div>One Vanderbilt · Midtown East</div>
+                            </td>
+                            <td class="p-4 text-slate-700">Gala Anual Corporativa Tech</td>
+                            <td class="p-4 font-black text-slate-900">$11,500.00</td>
+                            <td class="p-4 text-emerald-700 font-bold">Propuesta de Centros de Mesa entregada</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof Badges Strip -->
+    <section class="py-12 bg-white border-y border-rose-100">
+        <div class="max-w-5xl mx-auto px-6 text-center space-y-4">
+            <div class="text-xs font-mono font-bold text-slate-400 uppercase tracking-widest">
+                Floristerías que Confían en Socio en los 5 Boroughs
+            </div>
+            <div class="flex flex-wrap justify-center items-center gap-6 font-mono text-xs font-black text-slate-700">
+                <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-rose-50 border border-rose-200">
+                    <i data-lucide="flower-2" class="w-4 h-4 text-[#E11D48]"></i>
+                    <span>FLORES DE MANHATTAN</span>
+                </div>
+                <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-rose-50 border border-rose-200">
+                    <i data-lucide="flower-2" class="w-4 h-4 text-[#E11D48]"></i>
+                    <span>ROSA & OLIVO BOTANICAL (BK)</span>
+                </div>
+                <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-rose-50 border border-rose-200">
+                    <i data-lucide="flower-2" class="w-4 h-4 text-[#E11D48]"></i>
+                    <span>JARDÍN DE QUEENS FLORAL</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sticky Bottom Bar -->
+    <div class="fixed bottom-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-md border-t border-slate-800 p-4 shadow-2xl">
+        <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div class="text-xs text-slate-300 font-mono text-center sm:text-left">
+                <span class="font-bold text-white">Escaneo Floral Gratuito:</span> Conecte su floristería al radar de eventos en NYC.
+            </div>
+            <a href="https://wa.me/19175550199?text=Hola%20Socio,%20quiero%20conectar%20mi%20florister%C3%ADa%20al%20Radar%20Floral%20de%20NYC." target="_blank" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#E11D48] text-white text-xs font-black uppercase tracking-wider hover:bg-[#BE123C] shadow-lg transition-all shrink-0">
+                <span>📋 Obtén tu diagnóstico floral gratuito → WhatsApp</span>
+            </a>
+        </div>
+    </div>
+
+    <script>lucide.createIcons();</script>
+</body>
+</html>
