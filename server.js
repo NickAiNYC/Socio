@@ -329,15 +329,103 @@ app.get('/api/merchant/:businessId/audit', (req, res) => {
   });
 });
 
-app.post('/api/merchant/:businessId/audit/verify', (req, res) => {
+app.get('/api/merchant/:businessId/actions', (req, res) => {
+  const { businessId } = req.params;
+  const actions = [
+    { timestamp: new Date(Date.now() - 120000).toISOString(), agentId: 'Socio-Track', actionType: 'INVOICE_GENERATED', status: 'EXECUTED', proposalId: 'PROP-0094' },
+    { timestamp: new Date(Date.now() - 480000).toISOString(), agentId: 'Socio-Content', actionType: 'INSTAGRAM_STRIKE_DEPLOYED', status: 'EXECUTED', proposalId: 'PROP-0092' },
+    { timestamp: new Date(Date.now() - 900000).toISOString(), agentId: 'Socio-Prospect', actionType: 'LEAD_GAPS_SCORED', status: 'APPROVED', proposalId: 'PROP-0088' },
+    { timestamp: new Date(Date.now() - 1920000).toISOString(), agentId: 'Socio-Listings', actionType: 'GOOGLE_LOCAL_PACK_SYNC', status: 'EXECUTED', proposalId: 'PROP-0085' }
+  ];
+  return res.json({ status: 'success', businessId, actions });
+});
+
+app.get('/api/merchant/:businessId/revenue', (req, res) => {
+  const { businessId } = req.params;
+  const db = getDb();
+  const events = [
+    { type: 'revenue', icon: '💵', d: `Net New Revenue — ${businessId} · QR walk-in attributed`, amt: '+$1,240', ag: 'Socio-Track', t: '14:22:01', ch: 'stripe' },
+    { type: 'action', icon: '📣', d: `Email Sent — ${businessId} · Pitch sequence touch 2/3`, amt: null, ag: 'Socio-Pitch', t: '14:18:33', ch: 'resend' },
+    { type: 'revenue', icon: '💵', d: `Expansion Revenue — ${businessId} · Repeat catering order`, amt: '+$340', ag: 'Socio-Track', t: '14:05:12', ch: 'square' },
+    { type: 'alert', icon: '⚠️', d: `Campaign Cost — ${businessId} · Instagram Paid Test`, amt: '-$120', ag: 'Socio-Content', t: '13:44:00', ch: 'meta' },
+    { type: 'action', icon: '📍', d: `Listing Synced — ${businessId} · 12 local directories`, amt: null, ag: 'Socio-Listings', t: '13:30:05', ch: 'synup' }
+  ];
+  return res.json({ status: 'success', businessId, events });
+});
+
+// --------------------------------------------------------------------------
+// 0.3 AGENT FLEET REAL-TIME STATUS & CONTROL PLANE
+// --------------------------------------------------------------------------
+const AGENTS_STATE = [
+  { id: 'prospect', name: 'Socio-Prospect', role: 'Lead Generation', emoji: '🕵️', status: 'running', model: 'deepseek-v4', trigger: 'Daily 6AM cron', today: 47, proposals: 12, rate: 88, lastHeartbeat: new Date().toISOString(), log: '[06:02:14] Scanning East Harlem — 23 candidates\n[06:04:31] ✅ 10 prospects scored\n[06:05:00] → 3 proposals → Governor', tools: ['growth_os_read_twin', 'growth_os_propose_action'], desc: 'Daily scraping of NYC neighborhoods. Audits digital gaps, scores top 10 targets from Google Maps, Instagram, Yelp.' },
+  { id: 'pitch', name: 'Socio-Pitch', role: 'Outreach & CRM', emoji: '📣', status: 'idle', model: 'deepseek-v4', trigger: 'Webhook: new_prospect_scored', today: 23, proposals: 8, rate: 71, lastHeartbeat: new Date().toISOString(), log: '[09:14:22] ✅ Email → Bloom & Branch\n[09:15:01] WhatsApp queued (T+48h)\n[09:15:01] → SMS batch awaiting Governor', tools: ['Resend', 'Twilio WhatsApp'], desc: 'Multi-touch bilingual email/WhatsApp outreach sequences rooted in the Socio Manifesto.' },
+  { id: 'onboard', name: 'Socio-Onboard', role: 'Agreements & Setup', emoji: '📋', status: 'online', model: 'deepseek-v4', trigger: 'Webhook: partner_accepted', today: 5, proposals: 2, rate: 96, lastHeartbeat: new Date().toISOString(), log: '[11:30:00] ✅ Agreement → El Nuevo Cafe\n[11:45:12] DocuSign signed ✓\n[11:45:13] → Twin BIZ-0047 initialized', tools: ['DocuSign', 'Typeform'], desc: 'Generates partnership agreements, collects data, delivers 48-hour audit action plans.' },
+  { id: 'content', name: 'Socio-Content', role: 'Content Generation', emoji: '✍️', status: 'running', model: 'deepseek-v4', trigger: 'Daily 8AM cron', today: 142, proposals: 31, rate: 94, lastHeartbeat: new Date().toISOString(), log: '[08:01:00] Calendar generated → Cristal Flowers\n[08:03:44] ✅ 4 posts published via Helio\n[08:04:01] ⚠ Canva rate limit — 2 queued', tools: ['Helio CDP', 'Canva'], desc: 'Bilingual content generation & scheduling. 30-day calendars, Instagram management, review responses.' },
+  { id: 'listings', name: 'Socio-Listings', role: 'Local SEO & Reviews', emoji: '📍', status: 'online', model: 'deepseek-v4', trigger: 'Every 6h cron', today: 38, proposals: 9, rate: 91, lastHeartbeat: new Date().toISOString(), log: '[12:00:04] ✅ Google Business → La Bodega NYC\n[12:01:22] ✅ Yelp — 5 photos added\n[12:02:00] Review alert: 3★ response drafted', tools: ['Synup MCP'], desc: 'Local SEO optimization, listing sync across 12 directories, automated review management via Synup MCP.' },
+  { id: 'track', name: 'Socio-Track', role: 'Revenue & Invoicing', emoji: '💳', status: 'online', model: 'deepseek-v4', trigger: 'Webhook: pos_transaction', today: 67, proposals: 4, rate: 99, lastHeartbeat: new Date().toISOString(), log: '[14:22:01] ✅ Net New $1,240 (Cristal Flowers)\n[14:22:02] Commission: $186 (15%)\n[14:22:03] → Invoice #INV-0094 via Stripe', tools: ['Stripe Connect', 'Square'], desc: 'POS webhook processing, Net New & Expansion Revenue calculation, commission tracking, Stripe invoicing.' },
+  { id: 'support', name: 'Socio-Support', role: 'Merchant Support', emoji: '💬', status: 'online', model: 'deepseek-v4', trigger: 'Webhook: support_message', today: 19, proposals: 1, rate: 87, lastHeartbeat: new Date().toISOString(), log: '[15:10:44] ✅ WhatsApp resolved → Queens DC\n[15:32:00] Intercom #891 escalated\n[15:33:01] → Avg response: 2m 17s today', tools: ['Intercom', 'Twilio WhatsApp'], desc: 'Frontline support via Intercom & WhatsApp. Handles common issues, escalates edge cases.' },
+  { id: 'expand', name: 'Socio-Expand', role: 'Growth & Referrals', emoji: '🚀', status: 'idle', model: 'deepseek-v4', trigger: 'Weekly Monday 9AM', today: 8, proposals: 5, rate: 79, lastHeartbeat: new Date().toISOString(), log: '[Mon 09:00] Cross-sell: E.Harlem Bites → catering\n[Mon 09:04] ✅ Referral link → Cristal Flowers\n[Mon 09:05] → 5% commission-for-life activated', tools: ['growth_os_read_twin', 'growth_os_propose_action'], desc: 'Cross-sell analysis, referral program management, 5% lifetime commission activation per partner.' }
+];
+
+app.get('/api/agents/status', (req, res) => {
   return res.json({
     status: 'success',
-    verify: {
-      valid: true,
-      brokenLinks: [],
-      checkedAt: new Date().toISOString()
-    }
+    timestamp: new Date().toISOString(),
+    agents: AGENTS_STATE
   });
+});
+
+app.post('/api/agent/:agentId/trigger', (req, res) => {
+  const { agentId } = req.params;
+  const { businessId } = req.body;
+
+  const agent = AGENTS_STATE.find(a => a.id === agentId);
+  if (agent) {
+    agent.today += 1;
+    agent.status = 'running';
+    agent.lastHeartbeat = new Date().toISOString();
+  }
+
+  // Safe execFile to Hermes CLI
+  execFile('hermes', ['bot', 'chat', `socio-${agentId}`, '-q', `Trigger routine run for ${businessId || 'all merchants'}`], (err, stdout) => {
+    console.log(`[Agent Triggered] socio-${agentId} for ${businessId || 'fleet'}`);
+  });
+
+  return res.json({
+    status: 'success',
+    agentId,
+    message: `Socio-${agentId} triggered successfully. Execution queue updated.`,
+    timestamp: new Date().toISOString()
+  });
+});
+
+// --------------------------------------------------------------------------
+// 0.4 GOVERNOR PROPOSAL APPROVALS & REJECTIONS
+// --------------------------------------------------------------------------
+const PROPOSALS_DB = [
+  { id: 'PROP-0041', agent: 'Socio-Pitch', biz: 'Bloom & Branch', type: 'send_email_batch', risk: 'MEDIUM', obj: 'Send 3-touch email sequence to 47 prospects', ev: 'Audit score ≥ 75, no prior contact in 7 days', exp: '~8% response rate → 4 consultation calls', status: 'PENDING' },
+  { id: 'PROP-0042', agent: 'Socio-Content', biz: 'East Harlem Bites', type: 'launch_instagram_campaign', risk: 'HIGH', obj: 'Launch paid Instagram campaign — $400 budget', ev: 'Organic posts 4.2% engagement; paid test 11x ROAS', exp: '+$4,400 attributable new revenue in 30 days', status: 'PENDING' },
+  { id: 'PROP-0043', agent: 'Socio-Expand', biz: 'Cristal Flowers', type: 'activate_referral_program', risk: 'LOW', obj: 'Generate referral link and notify via WhatsApp', ev: 'Partner NPS: 9/10. Already referring informally.', exp: '2+ new merchant referrals in 90 days', status: 'PENDING' }
+];
+
+app.get('/api/governor/proposals', (req, res) => {
+  return res.json({ status: 'success', proposals: PROPOSALS_DB });
+});
+
+app.post('/api/governor/:proposalId/approve', (req, res) => {
+  const { proposalId } = req.params;
+  const p = PROPOSALS_DB.find(x => x.id === proposalId);
+  if (p) p.status = 'APPROVED';
+  console.log(`[Governor Approved] Proposal ${proposalId}`);
+  return res.json({ status: 'success', proposalId, decision: 'APPROVED', timestamp: new Date().toISOString() });
+});
+
+app.post('/api/governor/:proposalId/reject', (req, res) => {
+  const { proposalId } = req.params;
+  const p = PROPOSALS_DB.find(x => x.id === proposalId);
+  if (p) p.status = 'REJECTED';
+  console.log(`[Governor Rejected] Proposal ${proposalId}`);
+  return res.json({ status: 'success', proposalId, decision: 'REJECTED', timestamp: new Date().toISOString() });
 });
 
 // --------------------------------------------------------------------------
