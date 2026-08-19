@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ArrowUpRight, ShieldCheck } from 'lucide-react';
+import { Menu, X, ArrowUpRight, ChevronDown, HardHat, Building2, Store } from 'lucide-react';
 
 interface NavItem {
   name: string;
@@ -17,8 +17,25 @@ const NAV_ITEMS: NavItem[] = [
   { name: 'Command Center', href: '/command-center.html', badge: 'LIVE' },
 ];
 
+const INDUSTRY_ITEMS = [
+  {
+    name: 'Construction (Español)',
+    desc: 'NYC General Contractors & Remodelers (Zero Upfront)',
+    href: '/contratistas',
+    icon: HardHat,
+    badge: 'ES-FIRST',
+  },
+  {
+    name: 'Retail & POS Merchants',
+    desc: 'Local NYC Storefronts & Restaurants',
+    href: '/#how-it-works',
+    icon: Store,
+  },
+];
+
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
+  const [industriesOpen, setIndustriesOpen] = useState<boolean>(false);
 
   return (
     <motion.header
@@ -48,6 +65,64 @@ export function Header() {
 
         {/* Center Column: Navigation Links (Desktop) */}
         <nav className="hidden md:flex items-center gap-8">
+          
+          {/* Industries Dropdown */}
+          <div 
+            className="relative"
+            onMouseEnter={() => setIndustriesOpen(true)}
+            onMouseLeave={() => setIndustriesOpen(false)}
+          >
+            <button
+              className="text-sm font-medium text-slate-300 hover:text-white transition-colors duration-200 flex items-center gap-1.5 py-2 cursor-pointer focus:outline-none"
+              aria-expanded={industriesOpen}
+            >
+              <span>Industries</span>
+              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${industriesOpen ? 'rotate-180 text-white' : 'text-slate-400'}`} />
+            </button>
+
+            <AnimatePresence>
+              {industriesOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                  transition={{ duration: 0.15, ease: 'easeOut' }}
+                  className="absolute top-full left-0 w-80 p-2 bg-slate-900/98 backdrop-blur-2xl border border-white/15 rounded-2xl shadow-2xl space-y-1"
+                >
+                  {INDUSTRY_ITEMS.map((ind) => {
+                    const Icon = ind.icon;
+                    return (
+                      <Link
+                        key={ind.name}
+                        href={ind.href}
+                        className="flex items-start gap-3 p-3 rounded-xl hover:bg-white/10 transition-colors group"
+                      >
+                        <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 group-hover:text-white group-hover:border-white/25 shrink-0 mt-0.5">
+                          <Icon className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs font-bold text-white group-hover:text-white">
+                              {ind.name}
+                            </span>
+                            {ind.badge && (
+                              <span className="text-[9px] font-mono font-bold px-1.5 py-0.2 rounded bg-orange-500/20 text-orange-400 border border-orange-500/30">
+                                {ind.badge}
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-[11px] text-slate-400 font-normal leading-tight mt-0.5">
+                            {ind.desc}
+                          </p>
+                        </div>
+                      </Link>
+                    );
+                  })}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
           {NAV_ITEMS.map((item) => (
             <Link
               key={item.name}
@@ -60,7 +135,6 @@ export function Header() {
                   {item.badge}
                 </span>
               )}
-              {/* Subtle underline hover effect */}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-white to-slate-400 group-hover:w-full transition-all duration-300" />
             </Link>
           ))}
@@ -115,12 +189,32 @@ export function Header() {
             className="md:hidden border-t border-white/10 bg-slate-900/98 backdrop-blur-xl px-6 py-6 space-y-4 shadow-2xl"
           >
             <nav className="flex flex-col space-y-3">
+              <div className="text-xs font-mono font-bold uppercase tracking-wider text-slate-500 px-1">
+                Industries & Verticals
+              </div>
+              <Link
+                href="/contratistas"
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-base font-semibold text-orange-400 hover:text-orange-300 py-1.5 flex items-center justify-between border-b border-white/5"
+              >
+                <div className="flex items-center gap-2">
+                  <HardHat className="w-4 h-4 text-orange-400" />
+                  <span>Construction (Español)</span>
+                </div>
+                <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-orange-500/20 text-orange-400">
+                  ES
+                </span>
+              </Link>
+
+              <div className="pt-2 text-xs font-mono font-bold uppercase tracking-wider text-slate-500 px-1">
+                Platform
+              </div>
               {NAV_ITEMS.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-base font-medium text-slate-200 hover:text-white py-2 flex items-center justify-between border-b border-white/5"
+                  className="text-base font-medium text-slate-200 hover:text-white py-1.5 flex items-center justify-between border-b border-white/5"
                 >
                   <span>{item.name}</span>
                   {item.badge ? (
