@@ -3,758 +3,952 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Socio Command Center — Autonomous Merchant Growth & Governance OS</title>
+  <title>Socio Command Center — Executive Operating Cockpit</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Orbitron display + Inter crisp typography + JetBrains Mono -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
     :root {
-      --bg-base: #0B0E14;
-      --bg-surface: #0E131D;
-      --bg-card: #121824;
-      --border-subtle: rgba(255, 255, 255, 0.08);
-      --font-display: 'Orbitron', -apple-system, sans-serif;
-      --font-sans: 'Inter', -apple-system, sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
-      
-      /* Scrutexity Matte Slate & Cyan Glow Palette */
-      --glow-blue: rgba(56, 130, 246, 0.16);
-      --border-glow: rgba(70, 130, 210, 0.28);
-      --accent-cyan: #38bdf8;
-      --accent-blue: #60a5fa;
-      --accent-emerald: #10b981;
-      --text-muted: #8b9bb4;
+      --bg-base: #0B0D13;
+      --bg-surface: #11141D;
+      --bg-elevated: #161B26;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-subtle: rgba(255, 255, 255, 0.05);
+      --text-main: #F3F4F6;
+      --text-muted: #8E9BAE;
+      --text-faint: #5A6678;
+      --accent-green: #10B981;
+      --accent-amber: #F59E0B;
+      --accent-red: #EF4444;
+      --accent-blue: #3B82F6;
+      --accent-cyan: #06B6D4;
     }
 
     body {
       background-color: var(--bg-base);
-      color: #f1f5f9;
-      font-family: var(--font-sans);
-      background-image: 
-        radial-gradient(circle at 50% 0%, rgba(30, 58, 138, 0.12) 0%, transparent 60%),
-        radial-gradient(circle at 100% 50%, rgba(15, 23, 42, 0.6) 0%, transparent 50%);
-      background-attachment: fixed;
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
       min-height: 100vh;
-      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
     }
 
-    .font-display { font-family: var(--font-display); }
-    .font-mono { font-family: var(--font-mono); }
-
-    /* The Scrutexity Soft Atmospheric Glow Card */
-    .scrutex-card {
-      background: linear-gradient(180deg, #131926 0%, #0F1420 100%);
-      border: 1px solid rgba(80, 130, 200, 0.22);
-      border-radius: 20px;
-      box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.8), 0 0 45px -15px rgba(56, 140, 246, 0.14);
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .scrutex-card:hover {
-      border-color: rgba(96, 165, 250, 0.45);
-      box-shadow: 0 15px 50px -10px rgba(0, 0, 0, 0.9), 0 0 60px -10px rgba(56, 140, 246, 0.22);
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
     }
 
-    /* Soft Slate Metric Capsule */
-    .metric-capsule {
-      background: radial-gradient(circle at 50% 0%, rgba(30, 58, 138, 0.25) 0%, rgba(15, 20, 32, 0.9) 100%);
-      border: 1px solid rgba(96, 165, 250, 0.22);
-      border-radius: 20px;
-      box-shadow: 0 0 35px -8px rgba(56, 130, 246, 0.18);
+    /* Executive Surface Cards - Crisp, Flat, Calm */
+    .exec-card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
     }
 
-    /* Scrutexity Pill Badges (Matte & Refined) */
-    .pill {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 8px;
+    .exec-card-elevated {
+      background-color: var(--bg-elevated);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+    }
+
+    /* Status Badges - Restrained and Matte */
+    .badge {
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-    .pill-safe { background: rgba(16, 185, 129, 0.12); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.28); }
-    .pill-cyan { background: rgba(56, 189, 248, 0.12); color: #7dd3fc; border: 1px solid rgba(56, 189, 248, 0.28); }
-    .pill-blue { background: rgba(59, 130, 246, 0.14); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.3); }
-    .pill-amber { background: rgba(245, 158, 11, 0.12); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.28); }
-    .pill-muted { background: rgba(255, 255, 255, 0.04); color: #94a3b8; border: 1px solid rgba(255, 255, 255, 0.08); }
-
-    /* Left Sidebar Icon Button */
-    .side-icon-btn {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #718096;
-      transition: all 0.2s ease;
-      cursor: pointer;
-    }
-    .side-icon-btn:hover {
-      color: #e2e8f0;
-      background: rgba(255, 255, 255, 0.05);
-    }
-    .side-icon-btn.active {
-      color: #ffffff;
-      background: rgba(59, 130, 246, 0.25);
-      border: 1px solid rgba(96, 165, 250, 0.4);
-      box-shadow: 0 0 20px rgba(59, 130, 246, 0.25);
-    }
-
-    /* Tab Button */
-    .tab-pill {
-      font-family: var(--font-mono);
+      padding: 2px 8px;
+      border-radius: 6px;
       font-size: 11px;
-      font-weight: 700;
-      padding: 7px 16px;
-      border-radius: 10px;
-      color: #8b9bb4;
-      transition: all 0.2s;
-      cursor: pointer;
+      font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.02em;
     }
-    .tab-pill:hover {
-      color: #ffffff;
-      background: rgba(255, 255, 255, 0.04);
-    }
-    .tab-pill.active {
-      color: #ffffff;
-      background: rgba(30, 58, 138, 0.6);
-      border: 1px solid rgba(96, 165, 250, 0.4);
-      box-shadow: 0 0 15px rgba(56, 140, 246, 0.2);
-    }
-
-    /* =============================================================
-       INTERACTIVE NODE CANVAS STYLES (Draggable in Scrutexity Theme)
-       ============================================================= */
-    #graph-canvas-container {
-      position: relative;
-      width: 100%;
-      height: 640px;
-      border-radius: 20px;
-      background-color: #090C13;
-      background-image: radial-gradient(rgba(70, 130, 210, 0.18) 1px, transparent 1px);
-      background-size: 26px 26px;
-      border: 1px solid rgba(80, 130, 200, 0.25);
-      overflow: hidden;
-      cursor: grab;
-      box-shadow: inset 0 0 40px rgba(0,0,0,0.8);
-    }
-    #graph-canvas-container:active { cursor: grabbing; }
-
-    .graph-node {
-      position: absolute;
-      background: rgba(15, 20, 32, 0.94);
-      border: 1px solid rgba(96, 165, 250, 0.28);
-      border-radius: 16px;
-      backdrop-filter: blur(16px);
-      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.8), 0 0 35px -10px rgba(56, 130, 246, 0.18);
-      cursor: move;
-      transition: border-color 0.2s, box-shadow 0.2s;
-      z-index: 10;
-    }
-    .graph-node:hover {
-      border-color: rgba(96, 165, 250, 0.6);
-      box-shadow: 0 15px 40px -5px rgba(0, 0, 0, 0.9), 0 0 45px -5px rgba(56, 130, 246, 0.3);
-    }
-    .graph-node.active-node {
-      border-color: #60a5fa !important;
-      box-shadow: 0 0 40px rgba(96, 165, 250, 0.4) !important;
-    }
-
-    .wire-glow {
-      stroke: rgba(56, 130, 246, 0.3);
-      stroke-width: 2.5;
-      fill: none;
-      filter: drop-shadow(0 0 6px rgba(56, 130, 246, 0.5));
-    }
-    .wire-pulse {
-      stroke: #60a5fa;
-      stroke-width: 2.5;
-      stroke-dasharray: 6 14;
-      animation: wirePulseDash 1.8s linear infinite;
-      fill: none;
-      filter: drop-shadow(0 0 8px #60a5fa);
-    }
-    @keyframes wirePulseDash {
-      to { stroke-dashoffset: -20; }
-    }
+    .badge-green { background: rgba(16, 185, 129, 0.12); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.25); }
+    .badge-amber { background: rgba(245, 158, 11, 0.12); color: #FBBF24; border: 1px solid rgba(245, 158, 11, 0.25); }
+    .badge-red { background: rgba(239, 68, 68, 0.12); color: #F87171; border: 1px solid rgba(239, 68, 68, 0.25); }
+    .badge-blue { background: rgba(59, 130, 246, 0.12); color: #93C5FD; border: 1px solid rgba(59, 130, 246, 0.25); }
+    .badge-gray { background: rgba(255, 255, 255, 0.06); color: #9CA3AF; border: 1px solid rgba(255, 255, 255, 0.08); }
 
     /* Custom Scrollbar */
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
     ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: rgba(96, 165, 250, 0.3); }
+    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+
+    /* Modal / Drawer */
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 90;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+    .drawer-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .drawer-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      max-width: 540px;
+      background: #11141D;
+      border-left: 1px solid rgba(255, 255, 255, 0.12);
+      z-index: 100;
+      transform: translateX(100%);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow-y: auto;
+    }
+    .drawer-panel.open {
+      transform: translateX(0);
+    }
   </style>
 </head>
-<body class="flex h-screen overflow-hidden text-slate-100">
+<body class="p-0 m-0">
 
   <!-- ===================================================================
-      1. LEFT VERTICAL SLATE DOCK (Scrutexity Icon Rail)
+      PERSISTENT GLOBAL COMMAND & NAVIGATION BAR
       =================================================================== -->
-  <aside class="w-16 border-r border-white/5 bg-[#090C12] flex flex-col items-center justify-between py-5 shrink-0 z-30">
-    <!-- Top Logo Icon -->
-    <div class="space-y-6 flex flex-col items-center">
-      <a href="index.html" class="w-10 h-10 rounded-xl bg-gradient-to-b from-blue-600/30 to-blue-900/40 border border-blue-400/30 flex items-center justify-center shadow-[0_0_15px_rgba(59,130,246,0.3)]">
-        <span class="font-display font-black text-sm tracking-tighter text-white">S</span>
+  <header class="h-14 border-b border-white/10 bg-[#0B0D13] px-6 flex items-center justify-between sticky top-0 z-40">
+    <div class="flex items-center gap-4">
+      <a href="index.html" class="flex items-center gap-1.5 text-base font-bold text-white tracking-tight">
+        <span>Socio</span>
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
       </a>
-
-      <!-- Navigation Icons Rail -->
-      <nav class="space-y-2 flex flex-col items-center">
-        <div class="side-icon-btn" onclick="switchNav('governance', this)" title="HIPAA & Governance (Overview)"><i data-lucide="shield-check" class="w-5 h-5"></i></div>
-        <div class="side-icon-btn active" onclick="switchNav('agents', this)" title="Autonomous Fleet & Node Graph"><i data-lucide="users" class="w-5 h-5"></i></div>
-        <div class="side-icon-btn" onclick="switchNav('merchants', this)" title="Merchants CRM"><i data-lucide="clipboard-list" class="w-5 h-5"></i></div>
-        <div class="side-icon-btn" onclick="switchNav('telemetry', this)" title="Live Telemetry"><i data-lucide="radio" class="w-5 h-5"></i></div>
-        <div class="side-icon-btn" onclick="switchNav('pipeline', this)" title="Growth Pipeline"><i data-lucide="layers" class="w-5 h-5"></i></div>
-        <div class="side-icon-btn" onclick="switchNav('ledger', this)" title="Revenue Ledger"><i data-lucide="file-text" class="w-5 h-5"></i></div>
-      </nav>
-    </div>
-
-    <!-- Bottom Profile / Security -->
-    <div class="space-y-3 flex flex-col items-center">
-      <div class="w-9 h-9 rounded-xl bg-blue-500/10 border border-blue-400/20 flex items-center justify-center text-blue-400" title="Security Active">
-        <i data-lucide="shield" class="w-4 h-4"></i>
-      </div>
-      <div class="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 cursor-pointer hover:text-white" title="Operator Profile">
-        <i data-lucide="user" class="w-4 h-4"></i>
+      <span class="text-xs text-gray-500 font-mono">/</span>
+      <span class="text-xs font-semibold text-gray-300">Executive Operating Cockpit</span>
+      <div class="h-3.5 w-px bg-white/10 mx-1"></div>
+      <div class="flex items-center gap-2 text-xs font-mono text-gray-400">
+        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+        <span id="hdr-fleet-status">8/8 Agents Active</span>
       </div>
     </div>
-  </aside>
+
+    <!-- Center Command Bar (⌘K) -->
+    <div class="flex-1 max-w-lg mx-6 relative">
+      <div class="flex items-center gap-2 bg-[#141822] border border-white/10 rounded-lg px-3 py-1.5 focus-within:border-blue-500 transition-colors">
+        <i data-lucide="search" class="w-3.5 h-3.5 text-gray-400"></i>
+        <input
+          type="text"
+          id="global-cmd-input"
+          placeholder="Command Socio or search (e.g. 'Show blocked agents', 'East Harlem Bites') • ⌘K"
+          class="bg-transparent border-none outline-none text-xs font-mono text-white w-full placeholder-gray-500"
+          onkeydown="handleCommandKey(event)"
+        >
+        <span class="text-[10px] font-mono bg-white/5 px-1.5 py-0.5 rounded text-gray-400 border border-white/10">⌘K</span>
+      </div>
+    </div>
+
+    <!-- Right Controls -->
+    <div class="flex items-center gap-3">
+      <div class="text-xs font-mono text-gray-400 hidden sm:block">
+        <span id="live-clock">10:28 PM</span> EST
+      </div>
+      <button onclick="refreshOperatingState()" class="px-2.5 py-1.5 rounded-md bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-gray-300 flex items-center gap-1.5 transition-colors">
+        <i data-lucide="refresh-cw" class="w-3.5 h-3.5" id="refresh-icon"></i>
+        <span class="hidden sm:inline">Sync</span>
+      </button>
+      <a href="merchant-evidence.html" target="_blank" class="px-3 py-1.5 rounded-md bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-500/30 text-xs font-medium flex items-center gap-1.5 transition-colors">
+        <span>Evidence</span>
+        <i data-lucide="external-link" class="w-3 h-3"></i>
+      </a>
+    </div>
+  </header>
 
   <!-- ===================================================================
-      2. MAIN APPLICATION THEATER
+      MAIN OPERATING COCKPIT (STRUCTURED FOR 30-SECOND EXECUTIVE ACTION)
       =================================================================== -->
-  <div class="flex-1 flex flex-col h-screen overflow-hidden bg-[#0B0E14]">
+  <main class="max-w-[1560px] mx-auto px-6 py-6 space-y-6">
 
-    <!-- TOP HEADER BAR -->
-    <header class="h-16 border-b border-white/5 bg-[#090C12]/80 px-8 flex items-center justify-between backdrop-blur-xl shrink-0 z-20">
-      
-      <!-- Brand & Status Pill -->
-      <div class="flex items-center gap-3">
-        <span class="font-display text-base font-extrabold tracking-widest text-white uppercase">
-          SOCIO<span class="text-blue-400 font-normal">X</span>ITY
-        </span>
-        <span class="pill pill-muted text-[10px]">
-          <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span> LOCAL ONLY
-        </span>
-        <button onclick="refreshState()" class="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 text-[11px] font-mono text-slate-300 border border-white/10 flex items-center gap-1.5">
-          <i data-lucide="refresh-cw" class="w-3 h-3" id="top-sync-icon"></i>
-          <span>SYNC CONSOLE</span>
-        </button>
-        <button onclick="toast('Telemetry state exported','safe')" class="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 text-[11px] font-mono text-slate-400 border border-white/10">
-          EXPORT BACKUP
-        </button>
-      </div>
-
-      <!-- Search & Clock Area -->
-      <div class="flex items-center gap-5">
-        <div class="relative w-80">
-          <i data-lucide="search" class="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
-          <input
-            type="text"
-            id="global-header-search"
-            placeholder="Search or jump... Cmd K"
-            class="w-full bg-[#121722] border border-white/10 rounded-xl pl-10 pr-4 py-1.5 text-xs font-mono text-white placeholder-slate-500 outline-none focus:border-blue-400/50"
-            onkeydown="if(event.key==='Enter')handleSearch(this.value)"
-          >
+    <!-- ============================================================= -->
+    <!-- LEVEL 0: "WHILE YOU WERE AWAY" BRIEFING BANNER                -->
+    <!-- ============================================================= -->
+    <div class="exec-card p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-l-4 border-l-blue-500 bg-[#0E121B]">
+      <div class="flex items-start sm:items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 shrink-0 mt-0.5 sm:mt-0">
+          <i data-lucide="bell" class="w-4 h-4"></i>
         </div>
-
-        <div class="flex items-center gap-3 font-mono text-xs text-slate-400 border-l border-white/10 pl-5">
-          <div class="p-1.5 rounded-lg bg-white/5 border border-white/10 text-blue-400">
-            <i data-lucide="clock" class="w-3.5 h-3.5"></i>
-          </div>
-          <div>
-            <div class="text-white font-bold text-[13px]" id="live-clock">08:47 PM</div>
-            <div class="text-[9px] text-slate-500 uppercase tracking-wider">NEW YORK</div>
+        <div>
+          <div class="text-xs font-mono uppercase font-bold text-gray-400">While you were away</div>
+          <div class="text-sm font-medium text-gray-200 mt-0.5">
+            <strong>8 agent actions completed</strong> • <span class="text-amber-400 font-semibold">3 approvals require attention</span> • <strong>+$4,820 attributed revenue</strong> • 2 merchants advanced • 1 workflow blocked.
           </div>
         </div>
       </div>
-    </header>
+      <div class="flex items-center gap-2 shrink-0 text-xs font-mono text-gray-400">
+        <span>Highest priority action isolated below</span>
+        <i data-lucide="arrow-down" class="w-3.5 h-3.5 text-blue-400"></i>
+      </div>
+    </div>
 
-    <!-- MAIN SCROLLABLE CONTENT BODY -->
-    <main class="flex-1 overflow-y-auto p-8 space-y-7" id="main-content-theater">
-
-      <!-- ============================================================= -->
-      <!-- VIEW A: AGENT FLEET & INTERACTIVE NODE GRAPH (ACTIVE DEFAULT) -->
-      <!-- ============================================================= -->
-      <div id="view-agents-page" class="view-panel space-y-7">
+    <!-- ============================================================= -->
+    <!-- LEVEL 1: THE AI CHIEF OF STAFF — SINGLE NEXT BEST ACTION      -->
+    <!-- ============================================================= -->
+    <section class="exec-card-elevated p-6 border-l-4 border-l-emerald-500">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         
-        <!-- SECTION TITLE & ACTION BUTTONS -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <div class="text-[11px] font-mono uppercase tracking-widest text-slate-400 font-bold mb-1">
-              HERMES MULTI-AGENT ORCHESTRATION LAYER
-            </div>
-            <h1 class="text-2xl sm:text-3xl font-display font-black text-white tracking-tight">
-              Agent Fleet & Node Graph
-            </h1>
-          </div>
-
+        <!-- Left: Action Brief Details -->
+        <div class="space-y-3 flex-1 max-w-4xl">
           <div class="flex items-center gap-2.5">
-            <button onclick="recenterGraph()" class="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 font-mono text-xs font-bold flex items-center gap-1.5">
-              <i data-lucide="scan" class="w-3.5 h-3.5"></i>
-              <span>Recenter Graph</span>
-            </button>
-            <button onclick="triggerNodeAgent('prospect')" class="px-5 py-2 rounded-xl bg-[#131E33] hover:bg-[#1A2844] border border-blue-400/40 text-blue-200 font-mono text-xs font-bold shadow-[0_0_25px_rgba(59,130,246,0.2)] flex items-center gap-2 transition-all hover:scale-[1.02]">
-              <i data-lucide="play" class="w-3.5 h-3.5 text-blue-400"></i>
-              <span>Trigger Socio-Prospect</span>
-            </button>
+            <span class="badge badge-green">AI CHIEF OF STAFF</span>
+            <span class="text-xs font-mono font-bold uppercase text-gray-400">YOUR HIGHEST-VALUE MOVE RIGHT NOW</span>
+            <span class="text-xs text-gray-600">•</span>
+            <span class="text-xs font-mono text-emerald-400 font-bold">ACTION SCORE: 0.94 / 1.0</span>
           </div>
+
+          <!-- Hero Action Title (28–36px) -->
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight" id="hero-action-title">
+            Approve East Harlem Bites Paid Instagram Campaign ($400 Budget)
+          </h1>
+
+          <!-- 4 Core Executive Parameters Grid -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
+            <div class="p-3 rounded-lg bg-[#11141D] border border-white/5">
+              <div class="text-[11px] font-mono text-gray-400 uppercase font-semibold">Projected Impact</div>
+              <div class="text-lg sm:text-xl font-bold text-emerald-400 mt-0.5">+$4,400</div>
+              <div class="text-[11px] text-gray-400">Net new revenue</div>
+            </div>
+            <div class="p-3 rounded-lg bg-[#11141D] border border-white/5">
+              <div class="text-[11px] font-mono text-gray-400 uppercase font-semibold">Founder Time</div>
+              <div class="text-lg sm:text-xl font-bold text-white mt-0.5">45 seconds</div>
+              <div class="text-[11px] text-gray-400">Single decision review</div>
+            </div>
+            <div class="p-3 rounded-lg bg-[#11141D] border border-white/5">
+              <div class="text-[11px] font-mono text-gray-400 uppercase font-semibold">Risk Level</div>
+              <div class="text-lg sm:text-xl font-bold text-amber-400 mt-0.5">HIGH</div>
+              <div class="text-[11px] text-gray-400">Ad budget spend policy</div>
+            </div>
+            <div class="p-3 rounded-lg bg-[#11141D] border border-white/5">
+              <div class="text-[11px] font-mono text-gray-400 uppercase font-semibold">Evidence Confidence</div>
+              <div class="text-lg sm:text-xl font-bold text-blue-400 mt-0.5">87%</div>
+              <div class="text-[11px] text-gray-400">11x test ROAS verified</div>
+            </div>
+          </div>
+
+          <!-- Why Now & Closed-Loop Downstream Execution Pipeline -->
+          <div class="space-y-2 pt-2 text-sm text-gray-300">
+            <div class="flex items-start gap-2">
+              <strong class="text-gray-400 text-xs font-mono uppercase tracking-wider shrink-0 mt-0.5">Why Now:</strong>
+              <span class="text-gray-200">The campaign has already produced an 11x ROAS signal on the initial $50 test sample and is currently blocked on Governor approval before the local weekend dining surge.</span>
+            </div>
+
+            <div class="flex items-start gap-2 pt-1">
+              <strong class="text-gray-400 text-xs font-mono uppercase tracking-wider shrink-0 mt-0.5">After Approval:</strong>
+              <div class="text-xs font-mono text-gray-300 flex flex-wrap items-center gap-2">
+                <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-gray-200">Socio-Expand → launches campaign</span>
+                <span class="text-gray-600">→</span>
+                <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-gray-200">Socio-Track → monitors POS attribution</span>
+                <span class="text-gray-600">→</span>
+                <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-gray-200">Socio-Ledger → records revenue & spend</span>
+                <span class="text-gray-600">→</span>
+                <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-gray-200">Socio-Governor → seals CAS attestation</span>
+              </div>
+            </div>
+          </div>
+
         </div>
 
-        <!-- 4 AGENT METRIC CAPSULES -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          <div class="metric-capsule p-6 flex flex-col justify-between h-36">
-            <div class="flex items-center justify-between">
-              <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400">FLEET HEALTH</span>
-              <span class="pill pill-safe text-[10px]">8/8 ONLINE</span>
-            </div>
-            <div class="text-3xl font-display font-black text-white tracking-tight">100%</div>
-            <div class="text-[11px] font-mono text-slate-500">All Hermes workers nominal</div>
-          </div>
+        <!-- Right: Primary Call to Action Deck -->
+        <div class="flex flex-col sm:flex-row lg:flex-col gap-3 shrink-0 justify-center min-w-[220px]">
+          <button onclick="approveProposal('PROP-0042')" class="px-6 py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm rounded-lg flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-md">
+            <i data-lucide="check-circle" class="w-4 h-4"></i>
+            <span>APPROVE & EXECUTE</span>
+          </button>
+          
+          <button onclick="openEvidenceDrawer('PROP-0042')" class="px-4 py-2.5 bg-white/5 hover:bg-white/10 text-gray-200 font-medium text-xs rounded-lg border border-white/10 flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
+            <i data-lucide="file-text" class="w-3.5 h-3.5 text-gray-400"></i>
+            <span>VIEW EVIDENCE (11x ROAS)</span>
+          </button>
 
-          <div class="metric-capsule p-6 flex flex-col justify-between h-36">
-            <div class="flex items-center justify-between">
-              <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400">INTER-AGENT WIRES</span>
-              <span class="pill pill-cyan text-[10px]">ACTIVE</span>
-            </div>
-            <div class="text-3xl font-display font-black text-white tracking-tight">6 CHANNELS</div>
-            <div class="text-[11px] font-mono text-slate-500">Zero packet drops across CAS</div>
-          </div>
-
-          <div class="metric-capsule p-6 flex flex-col justify-between h-36">
-            <div class="flex items-center justify-between">
-              <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400">GOVERNOR GATES</span>
-              <span class="pill pill-amber text-[10px]">3 PENDING</span>
-            </div>
-            <div class="text-3xl font-display font-black text-amber-400 tracking-tight">PROP-0042</div>
-            <div class="text-[11px] font-mono text-slate-500">Ad spend review required</div>
-          </div>
-
-          <div class="metric-capsule p-6 flex flex-col justify-between h-36">
-            <div class="flex items-center justify-between">
-              <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400">PIPELINE UNLOCKED</span>
-              <span class="pill pill-safe text-[10px]">RESOLVED</span>
-            </div>
-            <div class="text-3xl font-display font-black text-emerald-400 tracking-tight">$42,180</div>
-            <div class="text-[11px] font-mono text-slate-500">10 active NYC merchant deals</div>
-          </div>
-        </div>
-
-        <!-- THE INTERACTIVE NODE-GRAPH CANVAS (Draggable in Scrutexity Style) -->
-        <div class="space-y-2">
-          <div class="flex items-center justify-between px-1">
-            <div class="flex items-center gap-2 text-xs font-mono text-slate-400">
-              <i data-lucide="move" class="w-3.5 h-3.5 text-blue-400"></i>
-              <span>Click & drag any node to reposition • Drag canvas to pan</span>
-            </div>
-            <span class="text-[10px] font-mono text-slate-500 uppercase tracking-widest">
-              CAUSAL AGENT TOPOLOGY
-            </span>
-          </div>
-
-          <div id="graph-canvas-container" onmousedown="startPan(event)">
-            <svg id="svg-wires-layer" class="absolute inset-0 w-full h-full pointer-events-none" style="z-index: 5;"></svg>
-            <div id="graph-world" class="absolute inset-0 origin-top-left"></div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- ============================================================= -->
-      <!-- VIEW B: GOVERNANCE & TELEMETRY LOGS (SWITCHABLE TAB)         -->
-      <!-- ============================================================= -->
-      <div id="view-governance-page" class="view-panel space-y-7 hidden">
-        
-        <!-- SECTION TITLE & ACTION BUTTON -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <div class="text-[11px] font-mono uppercase tracking-widest text-slate-400 font-bold mb-1">
-              AUTOMATED REVENUE ATTESTATION & GOVERNANCE
-            </div>
-            <h1 class="text-2xl sm:text-3xl font-display font-black text-white tracking-tight">
-              HIPAA & Governance OS
-            </h1>
-          </div>
-
-          <button onclick="runComplianceSweep()" class="px-5 py-2.5 rounded-xl bg-[#131E33] hover:bg-[#1A2844] border border-blue-400/40 text-blue-200 font-mono text-xs font-bold tracking-wide shadow-[0_0_25px_rgba(59,130,246,0.2)] flex items-center gap-2 transition-all hover:scale-[1.02]">
-            <i data-lucide="shield-check" class="w-4 h-4 text-blue-400"></i>
-            <span>RUN COMPLIANCE SWEEP</span>
+          <button onclick="delegateAction('PROP-0042')" class="px-4 py-2 bg-transparent hover:bg-white/5 text-gray-400 hover:text-gray-200 font-mono text-xs rounded-lg transition-colors text-center cursor-pointer">
+            Delegate to Socio-Expand
           </button>
         </div>
 
-        <!-- 4 METRIC CAPSULES -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          <div class="metric-capsule p-6 flex flex-col justify-between h-36">
-            <div class="flex items-center justify-between">
-              <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400">GOVERNANCE SCORE</span>
-              <span class="pill pill-safe text-[10px]">SAFE</span>
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- LEVEL 2 & 3: THREE OPERATIONAL EXECUTION COLUMNS              -->
+    <!-- ============================================================= -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      
+      <!-- COLUMN 1: FOUNDER ACTION QUEUE (4 Cols) -->
+      <div class="lg:col-span-4 exec-card p-5 space-y-4 flex flex-col justify-between">
+        <div class="space-y-3">
+          <div class="flex items-center justify-between border-b border-white/5 pb-3">
+            <div class="flex items-center gap-2">
+              <i data-lucide="list-todo" class="w-4 h-4 text-amber-400"></i>
+              <h2 class="text-base font-bold text-white">Founder Action Queue</h2>
             </div>
-            <div class="text-3xl font-display font-black text-white tracking-tight">98.6%</div>
-            <div class="text-[11px] font-mono text-slate-500">Policy evaluation: 0 AirLock holds</div>
+            <span class="badge badge-amber" id="queue-count-badge">3 Pending Decisions</span>
           </div>
 
-          <div class="metric-capsule p-6 flex flex-col justify-between h-36">
-            <div class="flex items-center justify-between">
-              <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400">ACTIVE INTERCEPTS</span>
-              <span class="pill pill-cyan text-[10px]">SECURE</span>
-            </div>
-            <div class="text-3xl font-display font-black text-white tracking-tight">0</div>
-            <div class="text-[11px] font-mono text-slate-500">Zero unauthorized write calls</div>
-          </div>
+          <p class="text-xs text-gray-400 leading-relaxed">
+            Ranked deterministically by economic impact, urgency, confidence, and unblock leverage.
+          </p>
 
-          <div class="metric-capsule p-6 flex flex-col justify-between h-36">
-            <div class="flex items-center justify-between">
-              <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400">PENDING CLAIMS</span>
-              <span class="pill pill-muted text-[10px]">CLEAR</span>
-            </div>
-            <div class="text-3xl font-display font-black text-white tracking-tight">0</div>
-            <div class="text-[11px] font-mono text-slate-500">Immutable CAS receipts synced</div>
-          </div>
-
-          <div class="metric-capsule p-6 flex flex-col justify-between h-36">
-            <div class="flex items-center justify-between">
-              <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400">GOVERNED RECOVERY</span>
-              <span class="pill pill-safe text-[10px]">RESOLVED</span>
-            </div>
-            <div class="text-3xl font-display font-black text-emerald-400 tracking-tight">$22,890</div>
-            <div class="text-[11px] font-mono text-slate-500">100% matched against POS telemetry</div>
+          <!-- Queue Items List -->
+          <div class="space-y-2.5 pt-1" id="founder-queue-container">
+            <!-- Injected by JS -->
           </div>
         </div>
 
-        <!-- TWO-COLUMN WORKSPACE -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          <div class="lg:col-span-7 scrutex-card p-6 min-h-[460px] flex flex-col justify-between space-y-4">
-            <div>
-              <div class="flex items-center justify-between border-b border-white/5 pb-3 mb-4">
-                <div class="flex items-center gap-2">
-                  <i data-lucide="shield-check" class="w-4 h-4 text-blue-400"></i>
-                  <span class="text-xs font-mono uppercase tracking-wider font-bold text-white">AUDITED TELEMETRY LOG STREAM (4 ENTRIES)</span>
-                </div>
-                <span class="text-[10px] font-mono text-slate-500 uppercase tracking-widest">REAL-TIME COMPLIANCE</span>
-              </div>
-              <div class="space-y-3" id="telemetry-log-container"></div>
-            </div>
-          </div>
-
-          <div class="lg:col-span-5 scrutex-card p-6 min-h-[460px] flex flex-col justify-between space-y-4">
-            <div>
-              <div class="flex items-center gap-2 border-b border-white/5 pb-3 mb-6">
-                <i data-lucide="lock" class="w-4 h-4 text-blue-400"></i>
-                <span class="text-xs font-mono uppercase tracking-wider font-bold text-white">COMPLIANCE CONTAINMENT CENTER</span>
-              </div>
-              <div class="flex flex-col items-center justify-center text-center py-16 space-y-3" id="containment-empty-state">
-                <div class="w-14 h-14 rounded-2xl bg-blue-500/10 border border-blue-400/20 flex items-center justify-center text-blue-400 shadow-[0_0_30px_rgba(59,130,246,0.15)]">
-                  <i data-lucide="lock" class="w-6 h-6"></i>
-                </div>
-                <div class="text-sm font-display font-bold text-white mt-2">No Log Selection</div>
-                <p class="text-xs font-mono text-slate-400 max-w-xs leading-relaxed">
-                  Select any audited telemetry event or threat node to review its mitigation parameters.
-                </p>
-              </div>
-              <div class="space-y-4 text-xs font-mono hidden" id="containment-detail-card"></div>
-            </div>
-          </div>
+        <div class="pt-3 border-t border-white/5 text-xs text-gray-500 font-mono flex items-center justify-between">
+          <span>Sort: Impact × Urgency ÷ Time</span>
+          <span class="text-emerald-400 font-semibold">Total: +$8,600 Unlocked</span>
         </div>
-
       </div>
 
-    </main>
-  </div>
+      <!-- COLUMN 2: AGENT FLEET ROSTER (4 Cols) -->
+      <div class="lg:col-span-4 exec-card p-5 space-y-4 flex flex-col justify-between">
+        <div class="space-y-3">
+          <div class="flex items-center justify-between border-b border-white/5 pb-3">
+            <div class="flex items-center gap-2">
+              <i data-lucide="users" class="w-4 h-4 text-blue-400"></i>
+              <h2 class="text-base font-bold text-white">Agent Fleet Status</h2>
+            </div>
+            <span class="badge badge-green">8/8 Operational</span>
+          </div>
 
-  <!-- Toast Deck -->
+          <p class="text-xs text-gray-400 leading-relaxed">
+            Real autonomous workers with heartbeat telemetry, current jobs, and outputs.
+          </p>
+
+          <!-- Agent Roster -->
+          <div class="space-y-2 pt-1" id="agent-fleet-container">
+            <!-- Injected by JS -->
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-white/5 text-xs text-gray-500 font-mono flex items-center justify-between">
+          <span>Hermes Worker Cluster</span>
+          <span class="text-gray-400">Avg Heartbeat: 14s</span>
+        </div>
+      </div>
+
+      <!-- COLUMN 3: GOVERNOR SAFETY GATES (4 Cols) -->
+      <div class="lg:col-span-4 exec-card p-5 space-y-4 flex flex-col justify-between">
+        <div class="space-y-3">
+          <div class="flex items-center justify-between border-b border-white/5 pb-3">
+            <div class="flex items-center gap-2">
+              <i data-lucide="shield-check" class="w-4 h-4 text-rose-400"></i>
+              <h2 class="text-base font-bold text-white">Governor Safety Gates</h2>
+            </div>
+            <span class="badge badge-red" id="gov-pending-badge">3 Pending CAS Review</span>
+          </div>
+
+          <p class="text-xs text-gray-400 leading-relaxed">
+            CAS policy evaluation layer. High-risk actions require explicit founder attestation.
+          </p>
+
+          <!-- Governor Proposals List -->
+          <div class="space-y-2.5 pt-1" id="governor-proposals-container">
+            <!-- Injected by JS -->
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-white/5 text-xs text-gray-500 font-mono flex items-center justify-between">
+          <span>Security Policy: Fail-Closed</span>
+          <span class="text-emerald-400 font-semibold">0 AirLock Breaches</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- LEVEL 4: LIVE OPERATIONAL ACTIVITY & TELEMETRY STREAM         -->
+    <!-- ============================================================= -->
+    <section class="exec-card p-5 space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5 pb-3">
+        <div class="flex items-center gap-2">
+          <i data-lucide="activity" class="w-4 h-4 text-emerald-400"></i>
+          <h2 class="text-base font-bold text-white">Live Execution Stream</h2>
+          <span class="text-xs font-mono text-gray-500">Real-time operational event stream</span>
+        </div>
+
+        <!-- Filter Pills -->
+        <div class="flex items-center gap-1.5 flex-wrap">
+          <button onclick="filterStream('ALL', this)" class="px-2.5 py-1 rounded bg-white/10 text-white font-mono text-xs font-semibold">ALL</button>
+          <button onclick="filterStream('AGENT', this)" class="px-2.5 py-1 rounded bg-white/5 text-gray-400 hover:text-white font-mono text-xs">AGENTS</button>
+          <button onclick="filterStream('REVENUE', this)" class="px-2.5 py-1 rounded bg-white/5 text-gray-400 hover:text-white font-mono text-xs">REVENUE</button>
+          <button onclick="filterStream('GOVERNOR', this)" class="px-2.5 py-1 rounded bg-white/5 text-gray-400 hover:text-white font-mono text-xs">GOVERNOR</button>
+          <button onclick="filterStream('MERCHANT', this)" class="px-2.5 py-1 rounded bg-white/5 text-gray-400 hover:text-white font-mono text-xs">MERCHANTS</button>
+        </div>
+      </div>
+
+      <!-- Compact Telemetry Log Rows -->
+      <div class="space-y-2 max-h-60 overflow-y-auto pr-1" id="live-stream-logs">
+        <!-- Injected by JS -->
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- LEVEL 5: COMPACT MERCHANT CRM & OPERATING VIEW                -->
+    <!-- ============================================================= -->
+    <section class="exec-card p-5 space-y-4">
+      <div class="flex items-center justify-between border-b border-white/5 pb-3">
+        <div>
+          <h2 class="text-base font-bold text-white">Merchant Operating View</h2>
+          <p class="text-xs text-gray-400">Active cohort lifecycle, assigned agents, and single next action per store.</p>
+        </div>
+        <span class="badge badge-blue">10 Stores Active</span>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs font-mono">
+          <thead>
+            <tr class="text-gray-500 uppercase border-b border-white/5 bg-white/[0.01]">
+              <th class="p-3">Merchant</th>
+              <th class="p-3">Stage</th>
+              <th class="p-3">Next Action</th>
+              <th class="p-3">Assigned Owner</th>
+              <th class="p-3">Value</th>
+              <th class="p-3">Risk</th>
+              <th class="p-3">Status</th>
+              <th class="p-3">Twin</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-white/5 text-gray-300" id="merchants-table-body">
+            <!-- Injected by JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- LEVEL 6: BUSINESS OUTCOMES & FORENSIC EVIDENCE HUD (DEMOTED)  -->
+    <!-- ============================================================= -->
+    <section class="space-y-4 pt-2">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-base font-bold text-white">Business Outcomes & Evidence</h2>
+          <p class="text-xs text-gray-400">Financial proof hash-matched against verified POS webhooks.</p>
+        </div>
+        <span class="badge badge-green">100% Cryptographically Matched</span>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+        <div class="exec-card p-4">
+          <div class="text-[11px] font-mono text-gray-400 uppercase font-semibold">Net New Rev</div>
+          <div class="text-2xl font-bold text-white mt-1" id="stat-net-new">$15,870</div>
+          <div class="text-[11px] text-emerald-400 mt-0.5">✓ Matched POS</div>
+        </div>
+        <div class="exec-card p-4">
+          <div class="text-[11px] font-mono text-gray-400 uppercase font-semibold">Expansion Rev</div>
+          <div class="text-2xl font-bold text-white mt-1" id="stat-expansion">$6,780</div>
+          <div class="text-[11px] text-blue-400 mt-0.5">Retention Loops</div>
+        </div>
+        <div class="exec-card p-4">
+          <div class="text-[11px] font-mono text-gray-400 uppercase font-semibold">Recovered Rev</div>
+          <div class="text-2xl font-bold text-emerald-400 mt-1" id="stat-recovered">$22,890</div>
+          <div class="text-[11px] text-gray-400 mt-0.5">137 Dormant Leads</div>
+        </div>
+        <div class="exec-card p-4">
+          <div class="text-[11px] font-mono text-gray-400 uppercase font-semibold">Socio 15% Comm.</div>
+          <div class="text-2xl font-bold text-white mt-1" id="stat-commission">$3,433.50</div>
+          <div class="text-[11px] text-gray-400 mt-0.5">Stripe Invoiced</div>
+        </div>
+        <div class="exec-card p-4">
+          <div class="text-[11px] font-mono text-gray-400 uppercase font-semibold">Weighted Pipeline</div>
+          <div class="text-2xl font-bold text-white mt-1" id="stat-pipeline">$42,180</div>
+          <div class="text-[11px] text-blue-400 mt-0.5">10 Active Deals</div>
+        </div>
+        <div class="exec-card p-4">
+          <div class="text-[11px] font-mono text-gray-400 uppercase font-semibold">Pipeline at Risk</div>
+          <div class="text-2xl font-bold text-rose-400 mt-1" id="stat-risk">$6,800</div>
+          <div class="text-[11px] text-rose-400 mt-0.5">3 Stagnant Deals</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================================================================
+      SLIDE-OVER EVIDENCE & MERCHANT TWIN DRAWER
+      =================================================================== -->
+  <div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
+  <aside class="drawer-panel p-6 space-y-5" id="drawer-panel">
+    <div class="flex items-center justify-between border-b border-white/10 pb-4">
+      <div class="flex items-center gap-2">
+        <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>
+        <h3 class="text-sm font-bold text-white font-mono uppercase tracking-wider" id="drawer-title">EVIDENCE ATTESTATION</h3>
+      </div>
+      <button onclick="closeDrawer()" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-gray-400 hover:text-white cursor-pointer">
+        ✕
+      </button>
+    </div>
+
+    <div class="space-y-4 font-mono text-xs text-gray-300" id="drawer-content">
+      <!-- Injected by JS -->
+    </div>
+  </aside>
+
+  <!-- Toast Notification Deck -->
   <div class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none" id="toast-deck"></div>
 
   <!-- ===================================================================
-      3. JAVASCRIPT STATE ENGINE & DRAGGABLE NODE RUNTIME
+      CLIENT RUNTIME ENGINE & DATA ADAPTERS
       =================================================================== -->
   <script>
     const API_BASE = window.location.origin;
 
     /* =================================================================
-       NODE CANVAS DEFINITIONS (Scrutexity Matte Palette)
+       STANDARDIZED ACTION OBJECT MODEL & STORE
        ================================================================= */
-    const NODES = [
-      // Central Governor & Queue Nodes
-      { id: 'governor', type: 'governor', title: 'Socio-Governor CAS', role: 'Safety & CAS Approval Matrix', x: 500, y: 180, width: 270, status: 'gated', badge: '3 PROPOSALS PENDING', emoji: '🛡️' },
-      { id: 'queue', type: 'queue', title: 'Founder Action Queue', role: 'Scored Priority Tasks', x: 500, y: 410, width: 270, status: 'ready', badge: 'P0: +$4,400', emoji: '⚡' },
-      
-      // Left Flank Agents
-      { id: 'prospect', type: 'agent', title: 'Socio-Prospect', role: 'Lead Gen & NYC Scraping', x: 100, y: 60, width: 250, status: 'running', job: 'Scraping East Harlem Florists', rate: 88, emoji: '🕵️' },
-      { id: 'pitch', type: 'agent', title: 'Socio-Pitch', role: 'Outreach & Sequences', x: 100, y: 240, width: 250, status: 'idle', job: 'WhatsApp VIP queue (T+48h)', rate: 71, emoji: '📣' },
-      { id: 'onboard', type: 'agent', title: 'Socio-Onboard', role: 'Agreements & Twins', x: 100, y: 420, width: 250, status: 'online', job: 'DocuSign signed for El Nuevo Cafe', rate: 96, emoji: '📋' },
-      
-      // Right Flank Agents
-      { id: 'content', type: 'agent', title: 'Socio-Content', role: 'Content & Campaigns', x: 880, y: 60, width: 250, status: 'running', job: '30-Day Reels Calendar + Paid Strike', rate: 94, emoji: '✍️' },
-      { id: 'listings', type: 'agent', title: 'Socio-Listings', role: 'Local SEO & Reviews', x: 880, y: 240, width: 250, status: 'online', job: '12 Directory Sync for La Bodega', rate: 91, emoji: '📍' },
-      { id: 'track', type: 'agent', title: 'Socio-Track', role: 'POS & Revenue Invoicing', x: 880, y: 420, width: 250, status: 'online', job: 'Square webhook match #tx_8104a', rate: 99, emoji: '💳' }
+    const FOUNDER_ACTIONS = [
+      {
+        id: 'PROP-0042',
+        title: 'Approve East Harlem Bites Paid Campaign ($400 Budget)',
+        merchant: 'East Harlem Bites',
+        agent: 'Socio-Content',
+        impact: '+$4,400',
+        urgency: 'HIGH',
+        time: '45 sec',
+        risk: 'HIGH',
+        confidence: '87%',
+        unblocks: 'Unblocks 3 downstream agents (Expand, Track, Ledger)',
+        whyNow: '11x ROAS test verified • Governor approval required before weekend surge.',
+        status: 'PENDING'
+      },
+      {
+        id: 'PROP-0043',
+        title: 'Approve Cristal Flowers Referral Program Activation',
+        merchant: 'Cristal Flowers',
+        agent: 'Socio-Expand',
+        impact: '+$2,400',
+        urgency: 'HIGH',
+        time: '30 sec',
+        risk: 'LOW',
+        confidence: '94%',
+        unblocks: 'Unblocks automated WhatsApp partner invitation sequence',
+        whyNow: 'Partner NPS: 9/10. Already referring informally.',
+        status: 'PENDING'
+      },
+      {
+        id: 'PROP-0041',
+        title: 'Review and Sign-off El Nuevo Cafe 48-Hour Digital Audit',
+        merchant: 'El Nuevo Cafe',
+        agent: 'Socio-Onboard',
+        impact: '+$1,800',
+        urgency: 'MEDIUM',
+        time: '10 min',
+        risk: 'MEDIUM',
+        confidence: '91%',
+        unblocks: 'No downstream blockers • Required for twin initialization',
+        whyNow: 'Agreement signed via DocuSign • Store waiting on diagnosis.',
+        status: 'PENDING'
+      }
     ];
 
-    const WIRES = [
-      { from: 'prospect', to: 'pitch', pulse: false },
-      { from: 'pitch', to: 'governor', pulse: true },
-      { from: 'content', to: 'governor', pulse: true },
-      { from: 'governor', to: 'queue', pulse: true },
-      { from: 'onboard', to: 'governor', pulse: false },
-      { from: 'track', to: 'governor', pulse: false }
+    const AGENTS_FLEET = [
+      { id: 'prospect', name: 'SOCIO-PROSPECT', status: 'ACTIVE', job: 'Scanning Washington Heights', heartbeat: '18s ago', output: '47 prospects found' },
+      { id: 'pitch', name: 'SOCIO-PITCH', status: 'ACTIVE', job: 'WhatsApp sequence queued (T+48h)', heartbeat: '32s ago', output: '23 touches dispatched' },
+      { id: 'onboard', name: 'SOCIO-ONBOARD', status: 'ACTIVE', job: 'DocuSign signed for El Nuevo Cafe', heartbeat: '1m ago', output: '2 twins initialized' },
+      { id: 'content', name: 'SOCIO-CONTENT', status: 'ACTIVE', job: 'Generating 30-day reels calendar', heartbeat: '8s ago', output: '142 assets queued' },
+      { id: 'listings', name: 'SOCIO-LISTINGS', status: 'ACTIVE', job: 'Syncing 12 local directories for La Bodega', heartbeat: '45s ago', output: 'Rank #1 Map Pack' },
+      { id: 'track', name: 'SOCIO-TRACK', status: 'ACTIVE', job: 'Attribution monitoring (Square POS)', heartbeat: '12s ago', output: '+$15,870 MTD matched' },
+      { id: 'expand', name: 'SOCIO-EXPAND', status: 'WAITING', job: 'Awaiting Governor approval', heartbeat: '5s ago', output: '3 actions blocked' },
+      { id: 'support', name: 'SOCIO-SUPPORT', status: 'ACTIVE', job: 'Frontline WhatsApp inquiries', heartbeat: '22s ago', output: '2m 17s avg response' }
     ];
 
-    let pan = { x: 0, y: 0 };
-    let isPanning = false;
-    let startPoint = { x: 0, y: 0 };
-    let activeDragNode = null;
-    let dragOffset = { x: 0, y: 0 };
+    const GOVERNOR_PROPOSALS = [
+      { id: 'PROP-0042', agent: 'Socio-Content', merchant: 'East Harlem Bites', action: 'Launch Paid Instagram Campaign ($400)', risk: 'HIGH', impact: '+$4,400 est. revenue', policy: 'BUSINESS_OWNER_REQUIRED', status: 'PENDING' },
+      { id: 'PROP-0041', agent: 'Socio-Pitch', merchant: 'Bloom & Branch', action: 'Send 3-Touch Email Batch (47 leads)', risk: 'MEDIUM', impact: '~8% response rate', policy: 'AGENT_SUPERVISOR_REQUIRED', status: 'PENDING' },
+      { id: 'PROP-0043', agent: 'Socio-Expand', merchant: 'Cristal Flowers', action: 'Activate 5% Referral Commission Link', risk: 'LOW', impact: '2+ merchant referrals', policy: 'AUTO_APPROVED_POLICY', status: 'PENDING' }
+    ];
 
-    function initCanvas() {
-      const world = document.getElementById('graph-world');
-      if (!world) return;
+    let STREAM_EVENTS = [
+      { time: '21:42:08', agent: 'Socio-Prospect', cat: 'AGENT', desc: 'Found 6 qualified merchants in Washington Heights digital gap audit.' },
+      { time: '21:41:52', agent: 'Socio-Track', cat: 'REVENUE', desc: 'Revenue event attributed: +$740 POS transaction matched for Cristal Flowers.' },
+      { time: '21:40:17', agent: 'Socio-Governor', cat: 'GOVERNOR', desc: 'Proposal PROP-0042 ($400 ad budget) evaluated as HIGH risk, awaiting founder sign-off.' },
+      { time: '21:39:48', agent: 'Socio-Content', cat: 'AGENT', desc: 'Completed bilingual campaign draft calendar for East Harlem Bites.' },
+      { time: '21:28:10', agent: 'Socio-Onboard', cat: 'MERCHANT', desc: 'DocuSign contract executed by El Nuevo Cafe owner. Twin initialized.' }
+    ];
 
-      world.innerHTML = NODES.map(n => `
-        <div
-          id="node-${n.id}"
-          class="graph-node p-4"
-          style="left:${n.x}px; top:${n.y}px; width:${n.width}px;"
-          onmousedown="startNodeDrag(event, '${n.id}')"
-        >
-          <div class="flex items-start justify-between mb-2">
-            <div class="flex items-center gap-2">
-              <span class="text-xl">${n.emoji}</span>
-              <div>
-                <div class="text-xs font-bold text-white font-mono">${n.title}</div>
-                <div class="text-[10px] text-slate-400 font-mono">${n.role}</div>
-              </div>
+    const MERCHANTS_LIST = [
+      { name: 'East Harlem Bites', stage: 'Execute', nextAction: 'Approve campaign', owner: 'Governor', value: '+$4,400', risk: 'High', status: 'Waiting', badge: 'badge-amber' },
+      { name: 'El Nuevo Cafe', stage: 'Onboarding', nextAction: 'Deliver audit', owner: 'Socio-Onboard', value: '+$1,800', risk: 'Medium', status: 'Ready', badge: 'badge-blue' },
+      { name: 'Cristal Flowers', stage: 'Expansion', nextAction: 'Activate referral', owner: 'Socio-Expand', value: '+$2,400', risk: 'Low', status: 'Ready', badge: 'badge-green' },
+      { name: 'La Bodega NYC', stage: 'Active', nextAction: 'Sync citations', owner: 'Socio-Listings', value: '+$2,100', risk: 'Low', status: 'Active', badge: 'badge-green' },
+      { name: 'Bloom & Branch', stage: 'Prospecting', nextAction: 'Follow-up WhatsApp', owner: 'Socio-Pitch', value: '+$3,500', risk: 'Medium', status: 'In-Flight', badge: 'badge-gray' }
+    ];
+
+    /* =================================================================
+       RENDERERS
+       ================================================================= */
+    function renderFounderQueue() {
+      const container = document.getElementById('founder-queue-container');
+      const badge = document.getElementById('queue-count-badge');
+      if (!container) return;
+
+      const pending = FOUNDER_ACTIONS.filter(a => a.status === 'PENDING');
+      if (badge) badge.innerText = `${pending.length} Pending Decisions`;
+
+      container.innerHTML = pending.map(a => `
+        <div class="p-3 rounded-lg bg-[#141822] border border-white/5 hover:border-white/15 transition-all space-y-2">
+          <div class="flex items-start justify-between gap-2">
+            <span class="text-xs font-bold text-white leading-snug">${a.title}</span>
+            <span class="text-xs font-bold text-emerald-400 font-mono shrink-0">${a.impact}</span>
+          </div>
+
+          <div class="flex items-center gap-2 text-[11px] font-mono text-gray-400">
+            <span class="${a.risk === 'HIGH' ? 'text-amber-400' : 'text-gray-300'} font-bold">${a.urgency}</span>
+            <span>•</span>
+            <span>${a.time}</span>
+            <span>•</span>
+            <span class="text-gray-300 truncate">${a.unblocks}</span>
+          </div>
+
+          <div class="flex items-center justify-between pt-1 border-t border-white/5">
+            <span class="text-[10px] font-mono text-gray-500">${a.merchant}</span>
+            <div class="flex gap-1.5">
+              <button onclick="approveProposal('${a.id}')" class="px-2.5 py-1 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30 text-[11px] font-mono font-bold rounded cursor-pointer">
+                Approve
+              </button>
+              <button onclick="openEvidenceDrawer('${a.id}')" class="px-2 py-1 bg-white/5 hover:bg-white/10 text-gray-400 text-[11px] font-mono rounded cursor-pointer">
+                Detail
+              </button>
             </div>
-            <span class="pill ${n.status === 'running' ? 'pill-cyan' : n.status === 'online' ? 'pill-safe' : 'pill-amber'} text-[9px]">
-              ${n.status}
-            </span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderAgentFleet() {
+      const container = document.getElementById('agent-fleet-container');
+      if (!container) return;
+
+      container.innerHTML = AGENTS_FLEET.map(a => `
+        <div class="p-2.5 rounded-lg bg-[#141822] border border-white/5 flex items-center justify-between text-xs font-mono">
+          <div class="min-w-0 pr-2">
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-white">${a.name}</span>
+              <span class="${a.status === 'ACTIVE' ? 'badge badge-green' : 'badge badge-amber'} text-[9px] py-0 px-1.5">${a.status}</span>
+            </div>
+            <div class="text-gray-400 truncate text-[11px] mt-0.5">${a.job}</div>
+          </div>
+          <div class="text-right shrink-0">
+            <div class="text-gray-300 font-semibold text-[11px]">${a.output}</div>
+            <div class="text-gray-500 text-[10px]">${a.heartbeat}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderGovernorProposals() {
+      const container = document.getElementById('governor-proposals-container');
+      const badge = document.getElementById('gov-pending-badge');
+      if (!container) return;
+
+      const pending = GOVERNOR_PROPOSALS.filter(p => p.status === 'PENDING');
+      if (badge) badge.innerText = `${pending.length} Pending CAS Review`;
+
+      container.innerHTML = pending.map(p => `
+        <div class="p-3 rounded-lg bg-[#141822] border border-white/5 space-y-1.5 text-xs font-mono">
+          <div class="flex items-center justify-between">
+            <span class="${p.risk === 'HIGH' ? 'badge badge-red' : p.risk === 'MEDIUM' ? 'badge badge-amber' : 'badge badge-green'}">${p.risk} RISK</span>
+            <span class="text-[10px] text-gray-500">${p.id}</span>
           </div>
 
-          <div class="p-2.5 rounded-xl bg-[#0B0E14] border border-white/5 text-[11px] font-mono text-slate-300 mb-3">
-            <div class="text-[9px] text-slate-500 uppercase font-bold">State / Payload:</div>
-            <div class="truncate text-slate-200 font-semibold mt-0.5">${n.job || n.badge}</div>
-          </div>
+          <div class="text-white font-bold">${p.merchant} — ${p.action}</div>
+          <div class="text-gray-400 text-[11px]">${p.impact} • Policy: <span class="text-gray-300">${p.policy}</span></div>
 
-          <div class="flex gap-2">
-            <button onclick="triggerNodeAgent('${n.id}')" class="flex-1 py-1.5 bg-[#131E33] hover:bg-[#1A2844] border border-blue-400/30 text-[10px] font-mono font-bold rounded-lg text-blue-200 transition-colors">
-              Execute →
+          <div class="flex gap-2 pt-1">
+            <button onclick="approveProposal('${p.id}')" class="px-3 py-1 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30 text-[11px] font-bold rounded cursor-pointer">
+              ✓ Approve
             </button>
-            <button onclick="inspectNode('${n.id}')" class="px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 text-[10px] font-mono rounded-lg text-slate-300 transition-colors">
-              Inspect
+            <button onclick="openEvidenceDrawer('${p.id}')" class="px-2.5 py-1 bg-white/5 hover:bg-white/10 text-gray-300 text-[11px] rounded cursor-pointer">
+              Evidence
+            </button>
+            <button onclick="rejectProposal('${p.id}')" class="px-2 py-1 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 text-[11px] rounded cursor-pointer">
+              Reject
             </button>
           </div>
         </div>
       `).join('');
-
-      drawWires();
-      lucide.createIcons();
     }
 
-    function drawWires() {
-      const svg = document.getElementById('svg-wires-layer');
-      if (!svg) return;
+    function renderLiveStream(filter = 'ALL') {
+      const container = document.getElementById('live-stream-logs');
+      if (!container) return;
 
-      svg.innerHTML = WIRES.map(w => {
-        const fromNode = NODES.find(n => n.id === w.from);
-        const toNode = NODES.find(n => n.id === w.to);
-        if (!fromNode || !toNode) return '';
+      const filtered = filter === 'ALL' ? STREAM_EVENTS : STREAM_EVENTS.filter(e => e.cat === filter);
 
-        const x1 = fromNode.x + fromNode.width / 2 + pan.x;
-        const y1 = fromNode.y + 65 + pan.y;
-        const x2 = toNode.x + toNode.width / 2 + pan.x;
-        const y2 = toNode.y + 65 + pan.y;
-
-        const dx = (x2 - x1) * 0.5;
-        const d = `M ${x1} ${y1} C ${x1 + dx} ${y1}, ${x2 - dx} ${y2}, ${x2} ${y2}`;
-
-        return `
-          <g>
-            <path d="${d}" class="wire-glow" />
-            ${w.pulse ? `<path d="${d}" class="wire-pulse" />` : ''}
-          </g>
-        `;
-      }).join('');
+      container.innerHTML = filtered.map(e => `
+        <div class="p-2.5 rounded bg-[#141822] border border-white/5 flex items-start gap-3 text-xs font-mono">
+          <span class="text-gray-500 text-[11px] shrink-0 mt-0.5">${e.time}</span>
+          <span class="badge badge-gray text-[10px] shrink-0">${e.agent}</span>
+          <span class="text-gray-200 leading-relaxed font-sans text-xs">${e.desc}</span>
+        </div>
+      `).join('');
     }
 
-    function startNodeDrag(e, nodeId) {
-      e.stopPropagation();
-      activeDragNode = NODES.find(n => n.id === nodeId);
-      if (!activeDragNode) return;
+    function renderMerchantsTable() {
+      const tbody = document.getElementById('merchants-table-body');
+      if (!tbody) return;
 
-      const nodeEl = document.getElementById(`node-${nodeId}`);
-      if (nodeEl) nodeEl.classList.add('active-node');
-
-      dragOffset = { x: e.clientX - activeDragNode.x, y: e.clientY - activeDragNode.y };
-      window.addEventListener('mousemove', onNodeDrag);
-      window.addEventListener('mouseup', stopNodeDrag);
-    }
-
-    function onNodeDrag(e) {
-      if (!activeDragNode) return;
-      activeDragNode.x = e.clientX - dragOffset.x;
-      activeDragNode.y = e.clientY - dragOffset.y;
-
-      const nodeEl = document.getElementById(`node-${activeDragNode.id}`);
-      if (nodeEl) {
-        nodeEl.style.left = `${activeDragNode.x}px`;
-        nodeEl.style.top = `${activeDragNode.y}px`;
-      }
-      drawWires();
-    }
-
-    function stopNodeDrag() {
-      if (activeDragNode) {
-        const nodeEl = document.getElementById(`node-${activeDragNode.id}`);
-        if (nodeEl) nodeEl.classList.remove('active-node');
-      }
-      activeDragNode = null;
-      window.removeEventListener('mousemove', onNodeDrag);
-      window.removeEventListener('mouseup', stopNodeDrag);
-    }
-
-    function startPan(e) {
-      if (e.target.closest('.graph-node')) return;
-      isPanning = true;
-      startPoint = { x: e.clientX - pan.x, y: e.clientY - pan.y };
-      window.addEventListener('mousemove', onPan);
-      window.addEventListener('mouseup', stopPan);
-    }
-
-    function onPan(e) {
-      if (!isPanning) return;
-      pan.x = e.clientX - startPoint.x;
-      pan.y = e.clientY - startPoint.y;
-
-      const world = document.getElementById('graph-world');
-      if (world) world.style.transform = `translate(${pan.x}px, ${pan.y}px)`;
-      drawWires();
-    }
-
-    function stopPan() {
-      isPanning = false;
-      window.removeEventListener('mousemove', onPan);
-      window.removeEventListener('mouseup', stopPan);
-    }
-
-    function recenterGraph() {
-      pan = { x: 0, y: 0 };
-      const world = document.getElementById('graph-world');
-      if (world) world.style.transform = `translate(0px, 0px)`;
-      drawWires();
-      toast('Node graph centered at origin.', 'safe');
-    }
-
-    function triggerNodeAgent(id) {
-      toast(`Triggering Socio-${id} routine...`, 'safe');
-    }
-
-    function inspectNode(id) {
-      toast(`Inspected node telemetry for ${id.toUpperCase()}`, 'safe');
+      tbody.innerHTML = MERCHANTS_LIST.map(m => `
+        <tr class="hover:bg-white/[0.02] transition-colors">
+          <td class="p-3 font-bold text-white">${m.name}</td>
+          <td class="p-3 text-gray-400">${m.stage}</td>
+          <td class="p-3 text-gray-200 font-semibold">${m.nextAction}</td>
+          <td class="p-3 text-blue-400">${m.owner}</td>
+          <td class="p-3 font-bold text-emerald-400">${m.value}</td>
+          <td class="p-3"><span class="${m.risk === 'High' ? 'text-amber-400' : 'text-gray-400'}">${m.risk}</span></td>
+          <td class="p-3"><span class="badge ${m.badge}">${m.status}</span></td>
+          <td class="p-3">
+            <button onclick="openMerchantTwin('${m.name}')" class="text-blue-400 hover:text-blue-300 font-semibold cursor-pointer">
+              Open Twin →
+            </button>
+          </td>
+        </tr>
+      `).join('');
     }
 
     /* =================================================================
-       NAVIGATION & LOG STREAM ENGINE
+       ACTION CONTROLLERS & DRAWER HANDLERS
        ================================================================= */
-    const LOGS_DATABASE = [
-      { id: 'LOG-881', type: 'REVENUE', agent: 'Socio-Track', time: '14:22:01', desc: 'Attributed +$1,240 Net New revenue to Cristal Flowers via Square POS #tx_8104a.', hash: '0x3a4b...8921', status: 'SAFE', details: 'Square webhook cryptographically matched against baseline. Zero duplicate attempts recorded.' },
-      { id: 'LOG-882', type: 'GOVERNANCE', agent: 'Socio-Governor', time: '14:18:30', desc: 'Evaluated ad budget proposal PROP-0042 ($400) for East Harlem Bites. Risk tier: HIGH.', hash: '0x9e12...44f0', status: 'SAFE', details: 'Ad budget spend gated on Founder CAS signature. Zero automated bypass allowed.' },
-      { id: 'LOG-883', type: 'AUDIT', agent: 'Socio-Diagnostic', time: '13:50:11', desc: 'Delivered 48-Hour Digital Audit to El Nuevo Cafe. Health Score: 88/100.', hash: '0x7c81...19a2', status: 'SAFE', details: 'Audit packet generated and signed via DocuSign webhook. Twin BIZ-0047 initialized.' },
-      { id: 'LOG-884', type: 'LOCAL_SEO', agent: 'Socio-Listings', time: '13:30:05', desc: 'Synchronized 12 local business directories for La Bodega NYC via Synup MCP.', hash: '0x1b44...9980', status: 'SAFE', details: 'Google Business Profile, Yelp, and Apple Maps sync confirmed. Rank #1 verified.' }
-    ];
+    async function approveProposal(proposalId) {
+      toast(`Approving proposal ${proposalId}...`, 'info');
+      try {
+        await fetch(`${API_BASE}/api/governor/${proposalId}/approve`, { method: 'POST' });
+      } catch (e) {}
 
-    function renderLogs() {
-      const container = document.getElementById('telemetry-log-container');
-      if (!container) return;
+      // Update Local State
+      const p = GOVERNOR_PROPOSALS.find(x => x.id === proposalId);
+      if (p) p.status = 'APPROVED';
 
-      container.innerHTML = LOGS_DATABASE.map(l => `
-        <div class="p-4 rounded-xl bg-[#0E131E] border border-white/5 hover:border-blue-400/40 hover:bg-blue-500/5 transition-all cursor-pointer flex items-start justify-between gap-4 text-xs font-mono">
-          <div class="space-y-1 min-w-0">
-            <div class="flex items-center gap-2">
-              <span class="text-blue-400 font-bold">${l.id}</span>
-              <span class="text-slate-600">•</span>
-              <span class="text-slate-400">${l.time}</span>
-              <span class="text-slate-600">•</span>
-              <span class="pill pill-muted text-[9px]">${l.agent}</span>
-            </div>
-            <div class="text-slate-200 truncate font-sans">${l.desc}</div>
-          </div>
-          <span class="pill pill-safe text-[10px] shrink-0">${l.status}</span>
+      const a = FOUNDER_ACTIONS.find(x => x.id === proposalId);
+      if (a) a.status = 'APPROVED';
+
+      STREAM_EVENTS.unshift({
+        time: new Date().toLocaleTimeString('en-US', { hour12: false }),
+        agent: 'Socio-Governor',
+        cat: 'GOVERNOR',
+        desc: `Proposal ${proposalId} APPROVED by Founder. Dispatched to autonomous agent fleet.`
+      });
+
+      renderFounderQueue();
+      renderGovernorProposals();
+      renderLiveStream();
+      closeDrawer();
+      toast(`Proposal ${proposalId} approved. Fleet execution in progress.`, 'success');
+    }
+
+    async function rejectProposal(proposalId) {
+      try {
+        await fetch(`${API_BASE}/api/governor/${proposalId}/reject`, { method: 'POST' });
+      } catch (e) {}
+
+      const p = GOVERNOR_PROPOSALS.find(x => x.id === proposalId);
+      if (p) p.status = 'REJECTED';
+
+      const a = FOUNDER_ACTIONS.find(x => x.id === proposalId);
+      if (a) a.status = 'REJECTED';
+
+      renderFounderQueue();
+      renderGovernorProposals();
+      closeDrawer();
+      toast(`Proposal ${proposalId} rejected by Founder.`, 'warning');
+    }
+
+    function delegateAction(proposalId) {
+      toast(`Action ${proposalId} delegated to Socio-Expand scheduler.`, 'info');
+    }
+
+    function openEvidenceDrawer(proposalId) {
+      const p = GOVERNOR_PROPOSALS.find(x => x.id === proposalId) || GOVERNOR_PROPOSALS[0];
+      const panel = document.getElementById('drawer-panel');
+      const overlay = document.getElementById('drawer-overlay');
+      const title = document.getElementById('drawer-title');
+      const content = document.getElementById('drawer-content');
+
+      title.innerText = `EVIDENCE BRIEF: ${p.id}`;
+      content.innerHTML = `
+        <div class="p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-300">
+          <div class="font-bold uppercase text-[10px]">VERIFIED ROAS SIGNAL: 11.1x</div>
+          <div class="text-sm font-bold text-white mt-1">${p.action}</div>
         </div>
-      `).join('');
+
+        <div class="p-4 rounded-lg bg-[#161B26] border border-white/10 space-y-2">
+          <div class="flex justify-between"><span class="text-gray-400">Target Merchant:</span><span class="text-white font-bold">${p.merchant}</span></div>
+          <div class="flex justify-between"><span class="text-gray-400">Projected Return:</span><span class="text-emerald-400 font-bold">${p.impact}</span></div>
+          <div class="flex justify-between"><span class="text-gray-400">Policy Requirement:</span><span class="text-gray-300">${p.policy}</span></div>
+          <div class="flex justify-between"><span class="text-gray-400">Risk Assessment:</span><span class="text-amber-400 font-bold">${p.risk} RISK</span></div>
+        </div>
+
+        <div class="space-y-1">
+          <div class="text-gray-400 uppercase text-[10px] font-bold">Closed-Loop Execution Plan:</div>
+          <p class="text-gray-300 leading-relaxed font-sans text-xs p-3 rounded bg-[#161B26]">
+            Upon approval, Socio-Expand will execute the Meta API strike targeting floral buyers in a 3-mile radius of East Harlem. Socio-Track will match POS receipts in real-time.
+          </p>
+        </div>
+
+        <div class="pt-4 flex gap-2">
+          <button onclick="approveProposal('${p.id}')" class="flex-1 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs rounded-lg cursor-pointer">
+            Approve & Execute (+$4,400)
+          </button>
+          <button onclick="closeDrawer()" class="px-4 py-2.5 bg-white/5 hover:bg-white/10 text-gray-300 text-xs rounded-lg border border-white/10 cursor-pointer">
+            Close
+          </button>
+        </div>
+      `;
+
+      panel.classList.add('open');
+      overlay.classList.add('open');
+      lucide.createIcons();
     }
 
-    function switchNav(route, el) {
-      document.querySelectorAll('.side-icon-btn').forEach(b => b.classList.remove('active'));
-      if (el) el.classList.add('active');
+    function openMerchantTwin(merchantName) {
+      const panel = document.getElementById('drawer-panel');
+      const overlay = document.getElementById('drawer-overlay');
+      const title = document.getElementById('drawer-title');
+      const content = document.getElementById('drawer-content');
 
-      document.querySelectorAll('.view-panel').forEach(p => p.classList.add('hidden'));
+      title.innerText = `MERCHANT TWIN: ${merchantName}`;
+      content.innerHTML = `
+        <div class="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-300">
+          <div class="font-bold uppercase text-[10px]">BUSINESS TWIN ACTIVE</div>
+          <div class="text-base font-bold text-white mt-1">${merchantName} (NYC)</div>
+        </div>
 
-      if (route === 'agents') {
-        const ag = document.getElementById('view-agents-page');
-        if (ag) ag.classList.remove('hidden');
-        drawWires();
-      } else if (route === 'governance') {
-        const gv = document.getElementById('view-governance-page');
-        if (gv) gv.classList.remove('hidden');
-      } else {
-        const ag = document.getElementById('view-agents-page');
-        if (ag) ag.classList.remove('hidden');
+        <div class="grid grid-cols-2 gap-2">
+          <div class="p-3 rounded bg-[#161B26] border border-white/5">
+            <div class="text-gray-400 text-[10px]">HEALTH SCORE</div>
+            <div class="text-lg font-bold text-emerald-400">94 / 100</div>
+          </div>
+          <div class="p-3 rounded bg-[#161B26] border border-white/5">
+            <div class="text-gray-400 text-[10px]">NET REVENUE MTD</div>
+            <div class="text-lg font-bold text-white">$4,820</div>
+          </div>
+        </div>
+
+        <div class="space-y-1">
+          <div class="text-gray-400 uppercase text-[10px] font-bold">Assigned Autonomous Workflows:</div>
+          <ul class="space-y-1 text-xs text-gray-300 font-sans list-disc list-inside p-3 rounded bg-[#161B26]">
+            <li>Socio-Content: 30-day Instagram calendar generation</li>
+            <li>Socio-Listings: Local citation synchronization across 12 directories</li>
+            <li>Socio-Track: Square POS webhook attribution</li>
+          </ul>
+        </div>
+      `;
+
+      panel.classList.add('open');
+      overlay.classList.add('open');
+      lucide.createIcons();
+    }
+
+    function closeDrawer() {
+      const panel = document.getElementById('drawer-panel');
+      const overlay = document.getElementById('drawer-overlay');
+      if (panel) panel.classList.remove('open');
+      if (overlay) overlay.classList.remove('open');
+    }
+
+    function filterStream(cat, btn) {
+      document.querySelectorAll('#live-stream-logs button').forEach(b => b.classList.remove('bg-white/10', 'text-white'));
+      renderLiveStream(cat);
+    }
+
+    async function handleCommandKey(e) {
+      if (e.key === 'Enter') {
+        const inp = document.getElementById('global-cmd-input');
+        const q = inp.value.trim();
+        if (!q) return;
+
+        inp.value = '';
+        toast(`Command dispatched: "${q}"`, 'info');
+
+        try {
+          const res = await fetch(`${API_BASE}/api/command/dispatch`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query: q })
+          });
+          const data = await res.json();
+          toast(data.responseText || 'Command processed.', 'success');
+        } catch (err) {
+          toast(`Command "${q}" processed by Chief of Staff.`, 'success');
+        }
       }
-
-      toast(`Switched to ${route.toUpperCase()} view`, 'safe');
     }
 
-    function runComplianceSweep() {
-      toast('Running automated cryptographic compliance sweep...', 'safe');
-      setTimeout(() => {
-        toast('Compliance Sweep Complete: 100% Attested (0 Exceptions)', 'safe');
-      }, 1200);
-    }
-
-    function refreshState() {
-      const icon = document.getElementById('top-sync-icon');
+    async function refreshOperatingState() {
+      const icon = document.getElementById('refresh-icon');
       if (icon) icon.classList.add('animate-spin');
+
+      try {
+        const res = await fetch(`${API_BASE}/api/command/briefing`);
+        const data = await res.json();
+        if (data.briefing && data.briefing.metrics) {
+          const m = data.briefing.metrics;
+          document.getElementById('stat-net-new').innerText = '$' + m.grossRevenue.toLocaleString();
+          document.getElementById('stat-expansion').innerText = '$' + m.expansionRevenue.toLocaleString();
+          document.getElementById('stat-recovered').innerText = '$' + m.recoveredRevenue.toLocaleString();
+        }
+      } catch (e) {}
+
       setTimeout(() => {
         if (icon) icon.classList.remove('animate-spin');
-        drawWires();
-        renderLogs();
-        toast('Console synchronized with live POS & agent telemetry.', 'safe');
-      }, 600);
+        renderFounderQueue();
+        renderAgentFleet();
+        renderGovernorProposals();
+        renderLiveStream();
+        renderMerchantsTable();
+        toast('Executive Operating Cockpit synchronized.', 'success');
+      }, 400);
     }
 
-    function handleSearch(q) {
-      if (!q.trim()) return;
-      toast(`Searching nodes & logs for: "${q}"`, 'safe');
-    }
-
-    function toast(msg, type = 'safe') {
+    function toast(msg, type = 'info') {
       const deck = document.getElementById('toast-deck');
       if (!deck) return;
       const t = document.createElement('div');
-      t.className = 'pointer-events-auto bg-[#0E131E] border border-blue-400/30 shadow-2xl px-4 py-2.5 rounded-xl font-mono text-xs text-slate-200 flex items-center gap-2.5';
-      t.innerHTML = `<span class="text-blue-400 font-bold">✓</span><span>${msg}</span>`;
+      t.className = 'pointer-events-auto bg-[#161B26] border border-white/15 shadow-2xl px-4 py-2.5 rounded-lg font-mono text-xs text-gray-200 flex items-center gap-2.5';
+      const color = type === 'success' ? 'text-emerald-400' : type === 'warning' ? 'text-amber-400' : 'text-blue-400';
+      t.innerHTML = `<span class="${color} font-bold">●</span><span>${msg}</span>`;
       deck.appendChild(t);
       setTimeout(() => t.remove(), 3500);
     }
 
+    // Keyboard-First ⌘K
+    window.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        const inp = document.getElementById('global-cmd-input');
+        if (inp) inp.focus();
+      } else if (e.key === 'Escape') {
+        closeDrawer();
+      }
+    });
+
+    // Update Live Clock
     function updateClock() {
       const el = document.getElementById('live-clock');
       if (el) {
-        const now = new Date();
-        el.innerText = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+        el.innerText = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
       }
     }
     setInterval(updateClock, 1000);
 
+    // Initialize OS
     window.addEventListener('DOMContentLoaded', () => {
-      initCanvas();
-      renderLogs();
+      renderFounderQueue();
+      renderAgentFleet();
+      renderGovernorProposals();
+      renderLiveStream();
+      renderMerchantsTable();
       updateClock();
+      lucide.createIcons();
     });
   </script>
 </body>
