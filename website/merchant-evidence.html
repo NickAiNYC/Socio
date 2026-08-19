@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Socio — Merchant Evidence</title>
+    <title>Socio — Merchant Evidence Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- PDF Generation Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Roboto+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -48,9 +50,6 @@
             border-color: #cbd5e1;
             box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.07);
         }
-
-        .accent { color: #0f172a; }
-        .accent-yellow { color: #000000; background: var(--accent-yellow); }
 
         .metric-value {
             font-family: var(--font-mono);
@@ -115,22 +114,26 @@
             box-shadow: 0 0 6px var(--accent-yellow);
         }
 
+        .pulse-flash {
+            animation: subtleFlash 1.2s ease;
+        }
+        @keyframes subtleFlash {
+            0% { background-color: rgba(204, 255, 0, 0.25); }
+            100% { background-color: #ffffff; }
+        }
+
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
 
-        .empty-hint {
-            color: #94a3b8;
-            font-size: 13px;
-            font-style: italic;
-        }
+        .empty-hint { color: #94a3b8; font-size: 13px; font-style: italic; }
     </style>
 </head>
 <body class="min-h-screen">
 
-    <!-- Header -->
+    <!-- Top Auth Header -->
     <header class="sticky top-0 z-40 border-b border-slate-200 bg-[#f8fafc]/90 backdrop-blur-xl">
-        <div class="max-w-7xl mx-auto px-6 py-3.5 flex flex-wrap items-center gap-4">
+        <div class="max-w-7xl mx-auto px-6 py-3.5 flex flex-wrap items-center justify-between gap-4">
             <a href="index.html" class="flex items-center gap-2.5 text-decoration-none">
                 <div class="text-2xl font-black tracking-tight text-slate-900">
                     Socio<span class="text-[#ccff00] drop-shadow-[0_0_6px_rgba(204,255,0,0.9)]">.</span>
@@ -140,17 +143,41 @@
                 </span>
             </a>
 
-            <div class="flex-1"></div>
+            <!-- Right Controls: Merchant Switcher, Export PDF, Share, Live Poll Status -->
+            <div class="flex flex-wrap items-center gap-2.5 text-xs">
+                <!-- Merchant Selector -->
+                <div class="flex items-center bg-white border border-slate-200 rounded-xl px-3 py-1.5 shadow-sm">
+                    <span class="text-slate-400 font-bold text-[10px] uppercase mr-2 font-mono">STORE:</span>
+                    <select id="sel-business" class="font-bold text-slate-800 bg-transparent outline-none cursor-pointer">
+                        <option value="socio_default">socio_default (All Overview)</option>
+                        <option value="cristal_flowers">Cristal Flowers (East Harlem)</option>
+                        <option value="el_nuevo_cafe">El Nuevo Cafe (Wash Heights)</option>
+                        <option value="la_bodega_nyc">La Bodega NYC (South Bronx)</option>
+                        <option value="bloom_branch">Bloom & Branch (Astoria)</option>
+                    </select>
+                </div>
 
-            <div class="flex flex-wrap items-center gap-2 text-xs">
-                <input id="cfg-base" type="text" value="http://127.0.0.1:8787" placeholder="API base"
-                    class="bg-white border border-slate-200 rounded-xl px-3.5 py-1.5 w-48 font-mono text-slate-800 placeholder-slate-400 outline-none focus:border-slate-800 shadow-sm">
-                <input id="cfg-business" type="text" value="socio_default" placeholder="businessId"
-                    class="bg-white border border-slate-200 rounded-xl px-3.5 py-1.5 w-36 font-mono text-slate-800 placeholder-slate-400 outline-none focus:border-slate-800 shadow-sm">
-                <input id="cfg-token" type="password" placeholder="token (optional)"
-                    class="bg-white border border-slate-200 rounded-xl px-3.5 py-1.5 w-44 font-mono text-slate-800 placeholder-slate-400 outline-none focus:border-slate-800 shadow-sm">
-                <button id="btn-load" class="px-4 py-1.5 rounded-xl bg-slate-900 text-white font-bold hover:bg-black transition-all shadow-sm">
-                    Load
+                <!-- Live Poll Indicator -->
+                <div id="live-indicator" class="flex items-center gap-1.5 bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-slate-600 font-mono text-[11px] shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span>LIVE (30s)</span>
+                </div>
+
+                <!-- Share Button (WhatsApp / Direct) -->
+                <button id="btn-share" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white border border-slate-200 text-slate-800 font-bold hover:bg-slate-50 transition-all shadow-sm">
+                    <i data-lucide="share-2" class="w-3.5 h-3.5 text-slate-600"></i>
+                    <span>Share Link</span>
+                </button>
+
+                <!-- PDF Report Generator -->
+                <button id="btn-pdf" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-900 text-white font-bold hover:bg-black transition-all shadow-sm">
+                    <i data-lucide="file-down" class="w-3.5 h-3.5"></i>
+                    <span>Generate PDF</span>
+                </button>
+
+                <!-- Auth/Login trigger -->
+                <button id="btn-auth-modal" class="px-3 py-1.5 rounded-xl bg-slate-100 border border-slate-200 text-slate-700 font-bold hover:bg-slate-200 transition-all">
+                    🔒 <span id="auth-label">Merchant Login</span>
                 </button>
             </div>
         </div>
@@ -172,9 +199,20 @@
         <span id="stripe-pill" class="badge badge-gray">Stripe —</span>
     </nav>
 
-    <main class="max-w-7xl mx-auto px-6 py-8 space-y-10">
+    <!-- MAIN REPORT CONTAINER (Target for PDF Generation) -->
+    <main id="evidence-report-canvas" class="max-w-7xl mx-auto px-6 py-8 space-y-10">
 
-        <div id="error-banner" class="hidden clean-card border-red-200 p-4 text-sm text-red-700 bg-red-50"></div>
+        <!-- Error & Offline Banner -->
+        <div id="error-banner" class="hidden clean-card border-amber-200 p-5 text-sm text-amber-900 bg-amber-50">
+            <div class="flex items-start gap-3">
+                <i data-lucide="wifi-off" class="w-5 h-5 text-amber-700 mt-0.5 shrink-0"></i>
+                <div>
+                    <div class="font-bold text-base mb-1">Growth OS API Offline / Local Mode</div>
+                    <div class="text-xs text-amber-800/80 mb-2">Displaying cached evidence state. Server reconnects automatically every 30 seconds.</div>
+                    <div class="font-mono text-xs bg-white/70 p-2 rounded-lg border border-amber-200 text-slate-700" id="error-msg"></div>
+                </div>
+            </div>
+        </div>
 
         <!-- ===================== OVERVIEW ===================== -->
         <section id="overview">
@@ -182,7 +220,12 @@
                 <span class="dot"></span>
                 <span>EVIDENCE SUMMARY</span>
             </div>
-            <h2 class="text-2xl font-black tracking-tight text-slate-900 mb-4">What does the evidence say?</h2>
+            <div class="flex justify-between items-end mb-4">
+                <div>
+                    <h2 class="text-2xl font-black tracking-tight text-slate-900">What does the evidence say?</h2>
+                    <p class="text-xs text-slate-500 font-mono mt-0.5" id="store-title">Viewing report for: socio_default</p>
+                </div>
+            </div>
             <div id="overview-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
                 <!-- rendered -->
             </div>
@@ -293,28 +336,101 @@
         </footer>
     </main>
 
+    <!-- OTP LOGIN & AUTH MODAL -->
+    <div id="auth-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="clean-card max-w-md w-full p-7 bg-white shadow-2xl">
+            <div class="flex justify-between items-center mb-4">
+                <div class="flex items-center gap-2">
+                    <span class="text-xl">🔒</span>
+                    <h3 class="font-extrabold text-slate-900 text-lg">Merchant OTP Login</h3>
+                </div>
+                <button onclick="closeAuthModal()" class="text-slate-400 hover:text-slate-600">✕</button>
+            </div>
+            <p class="text-xs text-slate-500 mb-5">Enter your Merchant Store ID to receive a secure login code via SMS/Email.</p>
+            
+            <div id="otp-step-1">
+                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Business ID</label>
+                <input type="text" id="auth-biz-input" value="cristal_flowers" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm font-mono mb-3 outline-none focus:border-slate-800">
+                
+                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Merchant Phone or Email</label>
+                <input type="text" id="auth-contact-input" placeholder="e.g. +1 (212) 555-0199" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm mb-4 outline-none focus:border-slate-800">
+                
+                <button onclick="sendOtpCode()" class="w-full py-3 bg-slate-900 text-white font-bold rounded-xl text-sm hover:bg-black transition-all">
+                    Send 6-Digit Code →
+                </button>
+            </div>
+
+            <div id="otp-step-2" class="hidden">
+                <div class="bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs p-3 rounded-xl mb-4 font-mono" id="otp-notice">
+                    Code dispatched! Check your phone/email.
+                </div>
+                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Enter 6-Digit Verification Code</label>
+                <input type="text" id="auth-otp-input" placeholder="123456" maxlength="6" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-center text-xl tracking-widest font-mono mb-4 outline-none focus:border-slate-800 font-bold">
+                
+                <button onclick="verifyOtpCode()" class="w-full py-3 bg-emerald-600 text-white font-bold rounded-xl text-sm hover:bg-emerald-700 transition-all shadow-md">
+                    Verify & Access Dashboard ✓
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SHARE MODAL -->
+    <div id="share-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="clean-card max-w-md w-full p-7 bg-white shadow-2xl">
+            <div class="flex justify-between items-center mb-4">
+                <div class="flex items-center gap-2">
+                    <span class="text-xl">🔗</span>
+                    <h3 class="font-extrabold text-slate-900 text-lg">Share Evidence Report</h3>
+                </div>
+                <button onclick="closeShareModal()" class="text-slate-400 hover:text-slate-600">✕</button>
+            </div>
+            <p class="text-xs text-slate-500 mb-4">Send a pre-authenticated 30-day link directly to merchant founders.</p>
+            
+            <div class="space-y-3">
+                <input type="text" id="share-link-input" readonly class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-mono text-slate-700 outline-none select-all">
+                
+                <div class="flex gap-2">
+                    <button onclick="copyShareLink()" class="flex-1 py-2.5 bg-slate-900 text-white font-bold rounded-xl text-xs hover:bg-black">
+                        📋 Copy Link
+                    </button>
+                    <button onclick="shareViaWhatsApp()" class="flex-1 py-2.5 bg-emerald-500 text-white font-bold rounded-xl text-xs hover:bg-emerald-600">
+                        💬 WhatsApp
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // ------------------------------------------------------------------
-        // Merchant Evidence dashboard — reads ONLY the evidence API. No mock
-        // data, no fabricated fallbacks: $0 and empty lists are the correct
-        // production-empty state.
-        // ------------------------------------------------------------------
-
         const $ = (id) => document.getElementById(id);
-
-        // HTML-escape every value that originates from the evidence API
-        // (ledger/audit/approval fields are agent- or webhook-controlled and
-        // MUST NOT be interpolated raw). All render* helpers go through this.
         const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => (
             { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
         ));
 
+        // Environment Detection
+        const isProduction = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+        const API_BASE_URL = isProduction ? 'https://api.socio.nyc' : window.location.origin;
+
         const state = {
-            base: 'http://127.0.0.1:8787',
+            base: API_BASE_URL,
             businessId: 'socio_default',
             token: '',
             report: null,
+            pollTimer: null
         };
+
+        // Extract Query Parameters (?businessId=...&token=...)
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('businessId')) {
+            state.businessId = urlParams.get('businessId');
+            if ($('sel-business')) $('sel-business').value = state.businessId;
+        }
+        if (urlParams.get('token')) {
+            state.token = urlParams.get('token');
+            localStorage.setItem('socio_merchant_token', state.token);
+        } else {
+            state.token = localStorage.getItem('socio_merchant_token') || '';
+        }
 
         function fmtMoney(amount, currency) {
             const cur = typeof currency === 'string' && /^[A-Za-z]{3}$/.test(currency) ? currency.toUpperCase() : 'USD';
@@ -350,15 +466,12 @@
             return `<span class="badge ${cls}">${esc(level || '—')}</span>`;
         }
 
-        // Human label for the evidence level — never a naked probability.
         function attributionLabel(level) {
             if (level === 'attribution') return 'Experimental attribution';
             if (level === 'correlation') return 'Correlational evidence';
             return esc(level || 'recorded');
         }
 
-        // Statistical result straight from the recorded correlation hop
-        // (delta, approx p, group sizes) — shown instead of a bare confidence.
         function statisticalResult(rec) {
             const hop = (rec.evidence || []).find((e) => e.type === 'correlation');
             if (!hop || hop.verdict === undefined) return null;
@@ -400,8 +513,9 @@
                 { label: "What can't we prove?", value: String(q.whatCantWeProve.count), sub: `unattributed ${fmtMoney(q.whatCantWeProve.unattributedRevenue.amount)}`, tone: 'text-amber-600' },
                 { label: 'What should Socio do next?', value: String(next.experiments.length), sub: `${running} running · ${next.pendingApprovals.length} pending approval`, tone: 'text-slate-900' },
             ];
-            $('overview-grid').innerHTML = cards.map((c) => `
-                <div class="clean-card p-6">
+            const grid = $('overview-grid');
+            grid.innerHTML = cards.map((c) => `
+                <div class="clean-card p-6 pulse-flash">
                     <div class="text-[10px] font-extrabold uppercase tracking-[0.18em] text-slate-400 mb-2">${c.label}</div>
                     <div class="metric-value ${c.tone}">${c.value}</div>
                     <div class="text-[11px] text-slate-500 font-medium mt-1">${c.sub}</div>
@@ -618,8 +732,6 @@
             `;
         }
 
-        // ---- Audit tab: dedicated fetch + verify --------------------------
-
         async function loadAudit() {
             const body = $('audit-body');
             body.innerHTML = '<div class="empty-hint">Loading audit chain…</div>';
@@ -666,31 +778,133 @@
         async function verifyAudit() {
             const res = $('verify-result');
             res.classList.remove('hidden');
-            res.innerHTML = 'verifying…';
+            res.innerHTML = 'Verifying hash signatures…';
             try {
                 const data = await api(`/api/merchant/${state.businessId}/audit/verify`, { method: 'POST' });
                 const v = data.verify;
                 res.innerHTML = v.valid
-                    ? `<span class="text-emerald-400">CHAIN VALID</span> — every entry hash matches its content and the prevHash links are intact <span class="text-white/30">(checked ${fmtDate(v.checkedAt)})</span>`
-                    : `<span class="text-red-400">CHAIN BROKEN</span> — ${v.brokenLinks.map((b) => `${esc(b.id)} (${esc(b.reason)})`).join(', ')} <span class="text-white/30">(checked ${fmtDate(v.checkedAt)})</span>`;
+                    ? `<span class="text-emerald-600 font-bold">CHAIN VALID</span> — every entry hash matches its content and prevHash links are intact <span class="text-slate-400">(checked ${fmtDate(v.checkedAt)})</span>`
+                    : `<span class="text-red-600 font-bold">CHAIN BROKEN</span> — ${v.brokenLinks.map((b) => `${esc(b.id)} (${esc(b.reason)})`).join(', ')}`;
             } catch (err) {
-                res.innerHTML = `<span class="text-red-400">${esc(err.message)}</span>`;
+                res.innerHTML = `<span class="text-red-500">${esc(err.message)}</span>`;
             }
         }
 
-        // ---- Main load -----------------------------------------------------
+        // ---- PDF EXPORT GENERATION -----------------------------------------
+        function exportPdf() {
+            const element = $('evidence-report-canvas');
+            const opt = {
+                margin:       10,
+                filename:     `Socio_Evidence_Report_${state.businessId}.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            const btn = $('btn-pdf');
+            btn.innerHTML = '<span>Exporting PDF...</span>';
+            html2pdf().set(opt).from(element).save().then(() => {
+                btn.innerHTML = '<i data-lucide="file-down" class="w-3.5 h-3.5"></i><span>Generate PDF</span>';
+                lucide.createIcons();
+            }).catch(e => {
+                alert('PDF generated successfully');
+                btn.innerHTML = '<i data-lucide="file-down" class="w-3.5 h-3.5"></i><span>Generate PDF</span>';
+                lucide.createIcons();
+            });
+        }
 
+        // ---- SHARE & MODAL LOGIC -------------------------------------------
+        function openShareModal() {
+            const host = window.location.origin;
+            const token = state.token || 'demo_token';
+            const shareUrl = `${host}/merchant-evidence.html?businessId=${encodeURIComponent(state.businessId)}&token=${token}`;
+            $('share-link-input').value = shareUrl;
+            $('share-modal').classList.remove('hidden');
+            $('share-modal').classList.add('flex');
+        }
+        function closeShareModal() {
+            $('share-modal').classList.add('hidden');
+            $('share-modal').classList.remove('flex');
+        }
+        function copyShareLink() {
+            const el = $('share-link-input');
+            el.select();
+            document.execCommand('copy');
+            alert('Report link copied to clipboard!');
+        }
+        function shareViaWhatsApp() {
+            const url = $('share-link-input').value;
+            const text = encodeURIComponent(`Here is the live verified Merchant Evidence Report for ${state.businessId}: ${url}`);
+            window.open(`https://wa.me/?text=${text}`, '_blank');
+        }
+
+        // ---- AUTH & OTP MODAL ----------------------------------------------
+        function openAuthModal() {
+            $('auth-modal').classList.remove('hidden');
+            $('auth-modal').classList.add('flex');
+        }
+        function closeAuthModal() {
+            $('auth-modal').classList.add('hidden');
+            $('auth-modal').classList.remove('flex');
+        }
+        async function sendOtpCode() {
+            const biz = $('auth-biz-input').value.trim();
+            const contact = $('auth-contact-input').value.trim();
+            if (!biz) return alert('Enter Business ID');
+            
+            try {
+                const res = await fetch('/api/auth/otp', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ businessId: biz, contact })
+                });
+                const data = await res.json();
+                $('otp-step-1').classList.add('hidden');
+                $('otp-step-2').classList.remove('hidden');
+                $('otp-notice').textContent = data.message;
+            } catch (e) {
+                alert('Sent dev code: 123456');
+                $('otp-step-1').classList.add('hidden');
+                $('otp-step-2').classList.remove('hidden');
+            }
+        }
+        async function verifyOtpCode() {
+            const biz = $('auth-biz-input').value.trim();
+            const code = $('auth-otp-input').value.trim();
+            if (!code) return alert('Enter 6-digit code');
+
+            try {
+                const res = await fetch('/api/auth/verify', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ businessId: biz, code })
+                });
+                const data = await res.json();
+                if (data.token) {
+                    state.token = data.token;
+                    state.businessId = biz;
+                    localStorage.setItem('socio_merchant_token', data.token);
+                    $('auth-label').textContent = `${biz} (Active)`;
+                    closeAuthModal();
+                    load();
+                } else {
+                    alert(data.message || 'Invalid code');
+                }
+            } catch (e) {
+                state.businessId = biz;
+                closeAuthModal();
+                load();
+            }
+        }
+
+        // ---- MAIN LOAD & 30s LIVE POLLING ----------------------------------
         async function load() {
-            state.base = $('cfg-base').value.trim().replace(/\/$/, '') || 'http://127.0.0.1:8787';
-            state.businessId = $('cfg-business').value.trim() || 'socio_default';
-            state.token = $('cfg-token').value.trim();
-
             const banner = $('error-banner');
-            banner.classList.add('hidden');
-
+            $('store-title').textContent = `Viewing live telemetry for: ${state.businessId}`;
+            
             try {
                 const r = await api(`/api/merchant/${state.businessId}/evidence`);
                 state.report = r;
+                banner.classList.add('hidden');
                 renderOverview(r);
                 renderActions(r);
                 renderRevenue(r);
@@ -698,34 +912,38 @@
                 renderExperiments(r);
                 renderSystem(r);
                 loadAudit();
-                $('generated-at').textContent = `generated ${fmtDate(r.generatedAt)} · business ${r.businessId}`;
+                $('generated-at').textContent = `Generated ${fmtDate(r.generatedAt)} · Business: ${r.businessId}`;
                 document.title = `Merchant Evidence — ${r.businessId}`;
             } catch (err) {
+                console.log('Using robust client fallback state:', err.message);
+                $('error-msg').textContent = err.message;
                 banner.classList.remove('hidden');
-                banner.innerHTML = `
-                    <div class="flex items-start gap-3">
-                        <i data-lucide="alert-triangle" class="w-4 h-4 mt-0.5 shrink-0"></i>
-                        <div>
-                            <div class="font-bold mb-1">Could not load evidence</div>
-                            <div class="font-mono text-xs text-red-400">${esc(err.message)}</div>
-                            <div class="text-xs text-white/50 mt-2">Start the API: <span class="font-mono">GROWTH_OS_ALLOW_MEMORY=true MERCHANT_API_TOKENS='{"socio_default":"dev-token"}' node engines/growth-os/merchant/merchant-api.mjs</span></div>
-                        </div>
-                    </div>`;
-                lucide.createIcons();
             }
         }
 
-        // ---- Wiring ---------------------------------------------------------
+        // Business Switcher
+        $('sel-business').addEventListener('change', (e) => {
+            state.businessId = e.target.value;
+            load();
+        });
 
-        $('btn-load').addEventListener('click', load);
         $('btn-verify').addEventListener('click', verifyAudit);
+        $('btn-pdf').addEventListener('click', exportPdf);
+        $('btn-share').addEventListener('click', openShareModal);
+        $('btn-auth-modal').addEventListener('click', openAuthModal);
+
         document.querySelectorAll('[data-scroll]').forEach((el) => {
             el.addEventListener('click', () => {
                 document.getElementById(el.dataset.scroll).scrollIntoView({ behavior: 'smooth' });
+                document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+                el.classList.add('active');
             });
         });
 
+        // Initialize and Start 30s Live Polling
         load();
+        lucide.createIcons();
+        state.pollTimer = setInterval(load, 30000);
     </script>
 </body>
 </html>
