@@ -44,37 +44,98 @@
       color: #94A3B8;
     }
 
-    /* 1. Base Glass Panel (No Hover) */
-    .base-glass-panel {
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(16px);
-      box-shadow: 0 0 40px -10px rgba(56, 189, 248, 0.12);
+    /* =============================================================
+       LAYERED BLUR COMPOSITING (VOLUMETRIC ATMOSPHERIC SMOKE & FOG)
+       ============================================================= */
+    .smoke-layer-cyan {
+      position: absolute;
+      inset: -8px;
+      border-radius: 28px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.22) 0%, rgba(56, 189, 248, 0.08) 60%, transparent 80%);
+      filter: blur(28px);
+      opacity: 0.45;
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .group:hover .smoke-layer-cyan {
+      opacity: 0.85;
+      transform: scale(1.03);
+      filter: blur(34px);
     }
 
-    /* 2. Interactive KPI Card (With Lift & Bright Cyan Hover Glow) */
-    .kpi-glass-card {
+    .smoke-layer-emerald {
+      position: absolute;
+      inset: -8px;
+      border-radius: 28px;
+      background: radial-gradient(circle, rgba(52, 211, 153, 0.24) 0%, rgba(52, 211, 153, 0.08) 60%, transparent 80%);
+      filter: blur(28px);
+      opacity: 0.50;
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .group:hover .smoke-layer-emerald {
+      opacity: 0.90;
+      transform: scale(1.03);
+      filter: blur(34px);
+    }
+
+    .smoke-layer-amber {
+      position: absolute;
+      inset: -8px;
+      border-radius: 28px;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.22) 0%, rgba(245, 158, 11, 0.06) 60%, transparent 80%);
+      filter: blur(28px);
+      opacity: 0.45;
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .group:hover .smoke-layer-amber {
+      opacity: 0.85;
+      transform: scale(1.03);
+      filter: blur(34px);
+    }
+
+    .smoke-layer-rose {
+      position: absolute;
+      inset: -8px;
+      border-radius: 28px;
+      background: radial-gradient(circle, rgba(244, 63, 94, 0.22) 0%, rgba(244, 63, 94, 0.06) 60%, transparent 80%);
+      filter: blur(28px);
+      opacity: 0.45;
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .group:hover .smoke-layer-rose {
+      opacity: 0.85;
+      transform: scale(1.03);
+      filter: blur(34px);
+    }
+
+    /* Volumetric Breathing Hero Smoke Fog */
+    @keyframes smokeBreathe {
+      0%, 100% { opacity: 0.40; transform: scale(0.99); filter: blur(36px); }
+      50% { opacity: 0.75; transform: scale(1.02); filter: blur(48px); }
+    }
+    .hero-breathing-smoke {
+      animation: smokeBreathe 5s ease-in-out infinite;
+    }
+
+    /* Top Card Layer (Sits on top of the smoke aura) */
+    .card-surface {
       position: relative;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(16px);
-      box-shadow: 0 0 40px -10px rgba(56, 189, 248, 0.08);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 10;
+      background: rgba(10, 13, 20, 0.90);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 18px;
+      transition: all 0.3s ease;
     }
-    .kpi-glass-card:hover {
-      box-shadow: 0 0 50px -5px rgba(56, 189, 248, 0.22);
-      border-color: rgba(56, 189, 248, 0.30);
-      transform: translateY(-2px);
-    }
-
-    /* 3. Verified Revenue State Card (Emerald) */
-    .verified-revenue-card {
-      border-radius: 14px;
-      background: rgba(52, 211, 153, 0.04);
-      border: 1px solid rgba(52, 211, 153, 0.20);
-      box-shadow: 0 0 35px -10px rgba(52, 211, 153, 0.15);
+    .group:hover .card-surface {
+      border-color: rgba(56, 189, 248, 0.25);
     }
 
     /* Restrained Status Badges */
@@ -164,7 +225,7 @@
     <!-- Right Controls -->
     <div class="flex items-center gap-3">
       <div class="text-xs font-mono text-slate-400 hidden sm:block">
-        <span id="live-clock">10:34 PM</span> EST
+        <span id="live-clock">10:35 PM</span> EST
       </div>
       <button onclick="refreshOperatingState()" class="px-2.5 py-1.5 rounded-lg bg-white/[0.02] hover:bg-white/[0.05] border border-white/5 text-xs font-medium text-slate-300 flex items-center gap-1.5 transition-colors">
         <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-cyan-400" id="refresh-icon"></i>
@@ -172,273 +233,306 @@
       </button>
       <a href="merchant-evidence.html" target="_blank" class="px-3 py-1.5 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-medium flex items-center gap-1.5 transition-colors">
         <span>Evidence Frame</span>
-        <i data-lucide="external-link" class="w-3 h-3"></i>
+        <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
       </a>
     </div>
   </header>
 
   <!-- ===================================================================
-      MAIN OPERATING COCKPIT (STRUCTURED FOR 30-SECOND EXECUTIVE ACTION)
+      MAIN OPERATING COCKPIT WITH VOLUMETRIC SMOKE CLOUD AURA
       =================================================================== -->
   <main class="max-w-[1560px] mx-auto px-6 py-6 space-y-6">
 
     <!-- ============================================================= -->
-    <!-- LEVEL 0: "WHILE YOU WERE AWAY" BRIEFING BANNER                -->
+    <!-- LEVEL 0: "WHILE YOU WERE AWAY" WITH ATMOSPHERIC SMOKE         -->
     <!-- ============================================================= -->
-    <div class="base-glass-panel p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-l-2 border-l-[#38BDF8]">
-      <div class="flex items-start sm:items-center gap-3">
-        <div class="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 shrink-0 mt-0.5 sm:mt-0 shadow-[0_0_15px_rgba(56,189,248,0.2)]">
-          <i data-lucide="bell" class="w-4 h-4"></i>
-        </div>
-        <div>
-          <div class="section-hdr mb-0.5">WHILE YOU WERE AWAY</div>
-          <div class="text-sm font-medium text-slate-200">
-            <strong>8 agent actions completed</strong> • <span class="text-amber-400 font-semibold">3 approvals require attention</span> • <strong class="text-emerald-400">+$4,820 attributed revenue</strong> • 2 merchants advanced • 1 workflow blocked.
+    <div class="relative group">
+      <!-- Smoke Layer -->
+      <div class="smoke-layer-cyan"></div>
+      <!-- Card Surface -->
+      <div class="card-surface p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-l-2 border-l-[#38BDF8]">
+        <div class="flex items-start sm:items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 shrink-0 mt-0.5 sm:mt-0 shadow-[0_0_15px_rgba(56,189,248,0.2)]">
+            <i data-lucide="bell" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <div class="section-hdr mb-0.5">WHILE YOU WERE AWAY</div>
+            <div class="text-sm font-medium text-slate-200">
+              <strong>8 agent actions completed</strong> • <span class="text-amber-400 font-semibold">3 approvals require attention</span> • <strong class="text-emerald-400">+$4,820 attributed revenue</strong> • 2 merchants advanced • 1 workflow blocked.
+            </div>
           </div>
         </div>
-      </div>
-      <div class="flex items-center gap-2 shrink-0 text-xs font-mono text-slate-400">
-        <span>Highest priority action isolated below</span>
-        <i data-lucide="arrow-down" class="w-3.5 h-3.5 text-cyan-400"></i>
+        <div class="flex items-center gap-2 shrink-0 text-xs font-mono text-slate-400">
+          <span>Highest priority action isolated below</span>
+          <i data-lucide="arrow-down" class="w-3.5 h-3.5 text-cyan-400"></i>
+        </div>
       </div>
     </div>
 
     <!-- ============================================================= -->
-    <!-- LEVEL 1: THE AI CHIEF OF STAFF — SINGLE NEXT BEST ACTION      -->
+    <!-- LEVEL 1: THE AI CHIEF OF STAFF — WITH BREATHING VOLUMETRIC FOG-->
     <!-- ============================================================= -->
-    <section class="base-glass-panel p-6 border-l-2 border-l-[#38BDF8] relative overflow-hidden shadow-[0_0_50px_-5px_rgba(56,189,248,0.18)]">
-      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
-        
-        <!-- Left: Action Brief Details -->
-        <div class="space-y-3 flex-1 max-w-4xl">
-          <div class="flex items-center gap-2.5">
-            <span class="badge-pill badge-cyan">AI CHIEF OF STAFF</span>
-            <span class="section-hdr">YOUR HIGHEST-VALUE MOVE RIGHT NOW</span>
-            <span class="text-xs text-slate-600">•</span>
-            <span class="text-xs font-mono text-cyan-400 font-bold">ACTION SCORE: 0.94 / 1.0</span>
-          </div>
-
-          <!-- Hero Action Title (28–36px) -->
-          <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-sans" id="hero-action-title">
-            Approve East Harlem Bites Paid Instagram Campaign ($400 Budget)
-          </h1>
-
-          <!-- 4 Core Executive Parameters Grid -->
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
-            <div class="p-3 rounded-xl bg-white/[0.02] border border-white/5">
-              <div class="text-[10px] font-mono text-slate-400 uppercase font-semibold">Projected Impact</div>
-              <div class="text-xl font-bold text-emerald-400 font-mono mt-0.5">+$4,400</div>
-              <div class="text-[11px] text-slate-500 font-mono">Net new revenue</div>
-            </div>
-            <div class="p-3 rounded-xl bg-white/[0.02] border border-white/5">
-              <div class="text-[10px] font-mono text-slate-400 uppercase font-semibold">Founder Time</div>
-              <div class="text-xl font-bold text-white font-mono mt-0.5">45 seconds</div>
-              <div class="text-[11px] text-slate-500 font-mono">Single decision review</div>
-            </div>
-            <div class="p-3 rounded-xl bg-white/[0.02] border border-white/5">
-              <div class="text-[10px] font-mono text-slate-400 uppercase font-semibold">Risk Level</div>
-              <div class="text-xl font-bold text-amber-400 font-mono mt-0.5">HIGH</div>
-              <div class="text-[11px] text-slate-500 font-mono">Ad budget spend policy</div>
-            </div>
-            <div class="p-3 rounded-xl bg-white/[0.02] border border-white/5">
-              <div class="text-[10px] font-mono text-slate-400 uppercase font-semibold">Evidence Confidence</div>
-              <div class="text-xl font-bold text-cyan-400 font-mono mt-0.5">87%</div>
-              <div class="text-[11px] text-slate-500 font-mono">11x test ROAS verified</div>
-            </div>
-          </div>
-
-          <!-- Why Now & Closed-Loop Downstream Execution Pipeline -->
-          <div class="space-y-2 pt-2 text-sm text-slate-300">
-            <div class="flex items-start gap-2">
-              <strong class="text-slate-400 text-xs font-mono uppercase tracking-wider shrink-0 mt-0.5">Why Now:</strong>
-              <span class="text-slate-200">The campaign has already produced an 11x ROAS signal on the initial $50 test sample and is currently blocked on Governor approval before the local weekend dining surge.</span>
+    <div class="relative group">
+      <!-- Breathing Volumetric Fog Layer -->
+      <div class="smoke-layer-cyan -inset-3 hero-breathing-smoke"></div>
+      
+      <!-- Card Surface -->
+      <section class="card-surface p-6 border-l-2 border-l-[#38BDF8]">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
+          
+          <!-- Left: Action Brief Details -->
+          <div class="space-y-3 flex-1 max-w-4xl">
+            <div class="flex items-center gap-2.5">
+              <span class="badge-pill badge-cyan">AI CHIEF OF STAFF</span>
+              <span class="section-hdr">YOUR HIGHEST-VALUE MOVE RIGHT NOW</span>
+              <span class="text-xs text-slate-600">•</span>
+              <span class="text-xs font-mono text-cyan-400 font-bold">ACTION SCORE: 0.94 / 1.0</span>
             </div>
 
-            <div class="flex items-start gap-2 pt-1">
-              <strong class="text-slate-400 text-xs font-mono uppercase tracking-wider shrink-0 mt-0.5">After Approval:</strong>
-              <div class="text-xs font-mono text-slate-300 flex flex-wrap items-center gap-2">
-                <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-200">Socio-Expand → launches campaign</span>
-                <span class="text-slate-600">→</span>
-                <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-200">Socio-Track → monitors POS attribution</span>
-                <span class="text-slate-600">→</span>
-                <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-200">Socio-Ledger → records revenue & spend</span>
-                <span class="text-slate-600">→</span>
-                <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-200">Socio-Governor → seals CAS attestation</span>
+            <!-- Hero Action Title (28–36px) -->
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-sans" id="hero-action-title">
+              Approve East Harlem Bites Paid Instagram Campaign ($400 Budget)
+            </h1>
+
+            <!-- 4 Core Executive Parameters Grid (With Micro Smoke Auras) -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
+              
+              <!-- Param 1 -->
+              <div class="relative group/param">
+                <div class="smoke-layer-emerald opacity-25 group-hover/param:opacity-60 -inset-1"></div>
+                <div class="relative z-10 p-3 rounded-xl bg-[#0B0F18]/90 border border-white/5">
+                  <div class="text-[10px] font-mono text-slate-400 uppercase font-semibold">Projected Impact</div>
+                  <div class="text-xl font-bold text-emerald-400 font-mono mt-0.5">+$4,400</div>
+                  <div class="text-[11px] text-slate-500 font-mono">Net new revenue</div>
+                </div>
+              </div>
+
+              <!-- Param 2 -->
+              <div class="relative group/param">
+                <div class="smoke-layer-cyan opacity-25 group-hover/param:opacity-60 -inset-1"></div>
+                <div class="relative z-10 p-3 rounded-xl bg-[#0B0F18]/90 border border-white/5">
+                  <div class="text-[10px] font-mono text-slate-400 uppercase font-semibold">Founder Time</div>
+                  <div class="text-xl font-bold text-white font-mono mt-0.5">45 seconds</div>
+                  <div class="text-[11px] text-slate-500 font-mono">Single decision review</div>
+                </div>
+              </div>
+
+              <!-- Param 3 -->
+              <div class="relative group/param">
+                <div class="smoke-layer-amber opacity-25 group-hover/param:opacity-60 -inset-1"></div>
+                <div class="relative z-10 p-3 rounded-xl bg-[#0B0F18]/90 border border-white/5">
+                  <div class="text-[10px] font-mono text-slate-400 uppercase font-semibold">Risk Level</div>
+                  <div class="text-xl font-bold text-amber-400 font-mono mt-0.5">HIGH</div>
+                  <div class="text-[11px] text-slate-500 font-mono">Ad budget spend policy</div>
+                </div>
+              </div>
+
+              <!-- Param 4 -->
+              <div class="relative group/param">
+                <div class="smoke-layer-cyan opacity-25 group-hover/param:opacity-60 -inset-1"></div>
+                <div class="relative z-10 p-3 rounded-xl bg-[#0B0F18]/90 border border-white/5">
+                  <div class="text-[10px] font-mono text-slate-400 uppercase font-semibold">Evidence Confidence</div>
+                  <div class="text-xl font-bold text-cyan-400 font-mono mt-0.5">87%</div>
+                  <div class="text-[11px] text-slate-500 font-mono">11x test ROAS verified</div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Why Now & Closed-Loop Downstream Execution Pipeline -->
+            <div class="space-y-2 pt-2 text-sm text-slate-300">
+              <div class="flex items-start gap-2">
+                <strong class="text-slate-400 text-xs font-mono uppercase tracking-wider shrink-0 mt-0.5">Why Now:</strong>
+                <span class="text-slate-200">The campaign has already produced an 11x ROAS signal on the initial $50 test sample and is currently blocked on Governor approval before the local weekend dining surge.</span>
+              </div>
+
+              <div class="flex items-start gap-2 pt-1">
+                <strong class="text-slate-400 text-xs font-mono uppercase tracking-wider shrink-0 mt-0.5">After Approval:</strong>
+                <div class="text-xs font-mono text-slate-300 flex flex-wrap items-center gap-2">
+                  <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-200">Socio-Expand → launches campaign</span>
+                  <span class="text-slate-600">→</span>
+                  <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-200">Socio-Track → monitors POS attribution</span>
+                  <span class="text-slate-600">→</span>
+                  <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-200">Socio-Ledger → records revenue & spend</span>
+                  <span class="text-slate-600">→</span>
+                  <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-200">Socio-Governor → seals CAS attestation</span>
+                </div>
               </div>
             </div>
+
+          </div>
+
+          <!-- Right: Primary Call to Action Deck -->
+          <div class="flex flex-col sm:flex-row lg:flex-col gap-3 shrink-0 justify-center min-w-[220px]">
+            <button onclick="approveProposal('PROP-0042')" class="px-6 py-3.5 bg-[#38BDF8] hover:bg-[#0284c7] text-[#0A0D14] font-black font-mono text-xs rounded-xl flex items-center justify-center gap-2 transition-all cursor-pointer shadow-[0_0_25px_rgba(56,189,248,0.4)] hover:scale-[1.02]">
+              <i data-lucide="check-circle" class="w-4 h-4 stroke-[3]"></i>
+              <span>APPROVE & EXECUTE</span>
+            </button>
+            
+            <button onclick="openEvidenceDrawer('PROP-0042')" class="px-4 py-2.5 bg-white/[0.03] hover:bg-white/[0.08] text-slate-200 font-medium font-mono text-xs rounded-xl border border-white/10 flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
+              <i data-lucide="file-text" class="w-3.5 h-3.5 text-cyan-400"></i>
+              <span>VIEW EVIDENCE (11x ROAS)</span>
+            </button>
+
+            <button onclick="delegateAction('PROP-0042')" class="px-4 py-2 bg-transparent hover:bg-white/5 text-slate-400 hover:text-slate-200 font-mono text-xs rounded-lg transition-colors text-center cursor-pointer">
+              Delegate to Socio-Expand
+            </button>
           </div>
 
         </div>
-
-        <!-- Right: Primary Call to Action Deck -->
-        <div class="flex flex-col sm:flex-row lg:flex-col gap-3 shrink-0 justify-center min-w-[220px]">
-          <button onclick="approveProposal('PROP-0042')" class="px-6 py-3.5 bg-[#38BDF8] hover:bg-[#0284c7] text-[#0A0D14] font-black font-mono text-xs rounded-xl flex items-center justify-center gap-2 transition-all cursor-pointer shadow-[0_0_25px_rgba(56,189,248,0.4)] hover:scale-[1.02]">
-            <i data-lucide="check-circle" class="w-4 h-4 stroke-[3]"></i>
-            <span>APPROVE & EXECUTE</span>
-          </button>
-          
-          <button onclick="openEvidenceDrawer('PROP-0042')" class="px-4 py-2.5 bg-white/[0.03] hover:bg-white/[0.08] text-slate-200 font-medium font-mono text-xs rounded-xl border border-white/10 flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
-            <i data-lucide="file-text" class="w-3.5 h-3.5 text-cyan-400"></i>
-            <span>VIEW EVIDENCE (11x ROAS)</span>
-          </button>
-
-          <button onclick="delegateAction('PROP-0042')" class="px-4 py-2 bg-transparent hover:bg-white/5 text-slate-400 hover:text-slate-200 font-mono text-xs rounded-lg transition-colors text-center cursor-pointer">
-            Delegate to Socio-Expand
-          </button>
-        </div>
-
-      </div>
-    </section>
+      </section>
+    </div>
 
     <!-- ============================================================= -->
-    <!-- LEVEL 2 & 3: THREE OPERATIONAL EXECUTION COLUMNS              -->
+    <!-- LEVEL 2 & 3: THREE OPERATIONAL EXECUTION COLUMNS (WITH SMOKE) -->
     <!-- ============================================================= -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
       
-      <!-- COLUMN 1: FOUNDER ACTION QUEUE (4 Cols) -->
-      <div class="lg:col-span-4 base-glass-panel p-5 space-y-4 flex flex-col justify-between">
-        <div class="space-y-3">
-          <div class="flex items-center justify-between border-b border-white/5 pb-3">
-            <div class="flex items-center gap-2">
-              <i data-lucide="list-todo" class="w-4 h-4 text-amber-400"></i>
-              <h2 class="section-hdr text-white">FOUNDER ACTION QUEUE</h2>
+      <!-- COLUMN 1: FOUNDER ACTION QUEUE (Amber Smoke Aura) -->
+      <div class="lg:col-span-4 relative group">
+        <div class="smoke-layer-amber"></div>
+        <div class="card-surface p-5 space-y-4 flex flex-col justify-between h-full">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between border-b border-white/5 pb-3">
+              <div class="flex items-center gap-2">
+                <i data-lucide="list-todo" class="w-4 h-4 text-amber-400"></i>
+                <h2 class="section-hdr text-white">FOUNDER ACTION QUEUE</h2>
+              </div>
+              <span class="badge-pill badge-amber" id="queue-count-badge">3 PENDING</span>
             </div>
-            <span class="badge-pill badge-amber" id="queue-count-badge">3 PENDING</span>
+
+            <p class="text-xs text-slate-400 leading-relaxed font-sans">
+              Ranked deterministically by economic impact, urgency, confidence, and unblock leverage.
+            </p>
+
+            <div class="space-y-2.5 pt-1" id="founder-queue-container"></div>
           </div>
 
-          <p class="text-xs text-slate-400 leading-relaxed font-sans">
-            Ranked deterministically by economic impact, urgency, confidence, and unblock leverage.
-          </p>
-
-          <!-- Queue Items List -->
-          <div class="space-y-2.5 pt-1" id="founder-queue-container">
-            <!-- Injected by JS -->
+          <div class="pt-3 border-t border-white/5 text-xs text-slate-500 font-mono flex items-center justify-between">
+            <span>Sort: Impact × Urgency ÷ Time</span>
+            <span class="text-emerald-400 font-semibold">+$8,600 Unlocked</span>
           </div>
-        </div>
-
-        <div class="pt-3 border-t border-white/5 text-xs text-slate-500 font-mono flex items-center justify-between">
-          <span>Sort: Impact × Urgency ÷ Time</span>
-          <span class="text-emerald-400 font-semibold">+$8,600 Unlocked</span>
         </div>
       </div>
 
-      <!-- COLUMN 2: AGENT FLEET ROSTER (4 Cols) -->
-      <div class="lg:col-span-4 base-glass-panel p-5 space-y-4 flex flex-col justify-between">
-        <div class="space-y-3">
-          <div class="flex items-center justify-between border-b border-white/5 pb-3">
-            <div class="flex items-center gap-2">
-              <i data-lucide="users" class="w-4 h-4 text-cyan-400"></i>
-              <h2 class="section-hdr text-white">AGENT FLEET STATUS</h2>
+      <!-- COLUMN 2: AGENT FLEET ROSTER (Cyan Smoke Aura) -->
+      <div class="lg:col-span-4 relative group">
+        <div class="smoke-layer-cyan"></div>
+        <div class="card-surface p-5 space-y-4 flex flex-col justify-between h-full">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between border-b border-white/5 pb-3">
+              <div class="flex items-center gap-2">
+                <i data-lucide="users" class="w-4 h-4 text-cyan-400"></i>
+                <h2 class="section-hdr text-white">AGENT FLEET STATUS</h2>
+              </div>
+              <span class="badge-pill badge-emerald">8/8 OPERATIONAL</span>
             </div>
-            <span class="badge-pill badge-emerald">8/8 OPERATIONAL</span>
+
+            <p class="text-xs text-slate-400 leading-relaxed font-sans">
+              Real autonomous workers with heartbeat telemetry, active job payloads, and outputs.
+            </p>
+
+            <div class="space-y-2 pt-1" id="agent-fleet-container"></div>
           </div>
 
-          <p class="text-xs text-slate-400 leading-relaxed font-sans">
-            Real autonomous workers with heartbeat telemetry, active job payloads, and outputs.
-          </p>
-
-          <!-- Agent Roster -->
-          <div class="space-y-2 pt-1" id="agent-fleet-container">
-            <!-- Injected by JS -->
+          <div class="pt-3 border-t border-white/5 text-xs text-slate-500 font-mono flex items-center justify-between">
+            <span>Hermes Worker Cluster</span>
+            <span class="text-slate-400">Avg Heartbeat: 14s</span>
           </div>
-        </div>
-
-        <div class="pt-3 border-t border-white/5 text-xs text-slate-500 font-mono flex items-center justify-between">
-          <span>Hermes Worker Cluster</span>
-          <span class="text-slate-400">Avg Heartbeat: 14s</span>
         </div>
       </div>
 
-      <!-- COLUMN 3: GOVERNOR SAFETY GATES (4 Cols) -->
-      <div class="lg:col-span-4 base-glass-panel p-5 space-y-4 flex flex-col justify-between">
-        <div class="space-y-3">
-          <div class="flex items-center justify-between border-b border-white/5 pb-3">
-            <div class="flex items-center gap-2">
-              <i data-lucide="shield-check" class="w-4 h-4 text-rose-400"></i>
-              <h2 class="section-hdr text-white">GOVERNOR SAFETY GATES</h2>
+      <!-- COLUMN 3: GOVERNOR SAFETY GATES (Rose Smoke Aura) -->
+      <div class="lg:col-span-4 relative group">
+        <div class="smoke-layer-rose"></div>
+        <div class="card-surface p-5 space-y-4 flex flex-col justify-between h-full">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between border-b border-white/5 pb-3">
+              <div class="flex items-center gap-2">
+                <i data-lucide="shield-check" class="w-4 h-4 text-rose-400"></i>
+                <h2 class="section-hdr text-white">GOVERNOR SAFETY GATES</h2>
+              </div>
+              <span class="badge-pill badge-rose" id="gov-pending-badge">3 PENDING</span>
             </div>
-            <span class="badge-pill badge-rose" id="gov-pending-badge">3 PENDING</span>
+
+            <p class="text-xs text-slate-400 leading-relaxed font-sans">
+              CAS policy evaluation layer. High-risk actions require explicit founder attestation.
+            </p>
+
+            <div class="space-y-2.5 pt-1" id="governor-proposals-container"></div>
           </div>
 
-          <p class="text-xs text-slate-400 leading-relaxed font-sans">
-            CAS policy evaluation layer. High-risk actions require explicit founder attestation.
-          </p>
-
-          <!-- Governor Proposals List -->
-          <div class="space-y-2.5 pt-1" id="governor-proposals-container">
-            <!-- Injected by JS -->
+          <div class="pt-3 border-t border-white/5 text-xs text-slate-500 font-mono flex items-center justify-between">
+            <span>Policy: Fail-Closed</span>
+            <span class="text-emerald-400 font-semibold">0 AirLock Breaches</span>
           </div>
-        </div>
-
-        <div class="pt-3 border-t border-white/5 text-xs text-slate-500 font-mono flex items-center justify-between">
-          <span>Policy: Fail-Closed</span>
-          <span class="text-emerald-400 font-semibold">0 AirLock Breaches</span>
         </div>
       </div>
 
     </div>
 
     <!-- ============================================================= -->
-    <!-- LEVEL 4: LIVE OPERATIONAL ACTIVITY & TELEMETRY STREAM         -->
+    <!-- LEVEL 4: LIVE OPERATIONAL ACTIVITY STREAM (WITH SMOKE)        -->
     <!-- ============================================================= -->
-    <section class="base-glass-panel p-5 space-y-4">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5 pb-3">
-        <div class="flex items-center gap-2">
-          <i data-lucide="activity" class="w-4 h-4 text-cyan-400"></i>
-          <h2 class="section-hdr text-white">LIVE GROWTH EVENT STREAM</h2>
+    <div class="relative group">
+      <div class="smoke-layer-cyan opacity-25 group-hover:opacity-60"></div>
+      <section class="card-surface p-5 space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5 pb-3">
+          <div class="flex items-center gap-2">
+            <i data-lucide="activity" class="w-4 h-4 text-cyan-400"></i>
+            <h2 class="section-hdr text-white">LIVE GROWTH EVENT STREAM</h2>
+          </div>
+
+          <!-- Filter Pills -->
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <button onclick="filterStream('ALL', this)" class="px-2.5 py-1 rounded bg-white/10 text-white font-mono text-xs font-semibold">ALL</button>
+            <button onclick="filterStream('AGENT', this)" class="px-2.5 py-1 rounded bg-white/[0.02] text-slate-400 hover:text-white font-mono text-xs">AGENTS</button>
+            <button onclick="filterStream('REVENUE', this)" class="px-2.5 py-1 rounded bg-white/[0.02] text-slate-400 hover:text-white font-mono text-xs">REVENUE</button>
+            <button onclick="filterStream('GOVERNOR', this)" class="px-2.5 py-1 rounded bg-white/[0.02] text-slate-400 hover:text-white font-mono text-xs">GOVERNOR</button>
+            <button onclick="filterStream('MERCHANT', this)" class="px-2.5 py-1 rounded bg-white/[0.02] text-slate-400 hover:text-white font-mono text-xs">MERCHANTS</button>
+          </div>
         </div>
 
-        <!-- Filter Pills -->
-        <div class="flex items-center gap-1.5 flex-wrap">
-          <button onclick="filterStream('ALL', this)" class="px-2.5 py-1 rounded bg-white/10 text-white font-mono text-xs font-semibold">ALL</button>
-          <button onclick="filterStream('AGENT', this)" class="px-2.5 py-1 rounded bg-white/[0.02] text-slate-400 hover:text-white font-mono text-xs">AGENTS</button>
-          <button onclick="filterStream('REVENUE', this)" class="px-2.5 py-1 rounded bg-white/[0.02] text-slate-400 hover:text-white font-mono text-xs">REVENUE</button>
-          <button onclick="filterStream('GOVERNOR', this)" class="px-2.5 py-1 rounded bg-white/[0.02] text-slate-400 hover:text-white font-mono text-xs">GOVERNOR</button>
-          <button onclick="filterStream('MERCHANT', this)" class="px-2.5 py-1 rounded bg-white/[0.02] text-slate-400 hover:text-white font-mono text-xs">MERCHANTS</button>
+        <div class="space-y-2 max-h-60 overflow-y-auto pr-1" id="live-stream-logs"></div>
+      </section>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- LEVEL 5: COMPACT MERCHANT CRM VIEW (WITH SMOKE)               -->
+    <!-- ============================================================= -->
+    <div class="relative group">
+      <div class="smoke-layer-cyan opacity-25 group-hover:opacity-60"></div>
+      <section class="card-surface p-5 space-y-4">
+        <div class="flex items-center justify-between border-b border-white/5 pb-3">
+          <div>
+            <h2 class="section-hdr text-white">MERCHANT OPERATING VIEW</h2>
+            <p class="text-xs text-slate-400 font-sans mt-0.5">Active cohort lifecycle, assigned agents, and single next action per store.</p>
+          </div>
+          <span class="badge-pill badge-cyan">10 Stores Active</span>
         </div>
-      </div>
 
-      <!-- Compact Telemetry Log Rows -->
-      <div class="space-y-2 max-h-60 overflow-y-auto pr-1" id="live-stream-logs">
-        <!-- Injected by JS -->
-      </div>
-    </section>
-
-    <!-- ============================================================= -->
-    <!-- LEVEL 5: COMPACT MERCHANT CRM & OPERATING VIEW                -->
-    <!-- ============================================================= -->
-    <section class="base-glass-panel p-5 space-y-4">
-      <div class="flex items-center justify-between border-b border-white/5 pb-3">
-        <div>
-          <h2 class="section-hdr text-white">MERCHANT OPERATING VIEW</h2>
-          <p class="text-xs text-slate-400 font-sans mt-0.5">Active cohort lifecycle, assigned agents, and single next action per store.</p>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs font-mono">
+            <thead>
+              <tr class="text-slate-500 uppercase border-b border-white/5 bg-white/[0.01]">
+                <th class="p-3">Merchant</th>
+                <th class="p-3">Stage</th>
+                <th class="p-3">Next Action</th>
+                <th class="p-3">Assigned Owner</th>
+                <th class="p-3">Value</th>
+                <th class="p-3">Risk</th>
+                <th class="p-3">Status</th>
+                <th class="p-3">Twin</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5 text-slate-300" id="merchants-table-body"></tbody>
+          </table>
         </div>
-        <span class="badge-pill badge-cyan">10 Stores Active</span>
-      </div>
-
-      <div class="overflow-x-auto">
-        <table class="w-full text-left text-xs font-mono">
-          <thead>
-            <tr class="text-slate-500 uppercase border-b border-white/5 bg-white/[0.01]">
-              <th class="p-3">Merchant</th>
-              <th class="p-3">Stage</th>
-              <th class="p-3">Next Action</th>
-              <th class="p-3">Assigned Owner</th>
-              <th class="p-3">Value</th>
-              <th class="p-3">Risk</th>
-              <th class="p-3">Status</th>
-              <th class="p-3">Twin</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-white/5 text-slate-300" id="merchants-table-body">
-            <!-- Injected by JS -->
-          </tbody>
-        </table>
-      </div>
-    </section>
+      </section>
+    </div>
 
     <!-- ============================================================= -->
-    <!-- LEVEL 6: BUSINESS OUTCOMES & VERIFIED REVENUE KPI GRID        -->
+    <!-- LEVEL 6: 6 VOLUMETRIC SMOKE KPI REVENUE CARDS                 -->
     <!-- ============================================================= -->
     <section class="space-y-4 pt-2">
       <div class="flex items-center justify-between">
@@ -446,55 +540,77 @@
           <h2 class="section-hdr text-white">BUSINESS OUTCOMES & EVIDENCE</h2>
           <p class="text-xs text-slate-400 font-sans mt-0.5">Financial proof hash-matched against verified POS webhooks.</p>
         </div>
-        <div class="verified-revenue-card px-3 py-1 flex items-center gap-1.5">
-          <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>
-          <span class="text-emerald-400 font-mono font-bold text-xs">POS VERIFIED</span>
+        <div class="relative group">
+          <div class="smoke-layer-emerald -inset-1 opacity-40"></div>
+          <div class="relative z-10 px-3 py-1 rounded-xl bg-emerald-500/[0.08] border border-emerald-500/30 flex items-center gap-1.5">
+            <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>
+            <span class="text-emerald-400 font-mono font-bold text-xs">POS VERIFIED</span>
+          </div>
         </div>
       </div>
 
       <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
         
-        <!-- Net New Revenue (Interactive KPI Card with Hover) -->
-        <div class="kpi-glass-card p-4 group">
-          <div class="section-hdr text-[10px]">Net New Rev</div>
-          <div class="text-2xl font-bold font-mono text-white mt-1" id="stat-net-new">$15,870</div>
-          <div class="text-[11px] font-mono text-emerald-400 mt-0.5">✓ Matched POS</div>
+        <!-- KPI 1: Net New (Emerald Fog) -->
+        <div class="relative group">
+          <div class="smoke-layer-emerald"></div>
+          <div class="card-surface p-4">
+            <div class="section-hdr text-[10px]">Net New Rev</div>
+            <div class="text-2xl font-bold font-mono text-white mt-1" id="stat-net-new">$15,870</div>
+            <div class="text-[11px] font-mono text-emerald-400 mt-0.5">✓ Matched POS</div>
+          </div>
         </div>
 
-        <!-- Expansion Revenue -->
-        <div class="kpi-glass-card p-4 group">
-          <div class="section-hdr text-[10px]">Expansion Rev</div>
-          <div class="text-2xl font-bold font-mono text-white mt-1" id="stat-expansion">$6,780</div>
-          <div class="text-[11px] font-mono text-cyan-400 mt-0.5">Retention Loops</div>
+        <!-- KPI 2: Expansion (Cyan Fog) -->
+        <div class="relative group">
+          <div class="smoke-layer-cyan"></div>
+          <div class="card-surface p-4">
+            <div class="section-hdr text-[10px]">Expansion Rev</div>
+            <div class="text-2xl font-bold font-mono text-white mt-1" id="stat-expansion">$6,780</div>
+            <div class="text-[11px] font-mono text-cyan-400 mt-0.5">Retention Loops</div>
+          </div>
         </div>
 
-        <!-- Recovered Revenue (Verified State) -->
-        <div class="kpi-glass-card p-4 group">
-          <div class="section-hdr text-[10px]">Recovered Rev</div>
-          <div class="text-2xl font-bold font-mono text-emerald-400 mt-1" id="stat-recovered">$22,890</div>
-          <div class="text-[11px] font-mono text-slate-400 mt-0.5">137 Dormant Leads</div>
+        <!-- KPI 3: Recovered (Emerald Fog) -->
+        <div class="relative group">
+          <div class="smoke-layer-emerald"></div>
+          <div class="card-surface p-4">
+            <div class="section-hdr text-[10px]">Recovered Rev</div>
+            <div class="text-2xl font-bold font-mono text-emerald-400 mt-1" id="stat-recovered">$22,890</div>
+            <div class="text-[11px] font-mono text-slate-400 mt-0.5">137 Dormant Leads</div>
+          </div>
         </div>
 
-        <!-- Commission -->
-        <div class="kpi-glass-card p-4 group">
-          <div class="section-hdr text-[10px]">Socio 15% Comm.</div>
-          <div class="text-2xl font-bold font-mono text-white mt-1" id="stat-commission">$3,433.50</div>
-          <div class="text-[11px] font-mono text-slate-400 mt-0.5">Stripe Invoiced</div>
+        <!-- KPI 4: Commission (Cyan Fog) -->
+        <div class="relative group">
+          <div class="smoke-layer-cyan"></div>
+          <div class="card-surface p-4">
+            <div class="section-hdr text-[10px]">Socio 15% Comm.</div>
+            <div class="text-2xl font-bold font-mono text-white mt-1" id="stat-commission">$3,433.50</div>
+            <div class="text-[11px] font-mono text-slate-400 mt-0.5">Stripe Invoiced</div>
+          </div>
         </div>
 
-        <!-- Weighted Pipeline -->
-        <div class="kpi-glass-card p-4 group">
-          <div class="section-hdr text-[10px]">Weighted Pipeline</div>
-          <div class="text-2xl font-bold font-mono text-white mt-1" id="stat-pipeline">$42,180</div>
-          <div class="text-[11px] font-mono text-cyan-400 mt-0.5">10 Active Deals</div>
+        <!-- KPI 5: Pipeline (Cyan Fog) -->
+        <div class="relative group">
+          <div class="smoke-layer-cyan"></div>
+          <div class="card-surface p-4">
+            <div class="section-hdr text-[10px]">Weighted Pipeline</div>
+            <div class="text-2xl font-bold font-mono text-white mt-1" id="stat-pipeline">$42,180</div>
+            <div class="text-[11px] font-mono text-cyan-400 mt-0.5">10 Active Deals</div>
+          </div>
         </div>
 
-        <!-- Pipeline at Risk -->
-        <div class="kpi-glass-card p-4 group">
-          <div class="section-hdr text-[10px]">Pipeline at Risk</div>
-          <div class="text-2xl font-bold font-mono text-rose-400 mt-1" id="stat-risk">$6,800</div>
-          <div class="text-[11px] font-mono text-rose-400 mt-0.5">3 Stagnant Deals</div>
+        <!-- KPI 6: Risk (Rose Fog) -->
+        <div class="relative group">
+          <div class="smoke-layer-rose"></div>
+          <div class="card-surface p-4">
+            <div class="section-hdr text-[10px]">Pipeline at Risk</div>
+            <div class="text-2xl font-bold font-mono text-rose-400 mt-1" id="stat-risk">$6,800</div>
+            <div class="text-[11px] font-mono text-rose-400 mt-0.5">3 Stagnant Deals</div>
+          </div>
         </div>
+
       </div>
     </section>
 
@@ -515,9 +631,7 @@
       </button>
     </div>
 
-    <div class="space-y-4 font-mono text-xs text-slate-300" id="drawer-content">
-      <!-- Injected by JS -->
-    </div>
+    <div class="space-y-4 font-mono text-xs text-slate-300" id="drawer-content"></div>
   </aside>
 
   <!-- Toast Notification Deck -->
