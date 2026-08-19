@@ -828,10 +828,15 @@ app.get('/terms', (req, res) => {
   `);
 });
 
-// Start Server
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`\n🚀 Socio Production Server active on http://localhost:${PORT}`);
-  console.log(`📊 Analytics Portal: http://localhost:${PORT}/admin/analytics?key=${ADMIN_PASSWORD}`);
-  console.log(`⚡ Command Center: http://localhost:${PORT}/command-center.html`);
-  console.log(`⚖️  Merchant Evidence: http://localhost:${PORT}/merchant-evidence.html\n`);
-});
+// Start Server if run directly
+if (require.main === module) {
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`\n🚀 Socio Production Server active on http://localhost:${PORT}`);
+    console.log(`📊 Analytics Portal: http://localhost:${PORT}/admin/analytics?key=${ADMIN_PASSWORD}`);
+    console.log(`⚡ Command Center: http://localhost:${PORT}/command-center.html`);
+    console.log(`⚖️  Merchant Evidence: http://localhost:${PORT}/merchant-evidence.html\n`);
+  });
+}
+
+module.exports = app;
+

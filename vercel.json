@@ -1,0 +1,35 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "server.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "website/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "server.js"
+    },
+    {
+      "src": "/admin/(.*)",
+      "dest": "server.js"
+    },
+    {
+      "src": "/privacy",
+      "dest": "server.js"
+    },
+    {
+      "src": "/terms",
+      "dest": "server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "website/$1"
+    }
+  ]
+}
