@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Socio — For Global Brands &amp; TikTok Shop USA</title>
+  <meta name="description" content="TikTok Shop USA scaling, localized NYC creator seeding, and compliant US market entry with transparent, all-in terms.">
+  <meta name="robots" content="index,follow">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Roboto+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-base: #f8fafc;
+      --bg-surface: #ffffff;
+      --accent-yellow: #ccff00;
+      --accent-yellow-soft: #f4ffc2;
+      --accent-yellow-border: #b8e600;
+      --accent-dark: #0f172a;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-light: #94a3b8;
+      --border-subtle: #e2e8f0;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'Roboto Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      background-image:
+        radial-gradient(circle at 10% 10%, rgba(204, 255, 0, 0.18) 0%, transparent 45%),
+        radial-gradient(circle at 90% 80%, rgba(226, 232, 240, 0.5) 0%, transparent 50%);
+      background-attachment: fixed;
+    }
+
+    h1, h2, h3, h4 { letter-spacing: -0.03em; }
+    a { color: inherit; text-decoration: none; }
+
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(15, 23, 42, 0.96);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+      padding: 0.85rem 6%;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo { font-size: 1.45rem; font-weight: 800; letter-spacing: -0.04em; color: #ffffff; }
+    .logo span { color: var(--accent-yellow); text-shadow: 0 0 12px rgba(204,255,0,0.7); }
+
+    .container { max-width: 1040px; margin: 0 auto; padding: 0 6%; }
+    section { padding: 6rem 0; }
+    .hero { padding-top: 7rem; padding-bottom: 5rem; text-align: center; }
+
+    .eyebrow-capsule {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.4rem 0.95rem; border-radius: 100px;
+      background: #ffffff; border: 1px solid #e2e8f0;
+      font-size: 0.75rem; font-weight: 700; color: var(--text-muted);
+      letter-spacing: 0.08em; text-transform: uppercase;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04); margin-bottom: 1.5rem;
+    }
+    .eyebrow-capsule .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-yellow-border); box-shadow: 0 0 8px var(--accent-yellow); }
+
+    h1 { font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 900; line-height: 1.1; margin-bottom: 1.5rem; }
+    .hero p { color: var(--text-muted); font-size: 1.1rem; max-width: 640px; margin: 0 auto 2.5rem; line-height: 1.7; }
+
+    .cta-btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+      background: var(--accent-dark); color: #ffffff; font-weight: 700; font-size: 0.95rem;
+      padding: 1rem 2rem; border-radius: 100px; box-shadow: 0 8px 24px rgba(15, 23, 42, 0.15);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .cta-btn:hover { background: #000; transform: translateY(-2px); }
+    .cta-btn-accent { background: var(--accent-yellow); color: #000; border: 1px solid var(--accent-yellow-border); }
+    .cta-btn-accent:hover { background: #c6f000; }
+
+    .card {
+      background: #ffffff; border: 1px solid var(--border-subtle); border-radius: 24px;
+      padding: 2.5rem 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.02), 0 20px 40px -15px rgba(0,0,0,0.05);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .card:hover { border-color: #cbd5e1; transform: translateY(-3px); }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+
+    .step-num {
+      width: 40px; height: 40px; border-radius: 12px; background: var(--accent-yellow);
+      border: 1px solid var(--accent-yellow-border); display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 1rem; margin-bottom: 1.25rem; color: #000;
+    }
+    .card h3 { font-size: 1.3rem; font-weight: 800; margin-bottom: 0.75rem; }
+    .card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.65; }
+
+    .note {
+      background: var(--accent-yellow-soft); border: 1px solid var(--accent-yellow-border);
+      border-radius: 14px; padding: 1rem 1.25rem; font-size: 0.85rem; color: var(--text-main); font-weight: 600;
+    }
+    .note .mono { font-family: var(--font-mono); font-weight: 700; }
+
+    footer { border-top: 1px solid var(--border-subtle); padding: 2.5rem 6%; text-align: center; color: var(--text-light); font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div style="display:flex; align-items:center; gap:1.25rem;">
+      <a href="index.html" class="logo">Socio<span>.</span></a>
+      <span style="font-size:0.75rem; font-family:var(--font-mono); color:#94a3b8;">FOR GLOBAL BRANDS</span>
+    </div>
+    <a href="index.html" style="font-size:0.8rem; font-weight:700; color:#cbd5e1; padding:0.5rem 1rem; border:1px solid rgba(255,255,255,0.15); border-radius:100px;">← NYC Local Shops</a>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <div class="eyebrow-capsule"><span class="dot"></span> US MARKET ENTRY</div>
+      <h1>TikTok Shop USA scaling,<br>without the guesswork.</h1>
+      <p>Socio helps global brands enter the US market through compliant TikTok Shop USA scaling, localized NYC creator seeding, and transparent all-in terms — zero hidden agency fees, zero retainers.</p>
+      <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+        <a href="mailto:hello@socio.nyc" class="cta-btn cta-btn-accent">Schedule a Consultation →</a>
+        <a href="index.html" class="cta-btn" style="background:transparent; border:1px solid #cbd5e1; color:var(--text-main); box-shadow:none;">See How We Work With NYC Shops</a>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#ffffff; border-top:1px solid var(--border-subtle); border-bottom:1px solid var(--border-subtle);">
+    <div class="container">
+      <div style="text-align:center; margin-bottom:3rem;">
+        <div class="eyebrow-capsule" style="background:#f8fafc;">WHAT WE HANDLE</div>
+        <h2 style="font-size:2rem; font-weight:900;">A compliant, all-in market entry</h2>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <div class="step-num">01</div>
+          <h3>TikTok Shop USA Setup</h3>
+          <p>Storefront configuration, listing compliance, and creator-affiliate program structuring for the US market.</p>
+        </div>
+        <div class="card">
+          <div class="step-num">02</div>
+          <h3>NYC Creator Seeding</h3>
+          <p>Localized creator partnerships with New York-based talent, grounded in the same attribution discipline we use for local merchants.</p>
+        </div>
+        <div class="card">
+          <div class="step-num">03</div>
+          <h3>Compliant Operations</h3>
+          <p>Transparent reporting, documented creator payments, and adherence to platform + US consumer rules at every step.</p>
+        </div>
+      </div>
+      <div class="note" style="margin-top:2rem;">
+        <span class="mono">100% all-in transparent terms:</span> our fee structure for brand work is agreed in writing before launch — no media commissions, no hidden retainers, no ambiguous "management fees."
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container" style="text-align:center;">
+      <h2 style="font-size:2rem; font-weight:900; margin-bottom:1rem;">Talk to a person, not a pitch deck.</h2>
+      <p style="color:var(--text-muted); max-width:560px; margin:0 auto 2rem; line-height:1.7;">A real NYC-based operator responds to every inquiry — typically within one business day.</p>
+      <a href="mailto:hello@socio.nyc" class="cta-btn cta-btn-accent">Email hello@socio.nyc →</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Socio NYC. Made for local commerce. <a href="index.html" style="color:var(--text-muted); font-weight:700;">← Back to NYC Local Shops</a></p>
+  </footer>
+
+</body>
+</html>

@@ -218,8 +218,8 @@
             <div class="flex items-start gap-3">
                 <i data-lucide="refresh-cw" class="w-5 h-5 text-blue-600 mt-0.5 shrink-0 animate-spin"></i>
                 <div>
-                    <div class="font-bold text-base mb-1 text-slate-900">Displaying Last Synced Evidence Telemetry</div>
-                    <div class="text-xs text-slate-600 mb-2">Showing verified offline cache as of <span id="offline-synced-time" class="font-mono font-bold text-slate-900">just now</span>. Reconnecting to live telemetry automatically every 30 seconds.</div>
+                    <div class="font-bold text-base mb-1 text-slate-900">Showing data as of <span id="offline-synced-time" class="font-mono font-bold text-slate-900">—</span> · reconnecting automatically</div>
+                    <div class="text-xs text-slate-600 mb-2">Live telemetry is temporarily unavailable and will reconnect every 30 seconds. Nothing on this page is estimated or mocked.</div>
                     <div class="font-mono text-xs bg-white p-2 rounded-lg border border-slate-200 text-slate-600" id="error-msg"></div>
                 </div>
             </div>
@@ -235,6 +235,7 @@
                 <div>
                     <h2 class="text-2xl font-black tracking-tight text-slate-900">What does the evidence say?</h2>
                     <p class="text-xs text-slate-500 font-mono mt-0.5" id="store-title">Viewing report for: socio_default</p>
+                    <div id="access-badge" class="hidden mt-2"></div>
                 </div>
             </div>
             <div id="overview-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
@@ -314,7 +315,7 @@
                 <div>
                     <div class="eyebrow-capsule">
                         <span class="dot"></span>
-                        <span>IMMUTABLE LEDGER</span>
+                        <span>TAMPER-EVIDENT LEDGER</span>
                     </div>
                     <h2 class="text-2xl font-black tracking-tight text-slate-900">Audit chain</h2>
                 </div>
@@ -341,7 +342,7 @@
         </section>
 
         <footer class="border-t border-slate-200 pt-6 pb-10 text-[11px] text-slate-400 font-mono flex flex-wrap items-center gap-4">
-            <span>No fake data. Everything rendered here comes from the Growth OS evidence API.</span>
+            <span>Every figure shown here traces to the Growth OS evidence API and its last verified sync — nothing is estimated or mocked.</span>
             <span class="flex-1"></span>
             <span id="generated-at"></span>
         </footer>
@@ -364,7 +365,7 @@
                 <input type="text" id="auth-biz-input" value="cristal_flowers" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm font-mono mb-3 outline-none focus:border-slate-800">
                 
                 <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Merchant Phone or Email</label>
-                <input type="text" id="auth-contact-input" placeholder="e.g. +1 (212) 555-0199" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm mb-4 outline-none focus:border-slate-800">
+                <input type="text" id="auth-contact-input" placeholder="e.g. +1 (646) 750-4650" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm mb-4 outline-none focus:border-slate-800">
                 
                 <button onclick="sendOtpCode()" class="w-full py-3 bg-slate-900 text-white font-bold rounded-xl text-sm hover:bg-black transition-all">
                     Send 6-Digit Code →
@@ -395,7 +396,7 @@
                 </div>
                 <button onclick="closeShareModal()" class="text-slate-400 hover:text-slate-600">✕</button>
             </div>
-            <p class="text-xs text-slate-500 mb-4">Send a secure 24-hour view-only link directly to merchant founders.</p>
+            <p class="text-xs text-slate-500 mb-4">Send a secure <strong>72-hour view-only</strong> link directly to merchant founders. The link stops working after 72 hours and only opens on the first device that clicks it.</p>
             
             <div class="space-y-3">
                 <input type="text" id="share-link-input" readonly class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-mono text-slate-700 outline-none select-all">
@@ -438,7 +439,11 @@
         }
         if (urlParams.get('token')) {
             state.token = urlParams.get('token');
-            localStorage.setItem('socio_merchant_token', state.token);
+            // View-only share tokens stay in memory only — never upgrade a forwarded
+            // link into a stored "logged in" session.
+            if (!state.token.startsWith('socio_share_')) {
+                localStorage.setItem('socio_merchant_token', state.token);
+            }
         } else {
             state.token = localStorage.getItem('socio_merchant_token') || '';
         }
@@ -824,13 +829,32 @@
         }
 
         // ---- SHARE & MODAL LOGIC -------------------------------------------
-        function openShareModal() {
-            const host = window.location.origin;
-            const token = state.token || 'demo_token';
-            const shareUrl = `${host}/merchant-evidence.html?businessId=${encodeURIComponent(state.businessId)}&token=${token}`;
-            $('share-link-input').value = shareUrl;
-            $('share-modal').classList.remove('hidden');
-            $('share-modal').classList.add('flex');
+        async function openShareModal() {
+            // Share links are minted server-side: 72h expiry, view-only, device-bound.
+            // Requires a full merchant session — public/demo viewers and view-only
+            // recipients cannot mint or re-share links.
+            if (state.access && !state.access.authenticated) {
+                alert('Log in as the merchant first to create a share link.');
+                return;
+            }
+            if (state.access && state.access.scope === 'view') {
+                alert('This report was opened from a view-only link. Ask the merchant to generate a fresh share link.');
+                return;
+            }
+            try {
+                const res = await fetch('/api/share', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', ...(state.token ? { 'Authorization': `Bearer ${state.token}` } : {}) },
+                    body: JSON.stringify({ businessId: state.businessId, channel: 'direct_link' })
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.message || res.statusText);
+                $('share-link-input').value = data.shareUrl;
+                $('share-modal').classList.remove('hidden');
+                $('share-modal').classList.add('flex');
+            } catch (err) {
+                alert('Could not create share link: ' + err.message);
+            }
         }
         function closeShareModal() {
             $('share-modal').classList.add('hidden');
@@ -907,15 +931,48 @@
             }
         }
 
+        // ---- ACCESS STATE & BADGES ------------------------------------------
+        function applyAccess(access) {
+            state.access = access;
+            const badge = $('access-badge');
+            const indicator = $('live-indicator');
+            const authBtn = $('btn-auth-modal');
+
+            if (!access) {
+                badge.classList.remove('hidden');
+                badge.innerHTML = '<span class="badge badge-gray">TELEMETRY UNAVAILABLE — reconnect in progress, nothing cached is shown as live</span>';
+                if (authBtn) $('auth-label').textContent = 'Merchant Login';
+                if (indicator) { indicator.className = 'flex items-center gap-1.5 bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-slate-600 font-mono text-[11px] shadow-sm'; indicator.innerHTML = '<span class="w-2 h-2 rounded-full bg-amber-500"></span><span>RECONNECTING (30s)</span>'; }
+            } else if (!access.authenticated) {
+                badge.classList.remove('hidden');
+                badge.innerHTML = '<span class="badge badge-amber">DEMO DATA — seed records shown before login. Log in as the merchant to verify real telemetry.</span>';
+                if (authBtn) $('auth-label').textContent = 'Merchant Login';
+                if (indicator) { indicator.className = 'flex items-center gap-1.5 bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-slate-600 font-mono text-[11px] shadow-sm'; indicator.innerHTML = '<span class="w-2 h-2 rounded-full bg-amber-500"></span><span>DEMO (30s)</span>'; }
+            } else if (access.scope === 'view') {
+                badge.classList.remove('hidden');
+                const exp = access.expiresAt ? ` · expires ${fmtDate(new Date(access.expiresAt).toISOString())}` : '';
+                badge.innerHTML = `<span class="badge badge-yellow">VIEW-ONLY LINK${exp}</span>`;
+                if (authBtn) $('auth-label').textContent = `${state.businessId} (View-only)`;
+                if (indicator) { indicator.className = 'flex items-center gap-1.5 bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-slate-600 font-mono text-[11px] shadow-sm'; indicator.innerHTML = '<span class="w-2 h-2 rounded-full bg-amber-500"></span><span>READ-ONLY (30s)</span>'; }
+            } else {
+                badge.classList.add('hidden');
+                badge.innerHTML = '';
+                if (authBtn) $('auth-label').textContent = `${state.businessId} (Active)`;
+                if (indicator) { indicator.className = 'flex items-center gap-1.5 bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-slate-600 font-mono text-[11px] shadow-sm'; indicator.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span><span>LIVE (30s)</span>'; }
+            }
+        }
+
         // ---- MAIN LOAD & 30s LIVE POLLING ----------------------------------
         async function load() {
             const banner = $('error-banner');
-            $('store-title').textContent = `Viewing live telemetry for: ${state.businessId}`;
-            
+            $('store-title').textContent = `Viewing evidence for: ${state.businessId}`;
+
             try {
                 const r = await api(`/api/merchant/${state.businessId}/evidence`);
                 state.report = r;
+                state.lastSyncAt = r.generatedAt || new Date().toISOString();
                 banner.classList.add('hidden');
+                applyAccess(r.access);
                 renderOverview(r);
                 renderActions(r);
                 renderRevenue(r);
@@ -928,6 +985,8 @@
             } catch (err) {
                 console.log('Using robust client fallback state:', err.message);
                 $('error-msg').textContent = err.message;
+                $('offline-synced-time').textContent = state.lastSyncAt ? fmtDate(state.lastSyncAt) : '—';
+                applyAccess(null);
                 banner.classList.remove('hidden');
             }
         }
