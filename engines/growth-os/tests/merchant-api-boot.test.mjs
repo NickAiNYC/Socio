@@ -20,10 +20,17 @@ function run(args, env, timeoutMs = 8000) {
 }
 
 test('MERCHANT API BOOT: fails closed when DATABASE_URL is set but MERCHANT_API_TOKENS is missing', async () => {
-  const { code, out } = await run([API], { DATABASE_URL: 'postgres://u:p@127.0.0.1:1/db' });
+  const { code, out } = await run([API], { DATABASE_URL: 'postgres://u:p@127.0.0.1:1/db', MERCHANT_API_CORS_ORIGIN: 'https://pilot.example.com' });
   assert.notEqual(code, 0, 'must refuse to boot without tokens in production mode');
   assert.match(out, /fails closed/);
   assert.match(out, /MERCHANT_API_TOKENS/);
+});
+
+test('MERCHANT API BOOT: fails closed when DATABASE_URL is set but MERCHANT_API_CORS_ORIGIN is missing', async () => {
+  const { code, out } = await run([API], { DATABASE_URL: 'postgres://u:p@127.0.0.1:1/db', MERCHANT_API_TOKENS: '{"biz":"tok"}' });
+  assert.notEqual(code, 0, 'must refuse to boot without an explicit CORS origin in production mode');
+  assert.match(out, /fails closed/);
+  assert.match(out, /MERCHANT_API_CORS_ORIGIN/);
 });
 
 test('MERCHANT API BOOT: boots in explicit in-memory dev mode without tokens', async () => {

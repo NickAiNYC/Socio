@@ -6,6 +6,7 @@ import { randomUUID } from 'crypto';
 export class MemoryRepository {
   constructor() {
     this.store = new Map();
+    this._refundLocks = new Map(); // per-original-payment refund serialization
   }
 
   async save(id, data) {
@@ -73,6 +74,27 @@ export class MemoryRepository {
    */
   async findByBusiness(businessId) {
     return this.findAll((item) => item.businessId === businessId);
+  }
+
+  /**
+   * Serializes refund bookkeeping per original payment within this process.
+   * Concurrent refund records for the same originalEventId run sequentially,
+   * so the over-refund check and the insert cannot interleave. Mirrors the
+   * Postgres advisory-lock semantics for in-memory stores.
+   */
+  async withRefundLock(originalEventId, fn) {
+    this._refundLocks ??= new Map();
+    const key = String(originalEventId);
+    const prev = this._refundLocks.get(key) || Promise.resolve();
+    const run = prev.then(() =>
+      fn({
+        get: (id) => this.get(id),
+        findAll: (filterFn) => this.findAll(filterFn),
+        saveIfAbsent: (id, data) => this.saveIfAbsent(id, data),
+      })
+    );
+    this._refundLocks.set(key, run.catch(() => {}));
+    return run;
   }
 
   async clear() {

@@ -236,6 +236,16 @@ export function main() {
     process.exit(1);
   }
 
+  // The dashboard serves merchant financial evidence; in production the CORS
+  // origin must be explicit — the wildcard default is for local dev only.
+  if (DATABASE_URL && !process.env.MERCHANT_API_CORS_ORIGIN) {
+    console.error(
+      'Merchant API fails closed: MERCHANT_API_CORS_ORIGIN is required when DATABASE_URL is set — ' +
+      'the dashboard serves financial evidence and must not allow arbitrary origins.'
+    );
+    process.exit(1);
+  }
+
   let tokens = null;
   if (process.env.MERCHANT_API_TOKENS) {
     try {

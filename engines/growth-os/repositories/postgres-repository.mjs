@@ -148,6 +148,54 @@ export class PostgresRepository {
     const res = await this.pool.query(query, [businessId]);
     return res.rows.map((row) => row.data);
   }
+
+  /**
+   * Serializes refund bookkeeping per original payment ACROSS connections.
+   *
+   * Runs the callback inside a transaction holding a Postgres advisory lock
+   * keyed on the original payment id, so concurrent refund records for the
+   * same original (from different API/webhook processes) cannot both pass the
+   * over-refund check. All reads/writes inside the callback use the locked
+   * transaction; the lock releases on COMMIT/ROLLBACK.
+   */
+  async withRefundLock(originalEventId, fn) {
+    await this._ensureTable();
+    const client = await this.pool.connect();
+    try {
+      await client.query('BEGIN');
+      // hashtextextended -> bigint advisory lock key; scoped to this tx.
+      await client.query('SELECT pg_advisory_xact_lock(hashtextextended($1, 0))', [String(originalEventId)]);
+      const result = await fn({
+        get: async (id) => {
+          const res = await client.query(`SELECT data FROM ${this.tableName} WHERE id = $1;`, [id]);
+          return res.rows.length > 0 ? res.rows[0].data : null;
+        },
+        findAll: async (filterFn) => {
+          const res = await client.query(`SELECT data FROM ${this.tableName};`);
+          return res.rows.map((row) => row.data).filter(filterFn);
+        },
+        saveIfAbsent: async (id, data) => {
+          const record = { ...data, id };
+          const res = await client.query(
+            `INSERT INTO ${this.tableName} (id, data) VALUES ($1, $2)
+             ON CONFLICT (id) DO NOTHING RETURNING data;`,
+            [id, record]
+          );
+          if (res.rows.length === 0) {
+            throw new Error(`Record ${id} already exists; duplicate writes are rejected.`);
+          }
+          return res.rows[0].data;
+        },
+      });
+      await client.query('COMMIT');
+      return result;
+    } catch (err) {
+      await client.query('ROLLBACK');
+      throw err;
+    } finally {
+      client.release();
+    }
+  }
 }
 
 /**

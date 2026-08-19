@@ -59,6 +59,8 @@ DATABASE_URL=postgres://postgres:<DB_PASSWORD>@127.0.0.1:5432/growth_os
 GROWTH_OS_ALLOW_MEMORY=false
 MERCHANT_API_PORT=8787
 MERCHANT_API_TOKENS={"<businessId>":"<LONG_RANDOM_TOKEN>"}
+# REQUIRED in production — API refuses to boot without it
+MERCHANT_API_CORS_ORIGIN=https://pilot.<yourdomain>.com
 STRIPE_WEBHOOK_PORT=8789
 STRIPE_WEBHOOK_SECRET=whsec_<from_stripe_dashboard>
 ```
