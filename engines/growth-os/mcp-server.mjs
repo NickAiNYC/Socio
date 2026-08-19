@@ -267,6 +267,28 @@ server.tool(
   }
 );
 
+// Tool: Score prospect batch (read-only — no governance approval required).
+server.tool(
+  "prospect_score_batch",
+  "Scores raw prospect records with the Socio Digital Gap model v1. Read-only: no external effects, no approval needed. Returns each record with a 0-100 Digital Gap Score (higher = bigger digital gap = stronger prospect), leakage tier, signal coverage, the specific gaps found, and a labeled recoverable-revenue ESTIMATE. Enforces the Manifesto cap (max 12) and a minimum score threshold so only pitch-worthy prospects are surfaced.",
+  {
+    area: z.string().describe("Corridor label, e.g. 'East Harlem, NYC'"),
+    vertical: z.enum(['florist', 'cafe', 'bodega', 'restaurant', 'clinic']).default('florist'),
+    records: z.array(z.any()).describe("Raw prospect records: name, rating, reviewCount, reviewsLast30d, website, websiteNote, googlePosts, instagramFollowers, instagramActive, whatsappBusiness, posType, neighborhoodDensity"),
+    limit: z.number().int().min(1).max(12).default(10).describe("Manifesto cap — maximum prospects to pass to Pitch"),
+    minScore: z.number().int().min(0).max(100).default(40).describe("Minimum Digital Gap Score to pass the threshold")
+  },
+  async ({ area, vertical, records, limit, minScore }) => {
+    try {
+      const { scoreProspects } = await import('../prospect/score.mjs');
+      const result = scoreProspects(records, { area, vertical, limit, minScore });
+      return { content: [{ type: "text", text: JSON.stringify(result, null, 2) }] };
+    } catch (error) {
+      return { content: [{ type: "text", text: `Scoring Error: ${error.message}` }], isError: true };
+    }
+  }
+);
+
 // Tool: Record Event — financial events must reference an executed governed action
 // AND the approval's proposal payload must declare the authorized event types
 // (allowedEventTypes) and a numeric maxAmount; amounts beyond the bound are rejected.
