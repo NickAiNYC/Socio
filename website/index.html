@@ -862,20 +862,94 @@
         <!-- Right: Calm Visual (Hero Quieted) -->
         <div style="flex: 1 1 480px; max-width: 540px; position: relative; width: 100%; margin: 0 auto;">
           
-          <div class="clean-card" style="padding: 4rem; text-align: center; border: 1px solid #e2e8f0; background: #ffffff; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.05); border-radius: 32px;">
-            <div class="eyebrow-capsule" style="margin-bottom: 2.5rem; border-color: #f1f5f9; background: #f8fafc;">
-              <span class="dot" style="background: #cbd5e1; box-shadow: none;"></span> POS-VERIFIED PIPELINE
-            </div>
-            
-            <div style="font-size: clamp(3.5rem, 5vw, 4.5rem); font-weight: 900; color: #0f172a; font-family: var(--font-mono); line-height: 1; margin-bottom: 1.5rem;" class="count-up" data-target="18420" data-prefix="$">
-              $18,420
-            </div>
-            
-            <p style="color: #64748b; font-size: 1.15rem; font-weight: 500; max-width: 280px; margin: 0 auto; line-height: 1.6;">
-              Illustrative weekly pipeline figure — receipt-verified numbers live in the Evidence portal.
-            </p>
-          </div>
+             <!-- Hero Aura Glass Pipeline Card -->
+          <div style="
+            position: relative;
+            background: linear-gradient(145deg, #0d1a2e 0%, #070d1a 100%);
+            border-radius: 28px;
+            border: 1px solid rgba(56, 189, 248, 0.22);
+            box-shadow:
+              inset 0 1px 0 rgba(255,255,255,0.12),
+              inset 0 0 40px rgba(56, 189, 248, 0.06),
+              0 0 0 1px rgba(255,255,255,0.04),
+              0 30px 60px -15px rgba(0,0,0,0.7),
+              0 0 50px rgba(56, 189, 248, 0.12);
+            padding: 0;
+            overflow: hidden;
+          ">
 
+            <!-- Ambient top glow -->
+            <div style="position: absolute; top: -60px; left: 50%; transform: translateX(-50%); width: 300px; height: 180px; background: radial-gradient(ellipse, rgba(56, 189, 248, 0.18) 0%, transparent 70%); filter: blur(30px); pointer-events: none;"></div>
+
+            <!-- Top line sweep -->
+            <div style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent 0%, rgba(56, 189, 248, 0.9) 50%, transparent 100%);"></div>
+
+            <!-- Header Bar -->
+            <div style="padding: 1.25rem 2rem; border-bottom: 1px solid rgba(255,255,255,0.07); display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.2);">
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span style="width: 7px; height: 7px; border-radius: 50%; background: #34d399; box-shadow: 0 0 8px #34d399; animation: pulse-dot 2s infinite;"></span>
+                <span style="font-family: var(--font-mono); font-size: 0.72rem; font-weight: 800; color: #ffffff; letter-spacing: 0.09em; text-transform: uppercase;">POS-VERIFIED PIPELINE</span>
+              </div>
+              <div style="font-family: var(--font-mono); font-size: 0.65rem; color: #38bdf8; font-weight: 700; background: rgba(56,189,248,0.1); padding: 0.25rem 0.6rem; border-radius: 100px; border: 1px solid rgba(56,189,248,0.25);">LIVE</div>
+            </div>
+
+            <!-- Main Metric -->
+            <div style="padding: 2.5rem 2rem 1.75rem; text-align: center; position: relative;">
+              <!-- Subtle grid background -->
+              <div style="position: absolute; inset: 0; background-image: linear-gradient(rgba(56,189,248,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(56,189,248,0.04) 1px, transparent 1px); background-size: 32px 32px; pointer-events: none;"></div>
+
+              <div style="font-family: var(--font-mono); font-size: 0.75rem; color: #38bdf8; font-weight: 700; letter-spacing: 0.1em; margin-bottom: 0.5rem; text-transform: uppercase; position: relative;">Recovery / Week</div>
+
+              <div style="
+                font-size: clamp(3.75rem, 5.5vw, 5rem);
+                font-weight: 900;
+                color: #ffffff;
+                font-family: var(--font-mono);
+                line-height: 1;
+                letter-spacing: -0.03em;
+                margin-bottom: 1rem;
+                position: relative;
+                text-shadow: 0 0 30px rgba(56,189,248,0.35), 0 0 60px rgba(56,189,248,0.15);
+              " class="count-up" data-target="18420" data-prefix="$">
+                $18,420
+              </div>
+
+              <!-- Sparkline bars -->
+              <div style="display: flex; align-items: flex-end; justify-content: center; gap: 3px; height: 28px; margin-bottom: 1.5rem; position: relative;">
+                <div style="width: 5px; border-radius: 3px; background: rgba(56,189,248,0.3); height: 40%;"></div>
+                <div style="width: 5px; border-radius: 3px; background: rgba(56,189,248,0.4); height: 55%;"></div>
+                <div style="width: 5px; border-radius: 3px; background: rgba(56,189,248,0.5); height: 45%;"></div>
+                <div style="width: 5px; border-radius: 3px; background: rgba(56,189,248,0.55); height: 70%;"></div>
+                <div style="width: 5px; border-radius: 3px; background: rgba(56,189,248,0.5); height: 60%;"></div>
+                <div style="width: 5px; border-radius: 3px; background: rgba(56,189,248,0.6); height: 80%;"></div>
+                <div style="width: 5px; border-radius: 3px; background: rgba(56,189,248,0.55); height: 65%;"></div>
+                <div style="width: 5px; border-radius: 3px; background: rgba(204,255,0,0.9); height: 100%;"></div>
+              </div>
+
+              <p style="color: #64748b; font-size: 0.8rem; font-family: var(--font-mono); line-height: 1.5; max-width: 280px; margin: 0 auto; position: relative;">
+                Illustrative weekly pipeline figure —<br>
+                receipt-verified numbers live in the
+                <a href="merchant-evidence.html" style="color: #38bdf8; text-decoration: none; font-weight: 700;">Evidence Portal ↗</a>
+              </p>
+            </div>
+
+            <!-- Footer Stat Row -->
+            <div style="padding: 1rem 2rem; border-top: 1px solid rgba(255,255,255,0.07); background: rgba(0,0,0,0.25); display: grid; grid-template-columns: 1fr 1fr 1fr; text-align: center; gap: 0;">
+              <div style="border-right: 1px solid rgba(255,255,255,0.07);">
+                <div style="font-family: var(--font-mono); font-size: 0.65rem; color: #64748b; text-transform: uppercase; margin-bottom: 0.2rem;">Commission</div>
+                <div style="font-family: var(--font-mono); font-size: 0.9rem; font-weight: 800; color: #ffffff;">15% Flat</div>
+              </div>
+              <div style="border-right: 1px solid rgba(255,255,255,0.07);">
+                <div style="font-family: var(--font-mono); font-size: 0.65rem; color: #64748b; text-transform: uppercase; margin-bottom: 0.2rem;">Upfront</div>
+                <div style="font-family: var(--font-mono); font-size: 0.9rem; font-weight: 800; color: #34d399;">$0</div>
+              </div>
+              <div>
+                <div style="font-family: var(--font-mono); font-size: 0.65rem; color: #64748b; text-transform: uppercase; margin-bottom: 0.2rem;">Verified Via</div>
+                <div style="font-family: var(--font-mono); font-size: 0.9rem; font-weight: 800; color: #ffffff;">Square POS</div>
+              </div>
+            </div>
+
+          </div>
         </div>
 
       </div>
