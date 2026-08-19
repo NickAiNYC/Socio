@@ -3,30 +3,69 @@ workflow:
   trigger:
     type: cron
     schedule: "0 6 * * *"
+  description: >
+    Density-aware corridor scan -> Digital Gap scoring (model v1) -> capped,
+    consented prospect packet for Socio-Pitch. Read-only gather + score:
+    no external effects, so no Governor approval is required for the scan
+    itself. Any OUTREACH that follows is a separate governed action by
+    Socio-Pitch via growth_os_propose_action.
   steps:
-    - name: scrape-harlem
-      agent: dsh-plugin-subagents
+    - name: scan-corridor
+      agent: dsh-exec
       params:
-        tool: google-maps-api
-        query: "florists in East Harlem, NYC"
-    - name: scrape-washington-heights
-      agent: dsh-plugin-subagents
+        command: node
+        args:
+          - engines/prospect/cli.mjs
+          - --area "east harlem"
+          - --vertical florist
+          - --limit 10
+          - --min-score 40
+      note: >
+        Uses density-aware grid search (breaks the 60-result Places limit).
+        Without GOOGLE_MAPS_API_KEY it runs in labeled demo mode (demo:true).
+    - name: rotate-corridor
+      agent: dsh-exec
       params:
-        tool: google-maps-api
-        query: "florists in Washington Heights, NYC"
-    - name: scrape-bronx
-      agent: dsh-plugin-subagents
+        command: node
+        args:
+          - engines/prospect/cli.mjs
+          - --area "washington heights"
+          - --vertical florist
+          - --limit 10
+          - --min-score 40
+      note: Own one corridor at a time — East Harlem -> Washington Heights ->
+        Bronx -> Astoria weekly rotation.
+    - name: score-and-cap
+      agent: socio-prospect
+      tool: prospect_score_batch
       params:
-        tool: google-maps-api
-        query: "florists in Bronx, NYC"
-    - name: scrape-queens
-      agent: dsh-plugin-subagents
+        area: "East Harlem, NYC"
+        vertical: florist
+        limit: 10
+        minScore: 40
+      note: >
+        First-class Growth OS MCP tool. Enforces the Manifesto cap (max 12)
+        and only surfaces records above the leakage threshold.
+    - name: record-packet
+      agent: socio-prospect
+      tool: growth_os_record_event
       params:
-        tool: google-maps-api
-        query: "florists in Queens, NYC"
-    - name: merge-results
-      agent: dsh-plugin-subagents
-      tool: merge-json
-    - name: score-prospects
-      agent: dsh-plan-execute
-      params: "Apply Socio scoring algorithm to identify top 10 merchants based on digital footprint gaps."
+        businessId: socio_default
+        agentId: socio-prospect
+        type: lead_created
+        amount: 0
+        source: "prospect-scan-{{ date }}"
+        metadata:
+          packet: "outputs/prospects/{{ date }}.json"
+          vertical: florist
+          corridor: east-harlem
+      note: >
+        Non-financial event: packet delivery is instrumented into the Growth
+        OS ledger from day one so the loop is auditable end to end.
+    - name: handoff-to-pitch
+      agent: socio-pitch
+      params:
+        packet: "outputs/prospects/{{ date }}.json"
+      note: >
+        Pitch consumes ONLY the scored, capped packet. First outreach action
+        must go through growth_os_propose_action -> approved -> execute.

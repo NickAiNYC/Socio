@@ -17,6 +17,12 @@ backups/
 # Migrations are source code — never ignore the schema.
 !engines/growth-os/migrations/*.sql
 
+# Runtime data (not source): server JSON DB + daily prospect packets.
+# Packets are the runtime handoff artifact between Prospect and Pitch —
+# generated per run, never committed.
+outputs/socio_production.json
+outputs/prospects/
+
 # Node
 node_modules/
 package-lock.json
