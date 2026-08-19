@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { 
-  HardHat, 
   MessageSquare, 
   ArrowUpRight, 
   Calculator, 
@@ -98,21 +97,18 @@ export function ContractorLanding() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F9FAFB] text-[#111827] font-sans selection:bg-[#EAB308] selection:text-black">
+    <div className="min-h-screen bg-[#F9FAFB] text-[#111827] font-sans selection:bg-[#FF5500] selection:text-white">
       {/* Safety Hazard Industrial Top Bar */}
-      <div className="h-2 w-full bg-gradient-to-r from-[#EAB308] via-[#1E40AF] to-[#EAB308]" />
+      <div className="h-2 w-full bg-gradient-to-r from-[#EAB308] via-[#FF5500] to-[#EAB308]" />
 
       {/* Main Navigation */}
-      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-[#E5E7EB]">
+      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-[#E5E7EB] shadow-sm">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded bg-[#111827] flex items-center justify-center text-[#EAB308]">
-              <HardHat className="w-6 h-6" />
-            </div>
-            <div className="flex items-center">
-              <span className="text-2xl font-black tracking-tight text-[#111827]">Socio</span>
-              <span className="w-1.5 h-1.5 rounded-[1px] bg-[#1E40AF] ml-[1.5px] self-end mb-1 inline-block"></span>
-              <span className="ml-2 px-2 py-0.5 rounded bg-[#F3F4F6] border border-[#E5E7EB] text-[10px] font-mono font-bold uppercase tracking-wider text-[#4B5563]">
+            <div className="flex items-center text-2xl font-black tracking-tight text-[#111827]">
+              <span>Socio</span>
+              <span className="w-1.5 h-1.5 rounded-[1px] bg-[#FF5500] inline-block shadow-[0_0_8px_rgba(255,85,0,0.8)] ml-[1.5px] self-end mb-1" />
+              <span className="ml-2.5 px-2.5 py-0.5 rounded-full bg-orange-50 border border-orange-200 text-[10px] font-mono font-bold uppercase tracking-wider text-orange-700">
                 CONTRATISTAS
               </span>
             </div>
@@ -121,9 +117,9 @@ export function ContractorLanding() {
           <div className="flex items-center gap-4">
             <button
               onClick={() => setLang(lang === 'es' ? 'en' : 'es')}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#D1D5DB] text-xs font-bold text-[#374151] hover:bg-[#F3F4F6] transition-all"
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-[#D1D5DB] text-xs font-bold text-[#374151] hover:bg-[#F3F4F6] transition-all"
             >
-              <Globe className="w-4 h-4 text-[#1E40AF]" />
+              <Globe className="w-4 h-4 text-[#FF5500]" />
               <span>{lang === 'es' ? 'English' : 'Español'}</span>
             </button>
 
@@ -131,7 +127,7 @@ export function ContractorLanding() {
               href={getWhatsAppLink()}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[#25D366] text-white text-xs font-extrabold tracking-wide uppercase hover:bg-[#20ba5a] shadow-sm transition-all"
+              className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#25D366] text-white text-xs font-extrabold tracking-wide uppercase hover:bg-[#20ba5a] shadow-sm transition-all"
             >
               <MessageSquare className="w-4 h-4" />
               WhatsApp Directo
@@ -144,14 +140,14 @@ export function ContractorLanding() {
       <section className="relative pt-16 pb-20 px-6 overflow-hidden border-b border-[#E5E7EB] bg-white">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-[#FEF9C3] border border-[#FDE047] text-[#854D0E] text-xs font-mono font-black tracking-wider uppercase">
-              <span className="w-2 h-2 rounded-full bg-[#EAB308] animate-ping" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-50 border border-orange-200 text-orange-800 text-xs font-mono font-black tracking-wider uppercase">
+              <span className="w-2 h-2 rounded-full bg-[#FF5500] animate-ping" />
               {t.badge}
             </div>
 
             <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-[#111827] leading-[1.08]">
               {t.headlineMain}{' '}
-              <span className="text-[#1E40AF] underline decoration-[#EAB308] decoration-4 underline-offset-8">
+              <span className="text-[#FF5500] underline decoration-[#EAB308] decoration-4 underline-offset-8">
                 {t.headlineSub}
               </span>
             </h1>
@@ -165,7 +161,7 @@ export function ContractorLanding() {
                 href={getWhatsAppLink()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-[#1E40AF] text-white text-base font-bold hover:bg-[#1e3a8a] shadow-lg shadow-blue-900/10 transition-all group"
+                className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-[#FF5500] text-white text-base font-bold hover:bg-[#E04B00] shadow-lg shadow-orange-600/20 transition-all group"
               >
                 <MessageSquare className="w-5 h-5 text-[#EAB308]" />
                 {t.ctaPrimary}
@@ -183,7 +179,7 @@ export function ContractorLanding() {
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 border-t border-[#E5E7EB]">
               {t.metrics.map((m, i) => (
-                <div key={i} className="p-3 bg-[#F9FAFB] rounded-lg border border-[#E5E7EB]">
+                <div key={i} className="p-3.5 bg-[#F9FAFB] rounded-xl border border-[#E5E7EB]">
                   <div className="text-2xl font-black font-mono text-[#111827]">{m.value}</div>
                   <div className="text-[11px] font-bold text-[#6B7280] uppercase tracking-wider mt-0.5">{m.label}</div>
                 </div>
@@ -191,7 +187,7 @@ export function ContractorLanding() {
             </div>
           </div>
 
-          <div className="lg:col-span-5 bg-[#111827] p-6 rounded-2xl border border-[#374151] text-white shadow-2xl space-y-6">
+          <div className="lg:col-span-5 bg-[#111827] p-7 rounded-2xl border border-[#374151] text-white shadow-2xl space-y-6">
             <div className="flex items-center justify-between border-b border-[#374151] pb-4">
               <div className="flex items-center gap-2">
                 <Hammer className="w-5 h-5 text-[#EAB308]" />
@@ -205,19 +201,19 @@ export function ContractorLanding() {
             </div>
 
             <div className="space-y-3 font-mono text-xs">
-              <div className="p-3 bg-[#1F2937] rounded-lg border-l-4 border-l-[#EAB308]">
+              <div className="p-3.5 bg-[#1F2937] rounded-xl border-l-4 border-l-[#EAB308]">
                 <div className="text-[#9CA3AF]">DOB PERMIT RADAR · QUEENS</div>
                 <div className="text-white font-bold mt-1">31-28 30th Ave, Astoria · Gut Rehab</div>
                 <div className="text-[#EAB308] text-[10px] mt-1">✓ WhatsApp Toque 1 enviado: $85,000</div>
               </div>
 
-              <div className="p-3 bg-[#1F2937] rounded-lg border-l-4 border-l-[#3B82F6]">
+              <div className="p-3.5 bg-[#1F2937] rounded-xl border-l-4 border-l-[#FF5500]">
                 <div className="text-[#9CA3AF]">COTIZACIÓN EN REVISIÓN · BROOKLYN</div>
                 <div className="text-white font-bold mt-1">142 Bedford Ave · Storefront Framing</div>
-                <div className="text-[#60A5FA] text-[10px] mt-1">✓ Presupuesto $120,000 en revisión</div>
+                <div className="text-orange-400 text-[10px] mt-1">✓ Presupuesto $120,000 en revisión</div>
               </div>
 
-              <div className="p-3 bg-[#064E3B] rounded-lg border-l-4 border-l-[#10B981]">
+              <div className="p-3.5 bg-[#064E3B] rounded-xl border-l-4 border-l-[#10B981]">
                 <div className="text-[#6EE7B7]">DEPÓSITO COBRADO (QUICKBOOKS)</div>
                 <div className="text-white font-bold mt-1">Anticipo 30% Pagado: $25,500.00</div>
                 <div className="text-[#A7F3D0] text-[10px] mt-1">✓ Comisión Socio (8%): $6,800.00</div>
@@ -244,8 +240,8 @@ export function ContractorLanding() {
           {t.features.map((f, i) => {
             const Icon = f.icon;
             return (
-              <div key={i} className="bg-white p-8 rounded-2xl border border-[#E5E7EB] hover:border-[#1E40AF] transition-all shadow-sm">
-                <div className="w-12 h-12 rounded-xl bg-[#EFF6FF] text-[#1E40AF] flex items-center justify-center mb-6">
+              <div key={i} className="bg-white p-8 rounded-2xl border border-slate-200/80 hover:border-[#FED7AA] transition-all duration-300 shadow-[0_2px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_32px_-8px_rgba(255,85,0,0.08)] hover:-translate-y-0.5">
+                <div className="w-12 h-12 rounded-xl bg-orange-50 text-[#FF5500] flex items-center justify-center mb-6">
                   <Icon className="w-6 h-6" />
                 </div>
                 <h3 className="text-lg font-bold text-[#111827] mb-2">{f.title}</h3>
@@ -267,10 +263,10 @@ export function ContractorLanding() {
       <footer className="bg-[#111827] text-white py-16 px-6">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div>
-            <div className="flex items-center gap-2 text-2xl font-black text-white mb-4">
+            <div className="flex items-center text-2xl font-black tracking-tight text-white mb-4">
               <span>Socio</span>
-              <span className="w-1.5 h-1.5 rounded-[1px] bg-[#EAB308] ml-[1.5px] self-end mb-1 inline-block" />
-              <span className="text-xs font-mono text-[#9CA3AF] ml-2">NYC CONSTRUCTION PARTNER</span>
+              <span className="w-1.5 h-1.5 rounded-[1px] bg-[#FF5500] inline-block shadow-[0_0_8px_rgba(255,85,0,0.8)] ml-[1.5px] self-end mb-1" />
+              <span className="text-xs font-mono text-[#9CA3AF] ml-2.5">NYC CONSTRUCTION PARTNER</span>
             </div>
             <h4 className="text-xl font-bold text-[#F3F4F6] mb-2">{t.guaranteeTitle}</h4>
             <p className="text-sm text-[#9CA3AF] leading-relaxed max-w-md">
