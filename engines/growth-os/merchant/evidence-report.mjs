@@ -20,6 +20,7 @@
 import { buildEconomicTrace } from '../economic/economic-trace.mjs';
 import { LEVELS } from '../economic/attribution.mjs';
 import { MIN_SAMPLE_PER_GROUP } from '../economic/stats.mjs';
+import { computeIncrementality } from './revenue-schedule.mjs';
 
 const REVENUE_EVENT_TYPES = new Set(['revenue', 'purchase', 'repeat_purchase', 'expansion_revenue']);
 
@@ -81,6 +82,8 @@ export function computeStripeState({ secretConfigured = false, stripeEventCount 
  * @param {import('../agent-governor.mjs').AgentGovernor} params.agentGovernor
  * @param {string} params.businessId
  * @param {boolean} [params.stripeSecretConfigured=false] whether STRIPE_WEBHOOK_SECRET is set
+ * @param {object|null} [params.revenueSchedule=null] the signed Revenue Definition
+ *   Schedule for this business (validated), or null when none is on file
  */
 export async function buildMerchantEvidenceReport({
   businessTwin,
@@ -91,6 +94,7 @@ export async function buildMerchantEvidenceReport({
   agentGovernor,
   businessId,
   stripeSecretConfigured = false,
+  revenueSchedule = null,
 }) {
   const trace = await buildEconomicTrace({
     businessTwin,
@@ -102,6 +106,11 @@ export async function buildMerchantEvidenceReport({
   });
 
   const metrics = await revenueLedger.calculateMetrics({ businessId });
+
+  // Verifier layer: apply the signed Revenue Definition Schedule to the ledger.
+  // "Verified" means incremental — excluded and out-of-window revenue is never
+  // claimed, and a baseline is only applied when real history exists.
+  const incrementality = computeIncrementality(trace.revenue, trace.attribution, revenueSchedule);
 
   const approvals = await listApprovals(agentGovernor, businessId);
   const approvalCounts = {
@@ -173,6 +182,10 @@ export async function buildMerchantEvidenceReport({
           eventCount: metrics.eventCount,
           mixedCurrencies: metrics.mixedCurrencies,
           currencies: metrics.currencies,
+          // Verifier layer: exclusion-aware split when a schedule is on file.
+          excludedRevenue: incrementality.excludedRevenue,
+          eligibleRevenue: incrementality.eligibleRevenue,
+          incrementalRevenue: incrementality.incrementalRevenue,
         },
         byCurrency: metrics.byCurrency,
       },
@@ -267,6 +280,22 @@ export async function buildMerchantEvidenceReport({
       })),
     },
     stripe,
+    incrementality,
+    schedule: revenueSchedule
+      ? {
+          status: 'signed',
+          businessId: revenueSchedule.businessId,
+          attributionWindowDays: revenueSchedule.attributionWindowDays,
+          baselineMethod: revenueSchedule.baselineMethod,
+          exclusions: revenueSchedule.exclusions,
+          disputeWindowDays: revenueSchedule.disputeWindowDays,
+          paymentFrequency: revenueSchedule.paymentFrequency,
+          holdoutPercent: revenueSchedule.holdoutPercent,
+          commissionRate: revenueSchedule.commissionRate,
+          effectiveDate: revenueSchedule.effectiveDate,
+          version: revenueSchedule.version,
+        }
+      : { status: 'none', note: 'no revenue definition schedule on file — incremental revenue cannot be computed' },
     system: {
       persistence: revenueLedger.repository.constructor.name.includes('Postgres') ? 'postgres' : 'memory',
       stripeSecretConfigured: Boolean(stripeSecretConfigured),

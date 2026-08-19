@@ -36,7 +36,7 @@ export function Header() {
             className="flex items-center gap-0.5 text-xl sm:text-2xl font-bold text-white tracking-tight group"
           >
             <span>Socio</span>
-            <span className="text-[#38BDF8] drop-shadow-[0_0_12px_rgba(56,189,248,0.9)] animate-pulse font-extrabold">.</span>
+            <span className="text-[#669BD2] drop-shadow-[0_0_12px_rgba(102,155,210,0.9)] animate-pulse font-extrabold">.</span>
           </Link>
 
           {/* Sub-pill (Desktop Only) */}

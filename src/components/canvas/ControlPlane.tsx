@@ -252,7 +252,7 @@ export function ControlPlane() {
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1.5 text-base font-black tracking-tight text-white font-mono">
             <span>Socio</span>
-            <span className="text-[#ccff00] drop-shadow-[0_0_8px_rgba(204,255,0,0.8)]">.</span>
+            <span className="text-[#669BD2] drop-shadow-[0_0_8px_rgba(102,155,210,0.8)]">.</span>
           </div>
           <span className="px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20 text-[9px] font-mono font-extrabold uppercase text-cyan-300">
             AGENT CONTROL PLANE
