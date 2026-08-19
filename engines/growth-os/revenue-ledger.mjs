@@ -16,6 +16,7 @@ export class RevenueLedger {
   constructor(repository) {
     /** @type {import('./repositories/memory-repository.mjs').MemoryRepository} */
     this.repository = repository;
+    this._fallbackRefundLocks = new Map(); // in-process refund serialization (no-lock repos)
   }
 
   /**
@@ -32,9 +33,10 @@ export class RevenueLedger {
       occurredAt: event.occurredAt || new Date().toISOString(),
     };
 
-    // Economic guards that depend on existing ledger state.
+    // Refunds are serialized per original payment: the over-refund check and
+    // the insert must be atomic (see _recordRefund / withRefundLock).
     if (REFUND_TYPES.has(event.type)) {
-      await this._validateRefund(event);
+      return this._recordRefund(finalEvent);
     }
 
     // DB-enforced idempotency: a replayed idempotencyKey (e.g. duplicate
@@ -65,34 +67,72 @@ export class RevenueLedger {
   }
 
   /**
-   * Refund guard — partial refunds accumulate, the total never exceeds the
-   * original payment, and a replayed refund id is rejected downstream by the
-   * idempotency check (duplicate key), never silently overwritten.
+   * Refund bookkeeping, atomic per original payment.
+   *
+   * Partial refunds accumulate and the total never exceeds the original. The
+   * check + insert run under a repository lock keyed on the original payment:
+   *   - Postgres: pg_advisory_xact_lock in a transaction (safe across
+   *     processes/connections)
+   *   - memory: per-key promise chain (safe across concurrent awaits)
+   * Without the lock, two concurrent refunds can both read "0 refunded so
+   * far" and over-refund the original.
    */
-  async _validateRefund(event) {
-    const originalEventId = event.metadata?.originalEventId;
+  async _recordRefund(finalEvent) {
+    const originalEventId = finalEvent.metadata?.originalEventId;
     if (!originalEventId) {
       throw new ValidationError('refund requires metadata.originalEventId of the original payment');
     }
-    const original = await this.repository.get(originalEventId);
-    if (!original) {
-      throw new ValidationError(`refund references unknown original event ${originalEventId}`);
-    }
-    if (!REVENUE_TYPES.has(original.type)) {
-      throw new ValidationError(`refund original event ${originalEventId} is not a payment (type ${original.type})`);
-    }
-    const existingRefunds = await this.repository.findAll(
-      (e) => e.type === 'refund' && e.metadata?.originalEventId === originalEventId
-    );
-    const totalRefunded = existingRefunds.reduce((sum, e) => sum + e.amount, 0);
-    const remaining = original.amount - totalRefunded;
-    // Small epsilon absorbs float division rounding (minor units / 100).
-    if (event.amount - remaining > 1e-6) {
-      throw new ValidationError(
-        `refund of ${event.amount} exceeds the remaining refundable amount ` +
-        `${Math.max(remaining, 0).toFixed(2)} of original event ${originalEventId}`
+
+    const book = async (tx) => {
+      const original = await tx.get(originalEventId);
+      if (!original) {
+        throw new ValidationError(`refund references unknown original event ${originalEventId}`);
+      }
+      if (!REVENUE_TYPES.has(original.type)) {
+        throw new ValidationError(`refund original event ${originalEventId} is not a payment (type ${original.type})`);
+      }
+      const existingRefunds = await tx.findAll(
+        (e) => e.type === 'refund' && e.metadata?.originalEventId === originalEventId
       );
+      const totalRefunded = existingRefunds.reduce((sum, e) => sum + e.amount, 0);
+      const remaining = original.amount - totalRefunded;
+      // Small epsilon absorbs float division rounding (minor units / 100).
+      if (finalEvent.amount - remaining > 1e-6) {
+        throw new ValidationError(
+          `refund of ${finalEvent.amount} exceeds the remaining refundable amount ` +
+          `${Math.max(remaining, 0).toFixed(2)} of original event ${originalEventId}`
+        );
+      }
+      if (finalEvent.idempotencyKey) {
+        const dup = await tx.findAll((e) => e.idempotencyKey === finalEvent.idempotencyKey);
+        if (dup.length > 0) {
+          throw new ValidationError(
+            `duplicate event: idempotencyKey ${finalEvent.idempotencyKey} already recorded`
+          );
+        }
+      }
+      try {
+        return await tx.saveIfAbsent(finalEvent.id, finalEvent);
+      } catch (err) {
+        if (err?.code === '23505' || /23505/.test(err?.message || '')) {
+          throw new ValidationError(
+            `duplicate event: idempotencyKey ${finalEvent.idempotencyKey || finalEvent.id} already recorded`
+          );
+        }
+        throw err;
+      }
+    };
+
+    if (this.repository.withRefundLock) {
+      return this.repository.withRefundLock(originalEventId, book);
     }
+    // Fallback for repositories without lock support: serialize in-process.
+    this._fallbackRefundLocks ??= new Map();
+    const key = String(originalEventId);
+    const prev = this._fallbackRefundLocks.get(key) || Promise.resolve();
+    const run = prev.then(() => book(this.repository));
+    this._fallbackRefundLocks.set(key, run.catch(() => {}));
+    return run;
   }
 
   /**

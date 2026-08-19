@@ -154,8 +154,9 @@ probability that Socio caused the revenue.
   `data->>'businessId'` filters).
 - Token-less operation is allowed only in explicit in-memory dev mode
   (`GROWTH_OS_ALLOW_MEMORY=true`, binds 127.0.0.1, logs `tokens: DISABLED`).
-- CORS: `MERCHANT_API_CORS_ORIGIN` (default `*` — set explicitly before any
-  non-local deployment).
+- CORS: `MERCHANT_API_CORS_ORIGIN` — **required** when `DATABASE_URL` is set
+  (the API fails closed without it); the wildcard default exists only for
+  local in-memory development.
 - Fail-closed boot: `DATABASE_URL` is required unless
   `GROWTH_OS_ALLOW_MEMORY=true` (explicit in-memory test mode). The server
   exits otherwise.

@@ -19,10 +19,13 @@ echo "🧠 Wiring up DSH as the MCP server for heavy lifting..."
 # in the human-operated DSH environment (npx @deepseek-ai/dsh), not inside the
 # agent fleet.
 # To explicitly opt in (NOT recommended for the pilot), set SOCIO_WIRE_DSH_MCP=1
-# and review what the dsh MCP server exposes before enabling it.
+# and review what the dsh MCP server exposes before enabling it. If you do
+# enable DSH, use a dedicated, isolated DEVELOPMENT profile — never a locked
+# production fleet profile.
 if [ "${SOCIO_WIRE_DSH_MCP:-0}" = "1" ]; then
   echo "⚠️  SOCIO_WIRE_DSH_MCP=1 — wiring DSH as an MCP server for the fleet."
-  echo "    This bypasses the execution boundary. Make sure you know what you are doing."
+  echo "    This bypasses the execution boundary. Use a dedicated dev profile,"
+  echo "    never a locked production profile. Make sure you know what you are doing."
   hermes mcp add dsh --command "npx @deepseek-ai/dsh --mcp"
 else
   echo "ℹ️  DSH MCP not wired into the fleet (locked profiles must have no MCP servers)."
