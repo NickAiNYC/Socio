@@ -1,0 +1,60 @@
+{
+  "pipeline": {
+    "label": "Socio Contratistas NYC - Pilot Acquisition",
+    "displayOrder": 1,
+    "stages": [
+      {
+        "stageId": "prospect_dob_scanned",
+        "label": "1. DOB Scanned / Cold Inbound",
+        "displayOrder": 1,
+        "metadata": { "probability": "0.1" }
+      },
+      {
+        "stageId": "leak_scan_ready",
+        "label": "2. Escaneo de Fugas Delivered",
+        "displayOrder": 2,
+        "metadata": { "probability": "0.25" }
+      },
+      {
+        "stageId": "whatsapp_pitch_engaged",
+        "label": "3. WhatsApp 3-Touch Active",
+        "displayOrder": 3,
+        "metadata": { "probability": "0.4" }
+      },
+      {
+        "stageId": "pilot_contract_sent",
+        "label": "4. Pilot Agreement Sent (50% Off)",
+        "displayOrder": 4,
+        "metadata": { "probability": "0.7" }
+      },
+      {
+        "stageId": "onboarding_live_qbo",
+        "label": "5. Onboarding Complete & QBO Connected (Gate 1 Cleared)",
+        "displayOrder": 5,
+        "metadata": { "probability": "0.9" }
+      },
+      {
+        "stageId": "deposit_cleared_won",
+        "label": "6. Closed Won / First Deposit Cleared (Gate 2 Cleared)",
+        "displayOrder": 6,
+        "metadata": { "probability": "1.0", "isClosed": "true" }
+      },
+      {
+        "stageId": "closed_lost_killed",
+        "label": "7. Disqualified / Kill Gate Expired",
+        "displayOrder": 7,
+        "metadata": { "probability": "0.0", "isClosed": "true" }
+      }
+    ]
+  },
+  "dealProperties": [
+    { "name": "contractor_phone_primary", "label": "Contractor WhatsApp Phone", "type": "string", "fieldType": "text" },
+    { "name": "borough_location", "label": "Borough", "type": "enumeration", "fieldType": "select", "options": [{"value": "queens", "label": "Queens"}, {"value": "brooklyn", "label": "Brooklyn"}, {"value": "bronx", "label": "Bronx"}, {"value": "manhattan", "label": "Manhattan"}] },
+    { "name": "qbo_realm_id", "label": "QuickBooks Realm ID", "type": "string", "fieldType": "text" },
+    { "name": "pilot_discount_active", "label": "Pilot 50% Commission Rate", "type": "bool", "fieldType": "booleancheckbox" },
+    { "name": "total_attributed_contracts", "label": "Total Attributed Contract Volume ($)", "type": "number", "fieldType": "number" },
+    { "name": "total_cleared_deposits", "label": "Total Cleared Bank Deposits ($)", "type": "number", "fieldType": "number" },
+    { "name": "gate_1_day_45_status", "label": "Gate 1 (Day 45 Status)", "type": "enumeration", "fieldType": "select", "options": [{"value": "passed", "label": "Passed"}, {"value": "failed", "label": "Failed"}] },
+    { "name": "gate_2_day_90_status", "label": "Gate 2 (Day 90 Status)", "type": "enumeration", "fieldType": "select", "options": [{"value": "passed", "label": "Passed"}, {"value": "failed", "label": "Failed"}] }
+  ]
+}

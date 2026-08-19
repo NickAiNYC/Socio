@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Socio_WhatsApp_Outbound_Pitch_Engine_v1",
+  "description": "3-Touch Cold Outreach Workflow for NYC Hispanic Construction Contractors with Governor Quiet Hours and Human Approval Gate",
+  "meta": {
+    "version": "1.2.0",
+    "targetVertical": "NYC_Hispanic_Contractors",
+    "supportedLanguages": ["es", "en"],
+    "rateLimitPerPhoneDaily": 1
+  },
+  "modules": [
+    {
+      "id": "step_1_prospect_trigger",
+      "name": "DOB or Directory Ingestion Trigger",
+      "type": "webhook",
+      "config": {
+        "endpoint": "/api/construction/permits/ingest",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "step_2_governor_quiet_hours_check",
+      "name": "Governor: 7:00 PM EST Quiet Hours Gate",
+      "type": "condition",
+      "logic": "TIME_BETWEEN(08:00, 19:00, 'America/New_York')",
+      "onFalse": "QUEUE_FOR_NEXT_DAY_0900_EST"
+    },
+    {
+      "id": "step_3_human_approval_gate",
+      "name": "Touch 1 Human Approval Gate",
+      "type": "manual_review_approval",
+      "config": {
+        "channel": "Telegram/Admin-Slack",
+        "notificationText": "Propose WhatsApp Touch 1 to {{ownerName}} ({{companyName}} - {{phone}}). Approve?",
+        "actions": ["APPROVE_SEND", "REJECT"]
+      }
+    },
+    {
+      "id": "step_4_dispatch_touch_1",
+      "name": "Send Touch 1: Free Leak Scan Offer",
+      "type": "whatsapp_cloud_api",
+      "endpoint": "https://graph.facebook.com/v18.0/{{WHATSAPP_PHONE_NUMBER_ID}}/messages",
+      "payload": {
+        "messaging_product": "whatsapp",
+        "recipient_type": "individual",
+        "to": "{{prospect_phone}}",
+        "type": "text",
+        "text": {
+          "body": "Hola {{ownerName}}, le saluda Nick de Socio en NYC. Vimos los proyectos que {{companyName}} hace en {{borough}}. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+        }
+      }
+    },
+    {
+      "id": "step_5_wait_day_3",
+      "name": "Wait 72 Hours (If No Reply)",
+      "type": "delay",
+      "duration": "72h",
+      "cancelCondition": "PROSPECT_REPLIED == true"
+    },
+    {
+      "id": "step_6_dispatch_touch_2",
+      "name": "Send Touch 2: Social Proof & Cleared Deposit Rule",
+      "type": "whatsapp_cloud_api",
+      "payload": {
+        "messaging_product": "whatsapp",
+        "to": "{{prospect_phone}}",
+        "type": "text",
+        "text": {
+          "body": "{{ownerName}}, quería agregar: con Socio usted *nunca paga por adelantado ni por estimados no cerrados*. Nuestro sistema solo cobra una pequeña comisión cuando su cliente deposita el anticipo en su cuenta bancaria. Si el cliente no paga el depósito, nuestro costo es $0.00."
+        }
+      }
+    },
+    {
+      "id": "step_7_wait_day_7",
+      "name": "Wait 96 Hours (Total Day 7)",
+      "type": "delay",
+      "duration": "96h",
+      "cancelCondition": "PROSPECT_REPLIED == true"
+    },
+    {
+      "id": "step_8_dispatch_touch_3_voice_and_pdf",
+      "name": "Send Touch 3: Voice Note + PDF Playbook",
+      "type": "whatsapp_batch",
+      "items": [
+        {
+          "type": "audio",
+          "payload": {
+            "messaging_product": "whatsapp",
+            "to": "{{prospect_phone}}",
+            "type": "audio",
+            "audio": { "link": "https://socio-one.vercel.app/assets/audio/socio-voice-intro.mp3" }
+          }
+        },
+        {
+          "type": "document",
+          "payload": {
+            "messaging_product": "whatsapp",
+            "to": "{{prospect_phone}}",
+            "type": "document",
+            "document": {
+              "link": "https://socio-one.vercel.app/docs/guia-marketing-contratistas-nyc.pdf",
+              "filename": "Guia_Contratistas_NYC_Socio.pdf",
+              "caption": "Don {{ownerName}}, le dejé una nota de voz rápida de 20 segundos arriba. También le adjunto la *Guía de Adquisición de Contratos para Contratistas Hispanos en NYC*. Si en el futuro busca expandir sus cuadrillas, aquí estamos a su orden."
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
