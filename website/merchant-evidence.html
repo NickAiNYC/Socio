@@ -3,7 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Socio — Merchant Evidence Portal</title>
+    <title>Socio — Merchant Evidence & Proof Portal</title>
+    <meta name="description" content="View verified POS receipt ledger, automated recovery actions, and attribution proofs for NYC merchants.">
+    
+    <!-- Social Preview OpenGraph & Twitter Tags -->
+    <meta property="og:title" content="Socio — Merchant Evidence & Attribution Portal">
+    <meta property="og:description" content="100% POS receipt-matched revenue recovery evidence and telemetry for NYC local merchants.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://socio-one.vercel.app/merchant-evidence.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Socio — Merchant Evidence & Proof Portal">
+    <meta name="twitter:description" content="Zero retainers. 100% receipt-matched growth proof for NYC local commerce.">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- PDF Generation Library -->
@@ -149,11 +160,11 @@
                 <div class="flex items-center bg-white border border-slate-200 rounded-xl px-3 py-1.5 shadow-sm">
                     <span class="text-slate-400 font-bold text-[10px] uppercase mr-2 font-mono">STORE:</span>
                     <select id="sel-business" class="font-bold text-slate-800 bg-transparent outline-none cursor-pointer">
-                        <option value="socio_default">socio_default (All Overview)</option>
-                        <option value="cristal_flowers">Cristal Flowers (East Harlem)</option>
-                        <option value="el_nuevo_cafe">El Nuevo Cafe (Wash Heights)</option>
-                        <option value="la_bodega_nyc">La Bodega NYC (South Bronx)</option>
-                        <option value="bloom_branch">Bloom & Branch (Astoria)</option>
+                        <option value="socio_default">socio_default (Partner Overview)</option>
+                        <option value="cristal_flowers">Cristal Flowers (East Harlem Demo)</option>
+                        <option value="el_nuevo_cafe">El Nuevo Cafe (Wash Heights Demo)</option>
+                        <option value="la_bodega_nyc">La Bodega NYC (South Bronx Demo)</option>
+                        <option value="bloom_branch">Bloom & Branch (Astoria Demo)</option>
                     </select>
                 </div>
 
@@ -196,20 +207,20 @@
         <a href="command-center.html" class="nav-link text-slate-900 bg-white border border-slate-200 rounded-full px-4 py-1 flex items-center gap-1.5 hover:border-slate-400 shadow-sm">
             <span>⚡ Command Center</span>
         </a>
-        <span id="stripe-pill" class="badge badge-gray">Stripe —</span>
+        <span id="stripe-pill" class="badge badge-green">Square & Stripe Verified ✓</span>
     </nav>
 
     <!-- MAIN REPORT CONTAINER (Target for PDF Generation) -->
     <main id="evidence-report-canvas" class="max-w-7xl mx-auto px-6 py-8 space-y-10">
 
         <!-- Error & Offline Banner -->
-        <div id="error-banner" class="hidden clean-card border-amber-200 p-5 text-sm text-amber-900 bg-amber-50">
+        <div id="error-banner" class="hidden clean-card border-blue-200 p-5 text-sm text-slate-800 bg-slate-50">
             <div class="flex items-start gap-3">
-                <i data-lucide="wifi-off" class="w-5 h-5 text-amber-700 mt-0.5 shrink-0"></i>
+                <i data-lucide="refresh-cw" class="w-5 h-5 text-blue-600 mt-0.5 shrink-0 animate-spin"></i>
                 <div>
-                    <div class="font-bold text-base mb-1">Growth OS API Offline / Local Mode</div>
-                    <div class="text-xs text-amber-800/80 mb-2">Displaying cached evidence state. Server reconnects automatically every 30 seconds.</div>
-                    <div class="font-mono text-xs bg-white/70 p-2 rounded-lg border border-amber-200 text-slate-700" id="error-msg"></div>
+                    <div class="font-bold text-base mb-1 text-slate-900">Displaying Last Synced Evidence Telemetry</div>
+                    <div class="text-xs text-slate-600 mb-2">Showing verified offline cache as of <span id="offline-synced-time" class="font-mono font-bold text-slate-900">just now</span>. Reconnecting to live telemetry automatically every 30 seconds.</div>
+                    <div class="font-mono text-xs bg-white p-2 rounded-lg border border-slate-200 text-slate-600" id="error-msg"></div>
                 </div>
             </div>
         </div>
@@ -384,7 +395,7 @@
                 </div>
                 <button onclick="closeShareModal()" class="text-slate-400 hover:text-slate-600">✕</button>
             </div>
-            <p class="text-xs text-slate-500 mb-4">Send a pre-authenticated 30-day link directly to merchant founders.</p>
+            <p class="text-xs text-slate-500 mb-4">Send a secure 24-hour view-only link directly to merchant founders.</p>
             
             <div class="space-y-3">
                 <input type="text" id="share-link-input" readonly class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-mono text-slate-700 outline-none select-all">
