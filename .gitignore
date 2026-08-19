@@ -29,3 +29,4 @@ Thumbs.db
 
 # Git worktrees (admin directories, not project content)
 .worktrees/
+.vercel

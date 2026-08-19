@@ -1,0 +1,27 @@
+{
+  "leads": [
+    {
+      "id": "lead_bf8b4f0275eb",
+      "name": "Cristal Flowers",
+      "address": "East Harlem",
+      "phone": "2125551234",
+      "email": "",
+      "type": "Florist",
+      "referralCode": "REF_PARTNER_01",
+      "timestamp": "2026-08-19T01:15:32.033Z"
+    }
+  ],
+  "referrals": {},
+  "referral_clicks": [],
+  "referral_conversions": [
+    {
+      "leadId": "lead_bf8b4f0275eb",
+      "referralCode": "REF_PARTNER_01",
+      "timestamp": "2026-08-19T01:15:32.033Z",
+      "status": "pending_revenue_split",
+      "commissionRate": 0.05
+    }
+  ],
+  "analytics_pageviews": [],
+  "analytics_events": []
+}

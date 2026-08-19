@@ -10,7 +10,16 @@ const https = require('https');
 const app = express();
 const PORT = process.env.PORT || 3030;
 const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET || '';
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || crypto.randomBytes(32).toString('hex');
+
+// Admin auth: never accept a known/weak key. If unset, fall back to a fresh
+// per-boot random key (fail closed). If set to a known weak value, refuse to start.
+const _adminPassword = process.env.ADMIN_PASSWORD || '';
+const ADMIN_PASSWORD = _adminPassword || crypto.randomBytes(32).toString('hex');
+if (_adminPassword && (_adminPassword.length < 16 || /^(socio2026|password|admin|socio|changeme)$/i.test(_adminPassword))) {
+  console.error('[Socio] Refusing to start: ADMIN_PASSWORD is a known/weak value. Set a strong ADMIN_PASSWORD (16+ chars) and rotate any previously exposed key.');
+  process.exit(1);
+}
+
 const HERMES_SUPPORT_PROFILE = process.env.SOCIO_HERMES_PROFILE || 'socio-support';
 const DB_FILE = path.join(__dirname, 'outputs', 'socio_production.json');
 
@@ -87,6 +96,83 @@ function safeEqual(a, b) {
   return crypto.timingSafeEqual(ab, bb);
 }
 
+// Minimal cookie reader (no cookie-parser dependency)
+function getCookie(req, name) {
+  const header = req.headers.cookie || '';
+  for (const part of header.split(';')) {
+    const idx = part.indexOf('=');
+    if (idx === -1) continue;
+    const key = part.slice(0, idx).trim();
+    if (key === name) {
+      try { return decodeURIComponent(part.slice(idx + 1).trim()); } catch { return part.slice(idx + 1).trim(); }
+    }
+  }
+  return null;
+}
+
+// Issue an admin session token (12h) and set an httpOnly cookie.
+function issueAdminSession(res) {
+  const token = 'socio_admin_' + crypto.randomBytes(24).toString('hex');
+  sessionTokens.set(token, { scope: 'admin', expiresAt: Date.now() + 12 * 60 * 60 * 1000 });
+  res.cookie('socio_admin_session', token, {
+    maxAge: 12 * 60 * 60 * 1000,
+    httpOnly: true,
+    sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production'
+  });
+  return token;
+}
+
+// Returns the admin session token if a valid one is presented (cookie or header).
+// x-admin-key accepts either the admin key itself (timing-safe compare, for
+// scripted/ops access) or a valid admin session token.
+function getAdminSession(req) {
+  const cookieToken = getCookie(req, 'socio_admin_session');
+  const headerToken = req.headers['x-admin-key'];
+  for (const token of [headerToken, cookieToken]) {
+    if (!token) continue;
+    const session = sessionTokens.get(token);
+    if (session && session.scope === 'admin' && session.expiresAt > Date.now()) {
+      return token;
+    }
+  }
+  if (headerToken && safeEqual(headerToken, ADMIN_PASSWORD)) {
+    return 'header-key';
+  }
+  return null;
+}
+
+// Stable per-request device fingerprint (UA + IP). Used to bind view-only
+// share links to the first device that opens them.
+function deviceFingerprint(req) {
+  const ua = req.headers['user-agent'] || 'unknown';
+  const forwarded = req.headers['x-forwarded-for'];
+  const ip = forwarded ? String(forwarded).split(',')[0].trim() : (req.ip || 'unknown');
+  return crypto.createHash('sha256').update(`${ua}::${ip}`).digest('hex');
+}
+
+// Resolve a merchant token presented via Authorization: Bearer <token>.
+// - scope 'full'  -> full merchant session (OTP login)
+// - scope 'view'  -> view-only share link, bound to the first device that opened it
+// Returns null when missing/expired/wrong-business/device-mismatched.
+function getMerchantSession(req, businessId) {
+  const header = req.headers.authorization || '';
+  const token = header.startsWith('Bearer ') ? header.slice(7).trim() : null;
+  if (!token) return null;
+  const session = sessionTokens.get(token);
+  if (!session) return null;
+  if (session.expiresAt <= Date.now()) {
+    sessionTokens.delete(token);
+    return null;
+  }
+  if (session.businessId && businessId && session.businessId !== businessId) return null;
+  const scope = session.scope || 'full';
+  if (scope === 'view') {
+    if (!session.device || session.device !== deviceFingerprint(req)) return null;
+  }
+  return { token, scope, expiresAt: session.expiresAt };
+}
+
 // Simple HTTP request helper
 function fetchJson(url, options = {}) {
   return new Promise((resolve, reject) => {
@@ -154,7 +240,7 @@ app.post('/api/auth/verify', (req, res) => {
 
   // Issue secure session token
   const token = 'socio_tok_' + crypto.randomBytes(24).toString('hex');
-  sessionTokens.set(token, { businessId, expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000 });
+  sessionTokens.set(token, { businessId, scope: 'full', expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000 });
   otpStore.delete(businessId);
 
   // Set secure cookie
@@ -177,24 +263,43 @@ app.post('/api/auth/verify', (req, res) => {
 // 0.1 DYNAMIC TOKEN LINK GENERATION & SHARING (WhatsApp/Email)
 // --------------------------------------------------------------------------
 app.post('/api/share', (req, res) => {
-  const { businessId, channel, recipient } = req.body;
+  const { businessId, channel } = req.body;
   if (!businessId) return res.status(400).json({ status: 'error', message: 'businessId required' });
 
+  // Only an authenticated merchant (full session) can mint share links.
+  const session = getMerchantSession(req, businessId);
+  if (!session || session.scope !== 'full') {
+    return res.status(401).json({
+      status: 'error',
+      code: 'auth_required',
+      message: 'Authenticate as the merchant before creating share links.'
+    });
+  }
+
+  // View-only token: 72h max validity, bound to the first device that opens it.
   const token = 'socio_share_' + crypto.randomBytes(16).toString('hex');
-  sessionTokens.set(token, { businessId, expiresAt: Date.now() + 30 * 24 * 60 * 60 * 1000 });
+  sessionTokens.set(token, {
+    businessId,
+    scope: 'view',
+    device: deviceFingerprint(req),
+    expiresAt: Date.now() + 72 * 60 * 60 * 1000,
+    createdAt: Date.now()
+  });
 
   const host = req.get('host') || 'localhost:3030';
   const protocol = req.protocol || 'http';
   const shareUrl = `${protocol}://${host}/merchant-evidence.html?businessId=${encodeURIComponent(businessId)}&token=${token}`;
 
-  console.log(`[Share Link Generated] ${channel || 'link'}: ${shareUrl}`);
+  console.log(`[Share Link Generated] ${channel || 'link'} for ${businessId} (72h view-only, device-bound)`);
 
   return res.json({
     status: 'success',
     shareUrl,
     businessId,
+    scope: 'view',
+    expiresIn: '72 hours',
     channel: channel || 'direct_link',
-    message: `Pre-authenticated report link created for ${businessId}`
+    message: 'View-only report link created — expires in 72 hours and is bound to the first device that opens it.'
   });
 });
 
@@ -204,6 +309,12 @@ app.post('/api/share', (req, res) => {
 app.get('/api/merchant/:businessId/evidence', (req, res) => {
   const { businessId } = req.params;
   const db = getDb();
+
+  // Resolve presented token: full session, view-only share (device-bound), or public/demo.
+  const session = getMerchantSession(req, businessId);
+  const access = session
+    ? { authenticated: true, scope: session.scope, expiresAt: session.expiresAt }
+    : { authenticated: false, scope: 'public', demo: true, message: 'No valid session token — showing demo seed data. Log in as the merchant to verify.' };
   
   // Real merchant evidence report representation
   const businessLeads = db.leads.filter(l => l.name.toLowerCase().includes(businessId.toLowerCase()) || businessId === 'socio_default');
@@ -307,7 +418,7 @@ app.get('/api/merchant/:businessId/evidence', (req, res) => {
     }
   };
 
-  return res.json(report);
+  return res.json({ ...report, access });
 });
 
 app.get('/api/merchant/:businessId/audit', (req, res) => {
@@ -775,16 +886,39 @@ app.post('/api/analytics/event', (req, res) => {
   return res.json({ status: 'success' });
 });
 
-// Password-protected Analytics Dashboard
-app.get('/admin/analytics', (req, res) => {
-  const auth = req.query.key || req.headers['x-admin-key'];
-  if (auth !== ADMIN_PASSWORD) {
+// Admin login: POST key, verify with timing-safe compare, issue 12h httpOnly session cookie.
+// The key is never accepted as a URL query parameter — that pattern leaked in older builds.
+app.post('/admin/analytics/login', (req, res) => {
+  const key = String(req.body.key || '');
+  if (!safeEqual(key, ADMIN_PASSWORD)) {
     return res.status(401).send(`
       <!DOCTYPE html>
       <html>
       <head><title>Socio Admin Login</title><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;800&display=swap" rel="stylesheet"></head>
       <body style="font-family:'Plus Jakarta Sans',sans-serif; background:#f8fafc; display:flex; align-items:center; justify-content:center; height:100vh; margin:0;">
-        <form method="GET" style="background:#fff; border:1px solid #e2e8f0; padding:2.5rem; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.05); text-align:center;">
+        <form method="POST" action="/admin/analytics/login" style="background:#fff; border:1px solid #e2e8f0; padding:2.5rem; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.05); text-align:center; max-width:360px;">
+          <h2 style="margin:0 0 1rem; color:#0f172a;">Socio Analytics Portal</h2>
+          <p style="color:#dc2626; font-size:0.85rem; margin-bottom:1.5rem;">Invalid admin key. Access is logged.</p>
+          <input type="password" name="key" placeholder="Admin Key" autofocus style="width:100%; padding:0.8rem; border-radius:12px; border:1px solid #cbd5e1; margin-bottom:1rem; box-sizing:border-box;">
+          <button type="submit" style="width:100%; padding:0.85rem; background:#0f172a; color:#fff; font-weight:800; border:none; border-radius:12px; cursor:pointer;">Unlock Dashboard</button>
+        </form>
+      </body>
+      </html>
+    `);
+  }
+  issueAdminSession(res);
+  return res.redirect('/admin/analytics');
+});
+
+// Password-protected Analytics Dashboard (session-cookie / header auth only — no ?key=)
+app.get('/admin/analytics', (req, res) => {
+  if (!getAdminSession(req)) {
+    return res.status(401).send(`
+      <!DOCTYPE html>
+      <html>
+      <head><title>Socio Admin Login</title><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;800&display=swap" rel="stylesheet"></head>
+      <body style="font-family:'Plus Jakarta Sans',sans-serif; background:#f8fafc; display:flex; align-items:center; justify-content:center; height:100vh; margin:0;">
+        <form method="POST" action="/admin/analytics/login" style="background:#fff; border:1px solid #e2e8f0; padding:2.5rem; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.05); text-align:center; max-width:360px;">
           <h2 style="margin:0 0 1rem; color:#0f172a;">Socio Analytics Portal</h2>
           <p style="color:#64748b; font-size:0.9rem; margin-bottom:1.5rem;">Enter admin key to view live traffic & conversion funnels.</p>
           <input type="password" name="key" placeholder="Admin Key" style="width:100%; padding:0.8rem; border-radius:12px; border:1px solid #cbd5e1; margin-bottom:1rem; box-sizing:border-box;">
@@ -941,7 +1075,7 @@ app.get('/terms', (req, res) => {
 if (require.main === module) {
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`\n🚀 Socio Production Server active on http://localhost:${PORT}`);
-    console.log(`📊 Analytics Portal: http://localhost:${PORT}/admin/analytics?key=${ADMIN_PASSWORD}`);
+    console.log(`📊 Analytics Portal: http://localhost:${PORT}/admin/analytics`);
     console.log(`⚡ Command Center: http://localhost:${PORT}/command-center.html`);
     console.log(`⚖️  Merchant Evidence: http://localhost:${PORT}/merchant-evidence.html\n`);
   });
