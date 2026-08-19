@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Socio Command Center — Autonomous Merchant Growth Operating System</title>
+  <title>Socio Command Center — Action-Oriented Growth Operating System</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,10 +12,10 @@
   
   <style>
     :root {
-      --bg-dark: #08090d;
-      --bg-card: #0e1017;
-      --bg-surface: #141722;
-      --border-subtle: rgba(255, 255, 255, 0.07);
+      --bg-dark: #07080b;
+      --bg-card: #0d0f16;
+      --bg-surface: #131620;
+      --border-subtle: rgba(255, 255, 255, 0.08);
       --accent-yellow: #ccff00;
       --accent-green: #10B981;
       --accent-sky: #38bdf8;
@@ -30,8 +30,8 @@
       color: #f8fafc;
       font-family: var(--font-sans);
       background-image: 
-        radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 100% 50%, rgba(204, 255, 0, 0.03) 0%, transparent 40%);
+        radial-gradient(circle at 50% 0%, rgba(204, 255, 0, 0.04) 0%, transparent 60%),
+        radial-gradient(circle at 100% 50%, rgba(56, 189, 248, 0.03) 0%, transparent 50%);
       background-attachment: fixed;
       min-height: 100vh;
       overflow-x: hidden;
@@ -43,10 +43,17 @@
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
       border-radius: 18px;
-      transition: all 0.2s ease;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .glass-card:hover {
-      border-color: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.16);
+    }
+
+    .action-hero-card {
+      background: linear-gradient(180deg, #131722 0%, #0c0e15 100%);
+      border: 1px solid rgba(204, 255, 0, 0.3);
+      border-radius: 22px;
+      box-shadow: 0 0 35px -5px rgba(204, 255, 0, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.15);
     }
 
     .pill {
@@ -120,7 +127,6 @@
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
   </style>
 </head>
 <body class="flex flex-col h-screen overflow-hidden">
@@ -137,7 +143,7 @@
       <div class="h-4 w-px bg-white/10 hidden sm:block"></div>
       <div class="flex items-center gap-2 text-xs font-mono text-gray-400">
         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        <span class="hidden md:inline">8/8 AGENTS RUNNING</span>
+        <span class="hidden md:inline">8/8 AGENTS ACTIVE</span>
       </div>
     </div>
 
@@ -145,7 +151,7 @@
     <div class="flex-1 max-w-xl mx-6 relative">
       <div class="flex items-center gap-2.5 bg-[#141722] border border-white/10 rounded-xl px-3.5 py-1.5 focus-within:border-[#ccff00] transition-colors shadow-inner">
         <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#ccff00]"></i>
-        <input type="text" id="global-command-input" placeholder="Ask Chief of Staff or enter command... (e.g. 'Show me what needs approval', 'Briefing') • ⌘K" class="bg-transparent border-none outline-none text-xs font-mono text-white w-full placeholder-gray-500" onkeydown="handleCommandKey(event)">
+        <input type="text" id="global-command-input" placeholder="Ask Chief of Staff or dispatch command... (e.g. 'What is my next action?', 'Approve PROP-0042') • ⌘K" class="bg-transparent border-none outline-none text-xs font-mono text-white w-full placeholder-gray-500" onkeydown="handleCommandKey(event)">
         <span class="text-[10px] font-mono bg-white/5 px-1.5 py-0.5 rounded text-gray-400 border border-white/10">⌘K</span>
       </div>
     </div>
@@ -169,27 +175,27 @@
     <!-- LEFT NAVIGATION DOCK -->
     <aside class="w-56 border-r border-white/5 bg-[#08090d] p-3 flex flex-col justify-between shrink-0 overflow-y-auto">
       <div class="space-y-1">
-        <div class="text-[10px] font-mono uppercase text-gray-500 font-bold px-3 py-1">Command Plane</div>
-        <div class="nav-tab-btn active" onclick="switchTab('overview', this)"><i data-lucide="layout-dashboard" class="w-4 h-4"></i> Executive HUD</div>
+        <div class="text-[10px] font-mono uppercase text-gray-500 font-bold px-3 py-1">Action Loop</div>
+        <div class="nav-tab-btn active" onclick="switchTab('action-engine', this)"><i data-lucide="zap" class="w-4 h-4"></i> Action Center <span class="ml-auto pill pill-yellow">P0</span></div>
         <div class="nav-tab-btn" onclick="switchTab('queue', this)"><i data-lucide="list-todo" class="w-4 h-4"></i> Founder Queue <span class="ml-auto pill pill-amber" id="nav-badge-queue">3</span></div>
-        <div class="nav-tab-btn" onclick="switchTab('governor', this)"><i data-lucide="shield-check" class="w-4 h-4"></i> Governor Control <span class="ml-auto pill pill-red" id="nav-badge-gov">3</span></div>
-
-        <div class="text-[10px] font-mono uppercase text-gray-500 font-bold px-3 pt-3 py-1">Operations</div>
         <div class="nav-tab-btn" onclick="switchTab('agents', this)"><i data-lucide="bot" class="w-4 h-4"></i> Agent Fleet <span class="ml-auto text-[10px] text-emerald-400 font-mono">8/8</span></div>
+        <div class="nav-tab-btn" onclick="switchTab('governor', this)"><i data-lucide="shield-check" class="w-4 h-4"></i> Governor Safety <span class="ml-auto pill pill-red" id="nav-badge-gov">3</span></div>
+
+        <div class="text-[10px] font-mono uppercase text-gray-500 font-bold px-3 pt-3 py-1">Execution & Evidence</div>
         <div class="nav-tab-btn" onclick="switchTab('merchants', this)"><i data-lucide="store" class="w-4 h-4"></i> Merchants CRM</div>
         <div class="nav-tab-btn" onclick="switchTab('pipeline', this)"><i data-lucide="kanban" class="w-4 h-4"></i> Growth Pipeline</div>
         <div class="nav-tab-btn" onclick="switchTab('ledger', this)"><i data-lucide="receipt" class="w-4 h-4"></i> Revenue Ledger</div>
-        <div class="nav-tab-btn" onclick="switchTab('evidence', this)"><i data-lucide="scale" class="w-4 h-4"></i> Merchant Evidence</div>
+        <div class="nav-tab-btn" onclick="switchTab('evidence', this)"><i data-lucide="scale" class="w-4 h-4"></i> Evidence Frame</div>
         <div class="nav-tab-btn" onclick="switchTab('experiments', this)"><i data-lucide="flask-conical" class="w-4 h-4"></i> Experiments</div>
       </div>
 
-      <!-- Quick Session Indicator -->
+      <!-- Quick Session Context -->
       <div class="p-3 rounded-xl bg-[#141722] border border-white/5 space-y-2">
         <div class="flex items-center justify-between text-[10px] font-mono text-gray-400">
-          <span>CAS LEDGER STATUS</span>
-          <span class="text-emerald-400 font-bold">TAMPER-PROOF</span>
+          <span>CAS ATTESTATION</span>
+          <span class="text-emerald-400 font-bold">IMMUTABLE</span>
         </div>
-        <div class="text-[11px] font-mono text-gray-300 truncate">Twin Context: <span class="text-white font-bold">10 NYC Merchants</span></div>
+        <div class="text-[11px] font-mono text-gray-300 truncate">Active Cohort: <span class="text-white font-bold">NYC 10 Stores</span></div>
       </div>
     </aside>
 
@@ -197,115 +203,69 @@
     <main class="flex-1 overflow-y-auto p-6 space-y-6 bg-[#0b0c10]" id="main-theater">
 
       <!-- ============================================================= -->
-      <!-- LAYER 1: EXECUTIVE STATE HUD (Clickable source metrics)       -->
+      <!-- TAB VIEW 1: THE ACTION ENGINE (PRIMARY OPERATING CENTER)      -->
       <!-- ============================================================= -->
-      <section class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3" id="executive-hud">
-        
-        <div class="glass-card p-3.5 cursor-pointer hover:border-emerald-500/40 border-l-2 border-l-emerald-400" onclick="switchTab('ledger')">
-          <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Net New Rev</div>
-          <div class="text-xl font-black font-mono text-white mt-1" id="m-net-new">$15,870</div>
-          <div class="text-[9px] font-mono text-emerald-400 mt-0.5">✓ Matched POS</div>
-        </div>
+      <div id="tab-action-engine" class="tab-content space-y-6">
 
-        <div class="glass-card p-3.5 cursor-pointer hover:border-sky-500/40 border-l-2 border-l-sky-400" onclick="switchTab('ledger')">
-          <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Expansion Rev</div>
-          <div class="text-xl font-black font-mono text-white mt-1" id="m-expansion">$6,780</div>
-          <div class="text-[9px] font-mono text-sky-400 mt-0.5">Retention Loops</div>
-        </div>
-
-        <div class="glass-card p-3.5 cursor-pointer hover:border-[#ccff00]/40 border-l-2 border-l-[#ccff00]" onclick="switchTab('ledger')">
-          <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Recovered Rev</div>
-          <div class="text-xl font-black font-mono text-[#ccff00] mt-1" id="m-recovered">$22,890</div>
-          <div class="text-[9px] font-mono text-gray-400 mt-0.5">137 Dormant Leads</div>
-        </div>
-
-        <div class="glass-card p-3.5 cursor-pointer hover:border-indigo-500/40 border-l-2 border-l-indigo-400" onclick="switchTab('pipeline')">
-          <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Pipeline Val</div>
-          <div class="text-xl font-black font-mono text-white mt-1" id="m-pipeline">$42,180</div>
-          <div class="text-[9px] font-mono text-indigo-400 mt-0.5">10 Active Deals</div>
-        </div>
-
-        <div class="glass-card p-3.5 cursor-pointer hover:border-rose-500/40 border-l-2 border-l-rose-500" onclick="switchTab('queue')">
-          <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Pipeline at Risk</div>
-          <div class="text-xl font-black font-mono text-rose-400 mt-1" id="m-risk">$6,800</div>
-          <div class="text-[9px] font-mono text-rose-400 mt-0.5">3 Stagnant Deals</div>
-        </div>
-
-        <div class="glass-card p-3.5 cursor-pointer hover:border-white/20" onclick="switchTab('merchants')">
-          <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Active Stores</div>
-          <div class="text-xl font-black font-mono text-white mt-1" id="m-merchants">10</div>
-          <div class="text-[9px] font-mono text-gray-400 mt-0.5">NYC Cohort 01</div>
-        </div>
-
-        <div class="glass-card p-3.5 cursor-pointer hover:border-white/20" onclick="switchTab('agents')">
-          <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Fleet Status</div>
-          <div class="text-xl font-black font-mono text-emerald-400 mt-1" id="m-agents">8 / 8</div>
-          <div class="text-[9px] font-mono text-gray-400 mt-0.5">0 Errors Today</div>
-        </div>
-
-        <div class="glass-card p-3.5 cursor-pointer hover:border-amber-500/40 border-l-2 border-l-amber-400" onclick="switchTab('governor')">
-          <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Gov Approvals</div>
-          <div class="text-xl font-black font-mono text-amber-400 mt-1" id="m-approvals">3</div>
-          <div class="text-[9px] font-mono text-amber-400 mt-0.5">Action Needed</div>
-        </div>
-
-      </section>
-
-      <!-- ============================================================= -->
-      <!-- TAB VIEW: EXECUTIVE OVERVIEW (CHIEF OF STAFF + QUEUE + FEED)  -->
-      <!-- ============================================================= -->
-      <div id="tab-overview" class="tab-content space-y-6">
-
-        <!-- LAYER 2: SOCIO BRIEFING (AI CHIEF OF STAFF) -->
-        <section class="glass-card p-5 border-l-4 border-l-[#ccff00] bg-gradient-to-r from-[#0e1017] to-[#141722]">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/5 pb-3 mb-4">
-            <div class="flex items-center gap-2.5">
-              <span class="p-1.5 rounded-lg bg-[#ccff00]/10 text-[#ccff00]"><i data-lucide="sparkles" class="w-4 h-4"></i></span>
-              <div>
-                <h2 class="text-sm font-bold text-white uppercase tracking-wider font-mono">SOCIO OPERATING BRIEFING • MORNING INTELLIGENCE</h2>
-                <div class="text-[11px] text-gray-400 font-mono mt-0.5">Status: <strong class="text-emerald-400 font-mono">OPTIMAL</strong> • Fleet running at 100% capacity</div>
+        <!-- 1. ACTION-ORIENTED HERO: THE NEXT HIGHEST-VALUE HUMAN ACTION -->
+        <section class="action-hero-card p-6 relative overflow-hidden">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
+            
+            <div class="space-y-2 max-w-3xl">
+              <div class="flex items-center gap-2">
+                <span class="p-1 rounded bg-[#ccff00]/10 text-[#ccff00]"><i data-lucide="sparkles" class="w-4 h-4"></i></span>
+                <span class="text-[11px] font-mono font-extrabold uppercase tracking-widest text-[#ccff00]">AI CHIEF OF STAFF • NEXT BEST ACTION</span>
+                <span class="pill pill-yellow">P0 FOUNDER ACTION</span>
+              </div>
+              <h1 class="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
+                Approve East Harlem Bites Paid Instagram Campaign ($400 Budget)
+              </h1>
+              <p class="text-xs sm:text-sm text-gray-300 font-mono leading-relaxed">
+                Projected Return: <strong class="text-emerald-400 font-mono text-sm sm:text-base">+$4,400 Attributable Net Revenue</strong> • Verified 11x ROAS on $50 pilot test sample • Gated by Governor (HIGH Risk due to ad spend).
+              </p>
+              <div class="flex flex-wrap items-center gap-4 text-xs font-mono text-gray-400 pt-1">
+                <span>Target: <strong class="text-white font-semibold">East Harlem Bites</strong></span>
+                <span>•</span>
+                <span>Proposing Agent: <strong class="text-sky-400 font-semibold">Socio-Content</strong></span>
+                <span>•</span>
+                <span>Time Req: <strong class="text-white font-semibold">45 seconds</strong></span>
               </div>
             </div>
-            <div class="flex items-center gap-2">
-              <span class="pill pill-yellow">P0 ACTION READY</span>
-              <button onclick="toast('Briefing updated with latest POS and Hermes telemetry','success')" class="text-xs font-mono text-gray-400 hover:text-white">Refresh Briefing</button>
-            </div>
-          </div>
 
-          <!-- The Highest-Value Immediate Human Action -->
-          <div class="bg-black/50 p-4 rounded-xl border border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div class="space-y-1">
-              <div class="text-[10px] font-mono font-bold text-[#ccff00] uppercase tracking-wider">🎯 NEXT HIGHEST-VALUE HUMAN ACTION</div>
-              <div class="text-base font-bold text-white">Approve East Harlem Bites Paid Instagram Campaign ($400 Budget)</div>
-              <div class="text-xs text-gray-400 font-mono">Expected Impact: <strong class="text-emerald-400 font-mono">+$4,400 Attributable Revenue</strong> (11x ROAS validated in test sample)</div>
-            </div>
-            <div class="flex items-center gap-2 shrink-0">
-              <button onclick="approveProposal('PROP-0042')" class="px-4 py-2 bg-[#ccff00] text-black font-bold font-mono text-xs rounded-lg hover:brightness-110 shadow-[0_0_15px_rgba(204,255,0,0.3)]">
-                ✓ Approve Campaign
+            <!-- Execution Trigger Controls -->
+            <div class="flex flex-col sm:flex-row lg:flex-col gap-2.5 shrink-0 justify-center">
+              <button onclick="approveProposal('PROP-0042')" class="px-6 py-3 bg-[#ccff00] text-black font-extrabold font-mono text-sm rounded-xl hover:brightness-110 shadow-[0_0_20px_rgba(204,255,0,0.35)] flex items-center justify-center gap-2">
+                <i data-lucide="check" class="w-4 h-4"></i> Execute & Approve (+$4,400)
               </button>
-              <button onclick="switchTab('governor')" class="px-3 py-2 bg-white/5 hover:bg-white/10 text-gray-300 font-mono text-xs rounded-lg border border-white/10">
-                Inspect Evidence
-              </button>
+              <div class="flex gap-2">
+                <button onclick="switchTab('governor')" class="flex-1 px-3 py-2 bg-white/5 hover:bg-white/10 text-gray-300 font-mono text-xs rounded-lg border border-white/10 text-center">
+                  Audit Evidence
+                </button>
+                <button onclick="rejectProposal('PROP-0042')" class="px-3 py-2 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 font-mono text-xs rounded-lg border border-rose-500/30 text-center">
+                  Reject
+                </button>
+              </div>
             </div>
+
           </div>
         </section>
 
-        <!-- 3-COLUMN CONTROL STAGE (FOUNDER QUEUE + AGENT STRIKES + LIVE STREAM) -->
+        <!-- 2. THE THREE EXECUTION PILLARS: FOUNDER QUEUE + AGENT FLEET + GOVERNOR -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           
-          <!-- LEFT: FOUNDER QUEUE (LAYER 3) -->
-          <div class="lg:col-span-5 glass-card p-5 space-y-4">
+          <!-- PILLAR 1: FOUNDER ACTION QUEUE (4 Cols) -->
+          <div class="lg:col-span-4 glass-card p-5 space-y-4">
             <div class="flex items-center justify-between border-b border-white/5 pb-3">
               <div class="flex items-center gap-2">
                 <i data-lucide="check-circle-2" class="w-4 h-4 text-amber-400"></i>
                 <span class="text-xs font-bold font-mono uppercase tracking-wider text-white">FOUNDER ACTION QUEUE</span>
               </div>
-              <span class="text-[10px] font-mono text-gray-400">Prioritized by $ Impact</span>
+              <span class="pill pill-amber" id="badge-queue-count">3 Pending</span>
             </div>
 
-            <!-- Task Input -->
+            <!-- Quick Task Input -->
             <div class="flex gap-2">
-              <input type="text" id="input-new-task" placeholder="+ Add founder task or command..." class="flex-1 bg-[#141722] border border-white/10 rounded-lg px-3 py-1.5 text-xs font-mono text-white placeholder-gray-500 outline-none focus:border-[#ccff00]" onkeydown="if(event.key==='Enter')addTaskFromInput()">
+              <input type="text" id="input-new-task" placeholder="+ Add founder action..." class="flex-1 bg-[#141722] border border-white/10 rounded-lg px-3 py-1.5 text-xs font-mono text-white placeholder-gray-500 outline-none focus:border-[#ccff00]" onkeydown="if(event.key==='Enter')addTaskFromInput()">
               <button onclick="addTaskFromInput()" class="px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-xs font-mono font-bold text-white">+</button>
             </div>
 
@@ -315,48 +275,150 @@
             </div>
           </div>
 
-          <!-- RIGHT: LIVE AGENT ACTIVITY STREAM (LAYER 5) -->
-          <div class="lg:col-span-7 glass-card p-5 space-y-4 flex flex-col h-[520px]">
-            <div class="flex items-center justify-between border-b border-white/5 pb-3 shrink-0">
+          <!-- PILLAR 2: AUTONOMOUS AGENT FLEET (4 Cols) -->
+          <div class="lg:col-span-4 glass-card p-5 space-y-4">
+            <div class="flex items-center justify-between border-b border-white/5 pb-3">
               <div class="flex items-center gap-2">
-                <i data-lucide="activity" class="w-4 h-4 text-sky-400"></i>
-                <span class="text-xs font-bold font-mono uppercase tracking-wider text-white">LIVE AGENT TELEMETRY & MEMORY STREAM</span>
+                <i data-lucide="bot" class="w-4 h-4 text-sky-400"></i>
+                <span class="text-xs font-bold font-mono uppercase tracking-wider text-white">AUTONOMOUS FLEET</span>
               </div>
-              <div class="flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-                <span class="text-[10px] font-mono text-gray-400 uppercase">Streaming Active</span>
-              </div>
+              <span class="text-[10px] font-mono text-emerald-400 font-bold">8/8 Operational</span>
             </div>
 
-            <!-- Stream Log Items -->
-            <div class="flex-1 overflow-y-auto space-y-2 pr-1" id="agent-activity-stream">
+            <!-- Fleet Micro Grid -->
+            <div class="space-y-2" id="fleet-micro-list">
               <!-- Rendered via JS -->
             </div>
 
-            <!-- Command Terminal Input -->
-            <div class="pt-3 border-t border-white/5 shrink-0 flex gap-2">
-              <input type="text" id="input-agent-cmd" placeholder="Dispatch instructions to agent fleet (e.g. 'Trigger Socio-Prospect on East Harlem florists')..." class="flex-1 bg-[#141722] border border-white/10 rounded-lg px-3 py-2 text-xs font-mono text-white placeholder-gray-500 outline-none focus:border-cyan-400" onkeydown="if(event.key==='Enter')dispatchAgentTerminalCmd()">
-              <button onclick="dispatchAgentTerminalCmd()" class="px-4 py-2 bg-cyan-500 text-black font-bold font-mono text-xs rounded-lg hover:brightness-110">
-                Dispatch →
-              </button>
+            <button onclick="switchTab('agents')" class="w-full py-2 bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono font-bold rounded-lg text-gray-300 transition-colors text-center block">
+              Manage All 8 Agents →
+            </button>
+          </div>
+
+          <!-- PILLAR 3: GOVERNOR SAFETY GATES (4 Cols) -->
+          <div class="lg:col-span-4 glass-card p-5 space-y-4">
+            <div class="flex items-center justify-between border-b border-white/5 pb-3">
+              <div class="flex items-center gap-2">
+                <i data-lucide="shield-check" class="w-4 h-4 text-rose-400"></i>
+                <span class="text-xs font-bold font-mono uppercase tracking-wider text-white">GOVERNOR GATES</span>
+              </div>
+              <span class="pill pill-red">3 Needs Review</span>
             </div>
+
+            <!-- Mini Proposal Cards -->
+            <div class="space-y-2.5" id="governor-micro-list">
+              <!-- Rendered via JS -->
+            </div>
+
+            <button onclick="switchTab('governor')" class="w-full py-2 bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono font-bold rounded-lg text-gray-300 transition-colors text-center block">
+              Open Full Governor Console →
+            </button>
           </div>
 
         </div>
 
+        <!-- 3. LIVE AGENT ACTIVITY & TELEMETRY STREAM (FULL WIDTH) -->
+        <section class="glass-card p-5 space-y-4">
+          <div class="flex items-center justify-between border-b border-white/5 pb-3">
+            <div class="flex items-center gap-2">
+              <i data-lucide="activity" class="w-4 h-4 text-emerald-400"></i>
+              <span class="text-xs font-bold font-mono uppercase tracking-wider text-white">LIVE REVENUE & EXECUTION STREAM (CONTINUOUS LOOP)</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span class="text-[10px] font-mono text-gray-400 uppercase">Streaming Active</span>
+            </div>
+          </div>
+
+          <div class="space-y-2 max-h-56 overflow-y-auto pr-1" id="agent-activity-stream">
+            <!-- Rendered via JS -->
+          </div>
+
+          <!-- Natural Language Terminal Input -->
+          <div class="pt-3 border-t border-white/5 flex gap-2">
+            <input type="text" id="input-agent-cmd" placeholder="Instruct fleet directly (e.g. 'Trigger Socio-Prospect on East Harlem florists', 'Sync listings for La Bodega')..." class="flex-1 bg-[#141722] border border-white/10 rounded-lg px-3 py-2 text-xs font-mono text-white placeholder-gray-500 outline-none focus:border-cyan-400" onkeydown="if(event.key==='Enter')dispatchAgentTerminalCmd()">
+            <button onclick="dispatchAgentTerminalCmd()" class="px-4 py-2 bg-cyan-500 text-black font-bold font-mono text-xs rounded-lg hover:brightness-110">
+              Dispatch →
+            </button>
+          </div>
+        </section>
+
+        <!-- 4. SECONDARY FINANCIAL HUD (EVIDENCE & PROOF SUMMARY) -->
+        <section class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 pt-2" id="executive-hud">
+          <div class="glass-card p-3.5 cursor-pointer hover:border-emerald-500/40 border-l-2 border-l-emerald-400" onclick="switchTab('ledger')">
+            <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Net New Rev</div>
+            <div class="text-xl font-black font-mono text-white mt-1" id="m-net-new">$15,870</div>
+            <div class="text-[9px] font-mono text-emerald-400 mt-0.5">✓ Matched POS</div>
+          </div>
+          <div class="glass-card p-3.5 cursor-pointer hover:border-sky-500/40 border-l-2 border-l-sky-400" onclick="switchTab('ledger')">
+            <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Expansion Rev</div>
+            <div class="text-xl font-black font-mono text-white mt-1" id="m-expansion">$6,780</div>
+            <div class="text-[9px] font-mono text-sky-400 mt-0.5">Retention Loops</div>
+          </div>
+          <div class="glass-card p-3.5 cursor-pointer hover:border-[#ccff00]/40 border-l-2 border-l-[#ccff00]" onclick="switchTab('ledger')">
+            <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Recovered Rev</div>
+            <div class="text-xl font-black font-mono text-[#ccff00] mt-1" id="m-recovered">$22,890</div>
+            <div class="text-[9px] font-mono text-gray-400 mt-0.5">137 Dormant Leads</div>
+          </div>
+          <div class="glass-card p-3.5 cursor-pointer hover:border-indigo-500/40 border-l-2 border-l-indigo-400" onclick="switchTab('pipeline')">
+            <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Pipeline Val</div>
+            <div class="text-xl font-black font-mono text-white mt-1" id="m-pipeline">$42,180</div>
+            <div class="text-[9px] font-mono text-indigo-400 mt-0.5">10 Active Deals</div>
+          </div>
+          <div class="glass-card p-3.5 cursor-pointer hover:border-rose-500/40 border-l-2 border-l-rose-500" onclick="switchTab('queue')">
+            <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Pipeline at Risk</div>
+            <div class="text-xl font-black font-mono text-rose-400 mt-1" id="m-risk">$6,800</div>
+            <div class="text-[9px] font-mono text-rose-400 mt-0.5">3 Stagnant Deals</div>
+          </div>
+          <div class="glass-card p-3.5 cursor-pointer hover:border-white/20" onclick="switchTab('merchants')">
+            <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Active Stores</div>
+            <div class="text-xl font-black font-mono text-white mt-1" id="m-merchants">10</div>
+            <div class="text-[9px] font-mono text-gray-400 mt-0.5">NYC Cohort 01</div>
+          </div>
+          <div class="glass-card p-3.5 cursor-pointer hover:border-white/20" onclick="switchTab('agents')">
+            <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Fleet Status</div>
+            <div class="text-xl font-black font-mono text-emerald-400 mt-1" id="m-agents">8 / 8</div>
+            <div class="text-[9px] font-mono text-gray-400 mt-0.5">0 Errors Today</div>
+          </div>
+          <div class="glass-card p-3.5 cursor-pointer hover:border-amber-500/40 border-l-2 border-l-amber-400" onclick="switchTab('governor')">
+            <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Gov Approvals</div>
+            <div class="text-xl font-black font-mono text-amber-400 mt-1" id="m-approvals">3</div>
+            <div class="text-[9px] font-mono text-amber-400 mt-0.5">Action Needed</div>
+          </div>
+        </section>
+
       </div>
 
       <!-- ============================================================= -->
-      <!-- TAB VIEW: AGENT FLEET (LAYER 4)                               -->
+      <!-- TAB VIEW 2: FOUNDER QUEUE (LAYER 3)                           -->
+      <!-- ============================================================= -->
+      <div id="tab-queue" class="tab-content space-y-5 hidden">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-lg font-bold text-white">Prioritized Founder Action Queue</h2>
+            <p class="text-xs text-gray-400 font-mono">Calculated in real-time based on expected revenue uplift and SLA urgency.</p>
+          </div>
+          <span class="pill pill-yellow">SORTED BY $ IMPACT</span>
+        </div>
+
+        <div class="glass-card p-6 space-y-4">
+          <div class="space-y-3" id="founder-queue-expanded-list">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================= -->
+      <!-- TAB VIEW 3: AGENT FLEET (LAYER 4)                             -->
       <!-- ============================================================= -->
       <div id="tab-agents" class="tab-content space-y-5 hidden">
         <div class="flex items-center justify-between">
           <div>
-            <h2 class="text-lg font-bold text-white">8-Agent Autonomous Fleet</h2>
-            <p class="text-xs text-gray-400 font-mono">DSH + Hermes Multi-Agent Framework • Role-locked governance</p>
+            <h2 class="text-lg font-bold text-white">8-Agent Autonomous Fleet Control Plane</h2>
+            <p class="text-xs text-gray-400 font-mono">DSH + Hermes Hybrid Framework • Specialized role isolation</p>
           </div>
           <div class="flex gap-2">
-            <button onclick="pingAllAgents()" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300">Ping Fleet</button>
+            <button onclick="pingAllAgents()" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300">Ping All</button>
             <button onclick="triggerLiveAgent('prospect')" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-[#ccff00] text-black hover:brightness-110">Trigger Socio-Prospect</button>
           </div>
         </div>
@@ -367,13 +429,13 @@
       </div>
 
       <!-- ============================================================= -->
-      <!-- TAB VIEW: GOVERNOR CONTROL PLANE (LAYER 6)                    -->
+      <!-- TAB VIEW 4: GOVERNOR CONTROL PLANE (LAYER 6)                  -->
       <!-- ============================================================= -->
       <div id="tab-governor" class="tab-content space-y-5 hidden">
         <div class="flex items-center justify-between">
           <div>
-            <h2 class="text-lg font-bold text-white">Governor Safety & Action Approval Layer</h2>
-            <p class="text-xs text-gray-400 font-mono">Every agent proposal is risk-scored and evaluated against CAS policies.</p>
+            <h2 class="text-lg font-bold text-white">Governor Safety & CAS Approval Matrix</h2>
+            <p class="text-xs text-gray-400 font-mono">Policy Evaluation • Risk Scoring • Immutable Decision Attestation</p>
           </div>
           <span class="pill pill-amber">3 PENDING FOUNDER REVIEW</span>
         </div>
@@ -406,7 +468,7 @@
       </div>
 
       <!-- ============================================================= -->
-      <!-- TAB VIEW: MERCHANTS CRM & TWIN WORKSPACE (LAYER 7 & 8)        -->
+      <!-- TAB VIEW 5: MERCHANTS CRM & TWIN WORKSPACE (LAYER 7 & 8)      -->
       <!-- ============================================================= -->
       <div id="tab-merchants" class="tab-content space-y-5 hidden">
         <div class="flex items-center justify-between">
@@ -439,7 +501,7 @@
       </div>
 
       <!-- ============================================================= -->
-      <!-- TAB VIEW: GROWTH PIPELINE (LAYER 9)                           -->
+      <!-- TAB VIEW 6: GROWTH PIPELINE (LAYER 9)                         -->
       <!-- ============================================================= -->
       <div id="tab-pipeline" class="tab-content space-y-5 hidden">
         <div class="flex items-center justify-between">
@@ -457,7 +519,7 @@
       </div>
 
       <!-- ============================================================= -->
-      <!-- TAB VIEW: REVENUE LEDGER (LAYER 10)                           -->
+      <!-- TAB VIEW 7: REVENUE LEDGER (LAYER 10)                         -->
       <!-- ============================================================= -->
       <div id="tab-ledger" class="tab-content space-y-5 hidden">
         <div class="flex items-center justify-between">
@@ -496,7 +558,7 @@
       </div>
 
       <!-- ============================================================= -->
-      <!-- TAB VIEW: EMBEDDED MERCHANT EVIDENCE (LAYER 18)               -->
+      <!-- TAB VIEW 8: EMBEDDED MERCHANT EVIDENCE (LAYER 18)             -->
       <!-- ============================================================= -->
       <div id="tab-evidence" class="tab-content space-y-5 hidden">
         <div class="flex items-center justify-between">
@@ -512,13 +574,13 @@
       </div>
 
       <!-- ============================================================= -->
-      <!-- TAB VIEW: EXPERIMENTS ENGINE (LAYER 13)                       -->
+      <!-- TAB VIEW 9: EXPERIMENTS ENGINE (LAYER 13)                     -->
       <!-- ============================================================= -->
       <div id="tab-experiments" class="tab-content space-y-5 hidden">
         <div class="flex items-center justify-between">
           <div>
-            <h2 class="text-lg font-bold text-white">Controlled Growth Experiments</h2>
-            <p class="text-xs text-gray-400 font-mono">Statistically verified uplift tests across NYC merchant verticals.</p>
+            <h2 class="text-lg font-bold text-white">Controlled Growth Experiments & Learning Engine</h2>
+            <p class="text-xs text-gray-400 font-mono">Statistically verified uplift tests that feed directly into the Next Action loop.</p>
           </div>
           <button onclick="toast('New hypothesis proposal drafted','success')" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-[#ccff00] text-black hover:brightness-110">+ New Hypothesis</button>
         </div>
@@ -555,21 +617,21 @@
     };
 
     let FOUNDER_TASKS = store.getTasks() || [
-      { id: 'ft-1', action: 'Approve East Harlem Bites 11x ROAS Instagram campaign', impact: '+$4,400', urgency: 'HIGH', estTime: '2 min', done: false },
-      { id: 'ft-2', action: 'Send 5 WhatsApp follow-ups to East Harlem florist leads', impact: '+$2,400', urgency: 'HIGH', estTime: '5 min', done: false },
-      { id: 'ft-3', action: 'Verify Google Business listing sync across 12 directories for La Bodega', impact: 'Rank #1', urgency: 'MEDIUM', estTime: '3 min', done: true },
-      { id: 'ft-4', action: 'Review DocuSign partnership packet for El Nuevo Cafe', impact: 'Onboard', urgency: 'MEDIUM', estTime: '5 min', done: false }
+      { id: 'ft-1', action: 'Approve East Harlem Bites 11x ROAS Instagram campaign', impact: '+$4,400', urgency: 'HIGH', estTime: '45s', done: false },
+      { id: 'ft-2', action: 'Send 5 WhatsApp follow-ups to East Harlem florist leads', impact: '+$2,400', urgency: 'HIGH', estTime: '3 min', done: false },
+      { id: 'ft-3', action: 'Review DocuSign partnership packet for El Nuevo Cafe', impact: 'Onboard', urgency: 'MEDIUM', estTime: '5 min', done: false },
+      { id: 'ft-4', action: 'Verify Google Business listing sync across 12 directories for La Bodega', impact: 'Rank #1', urgency: 'LOW', estTime: '2 min', done: true }
     ];
 
     let AGENTS = [
-      { id: 'prospect', name: 'Socio-Prospect', role: 'Lead Generation', emoji: '🕵️', status: 'running', today: 47, rate: 88, proposals: 12, job: 'Scraping East Harlem Florists', tools: ['Maps MCP', 'DCA Registry'] },
-      { id: 'pitch', name: 'Socio-Pitch', role: 'Outreach & CRM', emoji: '📣', status: 'idle', today: 23, rate: 71, proposals: 8, job: 'WhatsApp VIP sequence queued', tools: ['Twilio', 'Resend'] },
-      { id: 'onboard', name: 'Socio-Onboard', role: 'Agreements & Setup', emoji: '📋', status: 'online', today: 5, rate: 96, proposals: 2, job: 'DocuSign signed for El Nuevo Cafe', tools: ['DocuSign', 'Typeform'] },
-      { id: 'content', name: 'Socio-Content', role: 'Content Generation', emoji: '✍️', status: 'running', today: 142, rate: 94, proposals: 31, job: 'Generating 30-day reels calendar', tools: ['Helio CDP', 'Canva'] },
-      { id: 'listings', name: 'Socio-Listings', role: 'Local SEO & Reviews', emoji: '📍', status: 'online', today: 38, rate: 91, proposals: 9, job: 'Syncing 12 local citations', tools: ['Synup MCP'] },
-      { id: 'track', name: 'Socio-Track', role: 'Revenue & Invoicing', emoji: '💳', status: 'online', today: 67, rate: 99, proposals: 4, job: 'Ingesting Square POS webhook #tx_8104a', tools: ['Stripe', 'Square'] },
-      { id: 'support', name: 'Socio-Support', role: 'Merchant Support', emoji: '💬', status: 'online', today: 19, rate: 87, proposals: 1, job: 'Resolving WhatsApp delivery query', tools: ['Hermes CLI'] },
-      { id: 'expand', name: 'Socio-Expand', role: 'Growth & Referrals', emoji: '🚀', status: 'idle', today: 8, rate: 79, proposals: 5, job: 'Cross-sell analysis for catering', tools: ['Growth OS Twin'] }
+      { id: 'prospect', name: 'Socio-Prospect', role: 'Lead Gen', emoji: '🕵️', status: 'running', today: 47, rate: 88, proposals: 12, job: 'Scraping East Harlem Florists', tools: ['Maps MCP', 'DCA Registry'] },
+      { id: 'pitch', name: 'Socio-Pitch', role: 'Outreach', emoji: '📣', status: 'idle', today: 23, rate: 71, proposals: 8, job: 'WhatsApp VIP sequence queued', tools: ['Twilio', 'Resend'] },
+      { id: 'onboard', name: 'Socio-Onboard', role: 'Agreements', emoji: '📋', status: 'online', today: 5, rate: 96, proposals: 2, job: 'DocuSign signed for El Nuevo Cafe', tools: ['DocuSign', 'Typeform'] },
+      { id: 'content', name: 'Socio-Content', role: 'Content', emoji: '✍️', status: 'running', today: 142, rate: 94, proposals: 31, job: 'Generating 30-day reels calendar', tools: ['Helio CDP', 'Canva'] },
+      { id: 'listings', name: 'Socio-Listings', role: 'SEO & Reviews', emoji: '📍', status: 'online', today: 38, rate: 91, proposals: 9, job: 'Syncing 12 local citations', tools: ['Synup MCP'] },
+      { id: 'track', name: 'Socio-Track', role: 'Revenue', emoji: '💳', status: 'online', today: 67, rate: 99, proposals: 4, job: 'Ingesting Square POS webhook #tx_8104a', tools: ['Stripe', 'Square'] },
+      { id: 'support', name: 'Socio-Support', role: 'Support', emoji: '💬', status: 'online', today: 19, rate: 87, proposals: 1, job: 'Resolving WhatsApp delivery query', tools: ['Hermes CLI'] },
+      { id: 'expand', name: 'Socio-Expand', role: 'Expansion', emoji: '🚀', status: 'idle', today: 8, rate: 79, proposals: 5, job: 'Cross-sell analysis for catering', tools: ['Growth OS Twin'] }
     ];
 
     let MERCHANTS = [
@@ -601,7 +663,7 @@
     ];
 
     // =================================================================
-    // TAB SWITCHING & PROGRESSIVE DISCLOSURE
+    // TAB SWITCHING
     // =================================================================
     function switchTab(tabId, btn) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
@@ -609,25 +671,29 @@
       if (target) target.classList.remove('hidden');
 
       document.querySelectorAll('.nav-tab-btn').forEach(el => el.classList.remove('active'));
-      if (btn) btn.classList.add('active');
+      if (btn) {
+        btn.classList.add('active');
+      } else {
+        const found = document.querySelector(`.nav-tab-btn[onclick*="${tabId}"]`);
+        if (found) found.classList.add('active');
+      }
     }
 
     function toggleFocusMode() {
       isFocusMode = !isFocusMode;
-      const theater = document.getElementById('main-theater');
       const hud = document.getElementById('executive-hud');
       const btn = document.getElementById('btn-focus');
 
       if (isFocusMode) {
-        hud.classList.add('hidden');
+        if (hud) hud.classList.add('hidden');
         btn.classList.add('bg-[#ccff00]', 'text-black');
         btn.classList.remove('bg-white/5', 'text-gray-300');
-        toast('Founder Focus Mode Activated: Only highest-priority execution items displayed.', 'warn');
+        toast('Founder Focus Mode Activated: Only Next Action & Founder Queue visible.', 'warn');
       } else {
-        hud.classList.remove('hidden');
+        if (hud) hud.classList.remove('hidden');
         btn.classList.remove('bg-[#ccff00]', 'text-black');
         btn.classList.add('bg-white/5', 'text-gray-300');
-        toast('Standard Command Theater Restored.', 'success');
+        toast('Standard Action Theater Restored.', 'success');
       }
     }
 
@@ -645,7 +711,6 @@
         const data = await res.json();
         if (data.agents && Array.isArray(data.agents)) {
           AGENTS = data.agents;
-          renderAgentsGrid();
         }
       } catch (err) {
         console.log('Using local memory fleet state');
@@ -656,17 +721,20 @@
         const bData = await bRes.json();
         if (bData.briefing && bData.briefing.metrics) {
           const m = bData.briefing.metrics;
-          document.getElementById('m-net-new').innerText = '$' + m.grossRevenue.toLocaleString();
-          document.getElementById('m-expansion').innerText = '$' + m.expansionRevenue.toLocaleString();
-          document.getElementById('m-recovered').innerText = '$' + m.recoveredRevenue.toLocaleString();
+          const nn = document.getElementById('m-net-new');
+          const ex = document.getElementById('m-expansion');
+          const rc = document.getElementById('m-recovered');
+          if (nn) nn.innerText = '$' + m.grossRevenue.toLocaleString();
+          if (ex) ex.innerText = '$' + m.expansionRevenue.toLocaleString();
+          if (rc) rc.innerText = '$' + m.recoveredRevenue.toLocaleString();
         }
       } catch (e) {}
 
       setTimeout(() => {
         if (icon) icon.classList.remove('animate-spin');
         renderAllComponents();
-        toast('Fleet telemetry synchronized with Hermes & CAS Ledger.', 'success');
-      }, 500);
+        toast('Action Center synced with real-time POS & Hermes telemetry.', 'success');
+      }, 400);
     }
 
     async function triggerLiveAgent(agentId) {
@@ -696,7 +764,8 @@
       const p = PROPOSALS.find(x => x.id === proposalId);
       if (p) p.status = 'APPROVED';
       renderGovernor();
-      toast(`Proposal ${proposalId} APPROVED by Governor. Execution unlocked.`, 'success');
+      renderGovernorMicro();
+      toast(`Proposal ${proposalId} APPROVED by Governor. Execution dispatched to fleet.`, 'success');
     }
 
     async function rejectProposal(proposalId) {
@@ -710,6 +779,7 @@
       const p = PROPOSALS.find(x => x.id === proposalId);
       if (p) p.status = 'REJECTED';
       renderGovernor();
+      renderGovernorMicro();
       toast(`Proposal ${proposalId} REJECTED by Governor.`, 'warn');
     }
 
@@ -718,13 +788,20 @@
     // =================================================================
     function renderFounderQueue() {
       const el = document.getElementById('founder-queue-list');
-      if (!el) return;
-      el.innerHTML = FOUNDER_TASKS.map(t => `
+      const elExp = document.getElementById('founder-queue-expanded-list');
+      const badge = document.getElementById('badge-queue-count');
+      const navBadge = document.getElementById('nav-badge-queue');
+
+      const pendingCount = FOUNDER_TASKS.filter(t => !t.done).length;
+      if (badge) badge.innerText = `${pendingCount} Pending`;
+      if (navBadge) navBadge.innerText = `${pendingCount}`;
+
+      const html = FOUNDER_TASKS.map(t => `
         <div class="p-3 rounded-xl bg-black/40 border border-white/5 flex items-start gap-3 hover:border-white/15 transition-all ${t.done ? 'opacity-40' : ''}">
           <input type="checkbox" ${t.done ? 'checked' : ''} onchange="toggleTask('${t.id}')" class="mt-0.5 rounded bg-white/5 border-white/20">
           <div class="flex-1 min-w-0">
             <div class="text-xs font-semibold ${t.done ? 'line-through text-gray-500' : 'text-gray-200'}">${t.action}</div>
-            <div class="flex items-center gap-2 mt-1.5 text-[10px] font-mono text-gray-500">
+            <div class="flex items-center gap-2 mt-1 text-[10px] font-mono text-gray-500">
               <span class="text-emerald-400 font-bold">${t.impact}</span>
               <span>•</span>
               <span>${t.estTime}</span>
@@ -734,6 +811,55 @@
           </div>
         </div>
       `).join('');
+
+      if (el) el.innerHTML = html;
+      if (elExp) elExp.innerHTML = html;
+    }
+
+    function renderFleetMicro() {
+      const el = document.getElementById('fleet-micro-list');
+      if (!el) return;
+      el.innerHTML = AGENTS.slice(0, 4).map(a => `
+        <div class="p-2.5 rounded-lg bg-black/30 border border-white/5 flex items-center justify-between text-xs font-mono">
+          <div class="flex items-center gap-2 min-w-0">
+            <span class="text-base">${a.emoji || '🤖'}</span>
+            <div class="min-w-0">
+              <div class="font-bold text-white truncate">${a.name}</div>
+              <div class="text-[10px] text-gray-400 truncate">${a.job || a.role}</div>
+            </div>
+          </div>
+          <button onclick="triggerLiveAgent('${a.id}')" class="px-2 py-1 bg-white/5 hover:bg-white/10 rounded text-[10px] text-sky-400 font-bold shrink-0">
+            Run →
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function renderGovernorMicro() {
+      const el = document.getElementById('governor-micro-list');
+      if (!el) return;
+      const decisions = store.getDecisions();
+
+      el.innerHTML = PROPOSALS.map(p => {
+        const dec = decisions[p.id] || p.status;
+        return `
+          <div class="p-2.5 rounded-lg bg-black/30 border border-white/5 space-y-1.5 text-xs font-mono">
+            <div class="flex items-center justify-between">
+              <span class="pill ${p.risk === 'HIGH' ? 'pill-red' : p.risk === 'MEDIUM' ? 'pill-amber' : 'pill-green'}">${p.risk}</span>
+              <span class="text-[10px] ${dec === 'APPROVED' ? 'text-emerald-400' : dec === 'REJECTED' ? 'text-rose-400' : 'text-amber-400'} font-bold">${dec}</span>
+            </div>
+            <div class="text-xs font-bold text-white truncate">${p.biz} — ${p.type}</div>
+            <div class="flex gap-2 pt-1">
+              ${dec === 'PENDING' ? `
+                <button onclick="approveProposal('${p.id}')" class="px-2.5 py-1 bg-[#ccff00] text-black font-bold text-[10px] rounded hover:brightness-110">✓ Approve</button>
+                <button onclick="rejectProposal('${p.id}')" class="px-2.5 py-1 bg-white/5 text-gray-300 text-[10px] rounded hover:bg-white/10">✕</button>
+              ` : `
+                <span class="text-[10px] text-gray-500">Decision committed</span>
+              `}
+            </div>
+          </div>
+        `;
+      }).join('');
     }
 
     function toggleTask(id) {
@@ -742,7 +868,7 @@
         t.done = !t.done;
         store.saveTasks(FOUNDER_TASKS);
         renderFounderQueue();
-        toast(t.done ? 'Task marked complete' : 'Task reopened', 'success');
+        toast(t.done ? 'Action marked complete' : 'Action reopened', 'success');
       }
     }
 
@@ -754,13 +880,13 @@
         action: inp.value.trim(),
         impact: '+$1,200',
         urgency: 'HIGH',
-        estTime: '5 min',
+        estTime: '3 min',
         done: false
       });
       store.saveTasks(FOUNDER_TASKS);
       inp.value = '';
       renderFounderQueue();
-      toast('New high-priority action added to founder queue', 'success');
+      toast('High-impact action added to founder queue', 'success');
     }
 
     function renderAgentsGrid() {
@@ -825,7 +951,7 @@
                 <button onclick="approveProposal('${p.id}')" class="px-4 py-1.5 bg-[#ccff00] text-black font-bold font-mono text-xs rounded hover:brightness-110">✓ Approve</button>
                 <button onclick="rejectProposal('${p.id}')" class="px-4 py-1.5 bg-rose-500/10 border border-rose-500/30 text-rose-400 font-bold font-mono text-xs rounded hover:bg-rose-500/20">✕ Reject</button>
               ` : `
-                <span class="text-xs font-mono text-gray-500">Decision logged in immutable ledger.</span>
+                <span class="text-xs font-mono text-gray-500">Decision logged in immutable CAS ledger.</span>
               `}
             </div>
           </div>
@@ -932,6 +1058,8 @@
 
     function renderAllComponents() {
       renderFounderQueue();
+      renderFleetMicro();
+      renderGovernorMicro();
       renderAgentsGrid();
       renderGovernor();
       renderMerchantsCRM();
@@ -951,7 +1079,7 @@
         const q = inp.value.trim();
         if (!q) return;
 
-        toast(`Chief of Staff processing: "${q}"...`, 'warn');
+        toast(`Chief of Staff analyzing: "${q}"...`, 'warn');
         inp.value = '';
 
         try {
@@ -963,8 +1091,7 @@
           const data = await res.json();
           toast(data.responseText, 'success', 6000);
           if (data.targetTab) {
-            const btn = document.querySelector(`.nav-tab-btn[onclick*="${data.targetTab}"]`);
-            switchTab(data.targetTab, btn);
+            switchTab(data.targetTab === 'overview' ? 'action-engine' : data.targetTab);
           }
         } catch (err) {
           toast(`Command executed: Displaying records matching "${q}".`, 'success');
@@ -979,7 +1106,7 @@
       inp.value = '';
       ACTIVITY_LOGS.unshift({
         ts: new Date().toLocaleTimeString(),
-        agent: 'Founder-Terminal',
+        agent: 'Founder-Action',
         type: 'COMMAND',
         desc: `Instruction dispatched to Hermes: "${cmd}"`,
         col: 'text-[#ccff00]'
@@ -989,7 +1116,7 @@
     }
 
     function pingAllAgents() {
-      toast('Ping dispatched to 8 Hermes worker bots. Latency: 42ms.', 'success');
+      toast('Ping dispatched to 8 Hermes worker bots. Fleet nominal (42ms).', 'success');
     }
 
     function toast(msg, type = 'success', duration = 3500) {
