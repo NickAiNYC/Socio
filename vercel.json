@@ -48,6 +48,22 @@
       "dest": "website/pilot-agreement.html"
     },
     {
+      "src": "/contratistas/como-funciona/?",
+      "dest": "website/contratistas/como-funciona.html"
+    },
+    {
+      "src": "/contratistas/casos-de-exito/?",
+      "dest": "website/contratistas/casos-de-exito.html"
+    },
+    {
+      "src": "/contratistas/radar-de-permisos/?",
+      "dest": "website/contratistas/radar-de-permisos.html"
+    },
+    {
+      "src": "/contratistas/preguntas-frecuentes/?",
+      "dest": "website/contratistas/preguntas-frecuentes.html"
+    },
+    {
       "src": "/(.*)",
       "dest": "website/$1"
     }

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preguntas Frecuentes | Socio para Contratistas</title>
+    <meta name="description" content="Respuestas directas a las dudas de contratistas en NYC: cancelaciones, confidencialidad de libretas de clientes, atribución de pagos y tope anual de $40k.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F9FAFB; color: #111827; }
+        .hazard-stripe { background: repeating-linear-gradient(45deg, #EAB308, #EAB308 10px, #111827 10px, #111827 20px); }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="h-2 w-full hazard-stripe"></div>
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="/" class="flex items-center text-2xl font-black tracking-tight text-slate-900">
+                <span>Socio</span>
+                <span class="w-1.5 h-1.5 rounded-[1px] bg-[#FF5500] inline-block shadow-[0_0_8px_rgba(255,85,0,0.8)] ml-[1.5px] self-end mb-1"></span>
+                <span class="ml-2.5 px-2.5 py-0.5 rounded-full bg-orange-50 border border-orange-200 text-[10px] font-mono font-bold uppercase tracking-wider text-orange-700">CONTRATISTAS</span>
+            </a>
+            <nav class="hidden md:flex items-center gap-6 text-xs font-bold uppercase tracking-wider text-slate-600">
+                <a href="/contratistas" class="hover:text-[#FF5500] transition-colors">Inicio</a>
+                <a href="/contratistas/como-funciona" class="hover:text-[#FF5500] transition-colors">Cómo Funciona</a>
+                <a href="/contratistas/casos-de-exito" class="hover:text-[#FF5500] transition-colors">Casos de Éxito</a>
+                <a href="/contratistas/radar-de-permisos" class="hover:text-[#FF5500] transition-colors">Radar DOB</a>
+                <a href="/contratistas/preguntas-frecuentes" class="text-[#FF5500]">Preguntas</a>
+            </nav>
+            <a href="https://wa.me/19175550199?text=Hola%20Socio,%20tengo%20una%20pregunta%20sobre%20el%20acuerdo." target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#25D366] text-white text-xs font-black tracking-wide uppercase hover:bg-[#20ba5a] shadow-sm">
+                <i data-lucide="message-square" class="w-4 h-4"></i>
+                <span>WhatsApp</span>
+            </a>
+        </div>
+    </header>
+
+    <section class="py-16 md:py-20 px-6 bg-white border-b border-slate-200 text-center">
+        <div class="max-w-4xl mx-auto space-y-4">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-50 border border-orange-200 text-orange-800 text-xs font-mono font-black uppercase">
+                Transparencia Total
+            </div>
+            <h1 class="text-4xl md:text-5xl font-black text-slate-900 tracking-tight">Preguntas Frecuentes de Contratistas</h1>
+            <p class="text-slate-600 max-w-2xl mx-auto">Sin rodeos ni letra chica. Respuestas directas a las dudas más importantes antes de unirse al piloto.</p>
+        </div>
+    </section>
+
+    <section class="py-20 px-6 max-w-4xl mx-auto space-y-4">
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-2">
+            <h3 class="font-bold text-lg text-slate-900">¿Qué pasa si el cliente cancela la obra o se atrasa en los pagos?</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">La Regla de Oro de Socio es estricta: solo cobramos comisión sobre dinero que efectivamente haya ingresado y se haya acreditado en su cuenta bancaria comercial verificada por QuickBooks. Si el cliente cancela o no paga, nos debe $0.00.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-2">
+            <h3 class="font-bold text-lg text-slate-900">¿Por qué me piden fotos de mi libreta con presupuestos viejos? ¿Se los van a dar a otros contratistas?</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">Sus clientes son 100% suyos bajo contrato de confidencialidad legal en NYC. La asistente María se comunica en nombre de SU empresa, no de Socio. Jamás compartimos sus presupuestos o contactos con otros contratistas.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-2">
+            <h3 class="font-bold text-lg text-slate-900">¿Cómo prueban que un cliente vino por Socio y no por mi propia cuenta?</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">Utilizamos coincidencia determinista de teléfono y correo. Cuando se emite un depósito en su QuickBooks, el sistema verifica si ese contacto fue originado o reactivado por nuestros canales. Si el cliente ya era suyo y vino sin intervención nuestra, no hay comisión.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-2">
+            <h3 class="font-bold text-lg text-slate-900">¿Qué sucede exactamente cuando alcanzo el Tope Anual de $40,000?</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">En cuanto la suma acumulada de sus comisiones pagadas durante el año calendario alcance los $40,000 USD, la comisión cae automáticamente a 0.0%. A partir de ese momento, usted se queda con el 100% de los ingresos de todas sus obras por el resto del año.</p>
+        </div>
+    </section>
+
+    <!-- Floating WhatsApp CTA -->
+    <div id="waFab" class="fixed bottom-6 right-6 z-50">
+        <a href="https://wa.me/19175550199?text=Hola%20Socio,%20tengo%20una%20pregunta%20sobre%20el%20acuerdo." target="_blank" class="flex items-center gap-3 px-5 py-3.5 rounded-full bg-[#25D366] text-white font-black text-sm uppercase shadow-2xl hover:bg-[#20ba5a] hover:scale-105 transition-all">
+            <i data-lucide="message-square" class="w-5 h-5"></i>
+            <span>Consultar por WhatsApp</span>
+        </a>
+    </div>
+
+    <script>lucide.createIcons();</script>
+</body>
+</html>
