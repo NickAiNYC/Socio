@@ -64,6 +64,18 @@
       "dest": "website/contratistas/preguntas-frecuentes.html"
     },
     {
+      "src": "/proveedores/ferreterias/?",
+      "dest": "website/proveedores/ferreterias.html"
+    },
+    {
+      "src": "/proveedores/materiales/?",
+      "dest": "website/proveedores/materiales.html"
+    },
+    {
+      "src": "/proveedores/equipos/?",
+      "dest": "website/proveedores/equipos.html"
+    },
+    {
       "src": "/(.*)",
       "dest": "website/$1"
     }

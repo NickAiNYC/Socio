@@ -8,7 +8,10 @@ import {
   ArrowRight, 
   ShieldCheck, 
   Radio,
-  FileText
+  FileText,
+  ClipboardList,
+  Activity,
+  CheckCircle2
 } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -19,8 +22,38 @@ export const metadata: Metadata = {
 export default function RadarDePermisosPage() {
   const waLink = 'https://wa.me/19175550199?text=Hola%20Socio,%20quiero%20conectar%20mi%20empresa%20al%20Radar%20de%20Permisos%20DOB%20de%20NYC.';
 
+  const recentPermits = [
+    {
+      job: '44029104-Q',
+      time: 'Hace 14 min',
+      address: '31-28 30th Ave, Astoria, Queens',
+      owner: 'Carlos Mendoza',
+      work: 'A2 - Full Interior Gut & Framing',
+      est: '$85,000.00',
+      status: 'WhatsApp Entregado ✓',
+    },
+    {
+      job: '32194812-B',
+      time: 'Hace 38 min',
+      address: '742 Franklin Ave, Crown Heights, Brooklyn',
+      owner: 'David Levin',
+      work: 'Alteration 1 - 2-Family Brownstone Extension',
+      est: '$140,000.00',
+      status: 'Llamada Conectada ✓',
+    },
+    {
+      job: '24018293-X',
+      time: 'Hace 1 hora',
+      address: '415 E 149th St, South Bronx',
+      owner: 'Elena Rostova',
+      work: 'Commercial Roof Replacement & Waterproofing',
+      est: '$62,000.00',
+      status: 'Visita Técnica Agendada ✓',
+    },
+  ];
+
   return (
-    <div className="min-h-screen bg-[#F9FAFB] text-[#111827] font-sans selection:bg-[#FF5500] selection:text-white">
+    <div className="min-h-screen bg-[#F9FAFB] text-[#111827] font-sans selection:bg-[#FF5500] selection:text-white pb-24">
       
       {/* Hazard Top Bar */}
       <div className="h-2 w-full bg-gradient-to-r from-[#EAB308] via-[#FF5500] to-[#EAB308]" />
@@ -71,6 +104,21 @@ export default function RadarDePermisosPage() {
           </p>
         </div>
       </section>
+
+      {/* Live DOB Radar Ticker Bar */}
+      <div className="bg-slate-950 text-white py-3.5 px-6 border-b border-slate-800">
+        <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-4 font-mono text-xs">
+          <div className="flex items-center gap-2 text-yellow-400 font-bold">
+            <Activity className="w-4 h-4 animate-pulse" />
+            <span>RADAR EN VIVO NYC:</span>
+          </div>
+          <div className="flex flex-wrap items-center gap-6 text-slate-300">
+            <span>📋 Permisos DOB hoy (Queens): <strong className="text-emerald-400">18</strong></span>
+            <span>📋 Nuevos contratos habilitados: <strong className="text-emerald-400">4</strong></span>
+            <span>📋 Filtro Activo: <strong className="text-orange-400">Sin GC Asignado / &gt;$35k</strong></span>
+          </div>
+        </div>
+      </div>
 
       {/* Pipeline Diagram & Live Simulation */}
       <section className="py-20 px-6 max-w-6xl mx-auto space-y-12">
@@ -129,6 +177,46 @@ export default function RadarDePermisosPage() {
           </div>
         </div>
 
+        {/* Live Feed Table Simulation */}
+        <div className="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm space-y-6">
+          <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+            <div>
+              <h3 className="text-xl font-bold text-slate-900">Últimos Permisos Capturados por el Radar</h3>
+              <p className="text-xs text-slate-500">Filtrados automáticamente para obras &gt;$30,000 sin contratista general asignado.</p>
+            </div>
+            <span className="px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-full font-mono text-xs font-bold border border-emerald-200">
+              ● En Vivo
+            </span>
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-left font-mono text-xs">
+              <thead>
+                <tr className="border-b border-slate-200 text-slate-400 uppercase text-[10px]">
+                  <th className="pb-3">Job ID</th>
+                  <th className="pb-3">Tiempo</th>
+                  <th className="pb-3">Ubicación</th>
+                  <th className="pb-3">Tipo de Obra</th>
+                  <th className="pb-3">Presupuesto</th>
+                  <th className="pb-3 text-right">Estado Socio</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {recentPermits.map((p, i) => (
+                  <tr key={i} className="hover:bg-slate-50">
+                    <td className="py-3.5 font-bold text-slate-900">{p.job}</td>
+                    <td className="py-3.5 text-slate-500">{p.time}</td>
+                    <td className="py-3.5 text-slate-700">{p.address}</td>
+                    <td className="py-3.5 text-slate-600">{p.work}</td>
+                    <td className="py-3.5 font-bold text-[#FF5500]">{p.est}</td>
+                    <td className="py-3.5 text-right text-emerald-600 font-bold">{p.status}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
         {/* 3 Value Pillars */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-3">
@@ -164,17 +252,24 @@ export default function RadarDePermisosPage() {
 
       </section>
 
-      {/* Floating WhatsApp CTA */}
-      <div id="waFab" className="fixed bottom-6 right-6 z-50">
-        <a
-          href={waLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-3 px-5 py-3.5 rounded-full bg-[#25D366] text-white font-black text-sm uppercase shadow-2xl hover:bg-[#20ba5a] hover:scale-105 transition-all"
-        >
-          <MessageSquare className="w-5 h-5" />
-          <span>Consultar por WhatsApp</span>
-        </a>
+      {/* Sticky Bottom Diagnostic Bar */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-md border-t border-slate-700 py-3.5 px-6 shadow-2xl">
+        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3 text-white">
+            <ClipboardList className="w-5 h-5 text-[#FF5500] shrink-0" />
+            <span className="text-sm font-bold tracking-tight">
+              ¿Quieres recibir los permisos DOB sin contratista asignado de tu código postal?
+            </span>
+          </div>
+          <a
+            href={waLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#25D366] text-white font-black text-xs uppercase hover:bg-[#20ba5a] shadow-lg transition-all shrink-0"
+          >
+            <span>📋 Obtén tu diagnóstico gratuito → WhatsApp</span>
+          </a>
+        </div>
       </div>
 
     </div>

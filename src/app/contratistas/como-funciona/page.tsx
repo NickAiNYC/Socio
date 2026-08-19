@@ -9,7 +9,8 @@ import {
   ShieldCheck, 
   MessageSquare,
   Building2,
-  CheckCircle2
+  CheckCircle2,
+  ClipboardList
 } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -18,10 +19,10 @@ export const metadata: Metadata = {
 };
 
 export default function ComoFuncionaPage() {
-  const waLink = 'https://wa.me/19175550199?text=Hola%20Socio,%20quiero%20conocer%20m%C3%A1s%20sobre%20c%C3%B3mo%20funciona%20el%20sistema%20de%20adquisici%C3%B3n%20para%20contratistas.';
+  const waLink = 'https://wa.me/19175550199?text=Hola%20Socio,%20quiero%20obtener%20mi%20diagn%C3%B3stico%20gratuito%20de%20fugas%20para%20contratistas.';
 
   return (
-    <div className="min-h-screen bg-[#F9FAFB] text-[#111827] font-sans selection:bg-[#FF5500] selection:text-white">
+    <div className="min-h-screen bg-[#F9FAFB] text-[#111827] font-sans selection:bg-[#FF5500] selection:text-white pb-24">
       
       {/* Hazard Top Bar */}
       <div className="h-2 w-full bg-gradient-to-r from-[#EAB308] via-[#FF5500] to-[#EAB308]" />
@@ -71,6 +72,17 @@ export default function ComoFuncionaPage() {
           </p>
         </div>
       </section>
+
+      {/* Social Proof Bar */}
+      <div className="bg-slate-100 border-b border-slate-200 py-4 px-6">
+        <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-center gap-8 text-xs font-mono text-slate-500">
+          <span className="font-bold text-slate-700 uppercase">Cuadrillas Activas en NYC:</span>
+          <span className="flex items-center gap-1.5"><ShieldCheck className="w-4 h-4 text-emerald-600" /> Hector Framing (Queens)</span>
+          <span className="flex items-center gap-1.5"><ShieldCheck className="w-4 h-4 text-emerald-600" /> Vargas GC (Brooklyn)</span>
+          <span className="flex items-center gap-1.5"><ShieldCheck className="w-4 h-4 text-emerald-600" /> Mendoza Roofing (Bronx)</span>
+          <span className="flex items-center gap-1.5"><ShieldCheck className="w-4 h-4 text-emerald-600" /> Castillo Masonry (Queens)</span>
+        </div>
+      </div>
 
       {/* 4 Steps Grid */}
       <section className="py-20 px-6 max-w-6xl mx-auto space-y-12">
@@ -172,17 +184,24 @@ export default function ComoFuncionaPage() {
 
       </section>
 
-      {/* Floating WhatsApp CTA */}
-      <div id="waFab" className="fixed bottom-6 right-6 z-50">
-        <a
-          href={waLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-3 px-5 py-3.5 rounded-full bg-[#25D366] text-white font-black text-sm uppercase shadow-2xl hover:bg-[#20ba5a] hover:scale-105 transition-all"
-        >
-          <MessageSquare className="w-5 h-5" />
-          <span>Consultar por WhatsApp</span>
-        </a>
+      {/* Sticky Bottom Diagnostic Bar */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-md border-t border-slate-700 py-3.5 px-6 shadow-2xl">
+        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3 text-white">
+            <ClipboardList className="w-5 h-5 text-[#FF5500] shrink-0" />
+            <span className="text-sm font-bold tracking-tight">
+              ¿Quieres saber cuánto dinero estás perdiendo en llamadas y presupuestos no cerrados?
+            </span>
+          </div>
+          <a
+            href={waLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#25D366] text-white font-black text-xs uppercase hover:bg-[#20ba5a] shadow-lg transition-all shrink-0"
+          >
+            <span>📋 Obtén tu diagnóstico gratuito → WhatsApp</span>
+          </a>
+        </div>
       </div>
 
     </div>

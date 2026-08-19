@@ -15,7 +15,7 @@
         .hazard-stripe { background: repeating-linear-gradient(45deg, #EAB308, #EAB308 10px, #111827 10px, #111827 20px); }
     </style>
 </head>
-<body class="min-h-screen">
+<body class="min-h-screen pb-24">
     <div class="h-2 w-full hazard-stripe"></div>
     <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
@@ -48,15 +48,35 @@
         </div>
     </section>
 
+    <!-- Social Proof Strip -->
+    <section class="bg-slate-900 text-white py-4 px-6 border-b border-slate-800">
+        <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-center gap-8 text-xs font-mono text-slate-300">
+            <span class="text-slate-400 font-bold uppercase">Garantías Operativas en NYC:</span>
+            <span class="flex items-center gap-1.5"><i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i> Cero Cobro si Cliente Cancela</span>
+            <span class="flex items-center gap-1.5"><i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i> Confidencialidad NDA</span>
+            <span class="flex items-center gap-1.5"><i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i> Tope Máximo Anual $40k</span>
+        </div>
+    </section>
+
     <section class="py-20 px-6 max-w-4xl mx-auto space-y-4">
         <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-2">
-            <h3 class="font-bold text-lg text-slate-900">¿Qué pasa si el cliente cancela la obra o se atrasa en los pagos?</h3>
-            <p class="text-sm text-slate-600 leading-relaxed">La Regla de Oro de Socio es estricta: solo cobramos comisión sobre dinero que efectivamente haya ingresado y se haya acreditado en su cuenta bancaria comercial verificada por QuickBooks. Si el cliente cancela o no paga, nos debe $0.00.</p>
+            <h3 class="font-bold text-lg text-slate-900">¿Qué pasa si el propietario cancela el proyecto o detiene la obra?</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">La Regla de Oro de Socio es 100% estricta: solo cobramos comisión sobre dinero que efectivamente haya ingresado y se haya acreditado en su cuenta bancaria comercial verificada por QuickBooks. Si el cliente cancela o congela la obra, nos debe $0.00.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-2">
+            <h3 class="font-bold text-lg text-slate-900">¿Cómo manejan los atrasos en pagos o contratos con hitos (Milestones)?</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">La comisión se divide y se liquida en sincronía exacta con los hitos reales que usted cobra en su cuenta bancaria. Si el cliente paga en 3 partes, la comisión solo se calcula sobre cada depósito acreditado.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-2">
+            <h3 class="font-bold text-lg text-slate-900">¿Qué pasa si el cliente pide cambios de último minuto (Change Orders)?</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">Los Change Orders se reflejan en QuickBooks. Si el monto sube, la comisión sobre el extra se calcula con su descuento de piloto. Si el monto baja, su comisión total se reduce en proporción exacta.</p>
         </div>
 
         <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-2">
             <h3 class="font-bold text-lg text-slate-900">¿Por qué me piden fotos de mi libreta con presupuestos viejos? ¿Se los van a dar a otros contratistas?</h3>
-            <p class="text-sm text-slate-600 leading-relaxed">Sus clientes son 100% suyos bajo contrato de confidencialidad legal en NYC. La asistente María se comunica en nombre de SU empresa, no de Socio. Jamás compartimos sus presupuestos o contactos con otros contratistas.</p>
+            <p class="text-sm text-slate-600 leading-relaxed">Sus clientes son 100% suyos bajo contrato de confidencialidad legal en NYC. La asistente María se comunica en nombre de SU empresa, no de Socio. Jamás compartimos sus presupuestos con otros contratistas.</p>
         </div>
 
         <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-2">
@@ -70,12 +90,19 @@
         </div>
     </section>
 
-    <!-- Floating WhatsApp CTA -->
-    <div id="waFab" class="fixed bottom-6 right-6 z-50">
-        <a href="https://wa.me/19175550199?text=Hola%20Socio,%20tengo%20una%20pregunta%20sobre%20el%20acuerdo." target="_blank" class="flex items-center gap-3 px-5 py-3.5 rounded-full bg-[#25D366] text-white font-black text-sm uppercase shadow-2xl hover:bg-[#20ba5a] hover:scale-105 transition-all">
-            <i data-lucide="message-square" class="w-5 h-5"></i>
-            <span>Consultar por WhatsApp</span>
-        </a>
+    <!-- Sticky Bottom Diagnostic Bar -->
+    <div class="fixed bottom-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-md border-t border-slate-700 py-3.5 px-6 shadow-2xl">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3 text-white">
+                <i data-lucide="clipboard-list" class="w-5 h-5 text-[#FF5500] shrink-0"></i>
+                <span class="text-sm font-bold tracking-tight">
+                    ¿Tienes otra duda específica sobre tu empresa o licencias en NYC?
+                </span>
+            </div>
+            <a href="https://wa.me/19175550199?text=Hola%20Socio,%20tengo%20una%20pregunta%20sobre%20el%20acuerdo." target="_blank" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#25D366] text-white font-black text-xs uppercase hover:bg-[#20ba5a] shadow-lg transition-all shrink-0">
+                <span>📋 Consulta con un Operador → WhatsApp</span>
+            </a>
+        </div>
     </div>
 
     <script>lucide.createIcons();</script>

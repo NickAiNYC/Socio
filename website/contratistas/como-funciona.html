@@ -15,7 +15,7 @@
         .hazard-stripe { background: repeating-linear-gradient(45deg, #EAB308, #EAB308 10px, #111827 10px, #111827 20px); }
     </style>
 </head>
-<body class="min-h-screen">
+<body class="min-h-screen pb-24">
     <div class="h-2 w-full hazard-stripe"></div>
     <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
@@ -31,7 +31,7 @@
                 <a href="/contratistas/radar-de-permisos" class="hover:text-[#FF5500] transition-colors">Radar DOB</a>
                 <a href="/contratistas/preguntas-frecuentes" class="hover:text-[#FF5500] transition-colors">Preguntas</a>
             </nav>
-            <a href="https://wa.me/19175550199?text=Hola%20Socio,%20quiero%20conocer%20c%C3%B3mo%20funciona%20el%20sistema." target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#25D366] text-white text-xs font-black tracking-wide uppercase hover:bg-[#20ba5a] shadow-sm">
+            <a href="https://wa.me/19175550199?text=Hola%20Socio,%20quiero%20obtener%20mi%20diagn%C3%B3stico%20gratuito%20de%20fugas." target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#25D366] text-white text-xs font-black tracking-wide uppercase hover:bg-[#20ba5a] shadow-sm">
                 <i data-lucide="message-square" class="w-4 h-4"></i>
                 <span>WhatsApp</span>
             </a>
@@ -47,6 +47,17 @@
             <p class="text-slate-600 max-w-2xl mx-auto">Sin mensualidades fijas. Solo pagas comisión cuando el cliente deposita el anticipo en tu cuenta bancaria comercial.</p>
         </div>
     </section>
+
+    <!-- Social Proof Bar -->
+    <div class="bg-slate-100 border-b border-slate-200 py-3.5 px-6">
+        <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-center gap-8 text-xs font-mono text-slate-500">
+            <span class="font-bold text-slate-700 uppercase">Cuadrillas Activas en NYC:</span>
+            <span class="flex items-center gap-1.5"><i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i> Hector Framing (Queens)</span>
+            <span class="flex items-center gap-1.5"><i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i> Vargas GC (Brooklyn)</span>
+            <span class="flex items-center gap-1.5"><i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i> Mendoza Roofing (Bronx)</span>
+            <span class="flex items-center gap-1.5"><i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i> Castillo Masonry (Queens)</span>
+        </div>
+    </div>
 
     <section class="py-20 px-6 max-w-6xl mx-auto space-y-10">
         <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
@@ -94,12 +105,19 @@
         </div>
     </section>
 
-    <!-- Floating WhatsApp CTA -->
-    <div id="waFab" class="fixed bottom-6 right-6 z-50">
-        <a href="https://wa.me/19175550199?text=Hola%20Socio,%20quiero%20conocer%20c%C3%B3mo%20funciona%20el%20sistema." target="_blank" class="flex items-center gap-3 px-5 py-3.5 rounded-full bg-[#25D366] text-white font-black text-sm uppercase shadow-2xl hover:bg-[#20ba5a] hover:scale-105 transition-all">
-            <i data-lucide="message-square" class="w-5 h-5"></i>
-            <span>Consultar por WhatsApp</span>
-        </a>
+    <!-- Sticky Bottom Diagnostic Bar -->
+    <div class="fixed bottom-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-md border-t border-slate-700 py-3.5 px-6 shadow-2xl">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3 text-white">
+                <i data-lucide="clipboard-list" class="w-5 h-5 text-[#FF5500] shrink-0"></i>
+                <span class="text-sm font-bold tracking-tight">
+                    ¿Quieres saber cuánto dinero estás perdiendo en llamadas y presupuestos no cerrados?
+                </span>
+            </div>
+            <a href="https://wa.me/19175550199?text=Hola%20Socio,%20quiero%20obtener%20mi%20diagn%C3%B3stico%20gratuito%20de%20fugas." target="_blank" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#25D366] text-white font-black text-xs uppercase hover:bg-[#20ba5a] shadow-lg transition-all shrink-0">
+                <span>📋 Obtén tu diagnóstico gratuito → WhatsApp</span>
+            </a>
+        </div>
     </div>
 
     <script>lucide.createIcons();</script>
