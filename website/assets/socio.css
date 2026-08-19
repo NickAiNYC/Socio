@@ -56,7 +56,11 @@
         .cta-shimmer:hover::before { left: 100%; }
 
         /* Hero */
-        .hero-container { perspective: 1000px; }
+        .hero-container {
+    perspective: 1000px;
+    background: radial-gradient(800px at 80% -10%, rgba(102, 155, 210, 0.16), transparent 70%),
+                radial-gradient(600px at 20% 90%, rgba(102, 155, 210, 0.08), transparent 60%);
+}
 
         .hero-grid-bg {
             background-image:
@@ -367,4 +371,17 @@
     overflow: visible;
     clip: auto;
     white-space: normal;
+}
+
+
+/* Glass highlight for hero preview */
+#float-terminal {
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+}
+
+/* Tap highlight on touch devices */
+.cta-shimmer:active::before {
+    left: 100% !important;
+    transition: left 0.2s ease !important;
 }
