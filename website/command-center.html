@@ -203,14 +203,19 @@
 <!-- ============================
      TOP NAV
      ============================ -->
-<nav class="flex gap-2 px-6 mb-6 border-b border-white/5 pb-4 overflow-x-auto">
+<nav class="flex gap-2 px-6 mb-6 border-b border-white/5 pb-4 overflow-x-auto items-center">
     <button class="tab-active px-4 py-1.5 rounded-full text-xs font-bold font-mono tracking-widest transition-colors" onclick="setTab('overview',this)">TODAY</button>
+    <button class="px-4 py-1.5 rounded-full text-gray-500 hover:text-white text-xs font-bold font-mono tracking-widest transition-colors" onclick="setTab('gem',this)">⚡ GEM OPS</button>
     <button class="px-4 py-1.5 rounded-full text-gray-500 hover:text-white text-xs font-bold font-mono tracking-widest transition-colors" onclick="setTab('agents',this)">AGENTS</button>
     <button class="px-4 py-1.5 rounded-full text-gray-500 hover:text-white text-xs font-bold font-mono tracking-widest transition-colors" onclick="setTab('pipeline',this)">PIPELINE</button>
     <button class="px-4 py-1.5 rounded-full text-gray-500 hover:text-white text-xs font-bold font-mono tracking-widest transition-colors" onclick="setTab('governor',this)">GOVERNOR</button>
     <button class="px-4 py-1.5 rounded-full text-gray-500 hover:text-white text-xs font-bold font-mono tracking-widest transition-colors" onclick="setTab('ledger',this)">LEDGER</button>
     <button class="px-4 py-1.5 rounded-full text-gray-500 hover:text-white text-xs font-bold font-mono tracking-widest transition-colors" onclick="setTab('experiments',this)">EXPERIMENTS</button>
     <button class="px-4 py-1.5 rounded-full text-gray-500 hover:text-white text-xs font-bold font-mono tracking-widest transition-colors" onclick="setTab('infra',this)">INFRA</button>
+    <div class="flex-1"></div>
+    <a href="merchant-evidence.html" class="text-xs font-mono text-emerald-400 hover:underline px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-full flex items-center gap-1.5 transition-colors">
+        <i data-lucide="scale" class="w-3.5 h-3.5"></i> Merchant Evidence
+    </a>
 </nav>
 
 <main class="px-6 pb-10">
@@ -690,6 +695,209 @@
     </div>
 </div>
 
+<!-- ============================
+     VIEW: GEM OPS DASHBOARD
+     ============================ -->
+<div class="view" id="view-gem">
+    <!-- GEM Header Banner -->
+    <div class="flex flex-wrap items-center justify-between gap-4 mb-6 pb-4 border-b border-white/5">
+        <div>
+            <div class="flex items-center gap-3">
+                <span class="text-xl font-bold tracking-tight">⚡ GEM Operations Hub</span>
+                <span class="pill pill-green">LIVE TELEMETRY</span>
+                <span class="pill pill-blue font-mono">PORT 5175 COMPAT</span>
+            </div>
+            <div class="text-xs text-gray-500 font-mono mt-1">Direct pipeline velocity, outbound strike execution, at-risk recovery, and agent orchestration.</div>
+        </div>
+        <div class="flex items-center gap-3 text-xs font-mono">
+            <button onclick="refreshGemData()" class="btn-primary text-xs font-mono px-3 py-1.5 rounded-lg flex items-center gap-1.5">
+                <i data-lucide="refresh-cw" class="w-3.5 h-3.5" id="gem-refresh-icon"></i> Refresh Telemetry
+            </button>
+            <button onclick="openGemModal()" class="text-gray-400 border border-white/10 hover:border-white/20 px-3 py-1.5 rounded-lg transition-colors">
+                + New Outbound Strike
+            </button>
+        </div>
+    </div>
+
+    <!-- GEM KPI 5-Card Grid -->
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6" id="gem-kpis">
+        <div class="glass-panel p-4 flex flex-col justify-between border-l-2 border-l-cyan-500">
+            <div class="text-[10px] text-gray-500 font-mono uppercase font-bold flex items-center justify-between">
+                <span>DMs Sent (7d)</span>
+                <i data-lucide="send" class="w-3.5 h-3.5 text-cyan-400"></i>
+            </div>
+            <div class="mt-2">
+                <div class="metric-value text-cyan-400" id="gem-kpi-dms">47</div>
+                <div class="text-[10px] text-gray-600 font-mono">Outbound sequences</div>
+            </div>
+        </div>
+
+        <div class="glass-panel p-4 flex flex-col justify-between border-l-2 border-l-emerald-500">
+            <div class="text-[10px] text-gray-500 font-mono uppercase font-bold flex items-center justify-between">
+                <span>Replies Received</span>
+                <i data-lucide="message-square" class="w-3.5 h-3.5 text-emerald-400"></i>
+            </div>
+            <div class="mt-2">
+                <div class="metric-value text-emerald-400" id="gem-kpi-replies">18</div>
+                <div class="text-[10px] text-gray-600 font-mono">38.3% response rate</div>
+            </div>
+        </div>
+
+        <div class="glass-panel p-4 flex flex-col justify-between border-l-2 border-l-indigo-500">
+            <div class="text-[10px] text-gray-500 font-mono uppercase font-bold flex items-center justify-between">
+                <span>Scoping / Audits Booked</span>
+                <i data-lucide="calendar-check" class="w-3.5 h-3.5 text-indigo-400"></i>
+            </div>
+            <div class="mt-2">
+                <div class="metric-value text-indigo-400" id="gem-kpi-booked">8</div>
+                <div class="text-[10px] text-gray-600 font-mono">48-Hour audit queue</div>
+            </div>
+        </div>
+
+        <div class="glass-panel p-4 flex flex-col justify-between border-l-2 border-l-amber-500">
+            <div class="text-[10px] text-gray-500 font-mono uppercase font-bold flex items-center justify-between">
+                <span>Diagnostics / Pilots</span>
+                <i data-lucide="zap" class="w-3.5 h-3.5 text-amber-400"></i>
+            </div>
+            <div class="mt-2">
+                <div class="metric-value accent-gold" id="gem-kpi-pilots">3</div>
+                <div class="text-[10px] text-gray-600 font-mono">$10,500 pipeline val</div>
+            </div>
+        </div>
+
+        <div class="glass-panel p-4 flex flex-col justify-between border-l-2 border-l-rose-500">
+            <div class="text-[10px] text-gray-500 font-mono uppercase font-bold flex items-center justify-between">
+                <span>Revenue at Risk</span>
+                <i data-lucide="alert-triangle" class="w-3.5 h-3.5 text-rose-400"></i>
+            </div>
+            <div class="mt-2">
+                <div class="metric-value accent-red" id="gem-kpi-risk">$6,800</div>
+                <div class="text-[10px] text-gray-600 font-mono">3 partners need touch</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Row 1: Outbound Strikes Tracker & Today Focus Block -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-6">
+        <!-- Outbound Strikes Widget -->
+        <div class="glass-panel p-5 flex flex-col justify-between">
+            <div class="flex items-center justify-between border-b border-white/5 pb-3 mb-4">
+                <div>
+                    <h3 class="text-xs font-extrabold uppercase tracking-widest text-white flex items-center gap-2">
+                        <i data-lucide="target" class="w-4 h-4 text-cyan-400"></i> Outbound Strikes Tracker
+                    </h3>
+                    <p class="text-[10px] text-gray-500 font-mono mt-0.5">Automated multi-channel prospecting & follow-ups</p>
+                </div>
+                <div class="flex items-center gap-1.5">
+                    <span class="pill pill-blue">47 TOTAL</span>
+                </div>
+            </div>
+
+            <!-- Strikes Metrics Sub-Grid -->
+            <div class="grid grid-cols-4 gap-2 mb-4">
+                <div class="bg-[#141419] border border-white/5 rounded-lg p-2.5 text-center">
+                    <div class="text-[9px] font-mono text-gray-500 uppercase">Strikes</div>
+                    <div class="text-base font-mono font-bold text-white mt-0.5" id="gem-st-total">47</div>
+                </div>
+                <div class="bg-cyan-500/5 border border-cyan-500/20 rounded-lg p-2.5 text-center">
+                    <div class="text-[9px] font-mono text-cyan-400/80 uppercase">Sent</div>
+                    <div class="text-base font-mono font-bold text-cyan-400 mt-0.5" id="gem-st-sent">28</div>
+                </div>
+                <div class="bg-emerald-500/5 border border-emerald-500/20 rounded-lg p-2.5 text-center">
+                    <div class="text-[9px] font-mono text-emerald-400/80 uppercase">Replied</div>
+                    <div class="text-base font-mono font-bold text-emerald-400 mt-0.5" id="gem-st-replied">14</div>
+                </div>
+                <div class="bg-rose-500/5 border border-rose-500/20 rounded-lg p-2.5 text-center">
+                    <div class="text-[9px] font-mono text-rose-400/80 uppercase">Lost</div>
+                    <div class="text-base font-mono font-bold text-rose-400 mt-0.5" id="gem-st-lost">5</div>
+                </div>
+            </div>
+
+            <!-- Strike Items List -->
+            <div class="space-y-2.5 overflow-y-auto max-h-[260px] pr-1" id="gem-strikes-list">
+                <!-- rendered by JS -->
+            </div>
+        </div>
+
+        <!-- Today's Focus Block (Priority Scored) -->
+        <div class="glass-panel p-5 flex flex-col justify-between">
+            <div class="flex items-center justify-between border-b border-white/5 pb-3 mb-4">
+                <div>
+                    <h3 class="text-xs font-extrabold uppercase tracking-widest text-white flex items-center gap-2">
+                        <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i> Today's Focus Block
+                    </h3>
+                    <p class="text-[10px] text-gray-500 font-mono mt-0.5">Priority-scored operations queue</p>
+                </div>
+                <span class="pill pill-gold">5 PENDING</span>
+            </div>
+
+            <div class="space-y-2.5 overflow-y-auto max-h-[320px] pr-1" id="gem-focus-list">
+                <!-- rendered by JS -->
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/5 flex gap-2">
+                <input type="text" id="gem-new-task" placeholder="Add custom action item..." class="bg-[#141419] border border-white/10 rounded-lg px-3 py-1.5 text-xs text-white placeholder-gray-600 outline-none flex-1 font-mono focus:border-emerald-500/40">
+                <button onclick="addGemTask()" class="btn-primary text-xs font-mono px-4 py-1.5 rounded-lg">Add</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Row 2: Leads At Risk / Recovery & Hermes Orchestration -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-6">
+        <!-- Leads at Risk & Revenue Recovery -->
+        <div class="glass-panel p-5">
+            <div class="flex items-center justify-between border-b border-white/5 pb-3 mb-4">
+                <div>
+                    <h3 class="text-xs font-extrabold uppercase tracking-widest text-white flex items-center gap-2">
+                        <i data-lucide="shield-alert" class="w-4 h-4 text-amber-400"></i> Leads At Risk & Revenue Recovery
+                    </h3>
+                    <p class="text-[10px] text-gray-500 font-mono mt-0.5">SLA timers and revenue retention triggers</p>
+                </div>
+                <div class="flex gap-1" id="gem-risk-filters">
+                    <button onclick="filterRisk('all', this)" class="pill pill-gray cursor-pointer active-filter">ALL</button>
+                    <button onclick="filterRisk('hot', this)" class="pill pill-red cursor-pointer">🔥 HOT</button>
+                    <button onclick="filterRisk('warm', this)" class="pill pill-gold cursor-pointer">⚠️ WARM</button>
+                </div>
+            </div>
+
+            <div class="space-y-2.5 overflow-y-auto max-h-[290px] pr-1" id="gem-risk-list">
+                <!-- rendered by JS -->
+            </div>
+        </div>
+
+        <!-- Hermes & DSH Multi-Agent Orchestration -->
+        <div class="glass-panel p-5">
+            <div class="flex items-center justify-between border-b border-white/5 pb-3 mb-4">
+                <div>
+                    <h3 class="text-xs font-extrabold uppercase tracking-widest text-white flex items-center gap-2">
+                        <i data-lucide="bot" class="w-4 h-4 text-indigo-400"></i> Fleet Orchestration & Heartbeats
+                    </h3>
+                    <p class="text-[10px] text-gray-500 font-mono mt-0.5">Hermes Agents, DeepSeek Harness, and MCP runners</p>
+                </div>
+                <span class="pill pill-green">8 ACTIVE</span>
+            </div>
+
+            <div class="space-y-2 overflow-y-auto max-h-[290px] pr-1" id="gem-orch-list">
+                <!-- rendered by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Live Telemetry Stream -->
+    <div class="glass-panel p-5">
+        <div class="flex items-center justify-between border-b border-white/5 pb-3 mb-3">
+            <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span class="text-xs font-bold text-white uppercase tracking-widest font-mono">Live Telemetry Activity Feed</span>
+            </div>
+            <span class="text-[10px] text-gray-500 font-mono">Prisma / WebSocket / Local Event Bus</span>
+        </div>
+        <div class="space-y-1.5 font-mono text-xs max-h-48 overflow-y-auto" id="gem-feed-list">
+            <!-- rendered by JS -->
+        </div>
+    </div>
+</div>
+
 </main>
 
 <!-- TOAST -->
@@ -970,13 +1178,205 @@ function startLive(){
   },9000);
 }
 
+/* ===== GEM OPS DATA & LOGIC ===== */
+const GEM_STRIKES = [
+  { id: 'STK-091', target: 'Cristal Flowers (East Harlem)', stage: 'replied', score: 94, angle: 'Instagram Foot-Traffic Gap & Direct Delivery', time: '14m ago', statusClass: 'pill-green' },
+  { id: 'STK-092', target: 'El Nuevo Cafe (Wash. Heights)', stage: 'sent', score: 88, angle: 'Bilingual Review Sync & Catering Outreach', time: '1h ago', statusClass: 'pill-blue' },
+  { id: 'STK-093', target: 'La Bodega NYC (South Bronx)', stage: 'replied', score: 82, angle: 'Google Local Pack Rank #1 Strategy', time: '2h ago', statusClass: 'pill-green' },
+  { id: 'STK-094', target: 'Bloom & Branch (Astoria)', stage: 'sent', score: 79, angle: 'TikTok Shop / Walk-in Conversion', time: '4h ago', statusClass: 'pill-blue' },
+  { id: 'STK-095', target: 'BX Corner Deli (Bronx)', stage: 'closed', score: 69, angle: 'POS Online Invoicing Integration', time: '1d ago', statusClass: 'pill-red' }
+];
+
+const GEM_TASKS = [
+  { id: 'gt-1', action: 'Send 5 WhatsApp follow-ups to East Harlem qualified florist leads', priority: 10, done: false },
+  { id: 'gt-2', action: 'Deliver 48-Hour Digital Audit to El Nuevo Cafe owner', priority: 9, done: false },
+  { id: 'gt-3', action: 'Verify Google Business listing sync across 12 directories for La Bodega', priority: 8, done: true },
+  { id: 'gt-4', action: 'Draft Stripe Connect pilot agreement for Harlem Heritage ($7,200/mo)', priority: 8, done: false },
+  { id: 'gt-5', action: 'Log daily outbound response metrics and calibrate DeepSeek prompt', priority: 7, done: false }
+];
+
+const GEM_RISK_LEADS = [
+  { id: 'RL-01', name: 'Bloom & Branch', temp: 'hot', score: 86, val: '$3,500', days: 6, issue: 'No WhatsApp response after T+48h automated touch', action: 'Trigger Manual Voice Follow-up' },
+  { id: 'RL-02', name: 'Park Slope Laundry', temp: 'hot', score: 82, val: '$2,100', days: 5, issue: 'Diagnostic audit delivered but scoping call unscheduled', action: 'Resend Audit Video Summary' },
+  { id: 'RL-03', name: 'Midtown Florist', temp: 'warm', score: 68, val: '$1,200', days: 3, issue: 'Typeform onboarding half-filled', action: 'Send SMS Assistance Prompt' }
+];
+
+const GEM_ORCH_RUNS = [
+  { agent: 'Socio-Prospect', target: 'NYC Scout (East Harlem)', status: 'running', latency: '184ms', runs: '47 scored', color: '#6366F1' },
+  { agent: 'Socio-Pitch', target: 'Resend / Twilio Engine', status: 'idle', latency: '42ms', runs: '28 touches', color: '#F59E0B' },
+  { agent: 'Socio-Onboard', target: 'DocuSign / Typeform Bridge', status: 'succeeded', latency: '12ms', runs: '5 packets', color: '#10B981' },
+  { agent: 'Socio-Content', target: 'Helio CDP / Canva MCP', status: 'running', latency: '412ms', runs: '142 pieces', color: '#6366F1' },
+  { agent: 'Socio-Listings', target: 'Synup MCP Local SEO', status: 'succeeded', latency: '95ms', runs: '38 syncs', color: '#10B981' },
+  { agent: 'Socio-Track', target: 'Stripe Ledger / Economic Store', status: 'succeeded', latency: '22ms', runs: '67 events', color: '#10B981' }
+];
+
+function renderGemDashboard() {
+  // Strikes List
+  const sl = document.getElementById('gem-strikes-list');
+  if (sl) {
+    sl.innerHTML = GEM_STRIKES.map(s => `
+      <div class="flex items-center justify-between p-2.5 rounded-lg bg-black/30 border border-white/5 hover:border-white/10 transition-colors">
+        <div class="flex items-start gap-2.5 min-w-0">
+          <div class="w-6 h-6 rounded-md bg-white/5 border border-white/10 flex items-center justify-center shrink-0 mt-0.5">
+            <i data-lucide="crosshair" class="w-3.5 h-3.5 text-cyan-400"></i>
+          </div>
+          <div class="min-w-0">
+            <div class="text-xs font-semibold text-white truncate">${s.target}</div>
+            <div class="text-[10px] text-gray-500 font-mono truncate">${s.angle}</div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <span class="pill ${s.statusClass}">${s.stage.toUpperCase()}</span>
+          <span class="text-[9px] font-mono text-gray-600">${s.time}</span>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Focus List
+  const fl = document.getElementById('gem-focus-list');
+  if (fl) {
+    fl.innerHTML = GEM_TASKS.map(t => `
+      <div class="flex items-start gap-3 p-2.5 rounded-lg bg-black/30 border border-white/5 transition-colors ${t.done ? 'opacity-50' : ''}">
+        <input type="checkbox" class="todo-checkbox mt-0.5" ${t.done ? 'checked' : ''} onchange="toggleGemTask('${t.id}')">
+        <div class="flex-1 min-w-0">
+          <div class="text-xs font-medium ${t.done ? 'line-through text-gray-500' : 'text-gray-200'}">${t.action}</div>
+        </div>
+        <span class="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-white/5 border border-white/10 ${t.priority >= 9 ? 'text-amber-400' : 'text-gray-400'}">P${t.priority}</span>
+      </div>
+    `).join('');
+  }
+
+  // Risk Leads
+  renderGemRisk('all');
+
+  // Orchestration List
+  const ol = document.getElementById('gem-orch-list');
+  if (ol) {
+    ol.innerHTML = GEM_ORCH_RUNS.map(o => `
+      <div class="flex items-center justify-between p-2.5 rounded-lg bg-black/30 border border-white/5">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <span class="w-2 h-2 rounded-full shrink-0" style="background:${o.color}"></span>
+          <div class="min-w-0">
+            <div class="text-xs font-bold text-white font-mono">${o.agent}</div>
+            <div class="text-[10px] text-gray-500 font-mono truncate">${o.target}</div>
+          </div>
+        </div>
+        <div class="flex items-center gap-3 shrink-0">
+          <span class="text-[10px] font-mono text-gray-400">${o.runs}</span>
+          <span class="pill ${o.status === 'running' ? 'pill-blue' : 'pill-green'}">${o.status.toUpperCase()}</span>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Feed list
+  const feed = document.getElementById('gem-feed-list');
+  if (feed) {
+    const feedLogs = [
+      { ts: '14:22:01', type: 'PAYMENT', desc: 'Net New $1,240 recorded for Cristal Flowers', col: 'text-emerald-400' },
+      { ts: '14:18:33', type: 'OUTBOUND', desc: 'Sequence touch 2/3 delivered to Bloom & Branch via Resend', col: 'text-cyan-400' },
+      { ts: '13:50:11', type: 'AUDIT', desc: '48-Hour Digital Audit packet generated for El Nuevo Cafe', col: 'text-indigo-400' },
+      { ts: '13:30:05', type: 'SYNC', desc: '12 local directories synchronized for La Bodega NYC via Synup', col: 'text-emerald-400' },
+      { ts: '12:04:18', type: 'TELEMETRY', desc: 'Fleet heartbeat: 8/8 agents online, 0 fatal exceptions', col: 'text-gray-400' }
+    ];
+    feed.innerHTML = feedLogs.map(l => `
+      <div class="flex items-center gap-2 py-1 px-2 rounded bg-black/20 border border-white/4">
+        <span class="text-gray-600 text-[10px]">${l.ts}</span>
+        <span class="text-[9px] font-bold px-1 py-0.2 rounded bg-white/5 border border-white/10 ${l.col}">${l.type}</span>
+        <span class="text-gray-300 text-xs truncate">${l.desc}</span>
+      </div>
+    `).join('');
+  }
+}
+
+function toggleGemTask(id) {
+  const t = GEM_TASKS.find(x => x.id === id);
+  if (t) {
+    t.done = !t.done;
+    renderGemDashboard();
+    lucide.createIcons();
+    toast(t.done ? 'Task marked as completed' : 'Task reopened', 'success');
+  }
+}
+
+function addGemTask() {
+  const inp = document.getElementById('gem-new-task');
+  if (!inp || !inp.value.trim()) return;
+  GEM_TASKS.unshift({ id: 'gt-' + Date.now(), action: inp.value.trim(), priority: 8, done: false });
+  inp.value = '';
+  renderGemDashboard();
+  lucide.createIcons();
+  toast('New focus item added to queue', 'success');
+}
+
+function renderGemRisk(tier) {
+  const rl = document.getElementById('gem-risk-list');
+  if (!rl) return;
+  let items = GEM_RISK_LEADS;
+  if (tier !== 'all') items = items.filter(x => x.temp === tier);
+  rl.innerHTML = items.map(r => `
+    <div class="p-3 rounded-lg bg-black/30 border border-white/5 hover:border-white/10 transition-colors">
+      <div class="flex items-center justify-between mb-1.5">
+        <div class="flex items-center gap-2">
+          <span class="text-sm">${r.temp === 'hot' ? '🔥' : '⚠️'}</span>
+          <span class="text-xs font-bold text-white">${r.name}</span>
+          <span class="text-[10px] font-mono font-bold text-emerald-400">${r.val}</span>
+        </div>
+        <span class="pill ${r.temp === 'hot' ? 'pill-red' : 'pill-gold'}">${r.days}d inactive</span>
+      </div>
+      <div class="text-[11px] text-gray-400 font-mono mb-2">${r.issue}</div>
+      <button onclick="toast('${r.action} dispatched for ${r.name}', 'success')" class="text-[10px] font-mono font-bold text-cyan-400 hover:text-cyan-300 flex items-center gap-1">
+        → ${r.action}
+      </button>
+    </div>
+  `).join('');
+}
+
+function filterRisk(tier, btn) {
+  renderGemRisk(tier);
+  lucide.createIcons();
+  document.querySelectorAll('#gem-risk-filters button').forEach(b => b.classList.remove('active-filter', 'bg-white/10'));
+  if (btn) btn.classList.add('active-filter', 'bg-white/10');
+}
+
+function refreshGemData() {
+  const icon = document.getElementById('gem-refresh-icon');
+  if (icon) icon.classList.add('animate-spin');
+  setTimeout(() => {
+    if (icon) icon.classList.remove('animate-spin');
+    renderGemDashboard();
+    lucide.createIcons();
+    toast('GEM telemetry refreshed — 8/8 agents connected', 'success');
+  }, 600);
+}
+
+function openGemModal() {
+  const biz = prompt('Enter target business name for Outbound Strike:');
+  if (biz) {
+    GEM_STRIKES.unshift({
+      id: 'STK-' + Math.floor(Math.random() * 900 + 100),
+      target: biz + ' (NYC)',
+      stage: 'sent',
+      score: 85,
+      angle: 'Automated 48-Hour Digital Audit & Outreach',
+      time: 'Just now',
+      statusClass: 'pill-blue'
+    });
+    renderGemDashboard();
+    lucide.createIcons();
+    toast(`Strike dispatched to ${biz}`, 'success');
+  }
+}
+
 /* ===== INIT ===== */
 window.addEventListener('DOMContentLoaded',()=>{
   renderTicker();renderOverview();renderAgents();renderPipeline();renderGovernor();renderLedger();renderExp();
+  renderGemDashboard();
   mkInfra(INFRA_OPS,'i-ops');mkInfra(INFRA_EXEC,'i-exec');mkInfra(INFRA_DATA,'i-data');
   lucide.createIcons();
   startLive();
-  setTimeout(()=>toast('Growth OS v1.0 · All 8 agents nominal','success',4500),900);
+  setTimeout(()=>toast('Growth OS & GEM v1.0 · All agents nominal','success',4500),900);
   setTimeout(()=>toast('3 proposals pending Governor review','warn',4000),2800);
 });
 </script>
