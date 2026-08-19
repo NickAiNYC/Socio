@@ -23,5 +23,1909 @@
     }
   ],
   "analytics_pageviews": [],
-  "analytics_events": []
+  "analytics_events": [],
+  "ground_war_targets": [
+    {
+      "targetId": "target_dob_1787150983586_1",
+      "jobNumber": "402274481",
+      "ownerName": "Don Hector",
+      "companyName": "Hector Framing & Drywall Corp",
+      "phone": "17185551000",
+      "borough": "Queens",
+      "projectScope": "PL",
+      "estimatedTicket": 35000,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551000",
+          "type": "text",
+          "text": {
+            "body": "Hola Don Hector, le saluda Nick de Socio en NYC. Vimos los proyectos que Hector Framing & Drywall Corp hace en Queens. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.586Z"
+    },
+    {
+      "targetId": "target_dob_1787150983586_2",
+      "jobNumber": "401205165",
+      "ownerName": "Carlos Mendoza",
+      "companyName": "Mendoza & Sons General Contracting",
+      "phone": "17185551001",
+      "borough": "Brooklyn",
+      "projectScope": "FA",
+      "estimatedTicket": 38500,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551001",
+          "type": "text",
+          "text": {
+            "body": "Hola Carlos Mendoza, le saluda Nick de Socio en NYC. Vimos los proyectos que Mendoza & Sons General Contracting hace en Brooklyn. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.586Z"
+    },
+    {
+      "targetId": "target_dob_1787150983586_3",
+      "jobNumber": "402067231",
+      "ownerName": "Santiago Vargas",
+      "companyName": "Queens Gut Rehab Specialists",
+      "phone": "17185551002",
+      "borough": "Queens",
+      "projectScope": "OT",
+      "estimatedTicket": 42000,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551002",
+          "type": "text",
+          "text": {
+            "body": "Hola Santiago Vargas, le saluda Nick de Socio en NYC. Vimos los proyectos que Queens Gut Rehab Specialists hace en Queens. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.586Z"
+    },
+    {
+      "targetId": "target_dob_1787150983586_4",
+      "jobNumber": "401645751",
+      "ownerName": "Mateo Delgado",
+      "companyName": "Corona Custom Carpentry & Tile",
+      "phone": "17185551003",
+      "borough": "Brooklyn",
+      "projectScope": "FP",
+      "estimatedTicket": 45500,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551003",
+          "type": "text",
+          "text": {
+            "body": "Hola Mateo Delgado, le saluda Nick de Socio en NYC. Vimos los proyectos que Corona Custom Carpentry & Tile hace en Brooklyn. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.586Z"
+    },
+    {
+      "targetId": "target_dob_1787150983586_5",
+      "jobNumber": "402017937",
+      "ownerName": "Jorge Benitez",
+      "companyName": "Astoria Masonry & Structural",
+      "phone": "17185551004",
+      "borough": "Queens",
+      "projectScope": "OT",
+      "estimatedTicket": 49000,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551004",
+          "type": "text",
+          "text": {
+            "body": "Hola Jorge Benitez, le saluda Nick de Socio en NYC. Vimos los proyectos que Astoria Masonry & Structural hace en Queens. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.586Z"
+    },
+    {
+      "targetId": "target_dob_1787150983586_6",
+      "jobNumber": "401604616",
+      "ownerName": "Alonso Reyes",
+      "companyName": "Bushwick Interior Renovation LLC",
+      "phone": "17185551005",
+      "borough": "Brooklyn",
+      "projectScope": "General Renovation Permit",
+      "estimatedTicket": 52500,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551005",
+          "type": "text",
+          "text": {
+            "body": "Hola Alonso Reyes, le saluda Nick de Socio en NYC. Vimos los proyectos que Bushwick Interior Renovation LLC hace en Brooklyn. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.586Z"
+    },
+    {
+      "targetId": "target_dob_1787150983586_7",
+      "jobNumber": "401272467",
+      "ownerName": "Edison Morales",
+      "companyName": "Sunset Park Framing Masters",
+      "phone": "17185551006",
+      "borough": "Queens",
+      "projectScope": "OT",
+      "estimatedTicket": 56000,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551006",
+          "type": "text",
+          "text": {
+            "body": "Hola Edison Morales, le saluda Nick de Socio en NYC. Vimos los proyectos que Sunset Park Framing Masters hace en Queens. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.586Z"
+    },
+    {
+      "targetId": "target_dob_1787150983586_8",
+      "jobNumber": "421058893",
+      "ownerName": "Don Ramiro",
+      "companyName": "Williamsburg Storefront & Beam Corp",
+      "phone": "17185551007",
+      "borough": "Brooklyn",
+      "projectScope": "General Renovation Permit",
+      "estimatedTicket": 59500,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551007",
+          "type": "text",
+          "text": {
+            "body": "Hola Don Ramiro, le saluda Nick de Socio en NYC. Vimos los proyectos que Williamsburg Storefront & Beam Corp hace en Brooklyn. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.586Z"
+    },
+    {
+      "targetId": "target_dob_1787150983586_9",
+      "jobNumber": "420162139",
+      "ownerName": "Nestor Quintero",
+      "companyName": "Ridgewood Plaster & Millwork",
+      "phone": "17185551008",
+      "borough": "Queens",
+      "projectScope": "EQ",
+      "estimatedTicket": 63000,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551008",
+          "type": "text",
+          "text": {
+            "body": "Hola Nestor Quintero, le saluda Nick de Socio en NYC. Vimos los proyectos que Ridgewood Plaster & Millwork hace en Queens. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.586Z"
+    },
+    {
+      "targetId": "target_dob_1787150983586_10",
+      "jobNumber": "401270165",
+      "ownerName": "Mauricio Silva",
+      "companyName": "Flushing Residential Overhaul Co",
+      "phone": "17185551009",
+      "borough": "Brooklyn",
+      "projectScope": "OT",
+      "estimatedTicket": 66500,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551009",
+          "type": "text",
+          "text": {
+            "body": "Hola Mauricio Silva, le saluda Nick de Socio en NYC. Vimos los proyectos que Flushing Residential Overhaul Co hace en Brooklyn. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.586Z"
+    },
+    {
+      "targetId": "target_dob_1787150983586_11",
+      "jobNumber": "400731954",
+      "ownerName": "Don Hector",
+      "companyName": "Hector Framing & Drywall Corp 2",
+      "phone": "17185551010",
+      "borough": "Queens",
+      "projectScope": "OT",
+      "estimatedTicket": 70000,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551010",
+          "type": "text",
+          "text": {
+            "body": "Hola Don Hector, le saluda Nick de Socio en NYC. Vimos los proyectos que Hector Framing & Drywall Corp 2 hace en Queens. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.586Z"
+    },
+    {
+      "targetId": "target_dob_1787150983586_12",
+      "jobNumber": "401725950",
+      "ownerName": "Carlos Mendoza",
+      "companyName": "Mendoza & Sons General Contracting 2",
+      "phone": "17185551011",
+      "borough": "Brooklyn",
+      "projectScope": "OT",
+      "estimatedTicket": 73500,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551011",
+          "type": "text",
+          "text": {
+            "body": "Hola Carlos Mendoza, le saluda Nick de Socio en NYC. Vimos los proyectos que Mendoza & Sons General Contracting 2 hace en Brooklyn. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.586Z"
+    },
+    {
+      "targetId": "target_dob_1787150983586_13",
+      "jobNumber": "421605105",
+      "ownerName": "Santiago Vargas",
+      "companyName": "Queens Gut Rehab Specialists 2",
+      "phone": "17185551012",
+      "borough": "Queens",
+      "projectScope": "General Renovation Permit",
+      "estimatedTicket": 77000,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551012",
+          "type": "text",
+          "text": {
+            "body": "Hola Santiago Vargas, le saluda Nick de Socio en NYC. Vimos los proyectos que Queens Gut Rehab Specialists 2 hace en Queens. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.586Z"
+    },
+    {
+      "targetId": "target_dob_1787150983586_14",
+      "jobNumber": "421250791",
+      "ownerName": "Mateo Delgado",
+      "companyName": "Corona Custom Carpentry & Tile 2",
+      "phone": "17185551013",
+      "borough": "Brooklyn",
+      "projectScope": "General Renovation Permit",
+      "estimatedTicket": 80500,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551013",
+          "type": "text",
+          "text": {
+            "body": "Hola Mateo Delgado, le saluda Nick de Socio en NYC. Vimos los proyectos que Corona Custom Carpentry & Tile 2 hace en Brooklyn. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.586Z"
+    },
+    {
+      "targetId": "target_dob_1787150983586_15",
+      "jobNumber": "421487180",
+      "ownerName": "Jorge Benitez",
+      "companyName": "Astoria Masonry & Structural 2",
+      "phone": "17185551014",
+      "borough": "Queens",
+      "projectScope": "EQ",
+      "estimatedTicket": 84000,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551014",
+          "type": "text",
+          "text": {
+            "body": "Hola Jorge Benitez, le saluda Nick de Socio en NYC. Vimos los proyectos que Astoria Masonry & Structural 2 hace en Queens. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.586Z"
+    },
+    {
+      "targetId": "target_dob_1787150983586_16",
+      "jobNumber": "410006611",
+      "ownerName": "Alonso Reyes",
+      "companyName": "Bushwick Interior Renovation LLC 2",
+      "phone": "17185551015",
+      "borough": "Brooklyn",
+      "projectScope": "FP",
+      "estimatedTicket": 87500,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551015",
+          "type": "text",
+          "text": {
+            "body": "Hola Alonso Reyes, le saluda Nick de Socio en NYC. Vimos los proyectos que Bushwick Interior Renovation LLC 2 hace en Brooklyn. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.586Z"
+    },
+    {
+      "targetId": "target_dob_1787150983587_17",
+      "jobNumber": "400737333",
+      "ownerName": "Edison Morales",
+      "companyName": "Sunset Park Framing Masters 2",
+      "phone": "17185551016",
+      "borough": "Queens",
+      "projectScope": "General Renovation Permit",
+      "estimatedTicket": 91000,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551016",
+          "type": "text",
+          "text": {
+            "body": "Hola Edison Morales, le saluda Nick de Socio en NYC. Vimos los proyectos que Sunset Park Framing Masters 2 hace en Queens. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.587Z"
+    },
+    {
+      "targetId": "target_dob_1787150983587_18",
+      "jobNumber": "401422484",
+      "ownerName": "Don Ramiro",
+      "companyName": "Williamsburg Storefront & Beam Corp 2",
+      "phone": "17185551017",
+      "borough": "Brooklyn",
+      "projectScope": "OT",
+      "estimatedTicket": 94500,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551017",
+          "type": "text",
+          "text": {
+            "body": "Hola Don Ramiro, le saluda Nick de Socio en NYC. Vimos los proyectos que Williamsburg Storefront & Beam Corp 2 hace en Brooklyn. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.587Z"
+    },
+    {
+      "targetId": "target_dob_1787150983587_19",
+      "jobNumber": "401967056",
+      "ownerName": "Nestor Quintero",
+      "companyName": "Ridgewood Plaster & Millwork 2",
+      "phone": "17185551018",
+      "borough": "Queens",
+      "projectScope": "PL",
+      "estimatedTicket": 98000,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551018",
+          "type": "text",
+          "text": {
+            "body": "Hola Nestor Quintero, le saluda Nick de Socio en NYC. Vimos los proyectos que Ridgewood Plaster & Millwork 2 hace en Queens. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.587Z"
+    },
+    {
+      "targetId": "target_dob_1787150983587_20",
+      "jobNumber": "420838589",
+      "ownerName": "Mauricio Silva",
+      "companyName": "Flushing Residential Overhaul Co 2",
+      "phone": "17185551019",
+      "borough": "Brooklyn",
+      "projectScope": "EQ",
+      "estimatedTicket": 101500,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551019",
+          "type": "text",
+          "text": {
+            "body": "Hola Mauricio Silva, le saluda Nick de Socio en NYC. Vimos los proyectos que Flushing Residential Overhaul Co 2 hace en Brooklyn. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.587Z"
+    },
+    {
+      "targetId": "target_dob_1787150983587_21",
+      "jobNumber": "421678465",
+      "ownerName": "Don Hector",
+      "companyName": "Hector Framing & Drywall Corp 3",
+      "phone": "17185551020",
+      "borough": "Queens",
+      "projectScope": "OT",
+      "estimatedTicket": 105000,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551020",
+          "type": "text",
+          "text": {
+            "body": "Hola Don Hector, le saluda Nick de Socio en NYC. Vimos los proyectos que Hector Framing & Drywall Corp 3 hace en Queens. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.587Z"
+    },
+    {
+      "targetId": "target_dob_1787150983587_22",
+      "jobNumber": "401620787",
+      "ownerName": "Carlos Mendoza",
+      "companyName": "Mendoza & Sons General Contracting 3",
+      "phone": "17185551021",
+      "borough": "Brooklyn",
+      "projectScope": "General Renovation Permit",
+      "estimatedTicket": 108500,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551021",
+          "type": "text",
+          "text": {
+            "body": "Hola Carlos Mendoza, le saluda Nick de Socio en NYC. Vimos los proyectos que Mendoza & Sons General Contracting 3 hace en Brooklyn. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.587Z"
+    },
+    {
+      "targetId": "target_dob_1787150983587_23",
+      "jobNumber": "421590077",
+      "ownerName": "Santiago Vargas",
+      "companyName": "Queens Gut Rehab Specialists 3",
+      "phone": "17185551022",
+      "borough": "Queens",
+      "projectScope": "General Renovation Permit",
+      "estimatedTicket": 112000,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551022",
+          "type": "text",
+          "text": {
+            "body": "Hola Santiago Vargas, le saluda Nick de Socio en NYC. Vimos los proyectos que Queens Gut Rehab Specialists 3 hace en Queens. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.587Z"
+    },
+    {
+      "targetId": "target_dob_1787150983587_24",
+      "jobNumber": "440631899",
+      "ownerName": "Mateo Delgado",
+      "companyName": "Corona Custom Carpentry & Tile 3",
+      "phone": "17185551023",
+      "borough": "Brooklyn",
+      "projectScope": "OT",
+      "estimatedTicket": 115500,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551023",
+          "type": "text",
+          "text": {
+            "body": "Hola Mateo Delgado, le saluda Nick de Socio en NYC. Vimos los proyectos que Corona Custom Carpentry & Tile 3 hace en Brooklyn. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.587Z"
+    },
+    {
+      "targetId": "target_dob_1787150983587_25",
+      "jobNumber": "402574497",
+      "ownerName": "Jorge Benitez",
+      "companyName": "Astoria Masonry & Structural 3",
+      "phone": "17185551024",
+      "borough": "Queens",
+      "projectScope": "General Renovation Permit",
+      "estimatedTicket": 119000,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551024",
+          "type": "text",
+          "text": {
+            "body": "Hola Jorge Benitez, le saluda Nick de Socio en NYC. Vimos los proyectos que Astoria Masonry & Structural 3 hace en Queens. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.587Z"
+    },
+    {
+      "targetId": "target_dob_1787150983587_26",
+      "jobNumber": "421475923",
+      "ownerName": "Alonso Reyes",
+      "companyName": "Bushwick Interior Renovation LLC 3",
+      "phone": "17185551025",
+      "borough": "Brooklyn",
+      "projectScope": "General Renovation Permit",
+      "estimatedTicket": 122500,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551025",
+          "type": "text",
+          "text": {
+            "body": "Hola Alonso Reyes, le saluda Nick de Socio en NYC. Vimos los proyectos que Bushwick Interior Renovation LLC 3 hace en Brooklyn. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.587Z"
+    },
+    {
+      "targetId": "target_dob_1787150983587_27",
+      "jobNumber": "402470009",
+      "ownerName": "Edison Morales",
+      "companyName": "Sunset Park Framing Masters 3",
+      "phone": "17185551026",
+      "borough": "Queens",
+      "projectScope": "MH",
+      "estimatedTicket": 126000,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551026",
+          "type": "text",
+          "text": {
+            "body": "Hola Edison Morales, le saluda Nick de Socio en NYC. Vimos los proyectos que Sunset Park Framing Masters 3 hace en Queens. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.587Z"
+    },
+    {
+      "targetId": "target_dob_1787150983587_28",
+      "jobNumber": "421800956",
+      "ownerName": "Don Ramiro",
+      "companyName": "Williamsburg Storefront & Beam Corp 3",
+      "phone": "17185551027",
+      "borough": "Brooklyn",
+      "projectScope": "General Renovation Permit",
+      "estimatedTicket": 129500,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551027",
+          "type": "text",
+          "text": {
+            "body": "Hola Don Ramiro, le saluda Nick de Socio en NYC. Vimos los proyectos que Williamsburg Storefront & Beam Corp 3 hace en Brooklyn. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.587Z"
+    },
+    {
+      "targetId": "target_dob_1787150983587_29",
+      "jobNumber": "420625540",
+      "ownerName": "Nestor Quintero",
+      "companyName": "Ridgewood Plaster & Millwork 3",
+      "phone": "17185551028",
+      "borough": "Queens",
+      "projectScope": "OT",
+      "estimatedTicket": 133000,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551028",
+          "type": "text",
+          "text": {
+            "body": "Hola Nestor Quintero, le saluda Nick de Socio en NYC. Vimos los proyectos que Ridgewood Plaster & Millwork 3 hace en Queens. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.587Z"
+    },
+    {
+      "targetId": "target_dob_1787150983587_30",
+      "jobNumber": "421945408",
+      "ownerName": "Mauricio Silva",
+      "companyName": "Flushing Residential Overhaul Co 3",
+      "phone": "17185551029",
+      "borough": "Brooklyn",
+      "projectScope": "General Renovation Permit",
+      "estimatedTicket": 136500,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551029",
+          "type": "text",
+          "text": {
+            "body": "Hola Mauricio Silva, le saluda Nick de Socio en NYC. Vimos los proyectos que Flushing Residential Overhaul Co 3 hace en Brooklyn. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.587Z"
+    },
+    {
+      "targetId": "target_dob_1787150983587_31",
+      "jobNumber": "400511380",
+      "ownerName": "Don Hector",
+      "companyName": "Hector Framing & Drywall Corp 4",
+      "phone": "17185551030",
+      "borough": "Queens",
+      "projectScope": "General Renovation Permit",
+      "estimatedTicket": 140000,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551030",
+          "type": "text",
+          "text": {
+            "body": "Hola Don Hector, le saluda Nick de Socio en NYC. Vimos los proyectos que Hector Framing & Drywall Corp 4 hace en Queens. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.587Z"
+    },
+    {
+      "targetId": "target_dob_1787150983587_32",
+      "jobNumber": "421250791",
+      "ownerName": "Carlos Mendoza",
+      "companyName": "Mendoza & Sons General Contracting 4",
+      "phone": "17185551031",
+      "borough": "Brooklyn",
+      "projectScope": "General Renovation Permit",
+      "estimatedTicket": 143500,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551031",
+          "type": "text",
+          "text": {
+            "body": "Hola Carlos Mendoza, le saluda Nick de Socio en NYC. Vimos los proyectos que Mendoza & Sons General Contracting 4 hace en Brooklyn. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.587Z"
+    },
+    {
+      "targetId": "target_dob_1787150983587_33",
+      "jobNumber": "421736508",
+      "ownerName": "Santiago Vargas",
+      "companyName": "Queens Gut Rehab Specialists 4",
+      "phone": "17185551032",
+      "borough": "Queens",
+      "projectScope": "OT",
+      "estimatedTicket": 147000,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551032",
+          "type": "text",
+          "text": {
+            "body": "Hola Santiago Vargas, le saluda Nick de Socio en NYC. Vimos los proyectos que Queens Gut Rehab Specialists 4 hace en Queens. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.587Z"
+    },
+    {
+      "targetId": "target_dob_1787150983587_34",
+      "jobNumber": "400840630",
+      "ownerName": "Mateo Delgado",
+      "companyName": "Corona Custom Carpentry & Tile 4",
+      "phone": "17185551033",
+      "borough": "Brooklyn",
+      "projectScope": "General Renovation Permit",
+      "estimatedTicket": 150500,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551033",
+          "type": "text",
+          "text": {
+            "body": "Hola Mateo Delgado, le saluda Nick de Socio en NYC. Vimos los proyectos que Corona Custom Carpentry & Tile 4 hace en Brooklyn. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.587Z"
+    },
+    {
+      "targetId": "target_dob_1787150983587_35",
+      "jobNumber": "401985125",
+      "ownerName": "Jorge Benitez",
+      "companyName": "Astoria Masonry & Structural 4",
+      "phone": "17185551034",
+      "borough": "Queens",
+      "projectScope": "MH",
+      "estimatedTicket": 154000,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551034",
+          "type": "text",
+          "text": {
+            "body": "Hola Jorge Benitez, le saluda Nick de Socio en NYC. Vimos los proyectos que Astoria Masonry & Structural 4 hace en Queens. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.587Z"
+    },
+    {
+      "targetId": "target_dob_1787150983587_36",
+      "jobNumber": "301625551",
+      "ownerName": "Alonso Reyes",
+      "companyName": "Bushwick Interior Renovation LLC 4",
+      "phone": "17185551035",
+      "borough": "Brooklyn",
+      "projectScope": "EQ",
+      "estimatedTicket": 157500,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551035",
+          "type": "text",
+          "text": {
+            "body": "Hola Alonso Reyes, le saluda Nick de Socio en NYC. Vimos los proyectos que Bushwick Interior Renovation LLC 4 hace en Brooklyn. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.587Z"
+    },
+    {
+      "targetId": "target_dob_1787150983587_37",
+      "jobNumber": "321085071",
+      "ownerName": "Edison Morales",
+      "companyName": "Sunset Park Framing Masters 4",
+      "phone": "17185551036",
+      "borough": "Queens",
+      "projectScope": "MH",
+      "estimatedTicket": 161000,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551036",
+          "type": "text",
+          "text": {
+            "body": "Hola Edison Morales, le saluda Nick de Socio en NYC. Vimos los proyectos que Sunset Park Framing Masters 4 hace en Queens. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.587Z"
+    },
+    {
+      "targetId": "target_dob_1787150983587_38",
+      "jobNumber": "300824972",
+      "ownerName": "Don Ramiro",
+      "companyName": "Williamsburg Storefront & Beam Corp 4",
+      "phone": "17185551037",
+      "borough": "Brooklyn",
+      "projectScope": "General Renovation Permit",
+      "estimatedTicket": 164500,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551037",
+          "type": "text",
+          "text": {
+            "body": "Hola Don Ramiro, le saluda Nick de Socio en NYC. Vimos los proyectos que Williamsburg Storefront & Beam Corp 4 hace en Brooklyn. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.587Z"
+    },
+    {
+      "targetId": "target_dob_1787150983587_39",
+      "jobNumber": "321941048",
+      "ownerName": "Nestor Quintero",
+      "companyName": "Ridgewood Plaster & Millwork 4",
+      "phone": "17185551038",
+      "borough": "Queens",
+      "projectScope": "General Renovation Permit",
+      "estimatedTicket": 168000,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551038",
+          "type": "text",
+          "text": {
+            "body": "Hola Nestor Quintero, le saluda Nick de Socio en NYC. Vimos los proyectos que Ridgewood Plaster & Millwork 4 hace en Queens. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.587Z"
+    },
+    {
+      "targetId": "target_dob_1787150983587_40",
+      "jobNumber": "321955906",
+      "ownerName": "Mauricio Silva",
+      "companyName": "Flushing Residential Overhaul Co 4",
+      "phone": "17185551039",
+      "borough": "Brooklyn",
+      "projectScope": "General Renovation Permit",
+      "estimatedTicket": 171500,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551039",
+          "type": "text",
+          "text": {
+            "body": "Hola Mauricio Silva, le saluda Nick de Socio en NYC. Vimos los proyectos que Flushing Residential Overhaul Co 4 hace en Brooklyn. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.587Z"
+    },
+    {
+      "targetId": "target_dob_1787150983587_41",
+      "jobNumber": "321942029",
+      "ownerName": "Don Hector",
+      "companyName": "Hector Framing & Drywall Corp 5",
+      "phone": "17185551040",
+      "borough": "Queens",
+      "projectScope": "General Renovation Permit",
+      "estimatedTicket": 175000,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551040",
+          "type": "text",
+          "text": {
+            "body": "Hola Don Hector, le saluda Nick de Socio en NYC. Vimos los proyectos que Hector Framing & Drywall Corp 5 hace en Queens. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.587Z"
+    },
+    {
+      "targetId": "target_dob_1787150983587_42",
+      "jobNumber": "340762963",
+      "ownerName": "Carlos Mendoza",
+      "companyName": "Mendoza & Sons General Contracting 5",
+      "phone": "17185551041",
+      "borough": "Brooklyn",
+      "projectScope": "OT",
+      "estimatedTicket": 178500,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551041",
+          "type": "text",
+          "text": {
+            "body": "Hola Carlos Mendoza, le saluda Nick de Socio en NYC. Vimos los proyectos que Mendoza & Sons General Contracting 5 hace en Brooklyn. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.587Z"
+    },
+    {
+      "targetId": "target_dob_1787150983587_43",
+      "jobNumber": "321384890",
+      "ownerName": "Santiago Vargas",
+      "companyName": "Queens Gut Rehab Specialists 5",
+      "phone": "17185551042",
+      "borough": "Queens",
+      "projectScope": "General Renovation Permit",
+      "estimatedTicket": 182000,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551042",
+          "type": "text",
+          "text": {
+            "body": "Hola Santiago Vargas, le saluda Nick de Socio en NYC. Vimos los proyectos que Queens Gut Rehab Specialists 5 hace en Queens. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.587Z"
+    },
+    {
+      "targetId": "target_dob_1787150983587_44",
+      "jobNumber": "340800048",
+      "ownerName": "Mateo Delgado",
+      "companyName": "Corona Custom Carpentry & Tile 5",
+      "phone": "17185551043",
+      "borough": "Brooklyn",
+      "projectScope": "General Renovation Permit",
+      "estimatedTicket": 185500,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551043",
+          "type": "text",
+          "text": {
+            "body": "Hola Mateo Delgado, le saluda Nick de Socio en NYC. Vimos los proyectos que Corona Custom Carpentry & Tile 5 hace en Brooklyn. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.587Z"
+    },
+    {
+      "targetId": "target_dob_1787150983587_45",
+      "jobNumber": "302145765",
+      "ownerName": "Jorge Benitez",
+      "companyName": "Astoria Masonry & Structural 5",
+      "phone": "17185551044",
+      "borough": "Queens",
+      "projectScope": "PL",
+      "estimatedTicket": 189000,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551044",
+          "type": "text",
+          "text": {
+            "body": "Hola Jorge Benitez, le saluda Nick de Socio en NYC. Vimos los proyectos que Astoria Masonry & Structural 5 hace en Queens. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.587Z"
+    },
+    {
+      "targetId": "target_dob_1787150983587_46",
+      "jobNumber": "320993528",
+      "ownerName": "Alonso Reyes",
+      "companyName": "Bushwick Interior Renovation LLC 5",
+      "phone": "17185551045",
+      "borough": "Brooklyn",
+      "projectScope": "General Renovation Permit",
+      "estimatedTicket": 192500,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551045",
+          "type": "text",
+          "text": {
+            "body": "Hola Alonso Reyes, le saluda Nick de Socio en NYC. Vimos los proyectos que Bushwick Interior Renovation LLC 5 hace en Brooklyn. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.587Z"
+    },
+    {
+      "targetId": "target_dob_1787150983587_47",
+      "jobNumber": "310081639",
+      "ownerName": "Edison Morales",
+      "companyName": "Sunset Park Framing Masters 5",
+      "phone": "17185551046",
+      "borough": "Queens",
+      "projectScope": "General Renovation Permit",
+      "estimatedTicket": 196000,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551046",
+          "type": "text",
+          "text": {
+            "body": "Hola Edison Morales, le saluda Nick de Socio en NYC. Vimos los proyectos que Sunset Park Framing Masters 5 hace en Queens. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.587Z"
+    },
+    {
+      "targetId": "target_dob_1787150983587_48",
+      "jobNumber": "301251160",
+      "ownerName": "Don Ramiro",
+      "companyName": "Williamsburg Storefront & Beam Corp 5",
+      "phone": "17185551047",
+      "borough": "Brooklyn",
+      "projectScope": "General Renovation Permit",
+      "estimatedTicket": 199500,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551047",
+          "type": "text",
+          "text": {
+            "body": "Hola Don Ramiro, le saluda Nick de Socio en NYC. Vimos los proyectos que Williamsburg Storefront & Beam Corp 5 hace en Brooklyn. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.587Z"
+    },
+    {
+      "targetId": "target_dob_1787150983587_49",
+      "jobNumber": "310075842",
+      "ownerName": "Nestor Quintero",
+      "companyName": "Ridgewood Plaster & Millwork 5",
+      "phone": "17185551048",
+      "borough": "Queens",
+      "projectScope": "General Renovation Permit",
+      "estimatedTicket": 203000,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551048",
+          "type": "text",
+          "text": {
+            "body": "Hola Nestor Quintero, le saluda Nick de Socio en NYC. Vimos los proyectos que Ridgewood Plaster & Millwork 5 hace en Queens. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.587Z"
+    },
+    {
+      "targetId": "target_dob_1787150983587_50",
+      "jobNumber": "321193864",
+      "ownerName": "Mauricio Silva",
+      "companyName": "Flushing Residential Overhaul Co 5",
+      "phone": "17185551049",
+      "borough": "Brooklyn",
+      "projectScope": "EQ",
+      "estimatedTicket": 206500,
+      "touchNumber": 1,
+      "governorApproved": true,
+      "dispatchStatus": "QUEUED_FOR_DISPATCH",
+      "pitchPayload": {
+        "touchNumber": 1,
+        "type": "text",
+        "requiresApproval": true,
+        "payload": {
+          "messaging_product": "whatsapp",
+          "to": "17185551049",
+          "type": "text",
+          "text": {
+            "body": "Hola Mauricio Silva, le saluda Nick de Socio en NYC. Vimos los proyectos que Flushing Residential Overhaul Co 5 hace en Brooklyn. Preparamos un *Escaneo de Fugas* de 1 página que muestra llamadas y contratos que están yendo a competidores locales en su zona. Es 100% gratuito y no cobramos nada por adelantado. ¿Le gustaría que se lo comparta por aquí en PDF?"
+          }
+        }
+      },
+      "createdAt": "2026-08-19T14:49:43.587Z"
+    }
+  ],
+  "construction_leads": [
+    {
+      "id": "target_dob_1787150983586_1",
+      "clientName": "Don Hector",
+      "clientPhone": "17185551000",
+      "companyName": "Hector Framing & Drywall Corp",
+      "borough": "Queens",
+      "scope": "PL",
+      "estimatedTicket": 35000,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983586_2",
+      "clientName": "Carlos Mendoza",
+      "clientPhone": "17185551001",
+      "companyName": "Mendoza & Sons General Contracting",
+      "borough": "Brooklyn",
+      "scope": "FA",
+      "estimatedTicket": 38500,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983586_3",
+      "clientName": "Santiago Vargas",
+      "clientPhone": "17185551002",
+      "companyName": "Queens Gut Rehab Specialists",
+      "borough": "Queens",
+      "scope": "OT",
+      "estimatedTicket": 42000,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983586_4",
+      "clientName": "Mateo Delgado",
+      "clientPhone": "17185551003",
+      "companyName": "Corona Custom Carpentry & Tile",
+      "borough": "Brooklyn",
+      "scope": "FP",
+      "estimatedTicket": 45500,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983586_5",
+      "clientName": "Jorge Benitez",
+      "clientPhone": "17185551004",
+      "companyName": "Astoria Masonry & Structural",
+      "borough": "Queens",
+      "scope": "OT",
+      "estimatedTicket": 49000,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983586_6",
+      "clientName": "Alonso Reyes",
+      "clientPhone": "17185551005",
+      "companyName": "Bushwick Interior Renovation LLC",
+      "borough": "Brooklyn",
+      "scope": "General Renovation Permit",
+      "estimatedTicket": 52500,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983586_7",
+      "clientName": "Edison Morales",
+      "clientPhone": "17185551006",
+      "companyName": "Sunset Park Framing Masters",
+      "borough": "Queens",
+      "scope": "OT",
+      "estimatedTicket": 56000,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983586_8",
+      "clientName": "Don Ramiro",
+      "clientPhone": "17185551007",
+      "companyName": "Williamsburg Storefront & Beam Corp",
+      "borough": "Brooklyn",
+      "scope": "General Renovation Permit",
+      "estimatedTicket": 59500,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983586_9",
+      "clientName": "Nestor Quintero",
+      "clientPhone": "17185551008",
+      "companyName": "Ridgewood Plaster & Millwork",
+      "borough": "Queens",
+      "scope": "EQ",
+      "estimatedTicket": 63000,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983586_10",
+      "clientName": "Mauricio Silva",
+      "clientPhone": "17185551009",
+      "companyName": "Flushing Residential Overhaul Co",
+      "borough": "Brooklyn",
+      "scope": "OT",
+      "estimatedTicket": 66500,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983586_11",
+      "clientName": "Don Hector",
+      "clientPhone": "17185551010",
+      "companyName": "Hector Framing & Drywall Corp 2",
+      "borough": "Queens",
+      "scope": "OT",
+      "estimatedTicket": 70000,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983586_12",
+      "clientName": "Carlos Mendoza",
+      "clientPhone": "17185551011",
+      "companyName": "Mendoza & Sons General Contracting 2",
+      "borough": "Brooklyn",
+      "scope": "OT",
+      "estimatedTicket": 73500,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983586_13",
+      "clientName": "Santiago Vargas",
+      "clientPhone": "17185551012",
+      "companyName": "Queens Gut Rehab Specialists 2",
+      "borough": "Queens",
+      "scope": "General Renovation Permit",
+      "estimatedTicket": 77000,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983586_14",
+      "clientName": "Mateo Delgado",
+      "clientPhone": "17185551013",
+      "companyName": "Corona Custom Carpentry & Tile 2",
+      "borough": "Brooklyn",
+      "scope": "General Renovation Permit",
+      "estimatedTicket": 80500,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983586_15",
+      "clientName": "Jorge Benitez",
+      "clientPhone": "17185551014",
+      "companyName": "Astoria Masonry & Structural 2",
+      "borough": "Queens",
+      "scope": "EQ",
+      "estimatedTicket": 84000,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983586_16",
+      "clientName": "Alonso Reyes",
+      "clientPhone": "17185551015",
+      "companyName": "Bushwick Interior Renovation LLC 2",
+      "borough": "Brooklyn",
+      "scope": "FP",
+      "estimatedTicket": 87500,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983587_17",
+      "clientName": "Edison Morales",
+      "clientPhone": "17185551016",
+      "companyName": "Sunset Park Framing Masters 2",
+      "borough": "Queens",
+      "scope": "General Renovation Permit",
+      "estimatedTicket": 91000,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983587_18",
+      "clientName": "Don Ramiro",
+      "clientPhone": "17185551017",
+      "companyName": "Williamsburg Storefront & Beam Corp 2",
+      "borough": "Brooklyn",
+      "scope": "OT",
+      "estimatedTicket": 94500,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983587_19",
+      "clientName": "Nestor Quintero",
+      "clientPhone": "17185551018",
+      "companyName": "Ridgewood Plaster & Millwork 2",
+      "borough": "Queens",
+      "scope": "PL",
+      "estimatedTicket": 98000,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983587_20",
+      "clientName": "Mauricio Silva",
+      "clientPhone": "17185551019",
+      "companyName": "Flushing Residential Overhaul Co 2",
+      "borough": "Brooklyn",
+      "scope": "EQ",
+      "estimatedTicket": 101500,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983587_21",
+      "clientName": "Don Hector",
+      "clientPhone": "17185551020",
+      "companyName": "Hector Framing & Drywall Corp 3",
+      "borough": "Queens",
+      "scope": "OT",
+      "estimatedTicket": 105000,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983587_22",
+      "clientName": "Carlos Mendoza",
+      "clientPhone": "17185551021",
+      "companyName": "Mendoza & Sons General Contracting 3",
+      "borough": "Brooklyn",
+      "scope": "General Renovation Permit",
+      "estimatedTicket": 108500,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983587_23",
+      "clientName": "Santiago Vargas",
+      "clientPhone": "17185551022",
+      "companyName": "Queens Gut Rehab Specialists 3",
+      "borough": "Queens",
+      "scope": "General Renovation Permit",
+      "estimatedTicket": 112000,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983587_24",
+      "clientName": "Mateo Delgado",
+      "clientPhone": "17185551023",
+      "companyName": "Corona Custom Carpentry & Tile 3",
+      "borough": "Brooklyn",
+      "scope": "OT",
+      "estimatedTicket": 115500,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983587_25",
+      "clientName": "Jorge Benitez",
+      "clientPhone": "17185551024",
+      "companyName": "Astoria Masonry & Structural 3",
+      "borough": "Queens",
+      "scope": "General Renovation Permit",
+      "estimatedTicket": 119000,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983587_26",
+      "clientName": "Alonso Reyes",
+      "clientPhone": "17185551025",
+      "companyName": "Bushwick Interior Renovation LLC 3",
+      "borough": "Brooklyn",
+      "scope": "General Renovation Permit",
+      "estimatedTicket": 122500,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983587_27",
+      "clientName": "Edison Morales",
+      "clientPhone": "17185551026",
+      "companyName": "Sunset Park Framing Masters 3",
+      "borough": "Queens",
+      "scope": "MH",
+      "estimatedTicket": 126000,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983587_28",
+      "clientName": "Don Ramiro",
+      "clientPhone": "17185551027",
+      "companyName": "Williamsburg Storefront & Beam Corp 3",
+      "borough": "Brooklyn",
+      "scope": "General Renovation Permit",
+      "estimatedTicket": 129500,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983587_29",
+      "clientName": "Nestor Quintero",
+      "clientPhone": "17185551028",
+      "companyName": "Ridgewood Plaster & Millwork 3",
+      "borough": "Queens",
+      "scope": "OT",
+      "estimatedTicket": 133000,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983587_30",
+      "clientName": "Mauricio Silva",
+      "clientPhone": "17185551029",
+      "companyName": "Flushing Residential Overhaul Co 3",
+      "borough": "Brooklyn",
+      "scope": "General Renovation Permit",
+      "estimatedTicket": 136500,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983587_31",
+      "clientName": "Don Hector",
+      "clientPhone": "17185551030",
+      "companyName": "Hector Framing & Drywall Corp 4",
+      "borough": "Queens",
+      "scope": "General Renovation Permit",
+      "estimatedTicket": 140000,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983587_32",
+      "clientName": "Carlos Mendoza",
+      "clientPhone": "17185551031",
+      "companyName": "Mendoza & Sons General Contracting 4",
+      "borough": "Brooklyn",
+      "scope": "General Renovation Permit",
+      "estimatedTicket": 143500,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983587_33",
+      "clientName": "Santiago Vargas",
+      "clientPhone": "17185551032",
+      "companyName": "Queens Gut Rehab Specialists 4",
+      "borough": "Queens",
+      "scope": "OT",
+      "estimatedTicket": 147000,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983587_34",
+      "clientName": "Mateo Delgado",
+      "clientPhone": "17185551033",
+      "companyName": "Corona Custom Carpentry & Tile 4",
+      "borough": "Brooklyn",
+      "scope": "General Renovation Permit",
+      "estimatedTicket": 150500,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983587_35",
+      "clientName": "Jorge Benitez",
+      "clientPhone": "17185551034",
+      "companyName": "Astoria Masonry & Structural 4",
+      "borough": "Queens",
+      "scope": "MH",
+      "estimatedTicket": 154000,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983587_36",
+      "clientName": "Alonso Reyes",
+      "clientPhone": "17185551035",
+      "companyName": "Bushwick Interior Renovation LLC 4",
+      "borough": "Brooklyn",
+      "scope": "EQ",
+      "estimatedTicket": 157500,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983587_37",
+      "clientName": "Edison Morales",
+      "clientPhone": "17185551036",
+      "companyName": "Sunset Park Framing Masters 4",
+      "borough": "Queens",
+      "scope": "MH",
+      "estimatedTicket": 161000,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983587_38",
+      "clientName": "Don Ramiro",
+      "clientPhone": "17185551037",
+      "companyName": "Williamsburg Storefront & Beam Corp 4",
+      "borough": "Brooklyn",
+      "scope": "General Renovation Permit",
+      "estimatedTicket": 164500,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983587_39",
+      "clientName": "Nestor Quintero",
+      "clientPhone": "17185551038",
+      "companyName": "Ridgewood Plaster & Millwork 4",
+      "borough": "Queens",
+      "scope": "General Renovation Permit",
+      "estimatedTicket": 168000,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983587_40",
+      "clientName": "Mauricio Silva",
+      "clientPhone": "17185551039",
+      "companyName": "Flushing Residential Overhaul Co 4",
+      "borough": "Brooklyn",
+      "scope": "General Renovation Permit",
+      "estimatedTicket": 171500,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983587_41",
+      "clientName": "Don Hector",
+      "clientPhone": "17185551040",
+      "companyName": "Hector Framing & Drywall Corp 5",
+      "borough": "Queens",
+      "scope": "General Renovation Permit",
+      "estimatedTicket": 175000,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983587_42",
+      "clientName": "Carlos Mendoza",
+      "clientPhone": "17185551041",
+      "companyName": "Mendoza & Sons General Contracting 5",
+      "borough": "Brooklyn",
+      "scope": "OT",
+      "estimatedTicket": 178500,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983587_43",
+      "clientName": "Santiago Vargas",
+      "clientPhone": "17185551042",
+      "companyName": "Queens Gut Rehab Specialists 5",
+      "borough": "Queens",
+      "scope": "General Renovation Permit",
+      "estimatedTicket": 182000,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983587_44",
+      "clientName": "Mateo Delgado",
+      "clientPhone": "17185551043",
+      "companyName": "Corona Custom Carpentry & Tile 5",
+      "borough": "Brooklyn",
+      "scope": "General Renovation Permit",
+      "estimatedTicket": 185500,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983587_45",
+      "clientName": "Jorge Benitez",
+      "clientPhone": "17185551044",
+      "companyName": "Astoria Masonry & Structural 5",
+      "borough": "Queens",
+      "scope": "PL",
+      "estimatedTicket": 189000,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983587_46",
+      "clientName": "Alonso Reyes",
+      "clientPhone": "17185551045",
+      "companyName": "Bushwick Interior Renovation LLC 5",
+      "borough": "Brooklyn",
+      "scope": "General Renovation Permit",
+      "estimatedTicket": 192500,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983587_47",
+      "clientName": "Edison Morales",
+      "clientPhone": "17185551046",
+      "companyName": "Sunset Park Framing Masters 5",
+      "borough": "Queens",
+      "scope": "General Renovation Permit",
+      "estimatedTicket": 196000,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983587_48",
+      "clientName": "Don Ramiro",
+      "clientPhone": "17185551047",
+      "companyName": "Williamsburg Storefront & Beam Corp 5",
+      "borough": "Brooklyn",
+      "scope": "General Renovation Permit",
+      "estimatedTicket": 199500,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983587_49",
+      "clientName": "Nestor Quintero",
+      "clientPhone": "17185551048",
+      "companyName": "Ridgewood Plaster & Millwork 5",
+      "borough": "Queens",
+      "scope": "General Renovation Permit",
+      "estimatedTicket": 203000,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    },
+    {
+      "id": "target_dob_1787150983587_50",
+      "clientName": "Mauricio Silva",
+      "clientPhone": "17185551049",
+      "companyName": "Flushing Residential Overhaul Co 5",
+      "borough": "Brooklyn",
+      "scope": "EQ",
+      "estimatedTicket": 206500,
+      "source": "DOB_PERMIT_GROUNDWAR",
+      "status": "TOUCH_1_QUEUED"
+    }
+  ]
 }
