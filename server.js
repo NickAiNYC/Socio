@@ -1373,6 +1373,9 @@ require('./lib/whatsapp-routes.cjs')(app, getDb, saveDb);
 try { require('./lib/meta-capi-routes.cjs')(app, getDb, saveDb); } catch(e){ console.warn('[Meta CAPI] routes not loaded:', e.message); }
 try { require('./lib/instagram-routes.cjs')(app, getDb, saveDb); } catch(e){ console.warn('[Instagram] routes not loaded:', e.message); }
 
+// Zero-Trust Attribution Engine — Contratistas escrow + 60-day proxy ledger
+try { require('./lib/attribution-routes.cjs')(app, getDb, saveDb); } catch(e){ console.warn('[Attribution] routes not loaded:', e.message); }
+
 // Admin login: POST key, verify with timing-safe compare, issue 12h httpOnly session cookie.
 // The key is never accepted as a URL query parameter — that pattern leaked in older builds.
 app.post('/admin/analytics/login', (req, res) => {

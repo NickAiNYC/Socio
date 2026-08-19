@@ -28,84 +28,8 @@
       "dest": "server.js"
     },
     {
-      "src": "/recovery-index/?",
-      "dest": "website/recovery-index.html"
-    },
-    {
       "src": "/contratistas/?",
       "dest": "website/contratistas.html"
-    },
-    {
-      "src": "/floristas/?",
-      "dest": "website/floristas.html"
-    },
-    {
-      "src": "/floristas/como-funciona/?",
-      "dest": "website/floristas/como-funciona.html"
-    },
-    {
-      "src": "/floristas/casos-de-exito/?",
-      "dest": "website/floristas/casos-de-exito.html"
-    },
-    {
-      "src": "/floristas/radar-floral/?",
-      "dest": "website/floristas/radar-floral.html"
-    },
-    {
-      "src": "/floristas/preguntas-frecuentes/?",
-      "dest": "website/floristas/preguntas-frecuentes.html"
-    },
-    {
-      "src": "/restaurantes/?",
-      "dest": "website/restaurantes.html"
-    },
-    {
-      "src": "/restaurantes/como-funciona/?",
-      "dest": "website/restaurantes/como-funciona.html"
-    },
-    {
-      "src": "/restaurantes/casos-de-exito/?",
-      "dest": "website/restaurantes/casos-de-exito.html"
-    },
-    {
-      "src": "/restaurantes/radar-gastronomico/?",
-      "dest": "website/restaurantes/radar-gastronomico.html"
-    },
-    {
-      "src": "/restaurantes/preguntas-frecuentes/?",
-      "dest": "website/restaurantes/preguntas-frecuentes.html"
-    },
-    {
-      "src": "/clinicas/?",
-      "dest": "website/clinicas.html"
-    },
-    {
-      "src": "/clinicas/como-funciona/?",
-      "dest": "website/clinicas/como-funciona.html"
-    },
-    {
-      "src": "/clinicas/casos-de-exito/?",
-      "dest": "website/clinicas/casos-de-exito.html"
-    },
-    {
-      "src": "/clinicas/radar-pacientes/?",
-      "dest": "website/clinicas/radar-pacientes.html"
-    },
-    {
-      "src": "/clinicas/preguntas-frecuentes/?",
-      "dest": "website/clinicas/preguntas-frecuentes.html"
-    },
-    {
-      "src": "/escaneo-de-fugas-scorecard/?",
-      "dest": "website/escaneo-de-fugas-scorecard.html"
-    },
-    {
-      "src": "/supplier-cards/?",
-      "dest": "website/supplier-cards.html"
-    },
-    {
-      "src": "/pilot-agreement/?",
-      "dest": "website/pilot-agreement.html"
     },
     {
       "src": "/contratistas/como-funciona/?",
@@ -124,52 +48,36 @@
       "dest": "website/contratistas/preguntas-frecuentes.html"
     },
     {
-      "src": "/proveedores/ferreterias/?",
-      "dest": "website/proveedores/ferreterias.html"
+      "src": "/supplier-cards/?",
+      "dest": "website/supplier-cards.html"
     },
     {
-      "src": "/proveedores/materiales/?",
-      "dest": "website/proveedores/materiales.html"
+      "src": "/pilot-agreement/?",
+      "dest": "website/pilot-agreement.html"
     },
     {
-      "src": "/proveedores/equipos/?",
-      "dest": "website/proveedores/equipos.html"
+      "src": "/escaneo-de-fugas-scorecard/?",
+      "dest": "website/escaneo-de-fugas-scorecard.html"
     },
     {
-      "src": "/global-brands/?",
-      "dest": "website/global-brands.html"
+      "src": "/",
+      "dest": "website/contratistas.html"
     },
     {
-      "src": "/command-center/?",
-      "dest": "website/command-center.html"
+      "src": "/floristas/?",
+      "dest": "website/contratistas.html"
     },
     {
-      "src": "/merchant-evidence/?",
-      "dest": "website/merchant-evidence.html"
+      "src": "/restaurantes/?",
+      "dest": "website/contratistas.html"
     },
     {
-      "src": "/trust-and-proof/?",
-      "dest": "website/trust-and-proof.html"
-    },
-    {
-      "src": "/manifest.json",
-      "dest": "website/manifest.json"
-    },
-    {
-      "src": "/sitemap.xml",
-      "dest": "website/sitemap.xml"
-    },
-    {
-      "src": "/robots.txt",
-      "dest": "website/robots.txt"
-    },
-    {
-      "src": "/404",
-      "dest": "website/404.html"
+      "src": "/clinicas/?",
+      "dest": "website/contratistas.html"
     },
     {
       "src": "/(.*)",
-      "dest": "website/$1"
+      "dest": "website/contratistas.html"
     }
   ]
 }
