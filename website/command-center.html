@@ -7,89 +7,137 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;600;700&family=Michroma&family=Montserrat:wght@600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Roboto+Mono:wght@400;500;600;700&display=swap');
 
         :root {
-            --color-appbg: #16161a;
-            --color-accent: #8494FF;
-            --color-currency: #AAFFC7;
-            --color-glassbg: rgba(20, 20, 20, 0.4);
-            --color-glassborder: rgba(255, 255, 255, 0.08);
-            --font-sans: 'Plus Jakarta Sans', 'Inter', sans-serif;
-            --font-brand: 'Michroma', sans-serif;
+            --color-appbg: #09090b;
+            --color-cardbg: linear-gradient(180deg, rgba(28, 28, 35, 0.7) 0%, rgba(18, 18, 22, 0.85) 100%);
+            --color-border: rgba(255, 255, 255, 0.08);
+            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         body {
-            background-color: #16161a;
+            background-color: #0c0d12;
             color: #ffffff;
-            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             background-image:
-                radial-gradient(circle at 15% 0%, rgba(132, 148, 255, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 85% 100%, rgba(170, 255, 199, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.03) 0%, transparent 70%);
+                radial-gradient(circle at 50% -10%, rgba(132, 148, 255, 0.12) 0%, transparent 60%),
+                radial-gradient(circle at 10% 40%, rgba(56, 189, 248, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(170, 255, 199, 0.04) 0%, transparent 50%);
             background-attachment: fixed;
+            min-height: 100vh;
         }
 
         .font-mono { font-family: 'Roboto Mono', monospace; }
-        .font-brand { font-family: 'Michroma', sans-serif; }
 
-        /* GEM Signature Aura Card & Flat Card */
+        /* Atmospheric Volumetric Smoke Aura & Clean 3D Glass Cards */
         .glass-panel, .aura-card {
             position: relative;
-            background: linear-gradient(to bottom, #212126, #161619, #101012);
+            background: linear-gradient(180deg, rgba(28, 28, 34, 0.85) 0%, rgba(16, 16, 20, 0.95) 100%);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.8), inset 0 1px 20px rgba(137, 196, 244, 0.12);
-            backdrop-filter: blur(20px);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 24px;
+            /* Deep smoky volumetric shadow surrounding the card */
+            box-shadow: 
+                0 30px 60px -12px rgba(0, 0, 0, 0.9),
+                0 18px 36px -18px rgba(0, 0, 0, 0.8),
+                0 0 45px rgba(255, 255, 255, 0.02),
+                inset 0 1px 1px rgba(255, 255, 255, 0.15),
+                inset 0 0 20px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(30px);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .glass-panel:hover, .aura-card:hover {
-            border-color: rgba(132, 148, 255, 0.45);
-            box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.9), 0 0 25px rgba(132, 148, 255, 0.15), inset 0 1px 25px rgba(137, 196, 244, 0.2);
-        }
-
-        .glass-card-pill {
-            background: rgba(20, 20, 20, 0.45);
-            backdrop-filter: blur(40px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 40px;
-            box-shadow: 0 0 40px rgba(137, 196, 244, 0.25), inset 0 0 15px rgba(137, 196, 244, 0.2);
-        }
-
-        /* GEM Colors */
-        .accent { color: #8494FF; }
-        .accent-green { color: #AAFFC7; }
-        .accent-gold { color: #F8B149; }
-        .accent-blue { color: #8494FF; }
-        .accent-cyan { color: #67E8F9; }
-        .accent-red { color: #F85149; }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #8494FF 0%, #6477e0 100%);
-            color: #ffffff;
-            font-weight: 700;
-            border-radius: 12px;
-            box-shadow: 0 0 20px rgba(132, 148, 255, 0.35);
-            transition: all 0.25s ease;
-        }
-        .btn-primary:hover {
-            box-shadow: 0 0 28px rgba(132, 148, 255, 0.6);
+            border-color: rgba(255, 255, 255, 0.16);
+            box-shadow: 
+                0 35px 70px -10px rgba(0, 0, 0, 0.95),
+                0 0 50px rgba(132, 148, 255, 0.08),
+                inset 0 1px 2px rgba(255, 255, 255, 0.25);
             transform: translateY(-1px);
         }
 
-        .btn-currency {
-            background: linear-gradient(135deg, #AAFFC7 0%, #7ed4a3 100%);
-            color: #0d2818;
-            font-weight: 800;
-            border-radius: 12px;
-            box-shadow: 0 0 20px rgba(170, 255, 199, 0.35);
+        /* Inner sub-card with smoke depth */
+        .sub-card {
+            background: rgba(10, 10, 14, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.06), 0 8px 20px rgba(0, 0, 0, 0.4);
             transition: all 0.25s ease;
+        }
+        .sub-card:hover {
+            border-color: rgba(255, 255, 255, 0.12);
+            background: rgba(18, 18, 24, 0.7);
+        }
+
+        /* Clean High-Contrast Typography (NO neon glows) */
+        .text-hero {
+            font-size: 2.25rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            color: #ffffff;
+            line-height: 1.1;
+        }
+
+        .text-large {
+            font-size: 1.75rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: #ffffff;
+        }
+
+        .metric-value {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.85rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            color: #ffffff;
+        }
+
+        .metric-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #94a3b8;
+        }
+
+        /* Clean Accent Badges & Buttons */
+        .btn-primary {
+            background: #ffffff;
+            color: #000000;
+            font-weight: 700;
+            border-radius: 12px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+            transition: all 0.2s ease;
+        }
+        .btn-primary:hover {
+            background: #e2e8f0;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.06);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-weight: 600;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .tab-active {
+            background: #ffffff !important;
+            color: #000000 !important;
+            font-weight: 800 !important;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
         }
 
         .todo-checkbox {
             appearance: none;
-            width: 18px; height: 18px;
+            width: 20px; height: 20px;
             border: 2px solid rgba(255, 255, 255, 0.2);
             border-radius: 50%;
             outline: none;
@@ -99,49 +147,23 @@
             flex-shrink: 0;
             background: transparent;
         }
-        .todo-checkbox:checked { border-color: #8494FF; background-color: #8494FF; }
+        .todo-checkbox:checked { border-color: #ffffff; background-color: #ffffff; }
         .todo-checkbox:checked::after {
             content: '';
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 7px; height: 7px;
+            width: 8px; height: 8px;
             border-radius: 50%;
-            background-color: #ffffff;
+            background-color: #000000;
         }
 
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #2a2a35; border-radius: 10px; }
 
-        .metric-value {
-            font-family: 'Roboto Mono', monospace;
-            font-size: 1.55rem;
-            font-weight: 700;
-            letter-spacing: -0.05em;
-        }
-
-        .tab-active {
-            background: linear-gradient(135deg, rgba(132, 148, 255, 0.2) 0%, rgba(99, 102, 241, 0.2) 100%);
-            color: #ffffff;
-            border: 1px solid rgba(132, 148, 255, 0.5) !important;
-            box-shadow: 0 0 20px rgba(132, 148, 255, 0.25);
-        }
-
-        .agent-status-online { color: #AAFFC7; }
-        .agent-status-running { color: #8494FF; }
-        .agent-status-idle    { color: #F8B149; }
-
-        .pulse-accent {
-            animation: pulse-accent 2s infinite;
-        }
-        @keyframes pulse-accent {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(132, 148, 255, 0.4); }
-            50% { box-shadow: 0 0 0 8px rgba(132, 148, 255, 0); }
-        }
-
         /* Ticker tape */
-        .ticker-wrap { overflow: hidden; white-space: nowrap; border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); background: rgba(10, 10, 14, 0.4); backdrop-filter: blur(10px); }
+        .ticker-wrap { overflow: hidden; white-space: nowrap; border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); background: rgba(10, 10, 14, 0.6); backdrop-filter: blur(10px); }
         .ticker-move { display: inline-block; animation: ticker-scroll 30s linear infinite; }
         @keyframes ticker-scroll {
             0% { transform: translateX(0); }
@@ -152,62 +174,38 @@
         .view { display: none; }
         .view.active { display: block; }
 
-        /* Agent pill badges (GEM style) */
-        .pill { font-family:'Roboto Mono',monospace; font-size:9px; font-weight:700; padding:2px 8px; border-radius:40px; letter-spacing:.5px; }
-        .pill-green { background:rgba(170,255,199,.12); color:#AAFFC7; border:1px solid rgba(170,255,199,.3); }
-        .pill-blue  { background:rgba(132,148,255,.15); color:#8494FF; border:1px solid rgba(132,148,255,.35); }
-        .pill-gold  { background:rgba(248,177,73,.12); color:#F8B149; border:1px solid rgba(248,177,73,.3); }
-        .pill-red   { background:rgba(248,81,73,.12); color:#F85149; border:1px solid rgba(248,81,73,.3); }
-        .pill-gray  { background:rgba(255,255,255,.05); color:#94a3b8; border:1px solid rgba(255,255,255,.1); }
+        /* Clean pill tags */
+        .pill { font-family:'Roboto Mono',monospace; font-size:10px; font-weight:700; padding:3px 10px; border-radius:40px; letter-spacing:.5px; }
+        .pill-green { background:rgba(255,255,255,0.08); color:#86efac; border:1px solid rgba(134,239,172,0.3); }
+        .pill-blue  { background:rgba(255,255,255,0.08); color:#93c5fd; border:1px solid rgba(147,197,253,0.3); }
+        .pill-gold  { background:rgba(255,255,255,0.08); color:#fde047; border:1px solid rgba(253,224,71,0.3); }
+        .pill-red   { background:rgba(255,255,255,0.08); color:#fca5a5; border:1px solid rgba(252,165,165,0.3); }
+        .pill-gray  { background:rgba(255,255,255,0.05); color:#94a3b8; border:1px solid rgba(255,255,255,0.1); }
 
-        /* Terminal log block */
+        /* Terminal block */
         .terminal {
-            background: #0d0d12;
+            background: #09090d;
             border-radius: 12px;
             border: 1px solid rgba(255,255,255,0.06);
             padding: 10px 14px;
             font-family: 'Roboto Mono', monospace;
             font-size: 10px;
             line-height: 1.6;
-            color: #AAFFC7;
+            color: #cbd5e1;
             white-space: pre-wrap;
             max-height: 80px;
             overflow-y: auto;
         }
-        .terminal .t-ts { color: #64748b; }
-        .terminal .t-warn { color: #F8B149; }
-        .terminal .t-info { color: #8494FF; }
-
-        /* Proposal cards */
-        .prop-card {
-            background: linear-gradient(to bottom, #1e1e24, #141418);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 16px;
-            padding: 16px;
-            transition: all .3s ease;
-        }
-        .prop-card:hover { border-color: rgba(132,148,255,.4); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-
-        /* Risk badge */
-        .risk-low    { background:rgba(170,255,199,.12); color:#AAFFC7; border:1px solid rgba(170,255,199,.3); }
-        .risk-medium { background:rgba(248,177,73,.12); color:#F8B149; border:1px solid rgba(248,177,73,.3); }
-        .risk-high   { background:rgba(248,81,73,.12);  color:#F85149; border:1px solid rgba(248,81,73,.3); }
-
-        /* Signal dot rating */
-        .sig-dot { width:7px; height:7px; border-radius:50%; }
 
         /* Event feed item */
-        .eitem { display:flex; align-items:flex-start; gap:10px; padding:10px 12px; border-radius:12px; background:rgba(0,0,0,.25); border:1px solid rgba(255,255,255,.05); margin-bottom:6px; transition:border-color .2s; }
-        .eitem:hover { border-color:rgba(132,148,255,.3); }
-        .eicon { width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:12px; flex-shrink:0; }
-
-        /* Pipeline stage counter */
-        .stage-node { width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:11px; font-family:'Roboto Mono',monospace; font-weight:700; }
+        .eitem { display:flex; align-items:flex-start; gap:12px; padding:12px 14px; border-radius:14px; background:rgba(0,0,0,.3); border:1px solid rgba(255,255,255,.05); margin-bottom:6px; transition:border-color .2s; }
+        .eitem:hover { border-color:rgba(255,255,255,.15); }
+        .eicon { width:32px; height:32px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.08); }
 
         /* Infra health dot */
         .hdot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
-        .hdot-ok   { background:#AAFFC7; box-shadow:0 0 8px rgba(170,255,199,.7); }
-        .hdot-warn { background:#F8B149; box-shadow:0 0 8px rgba(248,177,73,.6); }
+        .hdot-ok   { background:#86efac; box-shadow:0 0 6px rgba(134,239,172,.6); }
+        .hdot-warn { background:#fde047; box-shadow:0 0 6px rgba(253,224,71,.6); }
     </style>
 </head>
 <body class="min-h-screen antialiased">
@@ -215,39 +213,55 @@
 <!-- ============================
      HEADER
      ============================ -->
-<header class="flex justify-between items-center px-8 pt-5 pb-4 border-b border-white/5 bg-[#16161a]/90 backdrop-blur-xl">
-    <div class="flex items-center gap-4">
+<header class="flex justify-between items-center px-8 py-5 border-b border-white/5 bg-[#09090d]/80 backdrop-blur-2xl">
+    <div class="flex items-center gap-6">
         <div class="flex items-center gap-3">
-            <span class="w-8 h-8 rounded-xl flex items-center justify-center text-white font-black text-sm shadow-[0_0_15px_rgba(132,148,255,0.4)]" style="background:linear-gradient(135deg, #8494FF 0%, #6477e0 100%)">S</span>
+            <span class="w-9 h-9 rounded-2xl flex items-center justify-center text-black font-black text-base bg-white shadow-md">S</span>
             <div class="flex flex-col">
-                <span class="font-brand text-base tracking-[0.2em] text-white">
-                    SOCIO<span class="text-[#8494FF] drop-shadow-[0_0_12px_rgba(132,148,255,0.6)]">.OS</span>
+                <span class="text-base font-extrabold tracking-tight text-white">
+                    SOCIO <span class="text-gray-400 font-semibold text-xs tracking-normal">COMMAND</span>
                 </span>
-                <span class="text-[9px] font-mono text-gray-500 uppercase tracking-widest">Growth Engine</span>
+                <span class="text-[10px] font-mono text-gray-500 uppercase tracking-wider">Growth OS v2.4</span>
             </div>
         </div>
 
-        <div class="hidden md:flex items-center gap-2 border-l border-white/10 pl-4">
-            <span class="px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-1.5 font-mono">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                SYSTEM ONLINE
-            </span>
+        <!-- Weather / Cloud Daily Brief Capsule (Matches FocusCommandCenter) -->
+        <div class="hidden lg:flex items-center gap-4 pl-6 border-l border-white/10">
+            <div class="flex items-center gap-3 bg-white/[0.04] border border-white/10 rounded-2xl px-4 py-2">
+                <span class="text-2xl">⛅</span>
+                <div class="flex flex-col">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-extrabold text-white">NYC · 16°C</span>
+                        <span class="text-[10px] text-gray-400 font-medium">Partly Cloudy</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-[9px] font-mono text-gray-500">
+                        <span>↑ 16°</span> • <span>↓ 10°</span> • <span class="text-emerald-400 font-bold">AIRLOCK PASS</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- Center - Large Greeting / Status -->
+    <div class="hidden md:flex items-center gap-2 text-sm font-semibold text-gray-300">
+        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+        All Systems Nominal • <span class="text-white font-bold">8 Active Agents</span>
+    </div>
+
+    <!-- Right Controls -->
     <div class="flex items-center gap-4">
-        <div class="hidden sm:flex items-center gap-2 bg-[#121216] border border-white/10 rounded-full px-4 py-1.5 text-xs font-mono">
-            <i data-lucide="search" class="w-3.5 h-3.5 text-gray-400"></i>
-            <input type="text" placeholder="Search or jump... (Cmd K)" class="bg-transparent border-none outline-none text-white w-48 placeholder-gray-500 text-xs">
+        <div class="hidden sm:flex items-center gap-2.5 bg-black/40 border border-white/10 rounded-full px-4 py-2 text-xs font-mono text-gray-400 shadow-inner">
+            <i data-lucide="search" class="w-3.5 h-3.5 text-gray-500"></i>
+            <input type="text" placeholder="Quick search... (⌘K)" class="bg-transparent border-none outline-none text-white w-40 placeholder-gray-600 text-xs">
         </div>
 
         <div class="text-right hidden sm:block">
-            <div class="text-[10px] font-semibold text-gray-400 tracking-wide" id="hdr-date">AUG 18, 2026</div>
-            <div class="text-sm font-mono font-bold text-white tracking-wider" id="hdr-time">--:--</div>
+            <div class="text-xs font-bold text-white tracking-wide" id="hdr-time">--:--</div>
+            <div class="text-[10px] font-medium text-gray-500 uppercase tracking-wider" id="hdr-date">AUG 18, 2026</div>
         </div>
 
-        <div class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center cursor-pointer hover:bg-white/10 transition-colors">
-            <i data-lucide="user" class="w-4 h-4 text-gray-300"></i>
+        <div class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center cursor-pointer hover:bg-white/10 transition-colors">
+            <span class="text-xs font-extrabold text-white">NA</span>
         </div>
     </div>
 </header>
@@ -758,100 +772,100 @@
      VIEW: GEM OPS DASHBOARD
      ============================ -->
 <div class="view active" id="view-gem">
-    <div class="w-full space-y-6 flex flex-col items-stretch">
+    <div class="w-full space-y-7 flex flex-col items-stretch">
         
         <!-- 1. KpiWidget + Pipeline Velocity -->
-        <div class="aura-card p-5">
-            <div class="flex items-center justify-between mb-4 pb-3 border-b border-white/5">
-                <div class="flex items-center gap-2">
-                    <h3 class="text-xs font-extrabold uppercase tracking-widest text-white">This Week</h3>
-                    <div class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></div>
+        <div class="aura-card p-6">
+            <div class="flex items-center justify-between mb-5 pb-4 border-b border-white/5">
+                <div class="flex items-center gap-3">
+                    <h3 class="text-sm font-extrabold uppercase tracking-widest text-white">Weekly Performance Telemetry</h3>
+                    <span class="pill pill-green font-mono">LIVE FEED</span>
                 </div>
-                <button onclick="refreshGemData()" class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] text-white/45 hover:text-white font-mono uppercase tracking-wider transition-colors flex items-center gap-1.5">
-                    <i data-lucide="refresh-cw" class="w-3 h-3" id="gem-refresh-icon"></i> Refresh
+                <button onclick="refreshGemData()" class="btn-secondary px-3.5 py-1.5 text-xs font-mono flex items-center gap-2">
+                    <i data-lucide="refresh-cw" class="w-3.5 h-3.5" id="gem-refresh-icon"></i> Refresh Telemetry
                 </button>
             </div>
 
-            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5 mb-4">
-                <div class="rounded-2xl border border-white/10 bg-black/25 p-3.5 transition-all duration-300 hover:border-accent/35 hover:bg-white/[0.035]">
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5 mb-5">
+                <div class="sub-card p-4">
                     <div class="flex items-center justify-between mb-2">
-                        <span class="text-[10px] text-white/45 font-mono uppercase font-bold tracking-wider">DMs sent this week</span>
-                        <i data-lucide="send" class="w-4 h-4 text-accent"></i>
+                        <span class="metric-label">DMs Sent (7d)</span>
+                        <i data-lucide="send" class="w-4 h-4 text-gray-400"></i>
                     </div>
-                    <div class="text-2xl font-extrabold text-white font-mono tracking-tight" id="gem-kpi-dms">47</div>
-                    <div class="mt-1 text-[9px] text-white/30 font-mono uppercase tracking-wider">Last 7 days</div>
+                    <div class="metric-value" id="gem-kpi-dms">47</div>
+                    <div class="mt-1 text-[11px] text-gray-400 font-medium">Outbound sequences</div>
                 </div>
 
-                <div class="rounded-2xl border border-white/10 bg-black/25 p-3.5 transition-all duration-300 hover:border-accent/35 hover:bg-white/[0.035]">
+                <div class="sub-card p-4">
                     <div class="flex items-center justify-between mb-2">
-                        <span class="text-[10px] text-white/45 font-mono uppercase font-bold tracking-wider">Replies received</span>
-                        <i data-lucide="message-square" class="w-4 h-4 text-accent"></i>
+                        <span class="metric-label">Replies Received</span>
+                        <i data-lucide="message-square" class="w-4 h-4 text-gray-400"></i>
                     </div>
-                    <div class="text-2xl font-extrabold text-emerald-400 font-mono tracking-tight" id="gem-kpi-replies">18</div>
-                    <div class="mt-1 text-[9px] text-white/30 font-mono uppercase tracking-wider">38.3% response rate</div>
+                    <div class="metric-value text-emerald-400" id="gem-kpi-replies">18</div>
+                    <div class="mt-1 text-[11px] text-gray-400 font-medium">38.3% response rate</div>
                 </div>
 
-                <div class="rounded-2xl border border-white/10 bg-black/25 p-3.5 transition-all duration-300 hover:border-accent/35 hover:bg-white/[0.035]">
+                <div class="sub-card p-4">
                     <div class="flex items-center justify-between mb-2">
-                        <span class="text-[10px] text-white/45 font-mono uppercase font-bold tracking-wider">Scoping calls booked</span>
-                        <i data-lucide="calendar-check" class="w-4 h-4 text-accent"></i>
+                        <span class="metric-label">Scoping Booked</span>
+                        <i data-lucide="calendar-check" class="w-4 h-4 text-gray-400"></i>
                     </div>
-                    <div class="text-2xl font-extrabold text-white font-mono tracking-tight" id="gem-kpi-booked">8</div>
-                    <div class="mt-1 text-[9px] text-white/30 font-mono uppercase tracking-wider">Booked or later</div>
+                    <div class="metric-value" id="gem-kpi-booked">8</div>
+                    <div class="mt-1 text-[11px] text-gray-400 font-medium">48-Hour audit queue</div>
                 </div>
 
-                <div class="rounded-2xl border border-white/10 bg-black/25 p-3.5 transition-all duration-300 hover:border-accent/35 hover:bg-white/[0.035]">
+                <div class="sub-card p-4">
                     <div class="flex items-center justify-between mb-2">
-                        <span class="text-[10px] text-white/45 font-mono uppercase font-bold tracking-wider">Diagnostics paid</span>
-                        <i data-lucide="dollar-sign" class="w-4 h-4 text-accent"></i>
+                        <span class="metric-label">Diagnostics Paid</span>
+                        <i data-lucide="dollar-sign" class="w-4 h-4 text-gray-400"></i>
                     </div>
-                    <div class="text-2xl font-extrabold text-accent-green font-mono tracking-tight" id="gem-kpi-pilots">3</div>
-                    <div class="mt-1 text-[9px] text-white/30 font-mono uppercase tracking-wider">$10,500 revenue this week</div>
+                    <div class="metric-value text-emerald-400" id="gem-kpi-pilots">3</div>
+                    <div class="mt-1 text-[11px] text-gray-400 font-medium">$10,500 pipeline val</div>
                 </div>
 
-                <div class="rounded-2xl border border-white/10 bg-black/25 p-3.5 transition-all duration-300 hover:border-accent/35 hover:bg-white/[0.035]">
+                <div class="sub-card p-4">
                     <div class="flex items-center justify-between mb-2">
-                        <span class="text-[10px] text-white/45 font-mono uppercase font-bold tracking-wider">Active subscriptions</span>
-                        <i data-lucide="target" class="w-4 h-4 text-accent"></i>
+                        <span class="metric-label">Active Subscriptions</span>
+                        <i data-lucide="target" class="w-4 h-4 text-gray-400"></i>
                     </div>
-                    <div class="text-2xl font-extrabold text-white font-mono tracking-tight">8</div>
-                    <div class="mt-1 text-[9px] text-white/30 font-mono uppercase tracking-wider">$16,000 MRR</div>
+                    <div class="metric-value">8</div>
+                    <div class="mt-1 text-[11px] text-gray-400 font-medium">$16,000 MRR</div>
                 </div>
             </div>
 
-            <!-- Pipeline Velocity Widget -->
-            <div class="rounded-2xl border border-white/10 bg-black/25 p-3.5">
+            <!-- Pipeline Velocity Sub-Card -->
+            <div class="sub-card p-4">
                 <div class="mb-3 flex items-center justify-between">
-                    <span class="text-[10px] text-gray-400 font-mono uppercase font-bold tracking-wider">Pipeline Velocity</span>
-                    <span class="text-[9px] font-mono uppercase text-emerald-400">DM → Paid 24% / target 20%</span>
+                    <span class="text-xs font-extrabold uppercase tracking-wider text-gray-300">Pipeline Velocity</span>
+                    <span class="text-xs font-mono text-emerald-400 font-bold">DM → Paid 24% (Target 20%)</span>
                 </div>
-                <div class="grid gap-2 grid-cols-2 lg:grid-cols-4">
-                    <div class="rounded-2xl border border-white/5 bg-black/20 p-3">
-                        <div class="text-[9px] text-white/35 font-mono uppercase tracking-wider">Found → DM Sent</div>
-                        <div class="mt-1 flex items-center justify-between">
-                            <span class="text-sm font-extrabold text-white font-mono">1d avg</span>
-                            <span class="inline-flex items-center gap-1 text-[9px] font-mono uppercase text-emerald-400">↑ improving</span>
+                <div class="grid gap-3 grid-cols-2 lg:grid-cols-4">
+                    <div class="bg-black/30 border border-white/5 rounded-xl p-3">
+                        <div class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Found → DM Sent</div>
+                        <div class="mt-1.5 flex items-center justify-between">
+                            <span class="text-base font-extrabold text-white">1d avg</span>
+                            <span class="text-[10px] font-mono text-emerald-400 font-bold">↑ improving</span>
                         </div>
                     </div>
-                    <div class="rounded-2xl border border-white/5 bg-black/20 p-3">
-                        <div class="text-[9px] text-white/35 font-mono uppercase tracking-wider">DM Sent → Replied</div>
-                        <div class="mt-1 flex items-center justify-between">
-                            <span class="text-sm font-extrabold text-white font-mono">2d avg</span>
-                            <span class="inline-flex items-center gap-1 text-[9px] font-mono uppercase text-emerald-400">↑ improving</span>
+                    <div class="bg-black/30 border border-white/5 rounded-xl p-3">
+                        <div class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">DM Sent → Replied</div>
+                        <div class="mt-1.5 flex items-center justify-between">
+                            <span class="text-base font-extrabold text-white">2d avg</span>
+                            <span class="text-[10px] font-mono text-emerald-400 font-bold">↑ improving</span>
                         </div>
                     </div>
-                    <div class="rounded-2xl border border-white/5 bg-black/20 p-3">
-                        <div class="text-[9px] text-white/35 font-mono uppercase tracking-wider">Replied → Scoping Booked</div>
-                        <div class="mt-1 flex items-center justify-between">
-                            <span class="text-sm font-extrabold text-white font-mono">3d avg</span>
-                            <span class="inline-flex items-center gap-1 text-[9px] font-mono uppercase text-amber-400">→ steady</span>
+                    <div class="bg-black/30 border border-white/5 rounded-xl p-3">
+                        <div class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Replied → Scoping</div>
+                        <div class="mt-1.5 flex items-center justify-between">
+                            <span class="text-base font-extrabold text-white">3d avg</span>
+                            <span class="text-[10px] font-mono text-amber-300 font-bold">→ steady</span>
                         </div>
                     </div>
-                    <div class="rounded-2xl border border-white/5 bg-black/20 p-3">
-                        <div class="text-[9px] text-white/35 font-mono uppercase tracking-wider">Scoping Booked → Diagnostic Paid</div>
-                        <div class="mt-1 flex items-center justify-between">
-                            <span class="text-sm font-extrabold text-white font-mono">4d avg</span>
-                            <span class="inline-flex items-center gap-1 text-[9px] font-mono uppercase text-amber-400">→ steady</span>
+                    <div class="bg-black/30 border border-white/5 rounded-xl p-3">
+                        <div class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Scoping → Paid</div>
+                        <div class="mt-1.5 flex items-center justify-between">
+                            <span class="text-base font-extrabold text-white">4d avg</span>
+                            <span class="text-[10px] font-mono text-amber-300 font-bold">→ steady</span>
                         </div>
                     </div>
                 </div>
@@ -859,43 +873,40 @@
         </div>
 
         <!-- 2. OutboundWidget -->
-        <div class="aura-card p-5 h-full flex flex-col">
-            <div class="mb-4 flex items-center justify-between border-b border-white/5 pb-3">
+        <div class="aura-card p-6 h-full flex flex-col">
+            <div class="mb-5 flex items-center justify-between border-b border-white/5 pb-4">
                 <div>
-                    <h3 class="text-xs font-extrabold uppercase tracking-widest text-white">Outbound Strikes Tracker</h3>
-                    <p class="text-[10px] text-gray-500 font-mono mt-1" id="gem-strike-updated">Last updated: Just now</p>
+                    <h3 class="text-sm font-extrabold uppercase tracking-widest text-white">Outbound Strikes Tracker</h3>
+                    <p class="text-xs text-gray-400 mt-1" id="gem-strike-updated">Multi-channel prospecting & automated follow-ups</p>
                 </div>
-                <div class="flex items-center gap-2">
-                    <button onclick="openGemModal()" class="text-[10px] font-mono border border-white/10 hover:border-white/25 rounded-full px-3 py-1 text-white/70 hover:text-white transition-colors">
+                <div class="flex items-center gap-3">
+                    <button onclick="openGemModal()" class="btn-primary px-4 py-2 text-xs font-bold">
                         + New Strike
-                    </button>
-                    <button onclick="refreshGemData()" class="text-accent hover:text-accent/80 transition-colors flex items-center gap-1.5 text-[10px] font-mono">
-                        <i data-lucide="refresh-cw" class="w-3 h-3"></i> REFRESH
                     </button>
                 </div>
             </div>
 
             <!-- Summary Cards -->
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
-                <div class="flex flex-col border border-white/5 rounded-xl bg-white/5 p-3">
-                    <span class="text-[10px] font-mono text-white/40 uppercase tracking-wider mb-1">Total Strikes</span>
-                    <span class="text-xl font-semibold text-white/90">47</span>
+                <div class="sub-card p-3.5">
+                    <span class="metric-label block mb-1">Total Strikes</span>
+                    <span class="text-2xl font-extrabold text-white">47</span>
                 </div>
-                <div class="flex flex-col border border-accent/20 rounded-xl bg-accent/5 p-3">
-                    <span class="text-[10px] font-mono text-accent/60 uppercase tracking-wider mb-1">Sent</span>
-                    <span class="text-xl font-semibold text-accent">28</span>
+                <div class="sub-card p-3.5">
+                    <span class="metric-label block mb-1 text-sky-400">Sent</span>
+                    <span class="text-2xl font-extrabold text-sky-300">28</span>
                 </div>
-                <div class="flex flex-col border border-emerald-500/20 rounded-xl bg-emerald-500/5 p-3">
-                    <span class="text-[10px] font-mono text-emerald-500/60 uppercase tracking-wider mb-1">Replied</span>
-                    <span class="text-xl font-semibold text-emerald-400">14</span>
+                <div class="sub-card p-3.5">
+                    <span class="metric-label block mb-1 text-emerald-400">Replied</span>
+                    <span class="text-2xl font-extrabold text-emerald-400">14</span>
                 </div>
-                <div class="flex flex-col border border-white/5 rounded-xl bg-white/5 p-3">
-                    <span class="text-[10px] font-mono text-white/40 uppercase tracking-wider mb-1">Closed/Lost</span>
-                    <span class="text-xl font-semibold text-rose-400">5</span>
+                <div class="sub-card p-3.5">
+                    <span class="metric-label block mb-1 text-rose-400">Closed/Lost</span>
+                    <span class="text-2xl font-extrabold text-rose-300">5</span>
                 </div>
             </div>
 
-            <!-- Strike Items List matching NextHumanAction style -->
+            <!-- Strike Items List -->
             <div class="flex-1 flex flex-col space-y-3" id="gem-strikes-list">
                 <!-- rendered by JS -->
             </div>
