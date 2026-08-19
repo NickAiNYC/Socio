@@ -487,13 +487,42 @@
                 </div>
 
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <a href="mailto:hello@socio.nyc" id="result-cta-mailto" class="btn-neon inline-flex items-center gap-3 px-7 py-4 rounded-2xl font-light text-sm">
-                        Book a founder call
+                    <button type="button" id="result-cta-booking" class="btn-neon hidden inline-flex items-center gap-3 px-7 py-4 rounded-2xl font-light text-sm">
+                        Book your Revenue Recovery Map Review
                         <iconify-icon icon="solar:arrow-right-up-linear" width="16"></iconify-icon>
-                    </a>
+                    </button>
                     <a href="/" class="inline-flex items-center gap-2 px-5 py-4 text-slate-500 text-sm font-light hover:text-slate-900 transition-colors">
                         Back to Socio
                     </a>
+                </div>
+                <p id="result-nurture" class="hidden text-center text-sm text-slate-500 font-light mt-6"></p>
+
+                <!-- Booking panel (qualified leads only) -->
+                <div id="booking-panel" class="hidden mt-8 pt-6 border-t border-slate-200">
+                    <h3 class="text-lg font-light text-slate-900 tracking-tight mb-1">Book your 20-minute Revenue Recovery Map Review</h3>
+                    <p class="text-xs text-slate-400 font-light mb-5">We\u2019ll use the call to validate data access, eligibility, and the highest-confidence recovery test \u2014 not to sell you a retainer.</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                        <div><label class="form-label block mb-1.5">Business name</label><input id="bk-name" class="form-field" readonly /></div>
+                        <div><label class="form-label block mb-1.5">Website</label><input id="bk-website" class="form-field" readonly /></div>
+                        <div><label class="form-label block mb-1.5">Category</label><input id="bk-vertical" class="form-field" readonly /></div>
+                        <div><label class="form-label block mb-1.5">Locations</label><input id="bk-locations" class="form-field" readonly /></div>
+                        <div><label class="form-label block mb-1.5">POS/CRM systems</label><input id="bk-systems" class="form-field" readonly /></div>
+                        <div><label class="form-label block mb-1.5">Monthly revenue band</label><input id="bk-band" class="form-field" readonly /></div>
+                    </div>
+                    <div class="mb-5">
+                        <label class="form-label block mb-1.5" for="bk-email">Contact email</label>
+                        <input type="email" id="bk-email" class="form-field" />
+                    </div>
+                    <button type="button" id="bk-submit" class="btn-neon w-full inline-flex items-center justify-center gap-3 px-7 py-4 rounded-2xl font-light text-sm">Confirm booking</button>
+                    <p class="text-xs text-red-500 font-light hidden mt-3" id="bk-error"></p>
+                </div>
+
+                <!-- Booking confirmation -->
+                <div id="booking-done" class="hidden mt-8 pt-6 border-t border-slate-200 text-center">
+                    <div class="w-14 h-14 rounded-2xl bg-green-50 flex items-center justify-center mx-auto mb-4">
+                        <iconify-icon icon="solar:verified-check-linear" width="26" class="text-green-500"></iconify-icon>
+                    </div>
+                    <p class="text-sm text-slate-600 font-light leading-relaxed" id="booking-done-copy"></p>
                 </div>
 
                 <p class="text-center text-[11px] text-slate-400 font-light mt-8 leading-relaxed">
@@ -714,7 +743,7 @@
         }
 
         // --- Submit ---
-        function buildPayload(score, leak, confidence, tier) {
+        function buildPayload(client) {
             return {
                 merchant: {
                     business_name: state.merchant.business_name,
@@ -726,12 +755,7 @@
                 economics: state.economics,
                 systems: state.systems,
                 operations: state.operations,
-                assessment: {
-                    recovery_score: score,
-                    leak_type: leak,
-                    data_confidence: confidence,
-                    sales_tier: tier
-                },
+                client_assessment: client,
                 consent: {
                     follow_up_opt_in: state.consent.follow_up_opt_in,
                     consent_timestamp: state.consent.consent_timestamp,
@@ -745,10 +769,15 @@
             captureStep(4);
             if (!validateStep(4)) return;
 
-            const score = computeScore();
-            const leak = detectLeak();
-            const confidence = dataConfidence();
-            const tier = tierFor(score);
+            // Client-side computation is kept ONLY for observability — the
+            // server recomputes from raw answers and its assessment is authoritative.
+            const clientScore = computeScore();
+            const client = {
+                recovery_score: clientScore,
+                leak_type: detectLeak(),
+                data_confidence: dataConfidence(),
+                sales_tier: tierFor(clientScore)
+            };
 
             const nextBtn = document.getElementById('rli-next');
             nextBtn.disabled = true;
@@ -758,12 +787,13 @@
                 const res = await fetch('/api/recovery-index', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(buildPayload(score, leak, confidence, tier))
+                    body: JSON.stringify(buildPayload(client))
                 });
                 const json = await res.json().catch(() => ({}));
                 if (!res.ok || json.status !== 'success') throw new Error(json.message || 'submit failed');
-                trackEvent('rli_completed', { tier: tier, score: score, leak: leak });
-                showResults(score, leak, confidence, tier);
+                const a = json.assessment || {};
+                trackEvent('rli_completed', { tier: a.sales_tier, score: a.recovery_score, leak: a.leak_type });
+                showResults(a.recovery_score, a.leak_type, a.data_confidence, a.sales_tier, json.lead_id);
             } catch (err) {
                 const e = document.getElementById('rli-error');
                 e.textContent = 'Something went wrong — email us at hello@socio.nyc and we\u2019ll finish your assessment manually.';
@@ -805,20 +835,78 @@
             document.getElementById('result-confidence').textContent = confidence;
             document.getElementById('result-next-step').textContent = nextStep;
 
-            const subject = encodeURIComponent('Founder call — ' + state.merchant.business_name + ' (' + state.merchant.vertical.replace(/_/g, ' ') + ') — RLI ' + score);
-            const body = encodeURIComponent('Business: ' + state.merchant.business_name + '\nVertical: ' + state.merchant.vertical + '\nIndex: ' + score + ' (tier: ' + tier + ')\n\nI just completed the Revenue Leakage Index and would like to book a founder call.');
-            document.getElementById('result-cta-mailto').href = 'mailto:hello@socio.nyc?subject=' + subject + '&body=' + body;
-            document.getElementById('result-cta-mailto').textContent = tier === 'high'
-                ? 'Book a founder call'
-                : tier === 'opportunity'
-                    ? 'Request my Revenue Recovery Map'
-                    : 'Get my practical roadmap';
+            currentLeadId = leadId;
+
+            // Booking path for qualified leads; nurture copy otherwise.
+            const bookingCta = document.getElementById('result-cta-booking');
+            const bookingPanel = document.getElementById('booking-panel');
+            const bookingDone = document.getElementById('booking-done');
+            bookingPanel.classList.add('hidden');
+            bookingDone.classList.add('hidden');
+            if (tier === 'high') {
+                bookingCta.classList.remove('hidden');
+                document.getElementById('bk-name').value = state.merchant.business_name;
+                document.getElementById('bk-website').value = state.merchant.website;
+                document.getElementById('bk-vertical').value = state.merchant.vertical.replace(/_/g, ' ');
+                document.getElementById('bk-locations').value = state.merchant.locations === '1' ? '1' : state.merchant.locations === '2_3' ? '2\u20133' : '4+';
+                document.getElementById('bk-systems').value = state.systems.systems.join(', ') || 'None selected';
+                document.getElementById('bk-band').value = { under_25k: 'Under $25k', '25_75k': '$25k\u2013$75k', '75_150k': '$75k\u2013$150k', '150_500k': '$150k\u2013$500k', '500k_plus': '$500k+' }[state.economics.monthly_revenue_band] || '';
+                document.getElementById('bk-email').value = state.contact.email;
+            } else {
+                bookingCta.classList.add('hidden');
+            }
+            const nurtureNote = document.getElementById('result-nurture');
+            nurtureNote.textContent = tier === 'opportunity'
+                ? 'We\u2019ll review your submission and email your Revenue Recovery Map after review \u2014 no sales call required.'
+                : tier === 'foundation'
+                    ? 'We\u2019ll send practical operating guidance by email \u2014 no pushy sales calls.'
+                    : '';
+            nurtureNote.classList.toggle('hidden', tier === 'high');
 
             document.getElementById('assessment').classList.add('hidden');
             document.getElementById('results').classList.remove('hidden');
             document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
             trackEvent('rli_tier_' + tier);
         }
+
+        // --- Booking (qualified leads only) ---
+        let currentLeadId = null;
+        document.getElementById('result-cta-booking').addEventListener('click', () => {
+            document.getElementById('booking-panel').classList.remove('hidden');
+            document.getElementById('booking-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+        document.getElementById('bk-submit').addEventListener('click', async () => {
+            const email = document.getElementById('bk-email').value.trim();
+            const err = document.getElementById('bk-error');
+            err.classList.add('hidden');
+            if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+                err.textContent = 'Please enter a valid email.';
+                err.classList.remove('hidden');
+                return;
+            }
+            const btn = document.getElementById('bk-submit');
+            btn.disabled = true;
+            btn.innerHTML = 'Confirming…';
+            try {
+                const res = await fetch('/api/rli/booking', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ lead_id: currentLeadId, event_type: 'revenue-recovery-map-review', contact_email: email, notes: '' })
+                });
+                const json = await res.json().catch(() => ({}));
+                if (!res.ok || json.status !== 'success') throw new Error(json.message || 'booking failed');
+                document.getElementById('booking-panel').classList.add('hidden');
+                document.getElementById('booking-done-copy').textContent = json.confirmation || 'Your Revenue Recovery Map review is confirmed.';
+                document.getElementById('booking-done').classList.remove('hidden');
+                trackEvent('rli_booked', { tier: 'high' });
+            } catch (e) {
+                err.textContent = 'Booking failed — email us at hello@socio.nyc instead.';
+                err.classList.remove('hidden');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = 'Confirm booking';
+            }
+        });
 
         // --- Wiring ---
         document.getElementById('rli-back').addEventListener('click', () => {
