@@ -772,22 +772,42 @@
     </div>
   </div>
 
-  <!-- Header -->
-  <header>
-    <a href="index.html" class="logo" style="font-size: 1.6rem; font-weight: 800; letter-spacing: -0.04em; color: #0f172a; text-decoration: none;">
-      Socio<span style="color: var(--accent-yellow); filter: drop-shadow(0 0 6px rgba(204, 255, 0, 0.9)); display: inline-block;">.</span>
-    </a>
-
-    <div class="header-links">
-      <a href="merchant-evidence.html" style="font-size: 0.8rem; font-weight: 700; color: #64748b; text-decoration: none; padding: 0.5rem 0.75rem; border-radius: 100px; transition: color 0.2s;" onmouseover="this.style.color='#0f172a'" onmouseout="this.style.color='#64748b'">
-        ⚖️ Evidence
+  <!-- Premium Grey Gradient Glassmorphic Header -->
+  <header style="position: fixed; top: 0; left: 0; width: 100%; z-index: 999; background: linear-gradient(180deg, rgba(15, 23, 42, 0.96) 0%, rgba(30, 41, 59, 0.90) 100%); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255, 255, 255, 0.10); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4); padding: 0.85rem 6%; display: flex; align-items: center; justify-content: space-between; transition: all 0.3s ease;">
+    
+    <!-- Left Column: Logo -->
+    <div style="display: flex; items-center; gap: 1.25rem;">
+      <a href="index.html" style="font-size: 1.45rem; font-weight: 800; letter-spacing: -0.04em; color: #ffffff; text-decoration: none; display: flex; align-items: center;">
+        <span>Socio</span><span style="color: #94a3b8; margin-left: 1px;">.</span>
       </a>
-      <div class="lang-toggle" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 100px; padding: 3px; display: flex; gap: 4px; box-shadow: 0 1px 4px rgba(0,0,0,0.03);">
-        <button class="lang-btn active" data-lang="en" style="padding: 0.35rem 0.85rem; font-size: 0.75rem; border-radius: 100px; background: #0f172a; color: #fff; border:none; cursor:pointer;">EN</button>
-        <button class="lang-btn" data-lang="es" style="padding: 0.35rem 0.85rem; font-size: 0.75rem; border-radius: 100px; background: transparent; color: #64748b; border:none; cursor:pointer;">ES</button>
+      <div style="display: none; align-items: center; gap: 0.5rem; border-left: 1px solid rgba(255, 255, 255, 0.12); padding-left: 1rem; font-size: 0.75rem; font-family: var(--font-mono); color: #94a3b8;" class="desktop-only-badge">
+        <span style="width: 6px; height: 6px; border-radius: 50%; background: #34d399; display: inline-block;"></span>
+        <span>NYC Growth OS</span>
       </div>
-      <a href="command-center.html" class="nav-btn nav-btn-highlight">
-        <span>⚡ Command Center</span>
+    </div>
+
+    <!-- Center Column: Navigation Links -->
+    <nav style="display: flex; align-items: center; gap: 2rem;" class="nav-center-links">
+      <a href="merchant-evidence.html" style="font-size: 0.875rem; font-weight: 600; color: #cbd5e1; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#cbd5e1'">
+        Evidence
+      </a>
+      <a href="trust-and-proof.html" style="font-size: 0.875rem; font-weight: 600; color: #cbd5e1; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#cbd5e1'">
+        Attribution Protocol
+      </a>
+      <a href="command-center.html" style="font-size: 0.875rem; font-weight: 600; color: #cbd5e1; text-decoration: none; display: flex; align-items: center; gap: 0.4rem; transition: color 0.2s;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#cbd5e1'">
+        <span>Command Center</span>
+        <span style="font-size: 9px; font-family: var(--font-mono); font-weight: 800; padding: 2px 6px; border-radius: 4px; background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3);">LIVE</span>
+      </a>
+    </nav>
+
+    <!-- Right Column: CTA Buttons -->
+    <div style="display: flex; align-items: center; gap: 1.25rem;">
+      <a href="command-center.html" style="font-size: 0.875rem; font-weight: 600; color: #cbd5e1; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#cbd5e1'">
+        Client Login
+      </a>
+      <a href="#audit" style="font-size: 0.825rem; font-weight: 800; color: #0f172a; text-decoration: none; padding: 0.6rem 1.35rem; border-radius: 100px; background: linear-gradient(180deg, #ffffff 0%, #e2e8f0 100%); box-shadow: 0 0 20px rgba(255, 255, 255, 0.25); display: inline-flex; align-items: center; gap: 0.4rem; transition: all 0.2s ease;" onmouseover="this.style.transform='scale(1.03)'; this.style.boxShadow='0 0 25px rgba(255,255,255,0.45)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 0 20px rgba(255,255,255,0.25)'">
+        <span>Start Free Audit</span>
+        <span>↗</span>
       </a>
     </div>
   </header>
