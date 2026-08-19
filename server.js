@@ -10,7 +10,7 @@ const https = require('https');
 const app = express();
 const PORT = process.env.PORT || 3030;
 const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET || '';
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'socio2026';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || crypto.randomBytes(32).toString('hex');
 const HERMES_SUPPORT_PROFILE = process.env.SOCIO_HERMES_PROFILE || 'socio-support';
 const DB_FILE = path.join(__dirname, 'outputs', 'socio_production.json');
 
