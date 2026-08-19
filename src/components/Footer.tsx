@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { HardHat, CheckCircle2, ShieldCheck, Mail, ArrowUpRight } from 'lucide-react';
+import { HardHat, CheckCircle2, ShieldCheck, Mail, ArrowUpRight, Flower2 } from 'lucide-react';
 
 export function Footer() {
   return (
@@ -70,6 +70,12 @@ export function Footer() {
                 <Link href="/contratistas" className="text-orange-400 hover:text-orange-300 font-semibold flex items-center gap-1.5">
                   <HardHat className="w-3.5 h-3.5" />
                   <span>Construction Partners (Español)</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/floristas" className="text-rose-400 hover:text-rose-300 font-semibold flex items-center gap-1.5">
+                  <Flower2 className="w-3.5 h-3.5" />
+                  <span>Florists & Botanical (NYC)</span>
                 </Link>
               </li>
               <li><Link href="/supplier-cards" className="hover:text-white transition-colors">Supplier Pro-Desk Nodes</Link></li>
