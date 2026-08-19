@@ -405,7 +405,28 @@
                 <span class="w-1.5 h-1.5 rounded-[1px] bg-[#669BD2] inline-block shadow-[0_0_6px_rgba(102,155,210,0.8)] ml-[1.5px] self-end mb-1"></span>
             </a>
 
-            <div class="hidden md:flex items-center gap-8 text-sm text-slate-500 font-light">
+            <div class="hidden md:flex items-center gap-7 text-sm text-slate-500 font-light">
+                <div class="relative group py-2">
+                    <button class="flex items-center gap-1 hover:text-slate-900 transition-colors focus:outline-none">
+                        <span>Industries</span>
+                        <iconify-icon icon="solar:alt-arrow-down-linear" width="12" class="text-slate-400 group-hover:text-slate-900 transition-transform group-hover:rotate-180"></iconify-icon>
+                    </button>
+                    <div class="absolute top-full left-0 hidden group-hover:block w-64 p-2 bg-white/95 backdrop-blur-2xl rounded-2xl border border-slate-200/80 shadow-2xl space-y-1">
+                        <a href="/contratistas" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-orange-50/70 transition-colors group/item">
+                            <div class="flex items-center gap-2.5">
+                                <span class="w-2 h-2 rounded-full bg-[#FF5500]"></span>
+                                <span class="text-xs font-bold text-slate-800 group-hover/item:text-[#FF5500]">Construction (Español)</span>
+                            </div>
+                            <span class="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-orange-100 text-orange-800">ES</span>
+                        </a>
+                        <a href="#how-it-works" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50 transition-colors">
+                            <div class="flex items-center gap-2.5">
+                                <span class="w-2 h-2 rounded-full bg-slate-400"></span>
+                                <span class="text-xs font-medium text-slate-700">Retail & POS Merchants</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
                 <a href="#how-it-works" class="nav-link hover:text-slate-900 transition-colors">How It Works</a>
                 <a href="#work" class="nav-link hover:text-slate-900 transition-colors">Proof</a>
                 <a href="#process" class="nav-link hover:text-slate-900 transition-colors">Process</a>
@@ -1957,10 +1978,31 @@
         </div>
 
         <div class="max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 pb-16 border-b border-slate-800">
+            
+            <!-- Contractor Vertical Callout Banner -->
+            <div class="p-6 md:p-8 rounded-2xl bg-gradient-to-r from-slate-800 via-slate-850 to-slate-800 border border-slate-700 shadow-2xl mb-16 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                <div class="space-y-1.5">
+                    <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-orange-500/10 border border-orange-500/25 text-orange-400 text-xs font-mono font-bold">
+                        <iconify-icon icon="solar:hammer-and-wrench-linear" width="14"></iconify-icon>
+                        <span>NEW VERTICAL · NYC</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white">
+                        Are you an NYC General Contractor or Remodeler?
+                    </h4>
+                    <p class="text-sm text-slate-400 max-w-2xl font-light">
+                        Explore our dedicated Spanish-first acquisition system connected to NYC DOB NOW permits and QuickBooks cleared deposits. Zero upfront retainers.
+                    </p>
+                </div>
+                <a href="/contratistas" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#FF5500] text-white text-xs font-bold uppercase tracking-wider hover:bg-[#E04B00] shadow-lg shadow-orange-600/20 transition-all shrink-0">
+                    <span>Explore Socio Contratistas</span>
+                    <iconify-icon icon="solar:arrow-right-up-linear" width="14"></iconify-icon>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-16 border-b border-slate-800">
 
                 <!-- Column 1: Founder -->
-                <div class="lg:col-span-1">
+                <div>
                     <div class="flex items-center gap-4 mb-6">
                         <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent to-blue-700 flex items-center justify-center text-white text-xl font-bold font-heading">N</div>
                         <div>
@@ -1978,7 +2020,7 @@
                 </div>
 
                 <!-- Column 2: Navigation -->
-                <div class="lg:col-span-1">
+                <div>
                     <h4 class="text-sm font-medium mb-6 text-slate-300">Navigation</h4>
                     <ul class="space-y-3">
                         <li><a href="#how-it-works" class="text-sm text-slate-400 font-light hover:text-white transition-colors">How It Works</a></li>
@@ -1989,8 +2031,24 @@
                     </ul>
                 </div>
 
-                <!-- Column 3: The Promise -->
-                <div class="lg:col-span-1">
+                <!-- Column 3: Industries & Verticals -->
+                <div>
+                    <h4 class="text-sm font-medium mb-6 text-slate-300">Industries & Verticals</h4>
+                    <ul class="space-y-3">
+                        <li>
+                            <a href="/contratistas" class="text-sm text-orange-400 font-semibold hover:text-orange-300 transition-colors flex items-center gap-1.5">
+                                <iconify-icon icon="solar:hammer-and-wrench-linear" width="14"></iconify-icon>
+                                <span>Construction (Español)</span>
+                            </a>
+                        </li>
+                        <li><a href="/supplier-cards" class="text-sm text-slate-400 font-light hover:text-white transition-colors">Supplier Pro-Desk Nodes</a></li>
+                        <li><a href="/pilot-agreement" class="text-sm text-slate-400 font-light hover:text-white transition-colors">Contractor Pilot Agreement</a></li>
+                        <li><a href="#how-it-works" class="text-sm text-slate-400 font-light hover:text-white transition-colors">Retail & Storefront POS</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: The Promise -->
+                <div>
                     <h4 class="text-sm font-medium mb-6 text-slate-300">The Socio Promise</h4>
                     <ul class="space-y-3">
                         <li class="flex items-center gap-2 text-sm text-slate-400 font-light">
@@ -1999,11 +2057,11 @@
                         </li>
                         <li class="flex items-center gap-2 text-sm text-slate-400 font-light">
                             <iconify-icon icon="solar:check-circle-linear" width="16" class="text-green-400"></iconify-icon>
-                            10–15% commission only on new revenue
+                            Commission only on new revenue
                         </li>
                         <li class="flex items-center gap-2 text-sm text-slate-400 font-light">
                             <iconify-icon icon="solar:check-circle-linear" width="16" class="text-green-400"></iconify-icon>
-                            POS receipt-matched proof
+                            POS / QBO deposit verified
                         </li>
                         <li class="flex items-center gap-2 text-sm text-slate-400 font-light">
                             <iconify-icon icon="solar:check-circle-linear" width="16" class="text-green-400"></iconify-icon>
