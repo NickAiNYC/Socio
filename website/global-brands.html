@@ -51,8 +51,8 @@
       padding: 0.85rem 6%;
       display: flex; align-items: center; justify-content: space-between;
     }
-    .logo { font-size: 1.45rem; font-weight: 800; letter-spacing: -0.04em; color: #ffffff; }
-    .logo span { color: #669BD2; text-shadow: 0 0 12px rgba(102,155,210,0.8); }
+    .logo { font-size: 1.45rem; font-weight: 800; letter-spacing: -0.04em; color: #ffffff; text-decoration: none; display: inline-flex; align-items: center; gap: 2px; }
+    .logo-dot { display: inline-block; width: 8px; height: 8px; border-radius: 2px; background: #669BD2; box-shadow: 0 0 8px rgba(102,155,210,0.8); align-self: flex-end; margin-bottom: 3px; }
 
     .container { max-width: 1040px; margin: 0 auto; padding: 0 6%; }
     section { padding: 6rem 0; }
@@ -110,7 +110,7 @@
 
   <header>
     <div style="display:flex; align-items:center; gap:1.25rem;">
-      <a href="index.html" class="logo">Socio<span>.</span></a>
+      <a href="index.html" class="logo"><span>Socio</span><span class="logo-dot"></span></a>
       <span style="font-size:0.75rem; font-family:var(--font-mono); color:#94a3b8;">FOR GLOBAL BRANDS</span>
     </div>
     <a href="index.html" style="font-size:0.8rem; font-weight:700; color:#cbd5e1; padding:0.5rem 1rem; border:1px solid rgba(255,255,255,0.15); border-radius:100px;">← NYC Local Shops</a>
