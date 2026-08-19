@@ -60,8 +60,40 @@
       "dest": "website/restaurantes.html"
     },
     {
+      "src": "/restaurantes/como-funciona/?",
+      "dest": "website/restaurantes/como-funciona.html"
+    },
+    {
+      "src": "/restaurantes/casos-de-exito/?",
+      "dest": "website/restaurantes/casos-de-exito.html"
+    },
+    {
+      "src": "/restaurantes/radar-gastronomico/?",
+      "dest": "website/restaurantes/radar-gastronomico.html"
+    },
+    {
+      "src": "/restaurantes/preguntas-frecuentes/?",
+      "dest": "website/restaurantes/preguntas-frecuentes.html"
+    },
+    {
       "src": "/clinicas/?",
       "dest": "website/clinicas.html"
+    },
+    {
+      "src": "/clinicas/como-funciona/?",
+      "dest": "website/clinicas/como-funciona.html"
+    },
+    {
+      "src": "/clinicas/casos-de-exito/?",
+      "dest": "website/clinicas/casos-de-exito.html"
+    },
+    {
+      "src": "/clinicas/radar-pacientes/?",
+      "dest": "website/clinicas/radar-pacientes.html"
+    },
+    {
+      "src": "/clinicas/preguntas-frecuentes/?",
+      "dest": "website/clinicas/preguntas-frecuentes.html"
     },
     {
       "src": "/escaneo-de-fugas-scorecard/?",
@@ -102,6 +134,34 @@
     {
       "src": "/proveedores/equipos/?",
       "dest": "website/proveedores/equipos.html"
+    },
+    {
+      "src": "/global-brands/?",
+      "dest": "website/global-brands.html"
+    },
+    {
+      "src": "/command-center/?",
+      "dest": "website/command-center.html"
+    },
+    {
+      "src": "/merchant-evidence/?",
+      "dest": "website/merchant-evidence.html"
+    },
+    {
+      "src": "/trust-and-proof/?",
+      "dest": "website/trust-and-proof.html"
+    },
+    {
+      "src": "/manifest.json",
+      "dest": "website/manifest.json"
+    },
+    {
+      "src": "/sitemap.xml",
+      "dest": "website/sitemap.xml"
+    },
+    {
+      "src": "/robots.txt",
+      "dest": "website/robots.txt"
     },
     {
       "src": "/(.*)",

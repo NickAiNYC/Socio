@@ -1,0 +1,370 @@
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        ::selection {
+            background: rgba(102, 155, 210, 0.2);
+            color: #0f172a;
+        }
+
+        html {
+            scrollbar-width: thin;
+            scrollbar-color: #CBD5E1 #FAFAFA;
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #FAFAFA; }
+        ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            background: #FAFAFA;
+            color: #475569;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* Navigation */
+        .nav-bar { transform: translateY(-100%); }
+
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #669BD2;
+            transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        .cta-shimmer { position: relative; overflow: hidden; }
+        .cta-shimmer::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+        .cta-shimmer:hover::before { left: 100%; }
+
+        /* Hero */
+        .hero-container { perspective: 1000px; }
+
+        .hero-grid-bg {
+            background-image:
+                linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+            background-size: 3rem 3rem;
+        }
+
+        .glow-orb { mix-blend-mode: multiply; }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #669BD2 0%, #5B8EC4 50%, #7BAEE0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .scribble-underline {
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            color: #669BD2;
+            opacity: 0.6;
+        }
+
+        .terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .bar-glow { filter: drop-shadow(0 0 6px currentColor); }
+
+        .sync-progress-bar { animation: syncProgress 3s ease-in-out infinite; }
+        @keyframes syncProgress {
+            0% { transform: translateX(-100%); }
+            50% { transform: translateX(0%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px; height: 4px;
+            border-radius: 50%;
+            background: #94a3b8;
+            pointer-events: none;
+        }
+
+        /* Sticky Stack */
+        .dm-card {
+            position: sticky;
+            top: 6rem;
+            transition: transform 0.1s linear, filter 0.1s linear;
+        }
+
+        /* Work */
+        .work-item { cursor: pointer; transition: opacity 0.3s ease; }
+        .work-item:hover { opacity: 1 !important; }
+        .work-visual { opacity: 0; transition: opacity 0.5s ease; pointer-events: none; }
+        .work-visual.active { opacity: 1; }
+
+        .iphone-frame {
+            width: 220px; height: 440px;
+            border-radius: 36px;
+            border: 4px solid #1e293b;
+            background: #0f172a;
+            overflow: hidden;
+            position: relative;
+            transform: rotate(5deg);
+        }
+        .iphone-notch {
+            width: 100px; height: 24px;
+            background: #1e293b;
+            border-radius: 0 0 16px 16px;
+            position: absolute; top: 0; left: 50%;
+            transform: translateX(-50%); z-index: 10;
+        }
+
+        /* Process */
+        .process-track { display: flex; will-change: transform; }
+        .process-step { min-width: 100vw; height: 100vh; flex-shrink: 0; }
+        .process-progress {
+            height: 2px;
+            background: linear-gradient(90deg, #669BD2, #7BAEE0, #669BD2);
+            transform-origin: left;
+            transform: scaleX(0);
+        }
+
+        /* Footer */
+        .footer-letter {
+            display: inline-block;
+            transform: rotateX(-90deg) scale(0.5);
+            opacity: 0;
+        }
+
+        /* Overlays */
+        .inner-page-overlay {
+            position: fixed; inset: 0; z-index: 100;
+            transform: translateY(100%);
+            background: #FAFAFA; overflow-y: auto;
+        }
+        .service-overlay {
+            position: fixed; inset: 0; z-index: 110;
+            transform: translateY(100%);
+            background: #FAFAFA; overflow-y: auto;
+        }
+
+        .text-balance { text-wrap: balance; }
+        .hover-arrow { transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+        .hover-arrow:hover { transform: scale(1.1); }
+
+        /* Neon pulse for brand dot */
+        .neon-dot {
+            background: #669BD2;
+            box-shadow: 0 0 8px rgba(102, 155, 210, 0.6);
+        }
+
+
+        /* ============================================================ */
+        /* Conversion toolkit (added Aug 2026)                          */
+        /* ============================================================ */
+
+        /* Aura card — dark Scrutexity treatment on landing palette */
+        .aura-card {
+            position: relative;
+            background: linear-gradient(180deg, #0f172a 0%, #16213a 100%);
+            border-radius: 1.5rem;
+            box-shadow:
+                0 0 0 1px rgba(102, 155, 210, 0.10),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08),
+                inset 0 0 28px rgba(102, 155, 210, 0.06),
+                0 8px 40px -12px rgba(15, 23, 42, 0.50);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+        }
+        .aura-card:hover {
+            transform: translateY(-4px);
+            box-shadow:
+                0 0 0 1px rgba(102, 155, 210, 0.30),
+                inset 0 1px 0 rgba(255, 255, 255, 0.16),
+                inset 0 0 40px rgba(102, 155, 210, 0.14),
+                0 14px 50px -12px rgba(102, 155, 210, 0.35);
+        }
+
+        /* Neon accent button */
+        .btn-neon {
+            background: #0f172a;
+            color: #ffffff;
+            box-shadow:
+                0 0 0 1px rgba(204, 255, 0, 0.30),
+                0 0 28px -6px rgba(204, 255, 0, 0.45),
+                inset 0 0 14px rgba(204, 255, 0, 0.10);
+            transition: all 0.3s ease;
+        }
+        .btn-neon:hover {
+            box-shadow:
+                0 0 0 1px rgba(204, 255, 0, 0.55),
+                0 0 40px -6px rgba(204, 255, 0, 0.65),
+                inset 0 0 18px rgba(204, 255, 0, 0.16);
+        }
+
+        /* Sticky CTA — fixed, scrolls with the user */
+        .sticky-cta {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 40;
+            opacity: 0;
+            transform: translateY(16px) scale(0.98);
+            pointer-events: none;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .sticky-cta.visible { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+        @media (max-width: 640px) {
+            .sticky-cta { left: 1rem; right: 1rem; bottom: 0.75rem; }
+            .sticky-cta a { width: 100%; justify-content: center; }
+        }
+
+        /* How It Works glass step card */
+        .step-card {
+            position: relative;
+            border-radius: 1.5rem;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, background 0.3s ease;
+        }
+        .step-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(102, 155, 210, 0.45);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        /* Vertical chips */
+        .vertical-chip {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.9rem 1.1rem;
+            border-radius: 1rem;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            transition: all 0.25s ease;
+        }
+        .vertical-chip:hover {
+            border-color: rgba(102, 155, 210, 0.5);
+            box-shadow: 0 8px 24px -12px rgba(102, 155, 210, 0.35);
+            transform: translateY(-2px);
+        }
+
+        /* Testimonial carousel */
+        .carousel-viewport { overflow: hidden; }
+        .carousel-track { display: flex; transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1); }
+        .carousel-slide { min-width: 100%; }
+
+        /* FAQ accordion */
+        details.faq-item {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 1rem;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+        details.faq-item:hover { border-color: rgba(102, 155, 210, 0.4); }
+        details.faq-item[open] {
+            border-color: rgba(102, 155, 210, 0.5);
+            box-shadow: 0 12px 32px -16px rgba(102, 155, 210, 0.3);
+        }
+        details.faq-item summary {
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        details.faq-item summary::-webkit-details-marker { display: none; }
+        details.faq-item summary .faq-chevron { transition: transform 0.3s ease; flex-shrink: 0; }
+        details.faq-item[open] summary .faq-chevron { transform: rotate(45deg); }
+
+        /* Form fields */
+        .form-field {
+            width: 100%;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            padding: 0.8rem 1rem;
+            font-size: 0.875rem;
+            color: #0f172a;
+            font-weight: 300;
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+        .form-field:focus {
+            border-color: #669BD2;
+            box-shadow: 0 0 0 3px rgba(102, 155, 210, 0.15);
+            background: #ffffff;
+        }
+        .form-label { font-size: 0.75rem; font-weight: 500; color: #475569; letter-spacing: 0.02em; }
+
+        /* Command Center screenshot frame */
+        .shot-frame {
+            border-radius: 1.5rem;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            box-shadow:
+                0 0 0 1px rgba(56, 189, 248, 0.06),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08),
+                0 30px 80px -20px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Calculator range slider */
+        input[type="range"].calc-range {
+            -webkit-appearance: none; appearance: none;
+            height: 4px; border-radius: 2px;
+            background: #334155; outline: none;
+        }
+        input[type="range"].calc-range::-webkit-slider-thumb {
+            -webkit-appearance: none; appearance: none;
+            width: 20px; height: 20px; border-radius: 50%;
+            background: #669BD2;
+            border: 3px solid #0f172a;
+            box-shadow: 0 0 0 1px rgba(102, 155, 210, 0.6), 0 0 16px rgba(102, 155, 210, 0.5);
+            cursor: pointer;
+        }
+
+    
+
+/* Accessibility & Focus-Visible */
+*:focus-visible {
+    outline: 2px solid #669BD2 !important;
+    outline-offset: 2px !important;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+.focus\:not-sr-only:focus {
+    position: fixed;
+    width: auto;
+    height: auto;
+    padding: 0.5rem 1rem;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+}
