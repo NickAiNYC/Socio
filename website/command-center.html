@@ -3,35 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Socio Command Center — Action-Oriented Growth Operating System</title>
+  <title>Socio Command Center — Autonomous Growth OS</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Roboto+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
     :root {
-      --bg-dark: #07080b;
-      --bg-card: #0d0f16;
-      --bg-surface: #131620;
-      --border-subtle: rgba(255, 255, 255, 0.08);
-      --accent-yellow: #ccff00;
-      --accent-green: #10B981;
-      --accent-sky: #38bdf8;
-      --accent-amber: #f59e0b;
-      --accent-red: #ef4444;
-      --font-sans: 'Plus Jakarta Sans', sans-serif;
-      --font-mono: 'Roboto Mono', monospace;
+      --bg-base: #0A0D14;
+      --font-sans: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
     }
 
     body {
-      background-color: var(--bg-dark);
+      background-color: #0A0D14;
       color: #f8fafc;
       font-family: var(--font-sans);
       background-image: 
-        radial-gradient(circle at 50% 0%, rgba(204, 255, 0, 0.04) 0%, transparent 60%),
-        radial-gradient(circle at 100% 50%, rgba(56, 189, 248, 0.03) 0%, transparent 50%);
+        radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.05) 0%, transparent 60%),
+        radial-gradient(circle at 100% 50%, rgba(16, 185, 129, 0.03) 0%, transparent 50%);
       background-attachment: fixed;
       min-height: 100vh;
       overflow-x: hidden;
@@ -39,1117 +31,603 @@
 
     .font-mono { font-family: var(--font-mono); }
 
-    .glass-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: 18px;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    /* The "Socio Glow" & Glassmorphic Surfaces */
+    .socio-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      backdrop-filter: blur(24px);
+      box-shadow: 0 0 40px -10px rgba(56, 189, 248, 0.08);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .glass-card:hover {
-      border-color: rgba(255, 255, 255, 0.16);
-    }
-
-    .action-hero-card {
-      background: linear-gradient(180deg, #131722 0%, #0c0e15 100%);
-      border: 1px solid rgba(204, 255, 0, 0.3);
-      border-radius: 22px;
-      box-shadow: 0 0 35px -5px rgba(204, 255, 0, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+    .socio-card:hover {
+      border-color: rgba(56, 189, 248, 0.3);
+      box-shadow: 0 0 50px -5px rgba(56, 189, 248, 0.2);
+      transform: translateY(-2px);
     }
 
-    .pill {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      font-weight: 700;
-      padding: 3px 8px;
-      border-radius: 6px;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    .pill-green { background: rgba(16, 185, 129, 0.12); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.25); }
-    .pill-blue { background: rgba(56, 189, 248, 0.12); color: #7dd3fc; border: 1px solid rgba(56, 189, 248, 0.25); }
-    .pill-amber { background: rgba(245, 158, 11, 0.12); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.25); }
-    .pill-red { background: rgba(239, 68, 68, 0.12); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.25); }
-    .pill-gray { background: rgba(255, 255, 255, 0.05); color: #94a3b8; border: 1px solid rgba(255, 255, 255, 0.1); }
-    .pill-yellow { background: rgba(204, 255, 0, 0.12); color: #ccff00; border: 1px solid rgba(204, 255, 0, 0.3); }
-
-    .nav-tab-btn {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 14px;
-      border-radius: 10px;
-      font-size: 12px;
-      font-weight: 700;
-      color: #94a3b8;
-      transition: all 0.15s ease;
-      cursor: pointer;
-    }
-    .nav-tab-btn:hover {
-      color: #ffffff;
-      background: rgba(255, 255, 255, 0.04);
-    }
-    .nav-tab-btn.active {
-      color: #000000;
-      background: var(--accent-yellow);
-      box-shadow: 0 0 15px rgba(204, 255, 0, 0.25);
+    .socio-panel {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      backdrop-filter: blur(24px);
+      box-shadow: 0 0 40px -10px rgba(56, 189, 248, 0.12);
     }
 
-    .toast-container {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      z-index: 100;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      pointer-events: none;
+    .active-nav-glow {
+      background: rgba(56, 189, 248, 0.1);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      box-shadow: 0 0 25px -5px rgba(56, 189, 248, 0.4);
     }
-    .toast-box {
-      pointer-events: auto;
-      background: #141722;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-      padding: 10px 16px;
-      border-radius: 12px;
-      font-size: 12px;
-      font-family: var(--font-mono);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      animation: slideUp 0.2s ease-out;
-    }
-    @keyframes slideUp { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-    /* Custom Scrollbars */
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    .event-selected {
+      background: rgba(56, 189, 248, 0.05) !important;
+      border-color: rgba(56, 189, 248, 0.4) !important;
+      box-shadow: 0 0 25px -5px rgba(56, 189, 248, 0.25) !important;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
     ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.08); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(56, 189, 248, 0.25); }
   </style>
 </head>
-<body class="flex flex-col h-screen overflow-hidden">
+<body class="flex h-screen w-full bg-[#0A0D14] text-slate-100 overflow-hidden antialiased selection:bg-cyan-500/20 selection:text-cyan-300">
 
-  <!-- ================================================================= -->
-  <!-- GLOBAL HEADER & AI COMMAND BAR (CMD + K)                          -->
-  <!-- ================================================================= -->
-  <header class="flex items-center justify-between px-6 py-3 border-b border-white/5 bg-[#08090d]/90 backdrop-blur-xl z-30 shrink-0">
-    <div class="flex items-center gap-4">
-      <a href="index.html" class="text-lg font-black tracking-tight text-white flex items-center gap-1">
-        Socio<span class="text-[#ccff00] drop-shadow-[0_0_8px_rgba(204,255,0,0.8)]">.</span>
+  <!-- ===================================================================
+      1. LEFT NAVIGATION SIDEBAR (Minimalist Cyber-Ops Dock)
+      =================================================================== -->
+  <aside class="w-16 border-r border-white/5 bg-[#080B10]/80 backdrop-blur-2xl flex flex-col items-center justify-between py-6 z-30 shrink-0">
+    <div class="flex flex-col items-center gap-8 w-full">
+      
+      <!-- Logo Mark -->
+      <a href="index.html" class="h-9 w-9 rounded-xl bg-gradient-to-br from-cyan-400/20 to-blue-600/10 border border-cyan-500/30 flex items-center justify-center shadow-[0_0_20px_rgba(56,189,248,0.25)] hover:scale-105 transition-transform" title="Socio Home">
+        <i data-lucide="radio" class="w-4 h-4 text-cyan-400 animate-pulse"></i>
       </a>
-      <span class="pill pill-yellow hidden sm:inline-flex">GROWTH OS v2.4</span>
-      <div class="h-4 w-px bg-white/10 hidden sm:block"></div>
-      <div class="flex items-center gap-2 text-xs font-mono text-gray-400">
-        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        <span class="hidden md:inline">8/8 AGENTS ACTIVE</span>
-      </div>
+
+      <!-- Navigation Icon List -->
+      <nav class="flex flex-col gap-3 w-full px-3" id="nav-dock">
+        <button onclick="setNavTab('home', this)" class="nav-btn relative w-10 h-10 rounded-xl flex items-center justify-center active-nav-glow transition-all duration-300" title="Command Center Dashboard">
+          <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+        </button>
+        <button onclick="setNavTab('leads', this)" class="nav-btn relative w-10 h-10 rounded-xl flex items-center justify-center text-slate-500 hover:text-slate-200 hover:bg-white/[0.03] border border-transparent transition-all duration-300" title="Leads & Intercepts">
+          <i data-lucide="users" class="w-4 h-4"></i>
+        </button>
+        <button onclick="setNavTab('automation', this)" class="nav-btn relative w-10 h-10 rounded-xl flex items-center justify-center text-slate-500 hover:text-slate-200 hover:bg-white/[0.03] border border-transparent transition-all duration-300" title="Automated Strikes">
+          <i data-lucide="zap" class="w-4 h-4"></i>
+        </button>
+        <button onclick="setNavTab('analytics', this)" class="nav-btn relative w-10 h-10 rounded-xl flex items-center justify-center text-slate-500 hover:text-slate-200 hover:bg-white/[0.03] border border-transparent transition-all duration-300" title="Revenue Ledger">
+          <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
+        </button>
+      </nav>
     </div>
 
-    <!-- AI Command Bar -->
-    <div class="flex-1 max-w-xl mx-6 relative">
-      <div class="flex items-center gap-2.5 bg-[#141722] border border-white/10 rounded-xl px-3.5 py-1.5 focus-within:border-[#ccff00] transition-colors shadow-inner">
-        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#ccff00]"></i>
-        <input type="text" id="global-command-input" placeholder="Ask Chief of Staff or dispatch command... (e.g. 'What is my next action?', 'Approve PROP-0042') • ⌘K" class="bg-transparent border-none outline-none text-xs font-mono text-white w-full placeholder-gray-500" onkeydown="handleCommandKey(event)">
-        <span class="text-[10px] font-mono bg-white/5 px-1.5 py-0.5 rounded text-gray-400 border border-white/10">⌘K</span>
-      </div>
-    </div>
+    <!-- Bottom Shield/Settings Icon -->
+    <button onclick="setNavTab('settings', this)" class="nav-btn w-10 h-10 rounded-xl flex items-center justify-center text-slate-500 hover:text-slate-200 hover:bg-white/[0.03] border border-transparent transition-all" title="Attribution & Governance Protocol">
+      <i data-lucide="shield-check" class="w-4 h-4"></i>
+    </button>
+  </aside>
 
-    <div class="flex items-center gap-3">
-      <button onclick="toggleFocusMode()" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 transition-all flex items-center gap-1.5" id="btn-focus">
-        <i data-lucide="crosshair" class="w-3.5 h-3.5 text-cyan-400"></i>
-        <span>Focus Mode</span>
-      </button>
-      <button onclick="fetchFleetTelemetry()" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-gray-300 transition-all" title="Refresh Telemetry">
-        <i data-lucide="refresh-cw" class="w-3.5 h-3.5" id="refresh-icon"></i>
-      </button>
-    </div>
-  </header>
+  <!-- ===================================================================
+      2. MAIN OPERATING THEATER (HEADER + KPIS + SPLIT VIEW)
+      =================================================================== -->
+  <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+    
+    <!-- TOP HEADER BAR -->
+    <header class="h-16 border-b border-white/5 px-8 flex items-center justify-between bg-[#0A0D14]/80 backdrop-blur-xl shrink-0 z-20">
+      <div class="flex items-center gap-4">
+        <h1 class="text-sm font-semibold tracking-wider uppercase text-white font-mono flex items-center gap-2.5">
+          <span>Socio Command Center</span>
+          <span class="text-slate-600">•</span>
+          <span class="text-xs text-slate-400 font-normal">Autonomous Growth OS</span>
+        </h1>
 
-  <!-- ================================================================= -->
-  <!-- MAIN WORKSPACE LAYOUT (SIDEBAR + CONTENT STAGE)                   -->
-  <!-- ================================================================= -->
-  <div class="flex flex-1 overflow-hidden">
-
-    <!-- LEFT NAVIGATION DOCK -->
-    <aside class="w-56 border-r border-white/5 bg-[#08090d] p-3 flex flex-col justify-between shrink-0 overflow-y-auto">
-      <div class="space-y-1">
-        <div class="text-[10px] font-mono uppercase text-gray-500 font-bold px-3 py-1">Action Loop</div>
-        <div class="nav-tab-btn active" onclick="switchTab('action-engine', this)"><i data-lucide="zap" class="w-4 h-4"></i> Action Center <span class="ml-auto pill pill-yellow">P0</span></div>
-        <div class="nav-tab-btn" onclick="switchTab('queue', this)"><i data-lucide="list-todo" class="w-4 h-4"></i> Founder Queue <span class="ml-auto pill pill-amber" id="nav-badge-queue">3</span></div>
-        <div class="nav-tab-btn" onclick="switchTab('agents', this)"><i data-lucide="bot" class="w-4 h-4"></i> Agent Fleet <span class="ml-auto text-[10px] text-emerald-400 font-mono">8/8</span></div>
-        <div class="nav-tab-btn" onclick="switchTab('governor', this)"><i data-lucide="shield-check" class="w-4 h-4"></i> Governor Safety <span class="ml-auto pill pill-red" id="nav-badge-gov">3</span></div>
-
-        <div class="text-[10px] font-mono uppercase text-gray-500 font-bold px-3 pt-3 py-1">Execution & Evidence</div>
-        <div class="nav-tab-btn" onclick="switchTab('merchants', this)"><i data-lucide="store" class="w-4 h-4"></i> Merchants CRM</div>
-        <div class="nav-tab-btn" onclick="switchTab('pipeline', this)"><i data-lucide="kanban" class="w-4 h-4"></i> Growth Pipeline</div>
-        <div class="nav-tab-btn" onclick="switchTab('ledger', this)"><i data-lucide="receipt" class="w-4 h-4"></i> Revenue Ledger</div>
-        <div class="nav-tab-btn" onclick="switchTab('evidence', this)"><i data-lucide="scale" class="w-4 h-4"></i> Evidence Frame</div>
-        <div class="nav-tab-btn" onclick="switchTab('experiments', this)"><i data-lucide="flask-conical" class="w-4 h-4"></i> Experiments</div>
-      </div>
-
-      <!-- Quick Session Context -->
-      <div class="p-3 rounded-xl bg-[#141722] border border-white/5 space-y-2">
-        <div class="flex items-center justify-between text-[10px] font-mono text-gray-400">
-          <span>CAS ATTESTATION</span>
-          <span class="text-emerald-400 font-bold">IMMUTABLE</span>
+        <!-- Live Sync Status Indicator Pill -->
+        <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-mono text-[10px] tracking-wider uppercase font-semibold">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+          <span>🟢 LIVE POS SYNC</span>
         </div>
-        <div class="text-[11px] font-mono text-gray-300 truncate">Active Cohort: <span class="text-white font-bold">NYC 10 Stores</span></div>
       </div>
-    </aside>
 
-    <!-- CENTER SCROLLABLE OPERATING THEATER -->
-    <main class="flex-1 overflow-y-auto p-6 space-y-6 bg-[#0b0c10]" id="main-theater">
+      <div class="flex items-center gap-4">
+        <!-- Command Palette Search Bar -->
+        <div class="relative flex items-center bg-white/[0.02] border border-white/5 rounded-xl px-3 py-1.5 w-72 focus-within:border-cyan-500/40 focus-within:bg-white/[0.04] transition-all">
+          <i data-lucide="search" class="w-3.5 h-3.5 text-slate-500 mr-2 shrink-0"></i>
+          <input
+            id="socio-command-input"
+            type="text"
+            placeholder="Search or jump... Cmd K"
+            class="bg-transparent text-xs text-slate-200 placeholder:text-slate-500 focus:outline-none w-full font-mono"
+            oninput="handleSearch(this.value)"
+          >
+          <kbd class="hidden sm:inline-block text-[9px] font-mono text-slate-500 bg-white/5 border border-white/10 px-1.5 py-0.5 rounded">
+            ⌘K
+          </kbd>
+        </div>
 
-      <!-- ============================================================= -->
-      <!-- TAB VIEW 1: THE ACTION ENGINE (PRIMARY OPERATING CENTER)      -->
-      <!-- ============================================================= -->
-      <div id="tab-action-engine" class="tab-content space-y-6">
+        <!-- Export Proof Action Button -->
+        <button onclick="exportAuditProof()" class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/[0.02] hover:bg-white/[0.05] border border-white/5 text-xs text-slate-300 font-mono transition-colors">
+          <i data-lucide="download" class="w-3.5 h-3.5 text-slate-400"></i>
+          <span>Export Proof</span>
+        </button>
+      </div>
+    </header>
 
-        <!-- 1. ACTION-ORIENTED HERO: THE NEXT HIGHEST-VALUE HUMAN ACTION -->
-        <section class="action-hero-card p-6 relative overflow-hidden">
-          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
-            
-            <div class="space-y-2 max-w-3xl">
-              <div class="flex items-center gap-2">
-                <span class="p-1 rounded bg-[#ccff00]/10 text-[#ccff00]"><i data-lucide="sparkles" class="w-4 h-4"></i></span>
-                <span class="text-[11px] font-mono font-extrabold uppercase tracking-widest text-[#ccff00]">AI CHIEF OF STAFF • NEXT BEST ACTION</span>
-                <span class="pill pill-yellow">P0 FOUNDER ACTION</span>
-              </div>
-              <h1 class="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
-                Approve East Harlem Bites Paid Instagram Campaign ($400 Budget)
-              </h1>
-              <p class="text-xs sm:text-sm text-gray-300 font-mono leading-relaxed">
-                Projected Return: <strong class="text-emerald-400 font-mono text-sm sm:text-base">+$4,400 Attributable Net Revenue</strong> • Verified 11x ROAS on $50 pilot test sample • Gated by Governor (HIGH Risk due to ad spend).
+    <!-- SCROLLABLE WORKSPACE -->
+    <main class="flex-1 overflow-y-auto p-8 space-y-8">
+      
+      <!-- ===============================================================
+          3. TOP KPI GRID (4 CARDS WITH DIFFUSE CYAN SOCIO GLOW)
+          =============================================================== -->
+      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        
+        <!-- KPI Card 1: Recovery Pipeline -->
+        <div class="socio-card p-5 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-mono uppercase tracking-widest text-slate-400 font-medium">
+              Recovery Pipeline
+            </span>
+            <div class="w-8 h-8 rounded-xl bg-white/[0.02] border border-white/5 flex items-center justify-center text-slate-400">
+              <i data-lucide="layers" class="w-4 h-4"></i>
+            </div>
+          </div>
+          <div class="flex items-baseline justify-between mt-2">
+            <div class="text-3xl font-medium tracking-tight text-white font-sans">
+              $16,420
+            </div>
+            <span class="text-[10px] font-mono text-slate-500">+18.4% MTD</span>
+          </div>
+        </div>
+
+        <!-- KPI Card 2: Active Automated Strikes -->
+        <div class="socio-card p-5 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-mono uppercase tracking-widest text-slate-400 font-medium">
+              Active Automated Strikes
+            </span>
+            <div class="w-8 h-8 rounded-xl bg-white/[0.02] border border-white/5 flex items-center justify-center text-cyan-400">
+              <i data-lucide="zap" class="w-4 h-4"></i>
+            </div>
+          </div>
+          <div class="flex items-baseline justify-between mt-2">
+            <div class="text-3xl font-medium tracking-tight text-white font-sans">
+              142
+            </div>
+            <span class="text-[10px] font-mono text-slate-500">8 Agents Active</span>
+          </div>
+        </div>
+
+        <!-- KPI Card 3: Dormant Leads Intercepted -->
+        <div class="socio-card p-5 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-mono uppercase tracking-widest text-slate-400 font-medium">
+              Dormant Leads Intercepted
+            </span>
+            <div class="w-8 h-8 rounded-xl bg-white/[0.02] border border-white/5 flex items-center justify-center text-slate-400">
+              <i data-lucide="users" class="w-4 h-4"></i>
+            </div>
+          </div>
+          <div class="flex items-baseline justify-between mt-2">
+            <div class="text-3xl font-medium tracking-tight text-white font-sans">
+              84
+            </div>
+            <span class="text-[10px] font-mono text-slate-500">92.4% Delivery</span>
+          </div>
+        </div>
+
+        <!-- KPI Card 4: Verified Commission Revenue (Neon Green) -->
+        <div class="socio-card p-5 space-y-3 border-emerald-500/20">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-mono uppercase tracking-widest text-slate-400 font-medium">
+              Verified Commission Revenue
+            </span>
+            <div class="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+              <i data-lucide="receipt" class="w-4 h-4"></i>
+            </div>
+          </div>
+          <div class="flex items-baseline justify-between mt-2">
+            <div class="text-3xl font-medium tracking-tight text-emerald-400 font-sans">
+              $2,463
+            </div>
+            <span class="text-[10px] font-mono text-emerald-500/80 font-bold">15% Matched Fee</span>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ===============================================================
+          4. MAIN SPLIT VIEW (LIVE GROWTH STREAM + ATTRIBUTION PROTOCOL)
+          =============================================================== -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- LEFT PANEL: LIVE GROWTH EVENT STREAM (7 COLS) -->
+        <div class="lg:col-span-7 socio-panel p-6 space-y-5">
+          
+          <!-- Header with Filter Tabs -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5 pb-4">
+            <div class="flex items-center gap-2.5">
+              <i data-lucide="terminal" class="w-4 h-4 text-cyan-400"></i>
+              <span class="text-xs font-mono uppercase tracking-widest text-slate-200 font-semibold">
+                LIVE GROWTH EVENT STREAM
+              </span>
+            </div>
+
+            <!-- Filter Tabs -->
+            <div class="flex items-center gap-1 bg-white/[0.02] border border-white/5 p-1 rounded-xl" id="filter-tabs">
+              <button onclick="setFilter('ALL', this)" class="px-3 py-1 rounded-lg text-[10px] font-mono font-medium tracking-wider uppercase bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shadow-[0_0_15px_rgba(56,189,248,0.2)]">ALL</button>
+              <button onclick="setFilter('VERIFIED', this)" class="px-3 py-1 rounded-lg text-[10px] font-mono font-medium tracking-wider uppercase text-slate-400 hover:text-slate-200">VERIFIED</button>
+              <button onclick="setFilter('STRIKES', this)" class="px-3 py-1 rounded-lg text-[10px] font-mono font-medium tracking-wider uppercase text-slate-400 hover:text-slate-200">STRIKES</button>
+              <button onclick="setFilter('DORMANT', this)" class="px-3 py-1 rounded-lg text-[10px] font-mono font-medium tracking-wider uppercase text-slate-400 hover:text-slate-200">DORMANT</button>
+            </div>
+          </div>
+
+          <!-- Event Stream List Container -->
+          <div class="space-y-3" id="events-stream-list">
+            <!-- Rendered dynamically by JS -->
+          </div>
+
+        </div>
+
+        <!-- RIGHT PANEL: ATTRIBUTION PROTOCOL CENTER (5 COLS) -->
+        <div class="lg:col-span-5 socio-panel p-6 space-y-6" id="attribution-panel">
+          
+          <div class="flex items-center justify-between border-b border-white/5 pb-4">
+            <div class="flex items-center gap-2.5">
+              <i data-lucide="shield-check" class="w-4 h-4 text-cyan-400"></i>
+              <span class="text-xs font-mono uppercase tracking-widest text-slate-200 font-semibold">
+                ATTRIBUTION PROTOCOL CENTER
+              </span>
+            </div>
+            <span id="selected-badge" class="hidden text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20"></span>
+          </div>
+
+          <!-- Lock Screen State / Evidence Dynamic Slot -->
+          <div id="attribution-content" class="py-16 flex flex-col items-center justify-center text-center space-y-4">
+            <div class="w-14 h-14 rounded-2xl bg-white/[0.02] border border-white/5 flex items-center justify-center text-slate-500 shadow-[0_0_30px_rgba(0,0,0,0.5)]">
+              <i data-lucide="lock" class="w-6 h-6 text-slate-500"></i>
+            </div>
+            <div class="space-y-1 max-w-xs">
+              <h3 class="text-xs font-mono uppercase tracking-wider text-slate-300 font-semibold">
+                No Event Selected
+              </h3>
+              <p class="text-[11px] font-mono text-slate-500 leading-relaxed">
+                Select any real-time growth strike or conversion from the live stream to inspect POS receipt verification and causal attribution proof.
               </p>
-              <div class="flex flex-wrap items-center gap-4 text-xs font-mono text-gray-400 pt-1">
-                <span>Target: <strong class="text-white font-semibold">East Harlem Bites</strong></span>
-                <span>•</span>
-                <span>Proposing Agent: <strong class="text-sky-400 font-semibold">Socio-Content</strong></span>
-                <span>•</span>
-                <span>Time Req: <strong class="text-white font-semibold">45 seconds</strong></span>
-              </div>
-            </div>
-
-            <!-- Execution Trigger Controls -->
-            <div class="flex flex-col sm:flex-row lg:flex-col gap-2.5 shrink-0 justify-center">
-              <button onclick="approveProposal('PROP-0042')" class="px-6 py-3 bg-[#ccff00] text-black font-extrabold font-mono text-sm rounded-xl hover:brightness-110 shadow-[0_0_20px_rgba(204,255,0,0.35)] flex items-center justify-center gap-2">
-                <i data-lucide="check" class="w-4 h-4"></i> Execute & Approve (+$4,400)
-              </button>
-              <div class="flex gap-2">
-                <button onclick="switchTab('governor')" class="flex-1 px-3 py-2 bg-white/5 hover:bg-white/10 text-gray-300 font-mono text-xs rounded-lg border border-white/10 text-center">
-                  Audit Evidence
-                </button>
-                <button onclick="rejectProposal('PROP-0042')" class="px-3 py-2 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 font-mono text-xs rounded-lg border border-rose-500/30 text-center">
-                  Reject
-                </button>
-              </div>
-            </div>
-
-          </div>
-        </section>
-
-        <!-- 2. THE THREE EXECUTION PILLARS: FOUNDER QUEUE + AGENT FLEET + GOVERNOR -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          
-          <!-- PILLAR 1: FOUNDER ACTION QUEUE (4 Cols) -->
-          <div class="lg:col-span-4 glass-card p-5 space-y-4">
-            <div class="flex items-center justify-between border-b border-white/5 pb-3">
-              <div class="flex items-center gap-2">
-                <i data-lucide="check-circle-2" class="w-4 h-4 text-amber-400"></i>
-                <span class="text-xs font-bold font-mono uppercase tracking-wider text-white">FOUNDER ACTION QUEUE</span>
-              </div>
-              <span class="pill pill-amber" id="badge-queue-count">3 Pending</span>
-            </div>
-
-            <!-- Quick Task Input -->
-            <div class="flex gap-2">
-              <input type="text" id="input-new-task" placeholder="+ Add founder action..." class="flex-1 bg-[#141722] border border-white/10 rounded-lg px-3 py-1.5 text-xs font-mono text-white placeholder-gray-500 outline-none focus:border-[#ccff00]" onkeydown="if(event.key==='Enter')addTaskFromInput()">
-              <button onclick="addTaskFromInput()" class="px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-xs font-mono font-bold text-white">+</button>
-            </div>
-
-            <!-- Task Items -->
-            <div class="space-y-2.5" id="founder-queue-list">
-              <!-- Rendered via JS -->
             </div>
           </div>
 
-          <!-- PILLAR 2: AUTONOMOUS AGENT FLEET (4 Cols) -->
-          <div class="lg:col-span-4 glass-card p-5 space-y-4">
-            <div class="flex items-center justify-between border-b border-white/5 pb-3">
-              <div class="flex items-center gap-2">
-                <i data-lucide="bot" class="w-4 h-4 text-sky-400"></i>
-                <span class="text-xs font-bold font-mono uppercase tracking-wider text-white">AUTONOMOUS FLEET</span>
-              </div>
-              <span class="text-[10px] font-mono text-emerald-400 font-bold">8/8 Operational</span>
-            </div>
-
-            <!-- Fleet Micro Grid -->
-            <div class="space-y-2" id="fleet-micro-list">
-              <!-- Rendered via JS -->
-            </div>
-
-            <button onclick="switchTab('agents')" class="w-full py-2 bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono font-bold rounded-lg text-gray-300 transition-colors text-center block">
-              Manage All 8 Agents →
-            </button>
-          </div>
-
-          <!-- PILLAR 3: GOVERNOR SAFETY GATES (4 Cols) -->
-          <div class="lg:col-span-4 glass-card p-5 space-y-4">
-            <div class="flex items-center justify-between border-b border-white/5 pb-3">
-              <div class="flex items-center gap-2">
-                <i data-lucide="shield-check" class="w-4 h-4 text-rose-400"></i>
-                <span class="text-xs font-bold font-mono uppercase tracking-wider text-white">GOVERNOR GATES</span>
-              </div>
-              <span class="pill pill-red">3 Needs Review</span>
-            </div>
-
-            <!-- Mini Proposal Cards -->
-            <div class="space-y-2.5" id="governor-micro-list">
-              <!-- Rendered via JS -->
-            </div>
-
-            <button onclick="switchTab('governor')" class="w-full py-2 bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono font-bold rounded-lg text-gray-300 transition-colors text-center block">
-              Open Full Governor Console →
-            </button>
-          </div>
-
         </div>
 
-        <!-- 3. LIVE AGENT ACTIVITY & TELEMETRY STREAM (FULL WIDTH) -->
-        <section class="glass-card p-5 space-y-4">
-          <div class="flex items-center justify-between border-b border-white/5 pb-3">
-            <div class="flex items-center gap-2">
-              <i data-lucide="activity" class="w-4 h-4 text-emerald-400"></i>
-              <span class="text-xs font-bold font-mono uppercase tracking-wider text-white">LIVE REVENUE & EXECUTION STREAM (CONTINUOUS LOOP)</span>
-            </div>
-            <div class="flex items-center gap-2">
-              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span class="text-[10px] font-mono text-gray-400 uppercase">Streaming Active</span>
-            </div>
-          </div>
-
-          <div class="space-y-2 max-h-56 overflow-y-auto pr-1" id="agent-activity-stream">
-            <!-- Rendered via JS -->
-          </div>
-
-          <!-- Natural Language Terminal Input -->
-          <div class="pt-3 border-t border-white/5 flex gap-2">
-            <input type="text" id="input-agent-cmd" placeholder="Instruct fleet directly (e.g. 'Trigger Socio-Prospect on East Harlem florists', 'Sync listings for La Bodega')..." class="flex-1 bg-[#141722] border border-white/10 rounded-lg px-3 py-2 text-xs font-mono text-white placeholder-gray-500 outline-none focus:border-cyan-400" onkeydown="if(event.key==='Enter')dispatchAgentTerminalCmd()">
-            <button onclick="dispatchAgentTerminalCmd()" class="px-4 py-2 bg-cyan-500 text-black font-bold font-mono text-xs rounded-lg hover:brightness-110">
-              Dispatch →
-            </button>
-          </div>
-        </section>
-
-        <!-- 4. SECONDARY FINANCIAL HUD (EVIDENCE & PROOF SUMMARY) -->
-        <section class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 pt-2" id="executive-hud">
-          <div class="glass-card p-3.5 cursor-pointer hover:border-emerald-500/40 border-l-2 border-l-emerald-400" onclick="switchTab('ledger')">
-            <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Net New Rev</div>
-            <div class="text-xl font-black font-mono text-white mt-1" id="m-net-new">$15,870</div>
-            <div class="text-[9px] font-mono text-emerald-400 mt-0.5">✓ Matched POS</div>
-          </div>
-          <div class="glass-card p-3.5 cursor-pointer hover:border-sky-500/40 border-l-2 border-l-sky-400" onclick="switchTab('ledger')">
-            <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Expansion Rev</div>
-            <div class="text-xl font-black font-mono text-white mt-1" id="m-expansion">$6,780</div>
-            <div class="text-[9px] font-mono text-sky-400 mt-0.5">Retention Loops</div>
-          </div>
-          <div class="glass-card p-3.5 cursor-pointer hover:border-[#ccff00]/40 border-l-2 border-l-[#ccff00]" onclick="switchTab('ledger')">
-            <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Recovered Rev</div>
-            <div class="text-xl font-black font-mono text-[#ccff00] mt-1" id="m-recovered">$22,890</div>
-            <div class="text-[9px] font-mono text-gray-400 mt-0.5">137 Dormant Leads</div>
-          </div>
-          <div class="glass-card p-3.5 cursor-pointer hover:border-indigo-500/40 border-l-2 border-l-indigo-400" onclick="switchTab('pipeline')">
-            <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Pipeline Val</div>
-            <div class="text-xl font-black font-mono text-white mt-1" id="m-pipeline">$42,180</div>
-            <div class="text-[9px] font-mono text-indigo-400 mt-0.5">10 Active Deals</div>
-          </div>
-          <div class="glass-card p-3.5 cursor-pointer hover:border-rose-500/40 border-l-2 border-l-rose-500" onclick="switchTab('queue')">
-            <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Pipeline at Risk</div>
-            <div class="text-xl font-black font-mono text-rose-400 mt-1" id="m-risk">$6,800</div>
-            <div class="text-[9px] font-mono text-rose-400 mt-0.5">3 Stagnant Deals</div>
-          </div>
-          <div class="glass-card p-3.5 cursor-pointer hover:border-white/20" onclick="switchTab('merchants')">
-            <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Active Stores</div>
-            <div class="text-xl font-black font-mono text-white mt-1" id="m-merchants">10</div>
-            <div class="text-[9px] font-mono text-gray-400 mt-0.5">NYC Cohort 01</div>
-          </div>
-          <div class="glass-card p-3.5 cursor-pointer hover:border-white/20" onclick="switchTab('agents')">
-            <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Fleet Status</div>
-            <div class="text-xl font-black font-mono text-emerald-400 mt-1" id="m-agents">8 / 8</div>
-            <div class="text-[9px] font-mono text-gray-400 mt-0.5">0 Errors Today</div>
-          </div>
-          <div class="glass-card p-3.5 cursor-pointer hover:border-amber-500/40 border-l-2 border-l-amber-400" onclick="switchTab('governor')">
-            <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Gov Approvals</div>
-            <div class="text-xl font-black font-mono text-amber-400 mt-1" id="m-approvals">3</div>
-            <div class="text-[9px] font-mono text-amber-400 mt-0.5">Action Needed</div>
-          </div>
-        </section>
-
-      </div>
-
-      <!-- ============================================================= -->
-      <!-- TAB VIEW 2: FOUNDER QUEUE (LAYER 3)                           -->
-      <!-- ============================================================= -->
-      <div id="tab-queue" class="tab-content space-y-5 hidden">
-        <div class="flex items-center justify-between">
-          <div>
-            <h2 class="text-lg font-bold text-white">Prioritized Founder Action Queue</h2>
-            <p class="text-xs text-gray-400 font-mono">Calculated in real-time based on expected revenue uplift and SLA urgency.</p>
-          </div>
-          <span class="pill pill-yellow">SORTED BY $ IMPACT</span>
-        </div>
-
-        <div class="glass-card p-6 space-y-4">
-          <div class="space-y-3" id="founder-queue-expanded-list">
-            <!-- Rendered via JS -->
-          </div>
-        </div>
-      </div>
-
-      <!-- ============================================================= -->
-      <!-- TAB VIEW 3: AGENT FLEET (LAYER 4)                             -->
-      <!-- ============================================================= -->
-      <div id="tab-agents" class="tab-content space-y-5 hidden">
-        <div class="flex items-center justify-between">
-          <div>
-            <h2 class="text-lg font-bold text-white">8-Agent Autonomous Fleet Control Plane</h2>
-            <p class="text-xs text-gray-400 font-mono">DSH + Hermes Hybrid Framework • Specialized role isolation</p>
-          </div>
-          <div class="flex gap-2">
-            <button onclick="pingAllAgents()" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300">Ping All</button>
-            <button onclick="triggerLiveAgent('prospect')" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-[#ccff00] text-black hover:brightness-110">Trigger Socio-Prospect</button>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4" id="fleet-cards-grid">
-          <!-- Rendered via JS -->
-        </div>
-      </div>
-
-      <!-- ============================================================= -->
-      <!-- TAB VIEW 4: GOVERNOR CONTROL PLANE (LAYER 6)                  -->
-      <!-- ============================================================= -->
-      <div id="tab-governor" class="tab-content space-y-5 hidden">
-        <div class="flex items-center justify-between">
-          <div>
-            <h2 class="text-lg font-bold text-white">Governor Safety & CAS Approval Matrix</h2>
-            <p class="text-xs text-gray-400 font-mono">Policy Evaluation • Risk Scoring • Immutable Decision Attestation</p>
-          </div>
-          <span class="pill pill-amber">3 PENDING FOUNDER REVIEW</span>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          <div class="lg:col-span-8 space-y-4" id="governor-proposals-container">
-            <!-- Rendered via JS -->
-          </div>
-          
-          <div class="lg:col-span-4 space-y-4">
-            <div class="glass-card p-5 space-y-3">
-              <div class="text-xs font-bold font-mono uppercase text-gray-400">Risk Matrix Policy</div>
-              <div class="space-y-2 text-xs font-mono">
-                <div class="p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
-                  <div class="font-bold">LOW RISK • Auto-Approved</div>
-                  <div class="text-[10px] text-gray-400 mt-0.5">Read-only SEO audits, draft calendars, citation checks.</div>
-                </div>
-                <div class="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400">
-                  <div class="font-bold">MEDIUM RISK • Supervisor Gated</div>
-                  <div class="text-[10px] text-gray-400 mt-0.5">Customer retention touches, WhatsApp follow-ups.</div>
-                </div>
-                <div class="p-2.5 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400">
-                  <div class="font-bold">HIGH RISK • Founder Approval</div>
-                  <div class="text-[10px] text-gray-400 mt-0.5">Ad campaigns, budget spending, contract terms.</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ============================================================= -->
-      <!-- TAB VIEW 5: MERCHANTS CRM & TWIN WORKSPACE (LAYER 7 & 8)      -->
-      <!-- ============================================================= -->
-      <div id="tab-merchants" class="tab-content space-y-5 hidden">
-        <div class="flex items-center justify-between">
-          <div>
-            <h2 class="text-lg font-bold text-white">NYC Merchant Cohort & Business Twins</h2>
-            <p class="text-xs text-gray-400 font-mono">Real-time status, health scores, and attributed revenue per merchant.</p>
-          </div>
-          <button onclick="toast('New merchant onboarding initialized','success')" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-[#ccff00] text-black hover:brightness-110">+ Onboard Merchant</button>
-        </div>
-
-        <div class="glass-card overflow-hidden">
-          <table class="w-full text-left text-xs font-mono">
-            <thead>
-              <tr class="text-[10px] uppercase text-gray-500 border-b border-white/5 bg-white/2">
-                <th class="p-3.5">Merchant Name</th>
-                <th class="p-3.5">Borough / Location</th>
-                <th class="p-3.5">Lifecycle Stage</th>
-                <th class="p-3.5">Assigned Agent</th>
-                <th class="p-3.5">Net New Rev</th>
-                <th class="p-3.5">Health Score</th>
-                <th class="p-3.5">Next Best Action</th>
-                <th class="p-3.5">Action</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-white/5 text-gray-300" id="merchants-crm-tbody">
-              <!-- Rendered via JS -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- ============================================================= -->
-      <!-- TAB VIEW 6: GROWTH PIPELINE (LAYER 9)                         -->
-      <!-- ============================================================= -->
-      <div id="tab-pipeline" class="tab-content space-y-5 hidden">
-        <div class="flex items-center justify-between">
-          <div>
-            <h2 class="text-lg font-bold text-white">10-Stage Merchant Growth Pipeline</h2>
-            <p class="text-xs text-gray-400 font-mono">From Prospect Scraping → Active Commission & Referrals</p>
-          </div>
-          <div class="text-xs font-mono text-[#ccff00] font-bold">Total Weighted Pipeline: $42,180</div>
-        </div>
-
-        <!-- 10-Stage Kanban Row -->
-        <div class="grid grid-cols-2 md:grid-cols-5 gap-3" id="kanban-pipeline-grid">
-          <!-- Rendered via JS -->
-        </div>
-      </div>
-
-      <!-- ============================================================= -->
-      <!-- TAB VIEW 7: REVENUE LEDGER (LAYER 10)                         -->
-      <!-- ============================================================= -->
-      <div id="tab-ledger" class="tab-content space-y-5 hidden">
-        <div class="flex items-center justify-between">
-          <div>
-            <h2 class="text-lg font-bold text-white">Idempotent Revenue Ledger</h2>
-            <p class="text-xs text-gray-400 font-mono">All transactions cryptographically hash-matched against POS telemetry.</p>
-          </div>
-          <span class="pill pill-green">IMMUTABLE CAS RECORD</span>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div class="glass-card p-4 border-l-4 border-l-emerald-400">
-            <div class="text-[10px] font-mono uppercase text-gray-500">Gross Recovered</div>
-            <div class="text-2xl font-bold font-mono text-white mt-1">$22,890.00</div>
-          </div>
-          <div class="glass-card p-4 border-l-4 border-l-sky-400">
-            <div class="text-[10px] font-mono uppercase text-gray-500">Verified Delta</div>
-            <div class="text-2xl font-bold font-mono text-sky-400 mt-1">$15,870.00</div>
-          </div>
-          <div class="glass-card p-4 border-l-4 border-l-[#ccff00]">
-            <div class="text-[10px] font-mono uppercase text-gray-500">Socio 15% Commission</div>
-            <div class="text-2xl font-bold font-mono text-[#ccff00] mt-1">$2,380.50</div>
-          </div>
-          <div class="glass-card p-4 border-l-4 border-l-purple-400">
-            <div class="text-[10px] font-mono uppercase text-gray-500">Store Payout (85%)</div>
-            <div class="text-2xl font-bold font-mono text-white mt-1">$13,489.50</div>
-          </div>
-        </div>
-
-        <div class="glass-card p-5 space-y-3">
-          <div class="text-xs font-bold font-mono uppercase text-gray-400">Receipt Event Ledger Stream</div>
-          <div class="space-y-2" id="revenue-events-stream">
-            <!-- Rendered via JS -->
-          </div>
-        </div>
-      </div>
-
-      <!-- ============================================================= -->
-      <!-- TAB VIEW 8: EMBEDDED MERCHANT EVIDENCE (LAYER 18)             -->
-      <!-- ============================================================= -->
-      <div id="tab-evidence" class="tab-content space-y-5 hidden">
-        <div class="flex items-center justify-between">
-          <div>
-            <h2 class="text-lg font-bold text-white">Merchant Evidence Frame</h2>
-            <p class="text-xs text-gray-400 font-mono">Live 6-Question Provability Ledger & Audit Trail</p>
-          </div>
-          <a href="merchant-evidence.html" target="_blank" class="text-xs font-mono text-cyan-400 hover:underline flex items-center gap-1">Open Fullscreen ↗</a>
-        </div>
-        <div class="glass-card overflow-hidden rounded-2xl h-[650px] border border-white/10">
-          <iframe src="merchant-evidence.html" class="w-full h-full border-none"></iframe>
-        </div>
-      </div>
-
-      <!-- ============================================================= -->
-      <!-- TAB VIEW 9: EXPERIMENTS ENGINE (LAYER 13)                     -->
-      <!-- ============================================================= -->
-      <div id="tab-experiments" class="tab-content space-y-5 hidden">
-        <div class="flex items-center justify-between">
-          <div>
-            <h2 class="text-lg font-bold text-white">Controlled Growth Experiments & Learning Engine</h2>
-            <p class="text-xs text-gray-400 font-mono">Statistically verified uplift tests that feed directly into the Next Action loop.</p>
-          </div>
-          <button onclick="toast('New hypothesis proposal drafted','success')" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-[#ccff00] text-black hover:brightness-110">+ New Hypothesis</button>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="experiments-cards-grid">
-          <!-- Rendered via JS -->
-        </div>
       </div>
 
     </main>
   </div>
 
-  <!-- Toast Notification Container -->
-  <div class="toast-container" id="toast-deck"></div>
-
-  <!-- ================================================================= -->
-  <!-- JAVASCRIPT ENGINE & REAL BACKEND DATA COUPLING                    -->
-  <!-- ================================================================= -->
+  <!-- ===================================================================
+      5. CLIENT RUNTIME & ATTRIBUTION ENGINE
+      =================================================================== -->
   <script>
-    const API_BASE = window.location.origin;
-    let authToken = localStorage.getItem('socio_merchant_token') || 'dev-token';
-    let isFocusMode = false;
-
-    // Real Persistent Store
-    const store = {
-      getTasks: () => JSON.parse(localStorage.getItem('socio_founder_tasks') || 'null'),
-      saveTasks: (tasks) => localStorage.setItem('socio_founder_tasks', JSON.stringify(tasks)),
-      getDecisions: () => JSON.parse(localStorage.getItem('socio_gov_decisions') || '{}'),
-      saveDecision: (id, status) => {
-        const d = store.getDecisions();
-        d[id] = status;
-        localStorage.setItem('socio_gov_decisions', JSON.stringify(d));
-      }
-    };
-
-    let FOUNDER_TASKS = store.getTasks() || [
-      { id: 'ft-1', action: 'Approve East Harlem Bites 11x ROAS Instagram campaign', impact: '+$4,400', urgency: 'HIGH', estTime: '45s', done: false },
-      { id: 'ft-2', action: 'Send 5 WhatsApp follow-ups to East Harlem florist leads', impact: '+$2,400', urgency: 'HIGH', estTime: '3 min', done: false },
-      { id: 'ft-3', action: 'Review DocuSign partnership packet for El Nuevo Cafe', impact: 'Onboard', urgency: 'MEDIUM', estTime: '5 min', done: false },
-      { id: 'ft-4', action: 'Verify Google Business listing sync across 12 directories for La Bodega', impact: 'Rank #1', urgency: 'LOW', estTime: '2 min', done: true }
-    ];
-
-    let AGENTS = [
-      { id: 'prospect', name: 'Socio-Prospect', role: 'Lead Gen', emoji: '🕵️', status: 'running', today: 47, rate: 88, proposals: 12, job: 'Scraping East Harlem Florists', tools: ['Maps MCP', 'DCA Registry'] },
-      { id: 'pitch', name: 'Socio-Pitch', role: 'Outreach', emoji: '📣', status: 'idle', today: 23, rate: 71, proposals: 8, job: 'WhatsApp VIP sequence queued', tools: ['Twilio', 'Resend'] },
-      { id: 'onboard', name: 'Socio-Onboard', role: 'Agreements', emoji: '📋', status: 'online', today: 5, rate: 96, proposals: 2, job: 'DocuSign signed for El Nuevo Cafe', tools: ['DocuSign', 'Typeform'] },
-      { id: 'content', name: 'Socio-Content', role: 'Content', emoji: '✍️', status: 'running', today: 142, rate: 94, proposals: 31, job: 'Generating 30-day reels calendar', tools: ['Helio CDP', 'Canva'] },
-      { id: 'listings', name: 'Socio-Listings', role: 'SEO & Reviews', emoji: '📍', status: 'online', today: 38, rate: 91, proposals: 9, job: 'Syncing 12 local citations', tools: ['Synup MCP'] },
-      { id: 'track', name: 'Socio-Track', role: 'Revenue', emoji: '💳', status: 'online', today: 67, rate: 99, proposals: 4, job: 'Ingesting Square POS webhook #tx_8104a', tools: ['Stripe', 'Square'] },
-      { id: 'support', name: 'Socio-Support', role: 'Support', emoji: '💬', status: 'online', today: 19, rate: 87, proposals: 1, job: 'Resolving WhatsApp delivery query', tools: ['Hermes CLI'] },
-      { id: 'expand', name: 'Socio-Expand', role: 'Expansion', emoji: '🚀', status: 'idle', today: 8, rate: 79, proposals: 5, job: 'Cross-sell analysis for catering', tools: ['Growth OS Twin'] }
-    ];
-
-    let MERCHANTS = [
-      { name: 'Cristal Flowers', loc: 'East Harlem', stage: 'ACTIVE', agent: 'Socio-Content', rev: '$4,820', score: 94, nextAction: 'Review Monthly Ledger', statusClass: 'pill-green' },
-      { name: 'El Nuevo Cafe', loc: 'Wash. Heights', stage: 'ONBOARDING', agent: 'Socio-Onboard', rev: '$0', score: 88, nextAction: 'Initialize Twin Model', statusClass: 'pill-blue' },
-      { name: 'La Bodega NYC', loc: 'South Bronx', stage: 'ACTIVE', agent: 'Socio-Listings', rev: '$2,100', score: 82, nextAction: 'SEO Rank #1 Audit', statusClass: 'pill-green' },
-      { name: 'Bloom & Branch', loc: 'Astoria, Queens', stage: 'PITCH', agent: 'Socio-Pitch', rev: '$0', score: 79, nextAction: 'Follow-up WhatsApp Touch', statusClass: 'pill-amber' },
-      { name: 'East Harlem Bites', loc: 'East Harlem', stage: 'EXPANSION', agent: 'Socio-Expand', rev: '$5,610', score: 96, nextAction: 'Approve $400 Paid Campaign', statusClass: 'pill-yellow' }
-    ];
-
-    let PROPOSALS = [
-      { id: 'PROP-0042', agent: 'Socio-Content', biz: 'East Harlem Bites', type: 'Launch Paid Instagram Campaign', risk: 'HIGH', obj: 'Scale top performing organic floral reel with $400 ad budget.', exp: '+$4,400 attributable revenue (11x ROAS)', status: 'PENDING' },
-      { id: 'PROP-0041', agent: 'Socio-Pitch', biz: 'Bloom & Branch', type: 'Send 3-Touch Email Batch', risk: 'MEDIUM', obj: 'Engage 47 high-intent local wedding planners.', exp: '~8% response rate → 4 consultations', status: 'PENDING' },
-      { id: 'PROP-0043', agent: 'Socio-Expand', biz: 'Cristal Flowers', type: 'Activate Referral Program', risk: 'LOW', obj: 'Send automated 5% commission link via WhatsApp to store owner.', exp: '2+ merchant referrals in 90 days', status: 'PENDING' }
-    ];
-
-    let REVENUE_EVENTS = [
-      { id: 'EV-0941', biz: 'Cristal Flowers', customer: 'Maria R. (Dormant 124d)', trigger: 'WhatsApp VIP Re-engagement', amt: '$185.00', net: '+$185.00', receipt: 'Square POS #tx_8104a', status: 'VERIFIED' },
-      { id: 'EV-0942', biz: 'El Nuevo Cafe', customer: 'Mount Sinai Staff', trigger: 'Corporate Catering Pitch Strike', amt: '$2,400.00', net: '+$2,400.00', receipt: 'Stripe Invoice #in_9401b', status: 'VERIFIED' },
-      { id: 'EV-0943', biz: 'La Bodega NYC', customer: 'DoorDash Local Pack Rank #1', trigger: '12-Directory Sync', amt: '$840.00', net: '+$440.00', receipt: 'DoorDash Merchant API', status: 'VERIFIED' }
-    ];
-
-    let ACTIVITY_LOGS = [
-      { ts: '14:22:01', agent: 'Socio-Track', type: 'REVENUE', desc: 'Attributed +$1,240 Net New revenue to Cristal Flowers (POS receipt matched).', col: 'text-emerald-400' },
-      { ts: '14:18:33', agent: 'Socio-Pitch', type: 'OUTREACH', desc: 'Dispatched sequence touch 2/3 to Bloom & Branch via Resend.', col: 'text-cyan-400' },
-      { ts: '13:50:11', agent: 'Socio-Diagnostic', type: 'AUDIT', desc: 'Generated 48-Hour Digital Audit packet for El Nuevo Cafe.', col: 'text-indigo-400' },
-      { ts: '13:30:05', agent: 'Socio-Listings', type: 'SYNC', desc: 'Synchronized 12 local citations for La Bodega NYC via Synup MCP.', col: 'text-emerald-400' },
-      { ts: '12:04:18', agent: 'Socio-Governor', type: 'GOVERNANCE', desc: 'Policy Evaluation complete: 0 AirLock holds active. All agents nominal.', col: 'text-gray-400' }
-    ];
-
-    // =================================================================
-    // TAB SWITCHING
-    // =================================================================
-    function switchTab(tabId, btn) {
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-      const target = document.getElementById(`tab-${tabId}`);
-      if (target) target.classList.remove('hidden');
-
-      document.querySelectorAll('.nav-tab-btn').forEach(el => el.classList.remove('active'));
-      if (btn) {
-        btn.classList.add('active');
-      } else {
-        const found = document.querySelector(`.nav-tab-btn[onclick*="${tabId}"]`);
-        if (found) found.classList.add('active');
-      }
-    }
-
-    function toggleFocusMode() {
-      isFocusMode = !isFocusMode;
-      const hud = document.getElementById('executive-hud');
-      const btn = document.getElementById('btn-focus');
-
-      if (isFocusMode) {
-        if (hud) hud.classList.add('hidden');
-        btn.classList.add('bg-[#ccff00]', 'text-black');
-        btn.classList.remove('bg-white/5', 'text-gray-300');
-        toast('Founder Focus Mode Activated: Only Next Action & Founder Queue visible.', 'warn');
-      } else {
-        if (hud) hud.classList.remove('hidden');
-        btn.classList.remove('bg-[#ccff00]', 'text-black');
-        btn.classList.add('bg-white/5', 'text-gray-300');
-        toast('Standard Action Theater Restored.', 'success');
-      }
-    }
-
-    // =================================================================
-    // REAL DATA TELEMETRY FETCH
-    // =================================================================
-    async function fetchFleetTelemetry() {
-      const icon = document.getElementById('refresh-icon');
-      if (icon) icon.classList.add('animate-spin');
-
-      try {
-        const res = await fetch(`${API_BASE}/api/agents/status`, {
-          headers: { 'Authorization': `Bearer ${authToken}` }
-        });
-        const data = await res.json();
-        if (data.agents && Array.isArray(data.agents)) {
-          AGENTS = data.agents;
+    const GROWTH_EVENTS = [
+      {
+        id: 'EV-8902',
+        timestamp: '14:22:04',
+        type: 'VERIFIED',
+        title: 'WhatsApp VIP Offer Converted',
+        target: 'Maria R. (Dormant 124 Days)',
+        channel: 'WhatsApp',
+        amount: 185.00,
+        commission: 27.75,
+        status: 'VERIFIED',
+        evidence: {
+          receiptId: 'sq_pos_tx_8104a',
+          posSource: 'Square POS Cloud Webhook',
+          latencyMs: 142,
+          dormantDays: 124,
+          scoreConfidence: 99.4,
+          hashProof: '0x7f4e8b9109a24c2a9bb8231',
+          attributedItems: ['1x Seasonal Bouquet Deluxe ($145.00)', '1x Custom Handcrafted Vase ($40.00)']
         }
-      } catch (err) {
-        console.log('Using local memory fleet state');
-      }
-
-      try {
-        const bRes = await fetch(`${API_BASE}/api/command/briefing`);
-        const bData = await bRes.json();
-        if (bData.briefing && bData.briefing.metrics) {
-          const m = bData.briefing.metrics;
-          const nn = document.getElementById('m-net-new');
-          const ex = document.getElementById('m-expansion');
-          const rc = document.getElementById('m-recovered');
-          if (nn) nn.innerText = '$' + m.grossRevenue.toLocaleString();
-          if (ex) ex.innerText = '$' + m.expansionRevenue.toLocaleString();
-          if (rc) rc.innerText = '$' + m.recoveredRevenue.toLocaleString();
+      },
+      {
+        id: 'EV-8901',
+        timestamp: '14:18:33',
+        type: 'STRIKES',
+        title: 'Outbound Strike Dispatched',
+        target: 'Bloom & Branch (Astoria)',
+        channel: 'Resend Email',
+        amount: null,
+        commission: null,
+        status: 'DISPATCHED',
+        evidence: {
+          receiptId: 'out_batch_9921b',
+          posSource: 'Hermes Agent Engine',
+          latencyMs: 48,
+          dormantDays: 0,
+          scoreConfidence: 86.0,
+          hashProof: '0x1a2b3c4d99efe84a1002381',
+          attributedItems: ['Bilingual B2B Catering Sequence (Touch 2/3)']
         }
-      } catch (e) {}
-
-      setTimeout(() => {
-        if (icon) icon.classList.remove('animate-spin');
-        renderAllComponents();
-        toast('Action Center synced with real-time POS & Hermes telemetry.', 'success');
-      }, 400);
-    }
-
-    async function triggerLiveAgent(agentId) {
-      toast(`Triggering Socio-${agentId}...`, 'warn');
-      try {
-        const res = await fetch(`${API_BASE}/api/agent/${agentId}/trigger`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${authToken}` },
-          body: JSON.stringify({ businessId: 'socio_default' })
-        });
-        const data = await res.json();
-        toast(data.message || `Socio-${agentId} routine launched`, 'success');
-        fetchFleetTelemetry();
-      } catch (e) {
-        toast(`Socio-${agentId} routine launched in local mode`, 'success');
+      },
+      {
+        id: 'EV-8900',
+        timestamp: '13:50:11',
+        type: 'DORMANT',
+        title: 'Dormant Lead Re-engaged',
+        target: 'Carlos D. (Dormant 88 Days)',
+        channel: 'SMS VIP Strike',
+        amount: 92.50,
+        commission: 13.88,
+        status: 'VERIFIED',
+        evidence: {
+          receiptId: 'clover_tx_9011e',
+          posSource: 'Clover POS Ingestion',
+          latencyMs: 89,
+          dormantDays: 88,
+          scoreConfidence: 97.8,
+          hashProof: '0x55aa66bb1122aef90448102',
+          attributedItems: ['2x Special Roast Whole Bean ($42.50)', '1x Cold Brew 4-Pack ($50.00)']
+        }
+      },
+      {
+        id: 'EV-8899',
+        timestamp: '13:30:05',
+        type: 'STRIKES',
+        title: 'Google Pack Rank #1 Synced',
+        target: 'La Bodega NYC (12 Directories)',
+        channel: 'Google Maps API',
+        amount: null,
+        commission: null,
+        status: 'DISPATCHED',
+        evidence: {
+          receiptId: 'synup_sync_4410a',
+          posSource: 'Synup MCP Connector',
+          latencyMs: 312,
+          dormantDays: 0,
+          scoreConfidence: 94.2,
+          hashProof: '0x99887766443311228899110',
+          attributedItems: ['12 Local Citations Sync', '5-Star Review Reply Stream']
+        }
       }
-    }
+    ];
 
-    async function approveProposal(proposalId) {
-      try {
-        await fetch(`${API_BASE}/api/governor/${proposalId}/approve`, {
-          method: 'POST',
-          headers: { 'Authorization': `Bearer ${authToken}` }
-        });
-      } catch(e) {}
-      store.saveDecision(proposalId, 'APPROVED');
-      const p = PROPOSALS.find(x => x.id === proposalId);
-      if (p) p.status = 'APPROVED';
-      renderGovernor();
-      renderGovernorMicro();
-      toast(`Proposal ${proposalId} APPROVED by Governor. Execution dispatched to fleet.`, 'success');
-    }
+    let currentFilter = 'ALL';
+    let selectedEventId = null;
+    let searchQuery = '';
 
-    async function rejectProposal(proposalId) {
-      try {
-        await fetch(`${API_BASE}/api/governor/${proposalId}/reject`, {
-          method: 'POST',
-          headers: { 'Authorization': `Bearer ${authToken}` }
-        });
-      } catch(e) {}
-      store.saveDecision(proposalId, 'REJECTED');
-      const p = PROPOSALS.find(x => x.id === proposalId);
-      if (p) p.status = 'REJECTED';
-      renderGovernor();
-      renderGovernorMicro();
-      toast(`Proposal ${proposalId} REJECTED by Governor.`, 'warn');
-    }
+    function renderEvents() {
+      const container = document.getElementById('events-stream-list');
+      if (!container) return;
 
-    // =================================================================
-    // COMPONENT RENDERERS
-    // =================================================================
-    function renderFounderQueue() {
-      const el = document.getElementById('founder-queue-list');
-      const elExp = document.getElementById('founder-queue-expanded-list');
-      const badge = document.getElementById('badge-queue-count');
-      const navBadge = document.getElementById('nav-badge-queue');
-
-      const pendingCount = FOUNDER_TASKS.filter(t => !t.done).length;
-      if (badge) badge.innerText = `${pendingCount} Pending`;
-      if (navBadge) navBadge.innerText = `${pendingCount}`;
-
-      const html = FOUNDER_TASKS.map(t => `
-        <div class="p-3 rounded-xl bg-black/40 border border-white/5 flex items-start gap-3 hover:border-white/15 transition-all ${t.done ? 'opacity-40' : ''}">
-          <input type="checkbox" ${t.done ? 'checked' : ''} onchange="toggleTask('${t.id}')" class="mt-0.5 rounded bg-white/5 border-white/20">
-          <div class="flex-1 min-w-0">
-            <div class="text-xs font-semibold ${t.done ? 'line-through text-gray-500' : 'text-gray-200'}">${t.action}</div>
-            <div class="flex items-center gap-2 mt-1 text-[10px] font-mono text-gray-500">
-              <span class="text-emerald-400 font-bold">${t.impact}</span>
-              <span>•</span>
-              <span>${t.estTime}</span>
-              <span>•</span>
-              <span class="${t.urgency === 'HIGH' ? 'text-amber-400' : 'text-gray-400'}">${t.urgency}</span>
-            </div>
-          </div>
-        </div>
-      `).join('');
-
-      if (el) el.innerHTML = html;
-      if (elExp) elExp.innerHTML = html;
-    }
-
-    function renderFleetMicro() {
-      const el = document.getElementById('fleet-micro-list');
-      if (!el) return;
-      el.innerHTML = AGENTS.slice(0, 4).map(a => `
-        <div class="p-2.5 rounded-lg bg-black/30 border border-white/5 flex items-center justify-between text-xs font-mono">
-          <div class="flex items-center gap-2 min-w-0">
-            <span class="text-base">${a.emoji || '🤖'}</span>
-            <div class="min-w-0">
-              <div class="font-bold text-white truncate">${a.name}</div>
-              <div class="text-[10px] text-gray-400 truncate">${a.job || a.role}</div>
-            </div>
-          </div>
-          <button onclick="triggerLiveAgent('${a.id}')" class="px-2 py-1 bg-white/5 hover:bg-white/10 rounded text-[10px] text-sky-400 font-bold shrink-0">
-            Run →
-          </button>
-        </div>
-      `).join('');
-    }
-
-    function renderGovernorMicro() {
-      const el = document.getElementById('governor-micro-list');
-      if (!el) return;
-      const decisions = store.getDecisions();
-
-      el.innerHTML = PROPOSALS.map(p => {
-        const dec = decisions[p.id] || p.status;
-        return `
-          <div class="p-2.5 rounded-lg bg-black/30 border border-white/5 space-y-1.5 text-xs font-mono">
-            <div class="flex items-center justify-between">
-              <span class="pill ${p.risk === 'HIGH' ? 'pill-red' : p.risk === 'MEDIUM' ? 'pill-amber' : 'pill-green'}">${p.risk}</span>
-              <span class="text-[10px] ${dec === 'APPROVED' ? 'text-emerald-400' : dec === 'REJECTED' ? 'text-rose-400' : 'text-amber-400'} font-bold">${dec}</span>
-            </div>
-            <div class="text-xs font-bold text-white truncate">${p.biz} — ${p.type}</div>
-            <div class="flex gap-2 pt-1">
-              ${dec === 'PENDING' ? `
-                <button onclick="approveProposal('${p.id}')" class="px-2.5 py-1 bg-[#ccff00] text-black font-bold text-[10px] rounded hover:brightness-110">✓ Approve</button>
-                <button onclick="rejectProposal('${p.id}')" class="px-2.5 py-1 bg-white/5 text-gray-300 text-[10px] rounded hover:bg-white/10">✕</button>
-              ` : `
-                <span class="text-[10px] text-gray-500">Decision committed</span>
-              `}
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function toggleTask(id) {
-      const t = FOUNDER_TASKS.find(x => x.id === id);
-      if (t) {
-        t.done = !t.done;
-        store.saveTasks(FOUNDER_TASKS);
-        renderFounderQueue();
-        toast(t.done ? 'Action marked complete' : 'Action reopened', 'success');
-      }
-    }
-
-    function addTaskFromInput() {
-      const inp = document.getElementById('input-new-task');
-      if (!inp || !inp.value.trim()) return;
-      FOUNDER_TASKS.unshift({
-        id: 'ft-' + Date.now(),
-        action: inp.value.trim(),
-        impact: '+$1,200',
-        urgency: 'HIGH',
-        estTime: '3 min',
-        done: false
+      const filtered = GROWTH_EVENTS.filter(ev => {
+        if (currentFilter !== 'ALL' && ev.type !== currentFilter && (currentFilter === 'VERIFIED' ? ev.status !== 'VERIFIED' : true)) {
+          return false;
+        }
+        if (searchQuery) {
+          const q = searchQuery.toLowerCase();
+          return ev.title.toLowerCase().includes(q) || ev.target.toLowerCase().includes(q) || ev.id.toLowerCase().includes(q);
+        }
+        return true;
       });
-      store.saveTasks(FOUNDER_TASKS);
-      inp.value = '';
-      renderFounderQueue();
-      toast('High-impact action added to founder queue', 'success');
-    }
 
-    function renderAgentsGrid() {
-      const g = document.getElementById('fleet-cards-grid');
-      if (!g) return;
-      g.innerHTML = AGENTS.map(a => `
-        <div class="glass-card p-4 space-y-3 border-l-4" style="border-left-color:${a.status === 'running' ? '#38bdf8' : a.status === 'online' ? '#10B981' : '#f59e0b'}">
-          <div class="flex items-start justify-between">
-            <div class="flex items-center gap-2">
-              <span class="text-2xl">${a.emoji || '🤖'}</span>
-              <div>
-                <div class="text-sm font-bold text-white">${a.name}</div>
-                <div class="text-[10px] text-gray-400 font-mono">${a.role}</div>
-              </div>
-            </div>
-            <span class="pill ${a.status === 'running' ? 'pill-blue' : a.status === 'online' ? 'pill-green' : 'pill-amber'}">${a.status}</span>
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="py-12 text-center text-xs font-mono text-slate-500">
+            No matching growth events recorded in current filter.
           </div>
+        `;
+        return;
+      }
 
-          <div class="p-2 rounded bg-black/40 border border-white/5 text-[11px] font-mono text-gray-300">
-            <div class="text-[9px] text-gray-500 uppercase">Current Job:</div>
-            <div class="truncate text-white font-semibold mt-0.5">${a.job || a.desc || 'Executing scheduled routine'}</div>
-          </div>
-
-          <div class="grid grid-cols-3 gap-2 text-center text-xs font-mono">
-            <div class="p-1.5 rounded bg-white/2"><div class="text-[9px] text-gray-500">Tasks</div><div class="font-bold text-white">${a.today}</div></div>
-            <div class="p-1.5 rounded bg-white/2"><div class="text-[9px] text-gray-500">Rate</div><div class="font-bold text-emerald-400">${a.rate}%</div></div>
-            <div class="p-1.5 rounded bg-white/2"><div class="text-[9px] text-gray-500">Props</div><div class="font-bold text-amber-400">${a.proposals}</div></div>
-          </div>
-
-          <button onclick="triggerLiveAgent('${a.id}')" class="w-full py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono font-bold rounded text-gray-200 transition-colors">
-            Trigger Routine Now →
-          </button>
-        </div>
-      `).join('');
-    }
-
-    function renderGovernor() {
-      const c = document.getElementById('governor-proposals-container');
-      if (!c) return;
-      const decisions = store.getDecisions();
-
-      c.innerHTML = PROPOSALS.map(p => {
-        const dec = decisions[p.id] || p.status;
+      container.innerHTML = filtered.map(ev => {
+        const isSelected = selectedEventId === ev.id;
         return `
-          <div class="glass-card p-5 space-y-3">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-2">
-                <span class="pill ${p.risk === 'HIGH' ? 'pill-red' : p.risk === 'MEDIUM' ? 'pill-amber' : 'pill-green'}">${p.risk} RISK</span>
-                <span class="text-xs font-mono text-gray-400">${p.id} • ${p.agent} → ${p.biz}</span>
+          <div
+            onclick="selectEvent('${ev.id}')"
+            class="p-4 rounded-xl border transition-all duration-200 cursor-pointer flex items-center justify-between ${
+              isSelected ? 'event-selected' : 'bg-white/[0.01] hover:bg-white/[0.03] border-white/5 hover:border-white/10'
+            }"
+          >
+            <div class="flex items-start gap-3.5 min-w-0">
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 border ${
+                ev.status === 'VERIFIED'
+                  ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
+                  : 'bg-cyan-500/10 border-cyan-500/20 text-cyan-400'
+              }">
+                <i data-lucide="${ev.status === 'VERIFIED' ? 'check-circle-2' : 'zap'}" class="w-4 h-4"></i>
               </div>
-              <span class="text-xs font-mono ${dec === 'APPROVED' ? 'text-emerald-400' : dec === 'REJECTED' ? 'text-rose-400' : 'text-amber-400'} font-bold">${dec}</span>
+
+              <div class="min-w-0 space-y-1">
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-medium text-slate-100 truncate">${ev.title}</span>
+                  <span class="text-[10px] font-mono text-slate-500">• ${ev.timestamp}</span>
+                </div>
+                <p class="text-[11px] font-mono text-slate-400 truncate">
+                  Target: <span class="text-slate-300">${ev.target}</span> via ${ev.channel}
+                </p>
+              </div>
             </div>
 
-            <div class="text-sm font-bold text-white">${p.type}</div>
-            <div class="text-xs text-gray-300 font-mono">${p.obj}</div>
-            <div class="p-2.5 rounded bg-black/40 border border-white/5 text-[11px] font-mono text-emerald-400">
-              Expected Return: <strong>${p.exp}</strong>
-            </div>
-
-            <div class="flex gap-2 pt-2">
-              ${dec === 'PENDING' ? `
-                <button onclick="approveProposal('${p.id}')" class="px-4 py-1.5 bg-[#ccff00] text-black font-bold font-mono text-xs rounded hover:brightness-110">✓ Approve</button>
-                <button onclick="rejectProposal('${p.id}')" class="px-4 py-1.5 bg-rose-500/10 border border-rose-500/30 text-rose-400 font-bold font-mono text-xs rounded hover:bg-rose-500/20">✕ Reject</button>
+            <div class="text-right shrink-0 ml-4 flex flex-col items-end gap-1">
+              ${ev.amount ? `
+                <span class="text-xs font-mono font-semibold text-emerald-400">
+                  +$${ev.amount.toFixed(2)}
+                </span>
               ` : `
-                <span class="text-xs font-mono text-gray-500">Decision logged in immutable CAS ledger.</span>
+                <span class="text-[10px] font-mono text-slate-500">DISPATCHED</span>
               `}
+              <div class="flex items-center gap-1 text-[9px] font-mono text-slate-400">
+                <span>Inspect</span>
+                <i data-lucide="chevron-right" class="w-3 h-3 text-slate-500"></i>
+              </div>
             </div>
           </div>
         `;
       }).join('');
-    }
 
-    function renderMerchantsCRM() {
-      const tb = document.getElementById('merchants-crm-tbody');
-      if (!tb) return;
-      tb.innerHTML = MERCHANTS.map(m => `
-        <tr class="hover:bg-white/2 transition-colors">
-          <td class="p-3.5 font-bold text-white">${m.name}</td>
-          <td class="p-3.5 text-gray-400">${m.loc}</td>
-          <td class="p-3.5"><span class="${m.statusClass}">${m.stage}</span></td>
-          <td class="p-3.5 text-sky-400">${m.agent}</td>
-          <td class="p-3.5 font-bold text-emerald-400">${m.rev}</td>
-          <td class="p-3.5"><span class="pill pill-green">${m.score}/100</span></td>
-          <td class="p-3.5 text-gray-300">${m.nextAction}</td>
-          <td class="p-3.5">
-            <button onclick="toast('Opened Twin Model for ${m.name}','success')" class="text-cyan-400 hover:text-cyan-300 font-bold">Open Twin →</button>
-          </td>
-        </tr>
-      `).join('');
-    }
-
-    function renderPipeline() {
-      const g = document.getElementById('kanban-pipeline-grid');
-      if (!g) return;
-      const stages = [
-        { name: '01 Prospect', count: 3, val: '$8,400', color: 'border-t-indigo-400' },
-        { name: '02 Discovery', count: 2, val: '$5,200', color: 'border-t-sky-400' },
-        { name: '03 Pitching', count: 2, val: '$6,800', color: 'border-t-amber-400' },
-        { name: '04 Onboarding', count: 1, val: '$4,200', color: 'border-t-purple-400' },
-        { name: '05 Active Growth', count: 2, val: '$17,580', color: 'border-t-emerald-400' }
-      ];
-      g.innerHTML = stages.map(s => `
-        <div class="glass-card p-4 border-t-4 ${s.color} space-y-3">
-          <div class="flex items-center justify-between">
-            <div class="text-xs font-bold font-mono text-white">${s.name}</div>
-            <span class="pill pill-gray">${s.count}</span>
-          </div>
-          <div class="text-lg font-bold font-mono text-[#ccff00]">${s.val}</div>
-          <div class="text-[10px] font-mono text-gray-400">Automated SLAs active</div>
-        </div>
-      `).join('');
-    }
-
-    function renderLedgerEvents() {
-      const c = document.getElementById('revenue-events-stream');
-      if (!c) return;
-      c.innerHTML = REVENUE_EVENTS.map(e => `
-        <div class="p-3 rounded-xl bg-black/40 border border-white/5 flex items-center justify-between font-mono text-xs">
-          <div class="space-y-0.5">
-            <div class="flex items-center gap-2">
-              <span class="text-sky-400 font-bold">${e.id}</span>
-              <span class="text-white font-bold">${e.biz}</span>
-              <span class="text-gray-500">•</span>
-              <span class="text-gray-300">${e.customer}</span>
-            </div>
-            <div class="text-[11px] text-gray-500">Trigger: ${e.trigger} • Receipt: ${e.receipt}</div>
-          </div>
-          <div class="text-right">
-            <div class="text-sm font-bold text-emerald-400">${e.net}</div>
-            <span class="pill pill-green">${e.status}</span>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function renderActivityLogs() {
-      const c = document.getElementById('agent-activity-stream');
-      if (!c) return;
-      c.innerHTML = ACTIVITY_LOGS.map(l => `
-        <div class="p-2.5 rounded-lg bg-black/30 border border-white/5 flex items-start gap-2.5 text-xs font-mono">
-          <span class="text-gray-600 text-[10px] mt-0.5">${l.ts}</span>
-          <span class="pill pill-gray shrink-0">${l.agent}</span>
-          <span class="text-gray-300 leading-relaxed">${l.desc}</span>
-        </div>
-      `).join('');
-    }
-
-    function renderExperiments() {
-      const g = document.getElementById('experiments-cards-grid');
-      if (!g) return;
-      const exps = [
-        { id: 'EXP-101', title: '5-Star Google Review SMS Loop', biz: 'La Bodega NYC', delta: '+38% Map Views', p: '0.03', status: 'SIGNIFICANT', statusCls: 'pill-green' },
-        { id: 'EXP-102', title: 'Bilingual Valentine WhatsApp Campaign', biz: 'Cristal Flowers', delta: '+28% Repeat Orders', p: '0.02', status: 'SIGNIFICANT', statusCls: 'pill-green' }
-      ];
-      g.innerHTML = exps.map(e => `
-        <div class="glass-card p-5 space-y-3 border-l-4 border-l-emerald-400">
-          <div class="flex items-center justify-between">
-            <span class="pill ${e.statusCls}">${e.status}</span>
-            <span class="text-xs font-mono text-gray-500">${e.id} • ${e.biz}</span>
-          </div>
-          <div class="text-sm font-bold text-white">${e.title}</div>
-          <div class="flex items-center gap-4 text-xs font-mono">
-            <div><span class="text-gray-500">Uplift:</span> <strong class="text-emerald-400">${e.delta}</strong></div>
-            <div><span class="text-gray-500">p-value:</span> <strong class="text-sky-400">${e.p}</strong></div>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function renderAllComponents() {
-      renderFounderQueue();
-      renderFleetMicro();
-      renderGovernorMicro();
-      renderAgentsGrid();
-      renderGovernor();
-      renderMerchantsCRM();
-      renderPipeline();
-      renderLedgerEvents();
-      renderActivityLogs();
-      renderExperiments();
       lucide.createIcons();
     }
 
-    // =================================================================
-    // NATURAL LANGUAGE COMMAND HANDLER (CMD + K)
-    // =================================================================
-    async function handleCommandKey(e) {
-      if (e.key === 'Enter') {
-        const inp = document.getElementById('global-command-input');
-        const q = inp.value.trim();
-        if (!q) return;
+    function selectEvent(id) {
+      selectedEventId = id;
+      renderEvents();
 
-        toast(`Chief of Staff analyzing: "${q}"...`, 'warn');
-        inp.value = '';
+      const ev = GROWTH_EVENTS.find(x => x.id === id);
+      const content = document.getElementById('attribution-content');
+      const badge = document.getElementById('selected-badge');
 
-        try {
-          const res = await fetch(`${API_BASE}/api/command/dispatch`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ query: q })
-          });
-          const data = await res.json();
-          toast(data.responseText, 'success', 6000);
-          if (data.targetTab) {
-            switchTab(data.targetTab === 'overview' ? 'action-engine' : data.targetTab);
-          }
-        } catch (err) {
-          toast(`Command executed: Displaying records matching "${q}".`, 'success');
+      if (!ev) {
+        if (badge) badge.classList.add('hidden');
+        if (content) {
+          content.innerHTML = `
+            <div class="w-14 h-14 rounded-2xl bg-white/[0.02] border border-white/5 flex items-center justify-center text-slate-500 shadow-[0_0_30px_rgba(0,0,0,0.5)]">
+              <i data-lucide="lock" class="w-6 h-6 text-slate-500"></i>
+            </div>
+            <div class="space-y-1 max-w-xs text-center">
+              <h3 class="text-xs font-mono uppercase tracking-wider text-slate-300 font-semibold">No Event Selected</h3>
+              <p class="text-[11px] font-mono text-slate-500 leading-relaxed">
+                Select any real-time growth strike or conversion from the live stream to inspect POS receipt verification and causal attribution proof.
+              </p>
+            </div>
+          `;
+          lucide.createIcons();
         }
+        return;
+      }
+
+      if (badge) {
+        badge.innerText = ev.id;
+        badge.classList.remove('hidden');
+      }
+
+      if (content) {
+        content.className = "space-y-6 text-left";
+        content.innerHTML = `
+          <!-- Top Outcome Badge -->
+          <div class="p-4 rounded-xl bg-emerald-500/[0.04] border border-emerald-500/20 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-mono uppercase tracking-widest text-emerald-400 font-bold">
+                VERIFIED POS ATTESTATION
+              </span>
+              <span class="text-xs font-mono font-bold text-emerald-400">
+                ${ev.evidence.scoreConfidence}% CONFIDENCE
+              </span>
+            </div>
+            <div class="text-xl font-medium text-white font-sans">
+              ${ev.amount ? '$' + ev.amount.toFixed(2) + ' Gross Recovered' : 'Strike Dispatched'}
+            </div>
+          </div>
+
+          <!-- Forensic Receipt Breakdown -->
+          <div class="space-y-3 font-mono text-xs">
+            <div class="text-[10px] uppercase tracking-widest text-slate-500 font-semibold">
+              POS RECEIPT METADATA
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-black/40 border border-white/5 space-y-2.5">
+              <div class="flex justify-between">
+                <span class="text-slate-500">Transaction ID:</span>
+                <span class="text-slate-200">${ev.evidence.receiptId || 'Pending'}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-500">Telemetry Source:</span>
+                <span class="text-cyan-400">${ev.evidence.posSource || 'Direct API'}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-500">Ingestion Latency:</span>
+                <span class="text-slate-200">${ev.evidence.latencyMs}ms</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-500">Cryptographic Proof:</span>
+                <span class="text-slate-400 font-mono text-[10px]">${ev.evidence.hashProof}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Attributed Basket -->
+          ${ev.evidence.attributedItems ? `
+            <div class="space-y-3 font-mono text-xs">
+              <div class="text-[10px] uppercase tracking-widest text-slate-500 font-semibold">
+                VERIFIED BASKET ITEMS
+              </div>
+              <div class="space-y-1.5">
+                ${ev.evidence.attributedItems.map(item => `
+                  <div class="p-2 rounded-lg bg-white/[0.02] border border-white/5 text-[11px] text-slate-300 flex items-center justify-between">
+                    <span>${item}</span>
+                    <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-400 shrink-0 ml-2"></i>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          ` : ''}
+
+          <!-- Performance Fee Split -->
+          ${ev.commission ? `
+            <div class="p-3 rounded-xl bg-white/[0.02] border border-white/5 flex items-center justify-between text-xs font-mono">
+              <span class="text-slate-400">Socio 15% Performance Fee:</span>
+              <span class="text-emerald-400 font-semibold">+$${ev.commission.toFixed(2)}</span>
+            </div>
+          ` : ''}
+
+          <button
+            onclick="selectEvent(null)"
+            class="w-full py-2 bg-white/[0.02] hover:bg-white/[0.05] border border-white/10 rounded-xl text-xs font-mono text-slate-400 hover:text-slate-200 transition-colors"
+          >
+            Clear Selection
+          </button>
+        `;
+        lucide.createIcons();
       }
     }
 
-    function dispatchAgentTerminalCmd() {
-      const inp = document.getElementById('input-agent-cmd');
-      if (!inp || !inp.value.trim()) return;
-      const cmd = inp.value.trim();
-      inp.value = '';
-      ACTIVITY_LOGS.unshift({
-        ts: new Date().toLocaleTimeString(),
-        agent: 'Founder-Action',
-        type: 'COMMAND',
-        desc: `Instruction dispatched to Hermes: "${cmd}"`,
-        col: 'text-[#ccff00]'
+    function setFilter(filter, btn) {
+      currentFilter = filter;
+      document.querySelectorAll('#filter-tabs button').forEach(b => {
+        b.className = 'px-3 py-1 rounded-lg text-[10px] font-mono font-medium tracking-wider uppercase text-slate-400 hover:text-slate-200';
       });
-      renderActivityLogs();
-      toast(`Instruction dispatched to fleet: "${cmd}"`, 'success');
+      if (btn) {
+        btn.className = 'px-3 py-1 rounded-lg text-[10px] font-mono font-medium tracking-wider uppercase bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shadow-[0_0_15px_rgba(56,189,248,0.2)]';
+      }
+      renderEvents();
     }
 
-    function pingAllAgents() {
-      toast('Ping dispatched to 8 Hermes worker bots. Fleet nominal (42ms).', 'success');
+    function handleSearch(val) {
+      searchQuery = val;
+      renderEvents();
     }
 
-    function toast(msg, type = 'success', duration = 3500) {
-      const deck = document.getElementById('toast-deck');
-      if (!deck) return;
-      const t = document.createElement('div');
-      t.className = 'toast-box';
-      t.innerHTML = `
-        <span class="${type === 'warn' ? 'text-amber-400' : 'text-emerald-400'} font-bold">${type === 'warn' ? '⚠️' : '✓'}</span>
-        <span class="text-gray-200">${msg}</span>
-      `;
-      deck.appendChild(t);
-      setTimeout(() => {
-        t.style.opacity = '0';
-        t.style.transition = 'opacity 0.3s ease';
-        setTimeout(() => t.remove(), 300);
-      }, duration);
+    function setNavTab(tab, btn) {
+      document.querySelectorAll('.nav-btn').forEach(b => {
+        b.className = 'nav-btn relative w-10 h-10 rounded-xl flex items-center justify-center text-slate-500 hover:text-slate-200 hover:bg-white/[0.03] border border-transparent transition-all duration-300';
+      });
+      if (btn) {
+        btn.className = 'nav-btn relative w-10 h-10 rounded-xl flex items-center justify-center active-nav-glow transition-all duration-300';
+      }
     }
 
-    // Keyboard Shortcut CMD + K
+    function exportAuditProof() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(GROWTH_EVENTS, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", "socio_pos_attribution_proof.json");
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+    }
+
+    // Keyboard shortcut (⌘K)
     window.addEventListener('keydown', (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
-        const inp = document.getElementById('global-command-input');
-        if (inp) inp.focus();
+        document.getElementById('socio-command-input')?.focus();
       }
     });
 
-    // Boot
+    // Initialize
     window.addEventListener('DOMContentLoaded', () => {
-      renderAllComponents();
-      fetchFleetTelemetry();
-      setInterval(fetchFleetTelemetry, 30000);
+      renderEvents();
+      lucide.createIcons();
     });
   </script>
 </body>
