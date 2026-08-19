@@ -58,6 +58,22 @@ Honesty rules (same doctrine as the site):
   Pitch (see agent-pitch.json HANDOFF BOUNDARY); the ledger makes the handoff
   auditable, no side channels.
 
+## Conversion feedback (data-network-effect seed)
+
+Pitch records per-prospect results via `growth_os_record_event` with
+`type: prospect_outcome` and `metadata: { prospectId, vertical, outcome }`
+where outcome ∈ meeting_booked | no_response | opted_out | partner_signed |
+unsubscribed | followup_needed. The ledger rejects outcomes without a
+prospectId or an unknown label — the signal stays clean.
+
+`prospect_feedback_stats` (Growth OS MCP, read-only) reads those events and
+returns per-vertical conversion stats. The scorer only "learns" when a vertical
+has ≥ 10 observed outcomes (`MIN_FEEDBACK_SAMPLE`); below that it stays on
+priors and says "insufficient outcomes". Learning adjusts the estimate base
+inside the same labeled-estimate framing, clamped to 0.6x–1.4x so a small
+sample can never explode an estimate. Volume without learning is noise; the
+threshold is the honesty guard.
+
 ## Layout
 
 ```

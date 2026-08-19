@@ -25,6 +25,83 @@ export const DEFAULT_LIMIT = 10;
 export const MAX_LIMIT = 12;               // Manifesto cap: 10 great > 100 mediocre
 export const DEFAULT_MIN_SCORE = 40;       // below this = LOW leakage, not pitch-worthy
 
+// --- conversion feedback (data-network-effect seed) --------------------------
+// Pitch records per-prospect outcomes via growth_os_record_event
+// (type: prospect_outcome). The scorer only "learns" when a vertical has enough
+// observed outcomes to be statistically honest — below that it stays on priors
+// and says so. Feedback NEVER becomes a promise: it adjusts the estimate base
+// inside the same labeled-estimate framing.
+
+export const OUTCOME_TYPES = new Set([
+  'meeting_booked', 'no_response', 'opted_out', 'partner_signed', 'unsubscribed', 'followup_needed'
+]);
+export const POSITIVE_OUTCOMES = new Set(['meeting_booked', 'partner_signed']);
+export const MIN_FEEDBACK_SAMPLE = 10;     // outcomes before a vertical is "learned"
+export const PRIOR_CONVERSION_RATE = 0.03; // naive prior: 3% of pitched prospects convert
+export const FEEDBACK_UPLIFT_PER_POINT = 5;
+export const FEEDBACK_BASE_CLAMP = { min: 0.6, max: 1.4 };
+
+export function computeFeedbackStats(outcomes) {
+  if (!Array.isArray(outcomes)) throw new Error('outcomes must be an array');
+  const byVertical = new Map();
+  for (const ev of outcomes) {
+    if (!ev || ev.type !== 'prospect_outcome') continue;
+    const meta = ev.metadata || {};
+    const vertical = meta.vertical || 'unknown';
+    const outcome = meta.outcome;
+    if (!OUTCOME_TYPES.has(outcome)) continue;
+    const bucket = byVertical.get(vertical) || { nOutcomes: 0, nPositive: 0, lastUpdated: null };
+    bucket.nOutcomes += 1;
+    if (POSITIVE_OUTCOMES.has(outcome)) bucket.nPositive += 1;
+    if (ev.occurredAt && (!bucket.lastUpdated || ev.occurredAt > bucket.lastUpdated)) bucket.lastUpdated = ev.occurredAt;
+    byVertical.set(vertical, bucket);
+  }
+
+  const stats = {};
+  for (const [vertical, b] of byVertical) {
+    stats[vertical] = {
+      vertical,
+      nOutcomes: b.nOutcomes,
+      nPositive: b.nPositive,
+      conversionRate: b.nOutcomes > 0 ? round3(b.nPositive / b.nOutcomes) : 0,
+      learned: b.nOutcomes >= MIN_FEEDBACK_SAMPLE,
+      lastUpdated: b.lastUpdated
+    };
+  }
+  return stats;
+}
+
+// Adjusted monthly base for a vertical given its feedback stats.
+// Honest: adjustment only applies when learned; otherwise returns the prior
+// base with a note. Clamped so a tiny sample can never explode the estimate.
+export function adjustedVerticalBase(vertical, stats) {
+  const base = VERTICAL_BASES[vertical]?.monthlyBase || 2200;
+  const s = stats && stats[vertical];
+  if (!s || !s.learned || s.nOutcomes < MIN_FEEDBACK_SAMPLE) {
+    return {
+      monthlyBase: base,
+      adjusted: false,
+      reason: s ? `insufficient outcomes (${s.nOutcomes}/${MIN_FEEDBACK_SAMPLE})` : 'no feedback recorded',
+      estimate: true,
+      model: 'v1'
+    };
+  }
+  const uplift = (s.conversionRate - PRIOR_CONVERSION_RATE) * FEEDBACK_UPLIFT_PER_POINT;
+  const factor = Math.min(FEEDBACK_BASE_CLAMP.max, Math.max(FEEDBACK_BASE_CLAMP.min, 1 + uplift));
+  return {
+    monthlyBase: Math.round(base * factor),
+    adjusted: true,
+    factor: round3(factor),
+    conversionRate: s.conversionRate,
+    nOutcomes: s.nOutcomes,
+    reason: `learned from ${s.nOutcomes} prospect outcomes`,
+    estimate: true,
+    model: 'v1'
+  };
+}
+
+function round3(n) { return Math.round(n * 1000) / 1000; }
+
 // Gap weights (sum = 100 when every signal is known)
 const WEIGHTS = {
   website: 25,
@@ -41,8 +118,12 @@ function signal(weight, score, status) {
   return { weight, score, status }; // score is gap contribution 0..weight
 }
 
-function gapSignal(weight, { verified, unknown, status = 'verified' } = {}) {
-  if (unknown) return signal(weight, 0, 'unknown');
+/**
+ * @param {number} weight
+ * @param {{ verified?: boolean, unk?: boolean, status?: string }} opts
+ */
+function gapSignal(weight, { verified, unk, status = 'verified' } = {}) {
+  if (unk) return signal(weight, 0, 'unknown');
   return signal(weight, verified ? weight : 0, status);
 }
 
@@ -69,7 +150,7 @@ function reviewsSignal(rec) {
 }
 
 function googlePostsSignal(rec) {
-  return gapSignal(WEIGHTS.googlePosts, { verified: rec.googlePosts === false || rec.googlePosts === 'no' || rec.googlePosts === 0, unknown: rec.googlePosts === undefined || rec.googlePosts === null });
+  return gapSignal(WEIGHTS.googlePosts, { verified: rec.googlePosts === false || rec.googlePosts === 'no' || rec.googlePosts === 0, unk: rec.googlePosts === undefined || rec.googlePosts === null });
 }
 
 function instagramSignal(rec) {
@@ -83,7 +164,7 @@ function instagramSignal(rec) {
 }
 
 function whatsappSignal(rec) {
-  return gapSignal(WEIGHTS.whatsapp, { verified: rec.whatsappBusiness === false || rec.whatsappBusiness === 'no', unknown: rec.whatsappBusiness === undefined || rec.whatsappBusiness === null });
+  return gapSignal(WEIGHTS.whatsapp, { verified: rec.whatsappBusiness === false || rec.whatsappBusiness === 'no', unk: rec.whatsappBusiness === undefined || rec.whatsappBusiness === null });
 }
 
 function posSignal(rec) {
