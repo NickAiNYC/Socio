@@ -35,6 +35,17 @@ const REVENUE_TYPES = new Set(['payment_intent.succeeded', 'checkout.session.com
 const REFUND_TYPES = new Set(['charge.refunded']);
 const CUSTOMER_TYPES = new Set(['customer.created', 'customer.updated']);
 
+// Stripe charges these currencies in whole units (no minor-unit division).
+const ZERO_DECIMAL_CURRENCIES = new Set([
+  'bif', 'clp', 'djf', 'gnf', 'jpy', 'kmf', 'krw', 'mga', 'pyg', 'rwf',
+  'ugx', 'vnd', 'vuv', 'xaf', 'xof', 'xpf',
+]);
+
+function minorToMajor(amountMinor, currencyCode) {
+  const zeroDecimal = ZERO_DECIMAL_CURRENCIES.has(String(currencyCode).toLowerCase());
+  return zeroDecimal ? amountMinor : amountMinor / 100;
+}
+
 /**
  * Maps a Stripe event to a durable ledger/customer action.
  *
@@ -46,7 +57,7 @@ const CUSTOMER_TYPES = new Set(['customer.created', 'customer.updated']);
  * @param {{id: string, type: string, data?: {object?: {[key: string]: any}}}} event the raw Stripe webhook event object
  * @returns {{kind: 'revenue'|'refund'|'customer'|'ignored', reason?: string,
  *            ledgerEvent?: {businessId: string, type: string, amount: number, currency: string, source: string, idempotencyKey: string, metadata?: object},
- *            refundRef?: {businessId: string, stripeRefundId: string, paymentIntentId: string|null, amount: number, currency: string, idempotencyKey: string},
+ *            refundRef?: {businessId: string, stripeRefundId: string, stripeChargeId: string, paymentIntentId: string|null, amount: number, currency: string, idempotencyKey: string, cumulative: boolean},
  *            customer?: object}}
  */
 export function mapStripeEvent(event) {
@@ -62,8 +73,16 @@ export function mapStripeEvent(event) {
     if (typeof amountMinor !== 'number' || amountMinor <= 0) {
       return { kind: 'ignored', reason: `revenue event ${event.id} has no positive amount` };
     }
-    const currency = String(object.currency || 'usd').toUpperCase();
-    const amount = amountMinor / 100;
+    if (typeof object.currency !== 'string' || !/^[A-Za-z]{3}$/.test(object.currency)) {
+      return { kind: 'ignored', reason: `revenue event ${event.id} has an invalid currency` };
+    }
+    const currency = object.currency.toUpperCase();
+    const amount = minorToMajor(amountMinor, currency);
+    // Idempotency key is bound to the PAYMENT INTENT, not the event id: Stripe
+    // can deliver both payment_intent.succeeded and checkout.session.completed
+    // for the same payment, and redeliver either. One payment -> one ledger
+    // record regardless of how many event types name it.
+    const paymentIntentId = object.payment_intent || object.id;
     return {
       kind: 'revenue',
       ledgerEvent: {
@@ -72,10 +91,10 @@ export function mapStripeEvent(event) {
         amount,
         currency,
         source: 'stripe',
-        idempotencyKey: `stripe:${event.id}`,
+        idempotencyKey: `stripe:pi:${paymentIntentId}`,
         metadata: {
           stripeEventId: event.id,
-          paymentIntentId: object.payment_intent || object.id,
+          paymentIntentId,
           stripeCustomerId: object.customer || null,
           businessId,
         },
@@ -92,15 +111,25 @@ export function mapStripeEvent(event) {
     if (typeof amountMinor !== 'number' || amountMinor <= 0) {
       return { kind: 'ignored', reason: `refund event ${event.id} has no positive amount` };
     }
+    if (typeof object.currency !== 'string' || !/^[A-Za-z]{3}$/.test(object.currency)) {
+      return { kind: 'ignored', reason: `refund event ${event.id} has an invalid currency` };
+    }
+    const currency = object.currency.toUpperCase();
+    // charge.refunded carries the CHARGE with a CUMULATIVE amount_refunded.
+    // The receiver computes the incremental delta against the ledger and keys
+    // idempotency on (chargeId, cumulative) so redelivery of the same state is
+    // a duplicate while a NEW partial refund (higher cumulative) is recorded.
     return {
       kind: 'refund',
       refundRef: {
         businessId,
-        stripeRefundId: object.id,
+        stripeRefundId: object.id,      // the CHARGE id (charge.refunded payload)
+        stripeChargeId: object.id,
         paymentIntentId: object.payment_intent || null,
-        amount: amountMinor / 100,
-        currency: String(object.currency || 'usd').toUpperCase(),
-        idempotencyKey: `stripe-refund:${object.id}`,
+        amount: minorToMajor(amountMinor, currency), // cumulative refunded so far
+        currency,
+        idempotencyKey: `stripe-refund:${object.id}:${amountMinor}`,
+        cumulative: true,
       },
     };
   }

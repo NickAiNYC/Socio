@@ -16,6 +16,12 @@ export class PostgresRepository {
     this.pool = new Pool({
       connectionString: process.env.DATABASE_URL,
     });
+    // A Postgres restart terminates idle clients; without a listener the
+    // pool's 'error' event crashes the Node process. Log and keep serving —
+    // the next query re-establishes a connection.
+    this.pool.on('error', (err) => {
+      console.error(`[pg] pool error on ${this.tableName}: ${err?.message || err}`);
+    });
   }
 
   async _ensureTable() {

@@ -246,6 +246,19 @@ export function main() {
     }
   }
 
+  // Mandatory auth: with durable persistence (DATABASE_URL), serving merchant
+  // data without per-business bearer tokens is not an option — the API is
+  // publicly reachable behind the pilot tunnel. Token-less operation is only
+  // allowed in explicit in-memory dev mode.
+  if (DATABASE_URL && !tokens) {
+    console.error(
+      'Merchant API fails closed: MERCHANT_API_TOKENS is required when DATABASE_URL is set — ' +
+      'refusing to serve merchant data unauthenticated. Configure {"businessId":"token"} ' +
+      '(generate with: openssl rand -hex 32).'
+    );
+    process.exit(1);
+  }
+
   let twinRepo;
   let ledgerRepo;
   let auditRepo;

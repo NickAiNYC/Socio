@@ -12,8 +12,21 @@ then
 fi
 
 echo "🧠 Wiring up DSH as the MCP server for heavy lifting..."
-# This allows Hermes to delegate coding/scraping tasks to the local DSH environment
-hermes mcp add dsh --command "npx @deepseek-ai/dsh --mcp"
+# NOTE — DSH is NOT wired into the locked-down fleet by default. DSH exposes
+# shell/file/web/code-execution tools; a locked profile (scripts/lockdown-
+# profiles.sh) must have ZERO MCP servers, otherwise DSH becomes an escape
+# hatch around the Governor (see the hostile audit). The heavy lifting happens
+# in the human-operated DSH environment (npx @deepseek-ai/dsh), not inside the
+# agent fleet.
+# To explicitly opt in (NOT recommended for the pilot), set SOCIO_WIRE_DSH_MCP=1
+# and review what the dsh MCP server exposes before enabling it.
+if [ "${SOCIO_WIRE_DSH_MCP:-0}" = "1" ]; then
+  echo "⚠️  SOCIO_WIRE_DSH_MCP=1 — wiring DSH as an MCP server for the fleet."
+  echo "    This bypasses the execution boundary. Make sure you know what you are doing."
+  hermes mcp add dsh --command "npx @deepseek-ai/dsh --mcp"
+else
+  echo "ℹ️  DSH MCP not wired into the fleet (locked profiles must have no MCP servers)."
+fi
 
 echo "👥 Creating the Agent Fleet (Bot Mode) with Manifesto..."
 

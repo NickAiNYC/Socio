@@ -3,10 +3,20 @@ const { execFile } = require('child_process');
 const crypto = require('crypto');
 
 const PORT = process.env.WEBHOOK_PORT || 3001;
+// Loopback by default: the receiver triggers a local Hermes CLI and must not
+// be reachable from the LAN. Override WEBHOOK_HOST only behind a reverse proxy.
+const HOST = process.env.WEBHOOK_HOST || '127.0.0.1';
 const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET || ''; // empty = auth disabled (local only)
 const RATE_LIMIT_PER_MIN = Number(process.env.WEBHOOK_RATE_LIMIT || 10);
 const MAX_BODY_BYTES = Number(process.env.WEBHOOK_MAX_BODY_BYTES || 16384);
 const DISABLE_EXEC = process.env.WEBHOOK_DISABLE_EXEC === 'true'; // test-only guard
+
+// Fail closed: a non-loopback bind without a secret is an open endpoint that
+// triggers a local CLI. Never allow it.
+if (HOST !== '127.0.0.1' && HOST !== 'localhost' && HOST !== '::1' && !WEBHOOK_SECRET) {
+  console.error('leads webhook fails closed: WEBHOOK_HOST is not loopback, so WEBHOOK_SECRET is required.');
+  process.exit(1);
+}
 
 // In-memory token bucket per client IP (single process; enough for lead capture).
 const buckets = new Map(); // ip -> { count, windowStart }
@@ -137,6 +147,6 @@ http.createServer((req, res) => {
     res.writeHead(405);
     res.end('Method Not Allowed');
   }
-}).listen(PORT, () => {
-  console.log(`Lead webhook listening on :${PORT} (secret: ${WEBHOOK_SECRET ? 'configured' : 'DISABLED'})`);
+}).listen({ port: PORT, host: HOST }, () => {
+  console.log(`Lead webhook listening on ${HOST}:${PORT} (secret: ${WEBHOOK_SECRET ? 'configured' : 'DISABLED'})`);
 });

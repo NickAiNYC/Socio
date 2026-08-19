@@ -12,8 +12,11 @@
  *   - signature invalid            -> 401, nothing recorded
  *   - no secret configured         -> 503, refuse to process (fail closed)
  *   - revenue event                -> ledger record; redelivery -> 200 duplicate
- *   - refund event                 -> matched to original payment; original
- *                                    missing -> 200 ignored with reason
+ *   - refund event                 -> matched to original payment; cumulative
+ *                                    charge.refunded state is diffed against the
+ *                                    ledger, so partial refunds accumulate
+ *                                    exactly and redelivery stays idempotent;
+ *                                    original missing -> 200 ignored with reason
  *   - customer event               -> upsert into the economic store
  *   - unhandled / unbusinessed     -> 200 ignored with reason (no retry storm)
  *
@@ -114,28 +117,47 @@ export function createStripeWebhookServer({ revenueLedger, economicStore, secret
         return;
       }
 
+      // charge.refunded is cumulative: record only the incremental delta over
+      // refunds already on the ledger for this payment. Redelivery of the same
+      // cumulative state is a duplicate; a new partial refund (higher
+      // cumulative) records the difference. Partial refunds therefore
+      // accumulate exactly, and the total can never exceed the original.
+      const priorRefunds = (await revenueLedger.getEvents({
+        businessId: refund.businessId,
+        type: 'refund',
+      }))
+        .filter((e) => e.metadata?.paymentIntentId === refund.paymentIntentId)
+        .reduce((sum, e) => sum + e.amount, 0);
+      const delta = Math.round((refund.amount - priorRefunds) * 100) / 100;
+
+      if (delta <= 0) {
+        sendJson(res, 200, { received: true, status: 'duplicate', eventId: event.id, reason: `refund state for charge ${refund.stripeRefundId} already recorded on the ledger (cumulative ${refund.amount})` });
+        return;
+      }
+
       try {
         const recorded = await revenueLedger.record({
           businessId: refund.businessId,
           type: 'refund',
-          amount: refund.amount,
+          amount: delta,
           currency: refund.currency,
           source: 'stripe',
           idempotencyKey: refund.idempotencyKey,
           metadata: {
             originalEventId: original.id,
             stripeRefundId: refund.stripeRefundId,
+            stripeChargeId: refund.stripeChargeId,
             paymentIntentId: refund.paymentIntentId,
             businessId: refund.businessId,
           },
         });
-        sendJson(res, 200, { received: true, status: 'refund_recorded', eventId: event.id, ledgerId: recorded.id });
+        sendJson(res, 200, { received: true, status: 'refund_recorded', eventId: event.id, ledgerId: recorded.id, amount: delta });
       } catch (err) {
         if (err instanceof ValidationError && /duplicate event/.test(err.message)) {
           sendJson(res, 200, { received: true, status: 'duplicate', eventId: event.id, reason: err.message });
           return;
         }
-        if (err instanceof ValidationError && /already refunded/.test(err.message)) {
+        if (err instanceof ValidationError && /exceeds the remaining refundable amount/.test(err.message)) {
           sendJson(res, 200, { received: true, status: 'rejected', eventId: event.id, reason: err.message });
           return;
         }

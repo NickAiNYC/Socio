@@ -66,6 +66,11 @@ STRIPE_WEBHOOK_SECRET=whsec_<from_stripe_dashboard>
 `<LONG_RANDOM_TOKEN>`: `openssl rand -hex 32`. The businessId will be the
 merchant's (e.g. `biz_<name>`).
 
+> **MERCHANT_API_TOKENS is MANDATORY** — the Merchant API now refuses to boot
+> when `DATABASE_URL` is set but no tokens are configured (fail closed). The
+> API is publicly reachable behind the tunnel; unauthenticated serving of
+> merchant data is not an option.
+
 Boot verification (fail-closed checks):
 
 ```bash
@@ -77,6 +82,27 @@ node engines/growth-os/merchant/stripe-webhook-endpoint.mjs
 
 Run both as launchd agents (or tmux for a quick pilot). Request plists here
 if you want them written for you.
+
+## 3b. Hermes fleet security gates (before exposing anything)
+
+The hostile audit found the real escape hatch is NOT the app code: a Hermes
+Gateway `api_server` bound to a non-loopback address with an empty
+`API_SERVER_KEY` is an **unauthenticated remote-code-execution surface**
+(Hermes itself warns: "dispatches terminal-capable agent work"). Gates:
+
+1. Set a strong `API_SERVER_KEY` (e.g. `openssl rand -hex 32`) in
+   `~/.hermes/.env`, or disable the platform entirely:
+   `hermes -p <profile> config set platforms.api_server.enabled false`.
+2. Confirm nothing is listening on a non-loopback Hermes port:
+   `lsof -nP -iTCP -sTCP:LISTEN | grep 8687` must show `127.0.0.1` only
+   (or nothing).
+3. Locked profiles must have **zero MCP servers**:
+   `hermes mcp list` → "No MCP servers configured." (never run
+   `hermes mcp add dsh` for the locked fleet — DSH is a code-execution MCP).
+4. Re-run `bash scripts/lockdown-profiles.sh` after any profile change; its
+   verification section now also reports `api_server.enabled` and the MCP list.
+5. On every boot, watch for Hermes startup security warnings
+   (`security_audit_startup.py`) — treat any as a release blocker.
 
 ## 4. HTTPS — Cloudflare Tunnel
 
@@ -141,7 +167,11 @@ once before switching out of test mode.
 2. Webhooks → find the event → **Resend** → expect `200 duplicate`, revenue
    not double-counted
 3. Issue a **refund** → expect `refund_recorded`, matched to the original
-4. Open `https://pilot.<yourdomain>.com` → enter businessId + token → the
+4. Issue a **second partial refund** → expect `refund_recorded` with the
+   incremental amount (partial refunds accumulate; the total can never exceed
+   the original payment). Resending the same charge.refunded state → `200
+   duplicate`
+5. Open `https://pilot.<yourdomain>.com` → enter businessId + token → the
    evidence report shows: action, revenue, attribution, unknown, audit VALID,
    Stripe connected
 

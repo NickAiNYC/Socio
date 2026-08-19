@@ -910,9 +910,14 @@
       };
 
       try {
+        // X-Webhook-Secret is injected at deploy time via
+        // window.SOCIO_WEBHOOK_SECRET (never hardcode a secret in the page).
+        // When absent, the request is sent without it (local/dev mode).
+        const headers = { 'Content-Type': 'application/json' };
+        if (window.SOCIO_WEBHOOK_SECRET) headers['X-Webhook-Secret'] = window.SOCIO_WEBHOOK_SECRET;
         const response = await fetch('/api/leads', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers,
           body: JSON.stringify(payload)
         });
         

@@ -64,6 +64,11 @@ export class RevenueLedger {
     }
   }
 
+  /**
+   * Refund guard — partial refunds accumulate, the total never exceeds the
+   * original payment, and a replayed refund id is rejected downstream by the
+   * idempotency check (duplicate key), never silently overwritten.
+   */
   async _validateRefund(event) {
     const originalEventId = event.metadata?.originalEventId;
     if (!originalEventId) {
@@ -79,8 +84,14 @@ export class RevenueLedger {
     const existingRefunds = await this.repository.findAll(
       (e) => e.type === 'refund' && e.metadata?.originalEventId === originalEventId
     );
-    if (existingRefunds.length > 0) {
-      throw new ValidationError(`original event ${originalEventId} already refunded`);
+    const totalRefunded = existingRefunds.reduce((sum, e) => sum + e.amount, 0);
+    const remaining = original.amount - totalRefunded;
+    // Small epsilon absorbs float division rounding (minor units / 100).
+    if (event.amount - remaining > 1e-6) {
+      throw new ValidationError(
+        `refund of ${event.amount} exceeds the remaining refundable amount ` +
+        `${Math.max(remaining, 0).toFixed(2)} of original event ${originalEventId}`
+      );
     }
   }
 

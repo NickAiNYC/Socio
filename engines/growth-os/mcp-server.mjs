@@ -29,11 +29,37 @@ if (!DATABASE_URL && !ALLOW_MEMORY) {
 }
 
 // Agent authentication map: { agentId: token }. When configured, every tool
-// call must come from a known agent id. Network transports MUST also validate
-// the bearer token (see below); stdio transport is local-only trust.
+// call must come from a known agent id.
+//
+// TRANSPORT NOTE — this server is STDIo-ONLY by design. main() below always
+// connects a StdioServerTransport; there is no network transport in this
+// build. The GROWTH_OS_AUTH_TOKENS map therefore acts as a local agent-id
+// allowlist (the values are validated to be non-empty and unique so a
+// misconfigured map fails closed, but they are NOT bearer credentials over a
+// socket — stdio trust is the security boundary here). If a network transport
+// is ever added, bearer-token verification of the header value MUST be
+// implemented before listening on any non-loopback interface.
 const AUTH_TOKENS = (() => {
   try {
-    return JSON.parse(process.env.GROWTH_OS_AUTH_TOKENS || 'null');
+    const raw = JSON.parse(process.env.GROWTH_OS_AUTH_TOKENS || 'null');
+    if (raw === null) return null;
+    if (typeof raw !== 'object' || Array.isArray(raw)) {
+      console.error('Growth OS fails closed: GROWTH_OS_AUTH_TOKENS must be a JSON object ({"agentId":"token"}).');
+      process.exit(1);
+    }
+    const seen = new Set();
+    for (const [agentId, token] of Object.entries(raw)) {
+      if (typeof token !== 'string' || token.length === 0) {
+        console.error(`Growth OS fails closed: GROWTH_OS_AUTH_TOKENS entry for "${agentId}" has an empty token.`);
+        process.exit(1);
+      }
+      if (seen.has(token)) {
+        console.error('Growth OS fails closed: GROWTH_OS_AUTH_TOKENS contains duplicate token values — each agent needs a unique token.');
+        process.exit(1);
+      }
+      seen.add(token);
+    }
+    return raw;
   } catch {
     console.error('Growth OS fails closed: GROWTH_OS_AUTH_TOKENS must be valid JSON ({"agentId":"token"}).');
     process.exit(1);
@@ -241,10 +267,12 @@ server.tool(
   }
 );
 
-// Tool: Record Event — financial events must reference an executed governed action.
+// Tool: Record Event — financial events must reference an executed governed action
+// AND the approval's proposal payload must declare the authorized event types
+// (allowedEventTypes) and a numeric maxAmount; amounts beyond the bound are rejected.
 server.tool(
   "growth_os_record_event",
-  "Records an outcome or action into the Revenue Ledger. Financial events (revenue, campaign_cost, refund) REQUIRE actionId of an executed, approved action. Refunds additionally require metadata.originalEventId of the original payment.",
+  "Records an outcome or action into the Revenue Ledger. Financial events (revenue, campaign_cost, refund) REQUIRE actionId of an executed, approved action whose proposal payload declares allowedEventTypes (including this event type) and a numeric maxAmount the amount must not exceed. Refunds additionally require metadata.originalEventId of the original payment.",
   {
     businessId: z.string(),
     agentId: z.string().optional(),
@@ -257,6 +285,9 @@ server.tool(
   },
   async (eventData) => {
     try {
+      if (AUTH_TOKENS && !eventData.agentId) {
+        throw new Error('agentId is required when GROWTH_OS_AUTH_TOKENS is configured');
+      }
       if (eventData.agentId) authenticateAgent(eventData.agentId);
       if (FINANCIAL_EVENT_TYPES.has(eventData.type)) {
         if (!eventData.actionId) {
@@ -268,6 +299,30 @@ server.tool(
         }
         if (approval.proposal.businessId !== eventData.businessId) {
           throw new Error(`actionId ${eventData.actionId} belongs to business ${approval.proposal.businessId}, not ${eventData.businessId}`);
+        }
+        // Economic-truth authorization: a financial event is only recordable
+        // against an approval whose proposal EXPLICITLY declared the event
+        // types and the maximum amount it authorizes. An approval for
+        // "send_email" cannot be reused to book $1,000,000 of revenue.
+        const bound = approval.proposal.payload || {};
+        const allowedTypes = Array.isArray(bound.allowedEventTypes) ? bound.allowedEventTypes : null;
+        const maxAmount = typeof bound.maxAmount === 'number' ? bound.maxAmount : null;
+        if (!allowedTypes || !allowedTypes.includes(eventData.type)) {
+          throw new Error(
+            `${eventData.type} events require the approved action payload to declare allowedEventTypes ` +
+            `(including "${eventData.type}") — proposal ${eventData.actionId} does not authorize this event type`
+          );
+        }
+        if (maxAmount === null) {
+          throw new Error(
+            `${eventData.type} events require the approved action payload to declare a numeric maxAmount — ` +
+            `proposal ${eventData.actionId} does not bound the amount`
+          );
+        }
+        if (Math.abs(eventData.amount) > maxAmount) {
+          throw new Error(
+            `event amount ${eventData.amount} exceeds the approved maxAmount ${maxAmount} of proposal ${eventData.actionId}`
+          );
         }
       }
 

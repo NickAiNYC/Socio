@@ -86,11 +86,16 @@ default `127.0.0.1:8789`, one public route:
   (`verifyStripeSignature`, timing-safe, 5-minute replay window); invalid →
   401, nothing recorded.
 - Fails closed: no `STRIPE_WEBHOOK_SECRET` → 503; boot refuses to start.
-- Idempotent: a redelivered event returns `200 duplicate` and never
-  double-counts (ledger idempotency keys `stripe:<eventId>`).
-- Refunds are matched to the original payment by `paymentIntentId`; a missing
-  original is ignored with a reason, a second refund of the same payment is
-  rejected (no retry storm).
+- Idempotent: revenue events are keyed on the **payment intent**
+  (`stripe:pi:<paymentIntentId>`), so `payment_intent.succeeded` and
+  `checkout.session.completed` for the same payment collapse to one ledger
+  record, and redelivery returns `200 duplicate` — never double-counted.
+- Refunds are matched to the original payment by `paymentIntentId`;
+  `charge.refunded` carries a **cumulative** `amount_refunded`, so the receiver
+  records only the incremental delta over refunds already on the ledger.
+  Partial refunds accumulate exactly; resending the same refund state is
+  `200 duplicate`; the total can never exceed the original payment. A missing
+  original is ignored with a reason.
 - Events without `metadata.businessId` are ignored with a reason — unknown
   stays unknown.
 - Put nginx/caddy in front for HTTPS; point Stripe at
@@ -139,15 +144,16 @@ probability that Socio caused the revenue.
 ## Authorization model
 
 - Per-business bearer tokens: `MERCHANT_API_TOKENS={"businessId":"token"}`.
-  When configured, every merchant request must present `Authorization: Bearer
-  <token>` (401 otherwise).
+  **Required in production**: when `DATABASE_URL` is set, the server refuses
+  to boot without tokens (fail closed). Every merchant request must present
+  `Authorization: Bearer <token>` (401 otherwise).
 - **Business isolation is server-side**: the token binds the caller to one
   businessId; requesting a different business in the path returns 403 *before
   any data is assembled*. All reads are additionally scoped by businessId at
   the repository boundary (`findByBusiness` / `getByBusiness` / SQL
   `data->>'businessId'` filters).
-- When `MERCHANT_API_TOKENS` is unset the API runs in local-only mode (binds
-  127.0.0.1, logs `tokens: DISABLED`) for development.
+- Token-less operation is allowed only in explicit in-memory dev mode
+  (`GROWTH_OS_ALLOW_MEMORY=true`, binds 127.0.0.1, logs `tokens: DISABLED`).
 - CORS: `MERCHANT_API_CORS_ORIGIN` (default `*` — set explicitly before any
   non-local deployment).
 - Fail-closed boot: `DATABASE_URL` is required unless

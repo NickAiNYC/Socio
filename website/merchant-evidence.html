@@ -220,6 +220,13 @@
 
         const $ = (id) => document.getElementById(id);
 
+        // HTML-escape every value that originates from the evidence API
+        // (ledger/audit/approval fields are agent- or webhook-controlled and
+        // MUST NOT be interpolated raw). All render* helpers go through this.
+        const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => (
+            { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+        ));
+
         const state = {
             base: 'http://127.0.0.1:8787',
             businessId: 'socio_default',
@@ -228,19 +235,20 @@
         };
 
         function fmtMoney(amount, currency) {
+            const cur = typeof currency === 'string' && /^[A-Za-z]{3}$/.test(currency) ? currency.toUpperCase() : 'USD';
             try {
-                return new Intl.NumberFormat('en-US', { style: 'currency', currency: currency || 'USD' }).format(amount || 0);
+                return new Intl.NumberFormat('en-US', { style: 'currency', currency: cur }).format(amount || 0);
             } catch {
-                return `$${(amount || 0).toFixed(2)} ${currency || 'USD'}`;
+                return `$${(amount || 0).toFixed(2)} ${esc(cur)}`;
             }
         }
 
         function fmtDate(iso) {
             if (!iso) return '—';
             try {
-                return new Date(iso).toISOString().slice(0, 19).replace('T', ' ');
+                return esc(new Date(iso).toISOString().slice(0, 19).replace('T', ' '));
             } catch {
-                return iso;
+                return esc(iso);
             }
         }
 
@@ -249,23 +257,22 @@
             const cls = s === 'EXECUTED' || s === 'APPROVED' ? 'badge-green'
                 : s === 'BLOCKED' ? 'badge-red'
                 : s === 'PENDING' ? 'badge-amber'
-                : s === 'EXECUTED' ? 'badge-green'
                 : 'badge-gray';
-            return `<span class="badge ${cls}">${s || '—'}</span>`;
+            return `<span class="badge ${cls}">${esc(s) || '—'}</span>`;
         }
 
         function levelBadge(level) {
             const cls = level === 'attribution' ? 'badge-green'
                 : level === 'correlation' ? 'badge-amber'
                 : 'badge-gray';
-            return `<span class="badge ${cls}">${level || '—'}</span>`;
+            return `<span class="badge ${cls}">${esc(level || '—')}</span>`;
         }
 
         // Human label for the evidence level — never a naked probability.
         function attributionLabel(level) {
             if (level === 'attribution') return 'Experimental attribution';
             if (level === 'correlation') return 'Correlational evidence';
-            return level || 'recorded';
+            return esc(level || 'recorded');
         }
 
         // Statistical result straight from the recorded correlation hop
@@ -274,7 +281,7 @@
             const hop = (rec.evidence || []).find((e) => e.type === 'correlation');
             if (!hop || hop.verdict === undefined) return null;
             const parts = [];
-            if (hop.verdict) parts.push(hop.verdict.replace(/_/g, ' '));
+            if (hop.verdict) parts.push(esc(String(hop.verdict).replace(/_/g, ' ')));
             if (typeof hop.delta === 'number') parts.push(`delta ${hop.delta >= 0 ? '+' : ''}${hop.delta.toFixed(4)}`);
             if (typeof hop.pApprox === 'number') parts.push(`approx p ${hop.pApprox.toFixed(4)}`);
             if (typeof hop.nTreatment === 'number' && typeof hop.nControl === 'number') parts.push(`n=${hop.nTreatment}/${hop.nControl}`);
@@ -341,10 +348,10 @@
                         ${actions.map((a) => `
                             <tr class="border-b border-white/5 last:border-0">
                                 <td class="py-2 pr-4 text-white/50">${fmtDate(a.timestamp)}</td>
-                                <td class="py-2 pr-4 text-white/80">${a.agentId}</td>
-                                <td class="py-2 pr-4 text-white/90">${a.actionType}</td>
+                                <td class="py-2 pr-4 text-white/80">${esc(a.agentId)}</td>
+                                <td class="py-2 pr-4 text-white/90">${esc(a.actionType)}</td>
                                 <td class="py-2 pr-4">${statusBadge(a.status)}</td>
-                                <td class="py-2 text-white/40">${a.proposalId}</td>
+                                <td class="py-2 text-white/40">${esc(a.proposalId)}</td>
                             </tr>
                         `).join('')}
                     </tbody>
@@ -393,8 +400,8 @@
                                     <td class="py-2 pr-4 text-white/50">${fmtDate(e.occurredAt)}</td>
                                     <td class="py-2 pr-4">${statusBadge(e.type)}</td>
                                     <td class="py-2 pr-4 text-right text-white/90">${fmtMoney(e.amount, e.currency)}</td>
-                                    <td class="py-2 pr-4 text-white/60">${e.source}</td>
-                                    <td class="py-2 text-white/40">${e.id}</td>
+                                    <td class="py-2 pr-4 text-white/60">${esc(e.source)}</td>
+                                    <td class="py-2 text-white/40">${esc(e.id)}</td>
                                 </tr>
                             `).join('')}
                         </tbody>
@@ -402,7 +409,7 @@
                 `;
             }
             if (m.mixedCurrencies) {
-                body += `<div class="text-[10px] text-amber-300/70 mt-3">Mixed currencies present — totals shown for ${m.currencies.join(', ')} primary; see byCurrency for the full breakdown.</div>`;
+                body += `<div class="text-[10px] text-amber-300/70 mt-3">Mixed currencies present — totals shown for ${m.currencies.map(esc).join(', ')} primary; see byCurrency for the full breakdown.</div>`;
             }
             $('revenue-body').innerHTML = body;
         }
@@ -428,12 +435,12 @@
                             <div class="flex items-center gap-2 mb-1">
                                 ${levelBadge(rec.level)}
                                 <span class="text-[10px] text-white/40 font-mono">${attributionLabel(rec.level)}</span>
-                                <span class="text-[10px] text-white/40 font-mono ml-auto">${rec.variant ? 'variant: ' + rec.variant : ''}</span>
+                                <span class="text-[10px] text-white/40 font-mono ml-auto">${rec.variant ? 'variant: ' + esc(rec.variant) : ''}</span>
                             </div>
-                            <div class="text-xs text-white/80 leading-relaxed">${rec.claim}</div>
+                            <div class="text-xs text-white/80 leading-relaxed">${esc(rec.claim)}</div>
                             ${stats ? `<div class="text-[10px] text-white/45 font-mono mt-1">Statistical result: ${stats}</div>` : ''}
                             ${support ? `<div class="text-[10px] text-emerald-300/60 mt-1">${support}</div>` : ''}
-                            <div class="text-[10px] text-white/30 font-mono mt-1">evidence: ${rec.evidence.map((e) => e.type).join(' → ')}</div>
+                            <div class="text-[10px] text-white/30 font-mono mt-1">evidence: ${rec.evidence.map((e) => esc(e.type)).join(' → ')}</div>
                         </div>
                     `;
                 }).join('');
@@ -446,7 +453,7 @@
                             ${levelBadge(rec.level)}
                             <span class="text-[10px] text-white/40 font-mono">no confidence</span>
                         </div>
-                        <div class="text-xs text-white/80 leading-relaxed">${rec.claim}</div>
+                        <div class="text-xs text-white/80 leading-relaxed">${esc(rec.claim)}</div>
                     </div>
                 `).join('')
             ) + `
@@ -463,7 +470,7 @@
             const next = r.questions.whatShouldSocioDoNext;
             $('learnings').innerHTML = `
                 <div class="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/40 mb-2">Learnings</div>
-                <div class="text-xs text-white/80 font-mono">${next.learnings.summary}</div>
+                <div class="text-xs text-white/80 font-mono">${esc(next.learnings.summary)}</div>
                 <div class="flex gap-4 mt-3 text-[11px] text-white/50 font-mono">
                     <span>attribution-level: <span class="text-emerald-400">${next.learnings.attributedCount}</span></span>
                     <span>correlation-level: <span class="text-amber-400">${next.learnings.correlationalCount}</span></span>
@@ -477,10 +484,10 @@
                 : experiments.map((e) => `
                     <div class="glass-panel p-5">
                         <div class="flex items-center gap-2 mb-2">${statusBadge(e.status)}${e.decision ? `<span class="badge badge-blue">${e.decision}</span>` : ''}</div>
-                        <div class="text-sm font-semibold text-white/90 leading-snug mb-1">${e.hypothesis}</div>
-                        <div class="text-[11px] text-white/40 mb-2">objective: ${e.objective} · metric: ${e.metric}</div>
-                        <div class="text-[10px] text-white/35 font-mono">${e.observations} observation(s) · ${(e.variants || []).join(' / ')}</div>
-                        ${e.rationale ? `<div class="text-[10px] text-white/35 mt-2">${e.rationale}</div>` : ''}
+                        <div class="text-sm font-semibold text-white/90 leading-snug mb-1">${esc(e.hypothesis)}</div>
+                        <div class="text-[11px] text-white/40 mb-2">objective: ${esc(e.objective)} · metric: ${esc(e.metric)}</div>
+                        <div class="text-[10px] text-white/35 font-mono">${esc(e.observations)} observation(s) · ${(e.variants || []).map(esc).join(' / ')}</div>
+                        ${e.rationale ? `<div class="text-[10px] text-white/35 mt-2">${esc(e.rationale)}</div>` : ''}
                     </div>
                 `).join('');
 
@@ -493,9 +500,9 @@
                         : `<div class="space-y-2 font-mono text-xs">
                             ${pending.map((p) => `
                                 <div class="flex flex-wrap items-center gap-2 border border-white/5 rounded-lg px-3 py-2">
-                                    <span class="badge badge-amber">${p.risk}</span>
-                                    <span class="text-white/80">${p.type}</span>
-                                    <span class="text-white/40">${p.agentId}</span>
+                                    <span class="badge badge-amber">${esc(p.risk)}</span>
+                                    <span class="text-white/80">${esc(p.type)}</span>
+                                    <span class="text-white/40">${esc(p.agentId)}</span>
                                     <span class="flex-1"></span>
                                     <span class="text-white/30">expires ${fmtDate(p.expiresAt)}</span>
                                 </div>
@@ -516,11 +523,11 @@
             const stripeBadge = s.status === 'connected' ? 'badge-green'
                 : s.status === 'configured' ? 'badge-amber'
                 : 'badge-red';
-            $('stripe-pill').innerHTML = `Stripe — <span class="badge ${stripeBadge} ml-1">${s.status}</span>`;
+            $('stripe-pill').innerHTML = `Stripe — <span class="badge ${stripeBadge} ml-1">${esc(s.status)}</span>`;
             $('system-body').innerHTML = `
-                <div class="flex items-center gap-2"><span class="text-white/40 w-40">Stripe state</span>${statusBadge(s.status)}<span class="text-[11px] text-white/50">${s.reason}</span></div>
-                <div class="flex items-center gap-2"><span class="text-white/40 w-40">Events received</span><span class="font-mono text-white/80">${s.eventsReceived}</span></div>
-                <div class="flex items-center gap-2"><span class="text-white/40 w-40">Persistence</span><span class="font-mono text-white/80">${sys.persistence}</span></div>
+                <div class="flex items-center gap-2"><span class="text-white/40 w-40">Stripe state</span>${statusBadge(s.status)}<span class="text-[11px] text-white/50">${esc(s.reason)}</span></div>
+                <div class="flex items-center gap-2"><span class="text-white/40 w-40">Events received</span><span class="font-mono text-white/80">${esc(s.eventsReceived)}</span></div>
+                <div class="flex items-center gap-2"><span class="text-white/40 w-40">Persistence</span><span class="font-mono text-white/80">${esc(sys.persistence)}</span></div>
                 <div class="flex items-center gap-2"><span class="text-white/40 w-40">System health</span>${statusBadge(sys.health)}</div>
             `;
         }
@@ -551,10 +558,10 @@
                                 ${data.entries.map((a) => `
                                     <tr class="border-b border-white/5 last:border-0">
                                         <td class="py-2 pr-4 text-white/50">${fmtDate(a.timestamp)}</td>
-                                        <td class="py-2 pr-4 text-white/80">${a.agentId}</td>
-                                        <td class="py-2 pr-4 text-white/90">${a.actionType}</td>
+                                        <td class="py-2 pr-4 text-white/80">${esc(a.agentId)}</td>
+                                        <td class="py-2 pr-4 text-white/90">${esc(a.actionType)}</td>
                                         <td class="py-2 pr-4">${statusBadge(a.status)}</td>
-                                        <td class="py-2 text-white/40">${a.id}</td>
+                                        <td class="py-2 text-white/40">${esc(a.id)}</td>
                                     </tr>
                                 `).join('')}
                             </tbody>
@@ -564,7 +571,7 @@
                 $('verify-result').classList.remove('hidden');
                 $('verify-result').innerHTML = `chain verification: <span class="${data.verify.valid ? 'text-emerald-400' : 'text-red-400'}">${data.verify.valid ? 'VALID' : 'BROKEN'}</span> <span class="text-white/30">(${data.verify.brokenLinks.length} broken link(s), checked ${fmtDate(data.verify.checkedAt)})</span>`;
             } catch (err) {
-                body.innerHTML = `<div class="text-red-400 text-xs font-mono">${err.message}</div>`;
+                body.innerHTML = `<div class="text-red-400 text-xs font-mono">${esc(err.message)}</div>`;
             }
         }
 
@@ -577,9 +584,9 @@
                 const v = data.verify;
                 res.innerHTML = v.valid
                     ? `<span class="text-emerald-400">CHAIN VALID</span> — every entry hash matches its content and the prevHash links are intact <span class="text-white/30">(checked ${fmtDate(v.checkedAt)})</span>`
-                    : `<span class="text-red-400">CHAIN BROKEN</span> — ${v.brokenLinks.map((b) => `${b.id} (${b.reason})`).join(', ')} <span class="text-white/30">(checked ${fmtDate(v.checkedAt)})</span>`;
+                    : `<span class="text-red-400">CHAIN BROKEN</span> — ${v.brokenLinks.map((b) => `${esc(b.id)} (${esc(b.reason)})`).join(', ')} <span class="text-white/30">(checked ${fmtDate(v.checkedAt)})</span>`;
             } catch (err) {
-                res.innerHTML = `<span class="text-red-400">${err.message}</span>`;
+                res.innerHTML = `<span class="text-red-400">${esc(err.message)}</span>`;
             }
         }
 
@@ -612,7 +619,7 @@
                         <i data-lucide="alert-triangle" class="w-4 h-4 mt-0.5 shrink-0"></i>
                         <div>
                             <div class="font-bold mb-1">Could not load evidence</div>
-                            <div class="font-mono text-xs text-red-400">${err.message}</div>
+                            <div class="font-mono text-xs text-red-400">${esc(err.message)}</div>
                             <div class="text-xs text-white/50 mt-2">Start the API: <span class="font-mono">GROWTH_OS_ALLOW_MEMORY=true MERCHANT_API_TOKENS='{"socio_default":"dev-token"}' node engines/growth-os/merchant/merchant-api.mjs</span></div>
                         </div>
                     </div>`;
