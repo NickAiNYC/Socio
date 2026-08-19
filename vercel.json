@@ -40,6 +40,14 @@
       "dest": "website/floristas.html"
     },
     {
+      "src": "/restaurantes/?",
+      "dest": "website/restaurantes.html"
+    },
+    {
+      "src": "/clinicas/?",
+      "dest": "website/clinicas.html"
+    },
+    {
       "src": "/escaneo-de-fugas-scorecard/?",
       "dest": "website/escaneo-de-fugas-scorecard.html"
     },

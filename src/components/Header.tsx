@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ArrowUpRight, ChevronDown, HardHat, Building2, Store, Flower2 } from 'lucide-react';
+import { Menu, X, ArrowUpRight, ChevronDown, HardHat, Building2, Store, Flower2, UtensilsCrossed, Stethoscope } from 'lucide-react';
 
 interface NavItem {
   name: string;
@@ -26,15 +26,29 @@ const INDUSTRY_ITEMS = [
     badge: 'ES-FIRST',
   },
   {
-    name: 'Florists & Botanical (Español/EN)',
+    name: 'Florists & Botanical',
     desc: 'NYC Florists, Events & Corporate Subscriptions',
     href: '/floristas',
     icon: Flower2,
     badge: 'NEW',
   },
   {
+    name: 'Restaurants & Catering',
+    desc: 'NYC Dining, Corporate Catering & Buyouts',
+    href: '/restaurantes',
+    icon: UtensilsCrossed,
+    badge: 'NEW',
+  },
+  {
+    name: 'Clinics & MedSpas',
+    desc: 'Aesthetic, Dental & No-Show Reduction',
+    href: '/clinicas',
+    icon: Stethoscope,
+    badge: 'NEW',
+  },
+  {
     name: 'Retail & POS Merchants',
-    desc: 'Local NYC Storefronts & Restaurants',
+    desc: 'Local NYC Storefronts & Bodegas',
     href: '/#how-it-works',
     icon: Store,
   },
