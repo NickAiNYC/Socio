@@ -51,8 +51,12 @@ Honesty rules (same doctrine as the site):
 - Manifesto: "10 great partners beat 100 mediocre ones" → hard cap `MAX_LIMIT = 12`,
   default `limit 10`, default `minScore 40`. Only records above threshold pass to Pitch.
 - Scoring is read-only: `prospect_score_batch` (Growth OS MCP) requires no approval.
-- Ledger instrumentation: after a scan, Prospect records a `lead_created`
-  (non-financial) event via `growth_os_record_event` so the loop is auditable.
+- Ledger instrumentation: `prospect_commit_packet` (Growth OS MCP) validates the
+  packet and records one `lead_created` event per selected prospect — score,
+  gaps, coverage and recoverable-revenue estimate as metadata. Non-financial,
+  no Governor approval. The packet FILE stays the single handoff artifact to
+  Pitch (see agent-pitch.json HANDOFF BOUNDARY); the ledger makes the handoff
+  auditable, no side channels.
 
 ## Layout
 
