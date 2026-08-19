@@ -8,7 +8,7 @@
   <script src="https://unpkg.com/lucide@latest"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Orbitron / Syne style geometric sci-fi headings + Inter crisp typography -->
+  <!-- Orbitron display + Inter crisp typography + JetBrains Mono -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
@@ -25,7 +25,7 @@
       --glow-blue: rgba(56, 130, 246, 0.16);
       --border-glow: rgba(70, 130, 210, 0.28);
       --accent-cyan: #38bdf8;
-      --accent-muted-cyan: #60a5fa;
+      --accent-blue: #60a5fa;
       --accent-emerald: #10b981;
       --text-muted: #8b9bb4;
     }
@@ -108,7 +108,7 @@
       box-shadow: 0 0 20px rgba(59, 130, 246, 0.25);
     }
 
-    /* Tab Button (Scrutexity Segmented Pill) */
+    /* Tab Button */
     .tab-pill {
       font-family: var(--font-mono);
       font-size: 11px;
@@ -128,6 +128,62 @@
       background: rgba(30, 58, 138, 0.6);
       border: 1px solid rgba(96, 165, 250, 0.4);
       box-shadow: 0 0 15px rgba(56, 140, 246, 0.2);
+    }
+
+    /* =============================================================
+       INTERACTIVE NODE CANVAS STYLES (Draggable in Scrutexity Theme)
+       ============================================================= */
+    #graph-canvas-container {
+      position: relative;
+      width: 100%;
+      height: 640px;
+      border-radius: 20px;
+      background-color: #090C13;
+      background-image: radial-gradient(rgba(70, 130, 210, 0.18) 1px, transparent 1px);
+      background-size: 26px 26px;
+      border: 1px solid rgba(80, 130, 200, 0.25);
+      overflow: hidden;
+      cursor: grab;
+      box-shadow: inset 0 0 40px rgba(0,0,0,0.8);
+    }
+    #graph-canvas-container:active { cursor: grabbing; }
+
+    .graph-node {
+      position: absolute;
+      background: rgba(15, 20, 32, 0.94);
+      border: 1px solid rgba(96, 165, 250, 0.28);
+      border-radius: 16px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.8), 0 0 35px -10px rgba(56, 130, 246, 0.18);
+      cursor: move;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      z-index: 10;
+    }
+    .graph-node:hover {
+      border-color: rgba(96, 165, 250, 0.6);
+      box-shadow: 0 15px 40px -5px rgba(0, 0, 0, 0.9), 0 0 45px -5px rgba(56, 130, 246, 0.3);
+    }
+    .graph-node.active-node {
+      border-color: #60a5fa !important;
+      box-shadow: 0 0 40px rgba(96, 165, 250, 0.4) !important;
+    }
+
+    .wire-glow {
+      stroke: rgba(56, 130, 246, 0.3);
+      stroke-width: 2.5;
+      fill: none;
+      filter: drop-shadow(0 0 6px rgba(56, 130, 246, 0.5));
+    }
+    .wire-pulse {
+      stroke: #60a5fa;
+      stroke-width: 2.5;
+      stroke-dasharray: 6 14;
+      animation: wirePulseDash 1.8s linear infinite;
+      fill: none;
+      filter: drop-shadow(0 0 8px #60a5fa);
+    }
+    @keyframes wirePulseDash {
+      to { stroke-dashoffset: -20; }
     }
 
     /* Custom Scrollbar */
@@ -151,18 +207,16 @@
 
       <!-- Navigation Icons Rail -->
       <nav class="space-y-2 flex flex-col items-center">
-        <div class="side-icon-btn active" onclick="switchNav('home', this)" title="Command Overview"><i data-lucide="home" class="w-5 h-5"></i></div>
-        <div class="side-icon-btn" onclick="switchNav('agents', this)" title="Autonomous Fleet"><i data-lucide="users" class="w-5 h-5"></i></div>
+        <div class="side-icon-btn" onclick="switchNav('governance', this)" title="HIPAA & Governance (Overview)"><i data-lucide="shield-check" class="w-5 h-5"></i></div>
+        <div class="side-icon-btn active" onclick="switchNav('agents', this)" title="Autonomous Fleet & Node Graph"><i data-lucide="users" class="w-5 h-5"></i></div>
         <div class="side-icon-btn" onclick="switchNav('merchants', this)" title="Merchants CRM"><i data-lucide="clipboard-list" class="w-5 h-5"></i></div>
         <div class="side-icon-btn" onclick="switchNav('telemetry', this)" title="Live Telemetry"><i data-lucide="radio" class="w-5 h-5"></i></div>
-        <div class="side-icon-btn" onclick="switchNav('governor', this)" title="HIPAA & Governance"><i data-lucide="shield-check" class="w-5 h-5"></i></div>
         <div class="side-icon-btn" onclick="switchNav('pipeline', this)" title="Growth Pipeline"><i data-lucide="layers" class="w-5 h-5"></i></div>
         <div class="side-icon-btn" onclick="switchNav('ledger', this)" title="Revenue Ledger"><i data-lucide="file-text" class="w-5 h-5"></i></div>
-        <div class="side-icon-btn" onclick="switchNav('growth', this)" title="Growth Engine"><i data-lucide="rocket" class="w-5 h-5"></i></div>
       </nav>
     </div>
 
-    <!-- Bottom Profile / System Shield -->
+    <!-- Bottom Profile / Security -->
     <div class="space-y-3 flex flex-col items-center">
       <div class="w-9 h-9 rounded-xl bg-blue-500/10 border border-blue-400/20 flex items-center justify-center text-blue-400" title="Security Active">
         <i data-lucide="shield" class="w-4 h-4"></i>
@@ -226,174 +280,186 @@
     <!-- MAIN SCROLLABLE CONTENT BODY -->
     <main class="flex-1 overflow-y-auto p-8 space-y-7" id="main-content-theater">
 
-      <!-- SECTION TITLE & ACTION BUTTON -->
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <div class="text-[11px] font-mono uppercase tracking-widest text-slate-400 font-bold mb-1">
-            AUTOMATED REVENUE ATTESTATION & GOVERNANCE
-          </div>
-          <h1 class="text-2xl sm:text-3xl font-display font-black text-white tracking-tight">
-            Governance & Execution OS
-          </h1>
-        </div>
-
-        <button onclick="runComplianceSweep()" class="px-5 py-2.5 rounded-xl bg-[#131E33] hover:bg-[#1A2844] border border-blue-400/40 text-blue-200 font-mono text-xs font-bold tracking-wide shadow-[0_0_25px_rgba(59,130,246,0.2)] flex items-center gap-2 transition-all hover:scale-[1.02]">
-          <i data-lucide="shield-check" class="w-4 h-4 text-blue-400"></i>
-          <span>RUN COMPLIANCE SWEEP</span>
-        </button>
-      </div>
-
-      <!-- 4 METRIC CAPSULES (Scrutexity Soft Radial Glow) -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <!-- ============================================================= -->
+      <!-- VIEW A: AGENT FLEET & INTERACTIVE NODE GRAPH (ACTIVE DEFAULT) -->
+      <!-- ============================================================= -->
+      <div id="view-agents-page" class="view-panel space-y-7">
         
-        <!-- Metric 1 -->
-        <div class="metric-capsule p-6 flex flex-col justify-between h-36">
-          <div class="flex items-center justify-between">
-            <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400">
-              GOVERNANCE SCORE
-            </span>
-            <span class="pill pill-safe text-[10px]">SAFE</span>
+        <!-- SECTION TITLE & ACTION BUTTONS -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div class="text-[11px] font-mono uppercase tracking-widest text-slate-400 font-bold mb-1">
+              HERMES MULTI-AGENT ORCHESTRATION LAYER
+            </div>
+            <h1 class="text-2xl sm:text-3xl font-display font-black text-white tracking-tight">
+              Agent Fleet & Node Graph
+            </h1>
           </div>
-          <div class="text-3xl font-display font-black text-white tracking-tight">
-            98.6%
-          </div>
-          <div class="text-[11px] font-mono text-slate-500">
-            Policy evaluation: 0 AirLock holds
+
+          <div class="flex items-center gap-2.5">
+            <button onclick="recenterGraph()" class="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 font-mono text-xs font-bold flex items-center gap-1.5">
+              <i data-lucide="scan" class="w-3.5 h-3.5"></i>
+              <span>Recenter Graph</span>
+            </button>
+            <button onclick="triggerNodeAgent('prospect')" class="px-5 py-2 rounded-xl bg-[#131E33] hover:bg-[#1A2844] border border-blue-400/40 text-blue-200 font-mono text-xs font-bold shadow-[0_0_25px_rgba(59,130,246,0.2)] flex items-center gap-2 transition-all hover:scale-[1.02]">
+              <i data-lucide="play" class="w-3.5 h-3.5 text-blue-400"></i>
+              <span>Trigger Socio-Prospect</span>
+            </button>
           </div>
         </div>
 
-        <!-- Metric 2 -->
-        <div class="metric-capsule p-6 flex flex-col justify-between h-36">
-          <div class="flex items-center justify-between">
-            <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400">
-              ACTIVE AGENT INTERCEPTS
-            </span>
-            <span class="pill pill-cyan text-[10px]">SECURE</span>
+        <!-- 4 AGENT METRIC CAPSULES -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div class="metric-capsule p-6 flex flex-col justify-between h-36">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400">FLEET HEALTH</span>
+              <span class="pill pill-safe text-[10px]">8/8 ONLINE</span>
+            </div>
+            <div class="text-3xl font-display font-black text-white tracking-tight">100%</div>
+            <div class="text-[11px] font-mono text-slate-500">All Hermes workers nominal</div>
           </div>
-          <div class="text-3xl font-display font-black text-white tracking-tight">
-            0
+
+          <div class="metric-capsule p-6 flex flex-col justify-between h-36">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400">INTER-AGENT WIRES</span>
+              <span class="pill pill-cyan text-[10px]">ACTIVE</span>
+            </div>
+            <div class="text-3xl font-display font-black text-white tracking-tight">6 CHANNELS</div>
+            <div class="text-[11px] font-mono text-slate-500">Zero packet drops across CAS</div>
           </div>
-          <div class="text-[11px] font-mono text-slate-500">
-            Zero unauthorized write calls
+
+          <div class="metric-capsule p-6 flex flex-col justify-between h-36">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400">GOVERNOR GATES</span>
+              <span class="pill pill-amber text-[10px]">3 PENDING</span>
+            </div>
+            <div class="text-3xl font-display font-black text-amber-400 tracking-tight">PROP-0042</div>
+            <div class="text-[11px] font-mono text-slate-500">Ad spend review required</div>
+          </div>
+
+          <div class="metric-capsule p-6 flex flex-col justify-between h-36">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400">PIPELINE UNLOCKED</span>
+              <span class="pill pill-safe text-[10px]">RESOLVED</span>
+            </div>
+            <div class="text-3xl font-display font-black text-emerald-400 tracking-tight">$42,180</div>
+            <div class="text-[11px] font-mono text-slate-500">10 active NYC merchant deals</div>
           </div>
         </div>
 
-        <!-- Metric 3 -->
-        <div class="metric-capsule p-6 flex flex-col justify-between h-36">
-          <div class="flex items-center justify-between">
-            <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400">
-              PENDING CLAIMS CHECKS
+        <!-- THE INTERACTIVE NODE-GRAPH CANVAS (Draggable in Scrutexity Style) -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between px-1">
+            <div class="flex items-center gap-2 text-xs font-mono text-slate-400">
+              <i data-lucide="move" class="w-3.5 h-3.5 text-blue-400"></i>
+              <span>Click & drag any node to reposition • Drag canvas to pan</span>
+            </div>
+            <span class="text-[10px] font-mono text-slate-500 uppercase tracking-widest">
+              CAUSAL AGENT TOPOLOGY
             </span>
-            <span class="pill pill-muted text-[10px]">CLEAR</span>
           </div>
-          <div class="text-3xl font-display font-black text-white tracking-tight">
-            0
-          </div>
-          <div class="text-[11px] font-mono text-slate-500">
-            Immutable CAS receipts synced
-          </div>
-        </div>
 
-        <!-- Metric 4 -->
-        <div class="metric-capsule p-6 flex flex-col justify-between h-36">
-          <div class="flex items-center justify-between">
-            <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400">
-              GOVERNED RECOVERY VALUE
-            </span>
-            <span class="pill pill-safe text-[10px]">RESOLVED</span>
-          </div>
-          <div class="text-3xl font-display font-black text-emerald-400 tracking-tight">
-            $22,890
-          </div>
-          <div class="text-[11px] font-mono text-slate-500">
-            100% matched against POS telemetry
+          <div id="graph-canvas-container" onmousedown="startPan(event)">
+            <svg id="svg-wires-layer" class="absolute inset-0 w-full h-full pointer-events-none" style="z-index: 5;"></svg>
+            <div id="graph-world" class="absolute inset-0 origin-top-left"></div>
           </div>
         </div>
 
       </div>
 
-      <!-- FILTER TABS & SEARCH BAR -->
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-1">
-        <div class="flex items-center gap-2 p-1 rounded-xl bg-[#0E131E] border border-white/5">
-          <button class="tab-pill active" onclick="switchFilter('live', this)">LIVE AUDIT LOG</button>
-          <button class="tab-pill" onclick="switchFilter('blocks', this)">SECURITY BLOCKS</button>
-          <button class="tab-pill" onclick="switchFilter('risks', this)">CLAIM RISKS</button>
-          <button class="tab-pill" onclick="switchFilter('recovered', this)">RECOVERED</button>
-        </div>
-
-        <div class="relative w-72">
-          <i data-lucide="search" class="w-3.5 h-3.5 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
-          <input
-            type="text"
-            id="filter-input"
-            placeholder="Filter logs by keyword..."
-            class="w-full bg-[#0E131E] border border-white/10 rounded-xl pl-9 pr-3 py-2 text-xs font-mono text-white placeholder-slate-500 outline-none focus:border-blue-400/50"
-            oninput="renderLogs(this.value)"
-          >
-        </div>
-      </div>
-
-      <!-- TWO-COLUMN WORKSPACE (TELEMETRY STREAM + CONTAINMENT CENTER) -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <!-- ============================================================= -->
+      <!-- VIEW B: GOVERNANCE & TELEMETRY LOGS (SWITCHABLE TAB)         -->
+      <!-- ============================================================= -->
+      <div id="view-governance-page" class="view-panel space-y-7 hidden">
         
-        <!-- LEFT: AUDITED TELEMETRY LOG STREAM (7 Cols) -->
-        <div class="lg:col-span-7 scrutex-card p-6 min-h-[460px] flex flex-col justify-between space-y-4">
+        <!-- SECTION TITLE & ACTION BUTTON -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <div class="flex items-center justify-between border-b border-white/5 pb-3 mb-4">
-              <div class="flex items-center gap-2">
-                <i data-lucide="shield-check" class="w-4 h-4 text-blue-400"></i>
-                <span class="text-xs font-mono uppercase tracking-wider font-bold text-white" id="log-count-header">
-                  AUDITED TELEMETRY LOG STREAM (4 ENTRIES)
-                </span>
-              </div>
-              <span class="text-[10px] font-mono text-slate-500 uppercase tracking-widest">
-                REAL-TIME COMPLIANCE DATABASE
-              </span>
+            <div class="text-[11px] font-mono uppercase tracking-widest text-slate-400 font-bold mb-1">
+              AUTOMATED REVENUE ATTESTATION & GOVERNANCE
             </div>
-
-            <!-- Log Rows List -->
-            <div class="space-y-3" id="telemetry-log-container">
-              <!-- Rendered by JS -->
-            </div>
+            <h1 class="text-2xl sm:text-3xl font-display font-black text-white tracking-tight">
+              HIPAA & Governance OS
+            </h1>
           </div>
 
-          <div class="p-3 rounded-xl bg-[#0A0D14]/80 border border-white/5 flex items-center justify-between text-xs font-mono text-slate-400">
-            <span>System state: <strong class="text-emerald-400">Fully Attested</strong></span>
-            <span>Cryptographic CAS Hash: <strong class="text-slate-200">#0x8f19...b2a4</strong></span>
+          <button onclick="runComplianceSweep()" class="px-5 py-2.5 rounded-xl bg-[#131E33] hover:bg-[#1A2844] border border-blue-400/40 text-blue-200 font-mono text-xs font-bold tracking-wide shadow-[0_0_25px_rgba(59,130,246,0.2)] flex items-center gap-2 transition-all hover:scale-[1.02]">
+            <i data-lucide="shield-check" class="w-4 h-4 text-blue-400"></i>
+            <span>RUN COMPLIANCE SWEEP</span>
+          </button>
+        </div>
+
+        <!-- 4 METRIC CAPSULES -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div class="metric-capsule p-6 flex flex-col justify-between h-36">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400">GOVERNANCE SCORE</span>
+              <span class="pill pill-safe text-[10px]">SAFE</span>
+            </div>
+            <div class="text-3xl font-display font-black text-white tracking-tight">98.6%</div>
+            <div class="text-[11px] font-mono text-slate-500">Policy evaluation: 0 AirLock holds</div>
+          </div>
+
+          <div class="metric-capsule p-6 flex flex-col justify-between h-36">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400">ACTIVE INTERCEPTS</span>
+              <span class="pill pill-cyan text-[10px]">SECURE</span>
+            </div>
+            <div class="text-3xl font-display font-black text-white tracking-tight">0</div>
+            <div class="text-[11px] font-mono text-slate-500">Zero unauthorized write calls</div>
+          </div>
+
+          <div class="metric-capsule p-6 flex flex-col justify-between h-36">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400">PENDING CLAIMS</span>
+              <span class="pill pill-muted text-[10px]">CLEAR</span>
+            </div>
+            <div class="text-3xl font-display font-black text-white tracking-tight">0</div>
+            <div class="text-[11px] font-mono text-slate-500">Immutable CAS receipts synced</div>
+          </div>
+
+          <div class="metric-capsule p-6 flex flex-col justify-between h-36">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400">GOVERNED RECOVERY</span>
+              <span class="pill pill-safe text-[10px]">RESOLVED</span>
+            </div>
+            <div class="text-3xl font-display font-black text-emerald-400 tracking-tight">$22,890</div>
+            <div class="text-[11px] font-mono text-slate-500">100% matched against POS telemetry</div>
           </div>
         </div>
 
-        <!-- RIGHT: COMPLIANCE CONTAINMENT CENTER (5 Cols) -->
-        <div class="lg:col-span-5 scrutex-card p-6 min-h-[460px] flex flex-col justify-between space-y-4" id="containment-panel">
-          <div>
-            <div class="flex items-center gap-2 border-b border-white/5 pb-3 mb-6">
-              <i data-lucide="lock" class="w-4 h-4 text-blue-400"></i>
-              <span class="text-xs font-mono uppercase tracking-wider font-bold text-white">
-                COMPLIANCE CONTAINMENT CENTER
-              </span>
-            </div>
-
-            <!-- Default Empty State -->
-            <div class="flex flex-col items-center justify-center text-center py-16 space-y-3" id="containment-empty-state">
-              <div class="w-14 h-14 rounded-2xl bg-blue-500/10 border border-blue-400/20 flex items-center justify-center text-blue-400 shadow-[0_0_30px_rgba(59,130,246,0.15)]">
-                <i data-lucide="lock" class="w-6 h-6"></i>
+        <!-- TWO-COLUMN WORKSPACE -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          <div class="lg:col-span-7 scrutex-card p-6 min-h-[460px] flex flex-col justify-between space-y-4">
+            <div>
+              <div class="flex items-center justify-between border-b border-white/5 pb-3 mb-4">
+                <div class="flex items-center gap-2">
+                  <i data-lucide="shield-check" class="w-4 h-4 text-blue-400"></i>
+                  <span class="text-xs font-mono uppercase tracking-wider font-bold text-white">AUDITED TELEMETRY LOG STREAM (4 ENTRIES)</span>
+                </div>
+                <span class="text-[10px] font-mono text-slate-500 uppercase tracking-widest">REAL-TIME COMPLIANCE</span>
               </div>
-              <div class="text-sm font-display font-bold text-white mt-2">
-                No Log Selection
-              </div>
-              <p class="text-xs font-mono text-slate-400 max-w-xs leading-relaxed">
-                Select any audited telemetry event or threat node to review its mitigation parameters and sign-off compliance actions.
-              </p>
-            </div>
-
-            <!-- Active Selection Detail Card (Hidden by default) -->
-            <div class="space-y-4 text-xs font-mono hidden" id="containment-detail-card">
-              <!-- Injected by JS -->
+              <div class="space-y-3" id="telemetry-log-container"></div>
             </div>
           </div>
 
-          <div class="text-[10px] font-mono text-center text-slate-500">
-            Immutable ledger records are cryptographically permanent.
+          <div class="lg:col-span-5 scrutex-card p-6 min-h-[460px] flex flex-col justify-between space-y-4">
+            <div>
+              <div class="flex items-center gap-2 border-b border-white/5 pb-3 mb-6">
+                <i data-lucide="lock" class="w-4 h-4 text-blue-400"></i>
+                <span class="text-xs font-mono uppercase tracking-wider font-bold text-white">COMPLIANCE CONTAINMENT CENTER</span>
+              </div>
+              <div class="flex flex-col items-center justify-center text-center py-16 space-y-3" id="containment-empty-state">
+                <div class="w-14 h-14 rounded-2xl bg-blue-500/10 border border-blue-400/20 flex items-center justify-center text-blue-400 shadow-[0_0_30px_rgba(59,130,246,0.15)]">
+                  <i data-lucide="lock" class="w-6 h-6"></i>
+                </div>
+                <div class="text-sm font-display font-bold text-white mt-2">No Log Selection</div>
+                <p class="text-xs font-mono text-slate-400 max-w-xs leading-relaxed">
+                  Select any audited telemetry event or threat node to review its mitigation parameters.
+                </p>
+              </div>
+              <div class="space-y-4 text-xs font-mono hidden" id="containment-detail-card"></div>
+            </div>
           </div>
         </div>
 
@@ -406,9 +472,194 @@
   <div class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none" id="toast-deck"></div>
 
   <!-- ===================================================================
-      3. JAVASCRIPT STATE ENGINE & INTERACTION LOGIC
+      3. JAVASCRIPT STATE ENGINE & DRAGGABLE NODE RUNTIME
       =================================================================== -->
   <script>
+    const API_BASE = window.location.origin;
+
+    /* =================================================================
+       NODE CANVAS DEFINITIONS (Scrutexity Matte Palette)
+       ================================================================= */
+    const NODES = [
+      // Central Governor & Queue Nodes
+      { id: 'governor', type: 'governor', title: 'Socio-Governor CAS', role: 'Safety & CAS Approval Matrix', x: 500, y: 180, width: 270, status: 'gated', badge: '3 PROPOSALS PENDING', emoji: '🛡️' },
+      { id: 'queue', type: 'queue', title: 'Founder Action Queue', role: 'Scored Priority Tasks', x: 500, y: 410, width: 270, status: 'ready', badge: 'P0: +$4,400', emoji: '⚡' },
+      
+      // Left Flank Agents
+      { id: 'prospect', type: 'agent', title: 'Socio-Prospect', role: 'Lead Gen & NYC Scraping', x: 100, y: 60, width: 250, status: 'running', job: 'Scraping East Harlem Florists', rate: 88, emoji: '🕵️' },
+      { id: 'pitch', type: 'agent', title: 'Socio-Pitch', role: 'Outreach & Sequences', x: 100, y: 240, width: 250, status: 'idle', job: 'WhatsApp VIP queue (T+48h)', rate: 71, emoji: '📣' },
+      { id: 'onboard', type: 'agent', title: 'Socio-Onboard', role: 'Agreements & Twins', x: 100, y: 420, width: 250, status: 'online', job: 'DocuSign signed for El Nuevo Cafe', rate: 96, emoji: '📋' },
+      
+      // Right Flank Agents
+      { id: 'content', type: 'agent', title: 'Socio-Content', role: 'Content & Campaigns', x: 880, y: 60, width: 250, status: 'running', job: '30-Day Reels Calendar + Paid Strike', rate: 94, emoji: '✍️' },
+      { id: 'listings', type: 'agent', title: 'Socio-Listings', role: 'Local SEO & Reviews', x: 880, y: 240, width: 250, status: 'online', job: '12 Directory Sync for La Bodega', rate: 91, emoji: '📍' },
+      { id: 'track', type: 'agent', title: 'Socio-Track', role: 'POS & Revenue Invoicing', x: 880, y: 420, width: 250, status: 'online', job: 'Square webhook match #tx_8104a', rate: 99, emoji: '💳' }
+    ];
+
+    const WIRES = [
+      { from: 'prospect', to: 'pitch', pulse: false },
+      { from: 'pitch', to: 'governor', pulse: true },
+      { from: 'content', to: 'governor', pulse: true },
+      { from: 'governor', to: 'queue', pulse: true },
+      { from: 'onboard', to: 'governor', pulse: false },
+      { from: 'track', to: 'governor', pulse: false }
+    ];
+
+    let pan = { x: 0, y: 0 };
+    let isPanning = false;
+    let startPoint = { x: 0, y: 0 };
+    let activeDragNode = null;
+    let dragOffset = { x: 0, y: 0 };
+
+    function initCanvas() {
+      const world = document.getElementById('graph-world');
+      if (!world) return;
+
+      world.innerHTML = NODES.map(n => `
+        <div
+          id="node-${n.id}"
+          class="graph-node p-4"
+          style="left:${n.x}px; top:${n.y}px; width:${n.width}px;"
+          onmousedown="startNodeDrag(event, '${n.id}')"
+        >
+          <div class="flex items-start justify-between mb-2">
+            <div class="flex items-center gap-2">
+              <span class="text-xl">${n.emoji}</span>
+              <div>
+                <div class="text-xs font-bold text-white font-mono">${n.title}</div>
+                <div class="text-[10px] text-slate-400 font-mono">${n.role}</div>
+              </div>
+            </div>
+            <span class="pill ${n.status === 'running' ? 'pill-cyan' : n.status === 'online' ? 'pill-safe' : 'pill-amber'} text-[9px]">
+              ${n.status}
+            </span>
+          </div>
+
+          <div class="p-2.5 rounded-xl bg-[#0B0E14] border border-white/5 text-[11px] font-mono text-slate-300 mb-3">
+            <div class="text-[9px] text-slate-500 uppercase font-bold">State / Payload:</div>
+            <div class="truncate text-slate-200 font-semibold mt-0.5">${n.job || n.badge}</div>
+          </div>
+
+          <div class="flex gap-2">
+            <button onclick="triggerNodeAgent('${n.id}')" class="flex-1 py-1.5 bg-[#131E33] hover:bg-[#1A2844] border border-blue-400/30 text-[10px] font-mono font-bold rounded-lg text-blue-200 transition-colors">
+              Execute →
+            </button>
+            <button onclick="inspectNode('${n.id}')" class="px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 text-[10px] font-mono rounded-lg text-slate-300 transition-colors">
+              Inspect
+            </button>
+          </div>
+        </div>
+      `).join('');
+
+      drawWires();
+      lucide.createIcons();
+    }
+
+    function drawWires() {
+      const svg = document.getElementById('svg-wires-layer');
+      if (!svg) return;
+
+      svg.innerHTML = WIRES.map(w => {
+        const fromNode = NODES.find(n => n.id === w.from);
+        const toNode = NODES.find(n => n.id === w.to);
+        if (!fromNode || !toNode) return '';
+
+        const x1 = fromNode.x + fromNode.width / 2 + pan.x;
+        const y1 = fromNode.y + 65 + pan.y;
+        const x2 = toNode.x + toNode.width / 2 + pan.x;
+        const y2 = toNode.y + 65 + pan.y;
+
+        const dx = (x2 - x1) * 0.5;
+        const d = `M ${x1} ${y1} C ${x1 + dx} ${y1}, ${x2 - dx} ${y2}, ${x2} ${y2}`;
+
+        return `
+          <g>
+            <path d="${d}" class="wire-glow" />
+            ${w.pulse ? `<path d="${d}" class="wire-pulse" />` : ''}
+          </g>
+        `;
+      }).join('');
+    }
+
+    function startNodeDrag(e, nodeId) {
+      e.stopPropagation();
+      activeDragNode = NODES.find(n => n.id === nodeId);
+      if (!activeDragNode) return;
+
+      const nodeEl = document.getElementById(`node-${nodeId}`);
+      if (nodeEl) nodeEl.classList.add('active-node');
+
+      dragOffset = { x: e.clientX - activeDragNode.x, y: e.clientY - activeDragNode.y };
+      window.addEventListener('mousemove', onNodeDrag);
+      window.addEventListener('mouseup', stopNodeDrag);
+    }
+
+    function onNodeDrag(e) {
+      if (!activeDragNode) return;
+      activeDragNode.x = e.clientX - dragOffset.x;
+      activeDragNode.y = e.clientY - dragOffset.y;
+
+      const nodeEl = document.getElementById(`node-${activeDragNode.id}`);
+      if (nodeEl) {
+        nodeEl.style.left = `${activeDragNode.x}px`;
+        nodeEl.style.top = `${activeDragNode.y}px`;
+      }
+      drawWires();
+    }
+
+    function stopNodeDrag() {
+      if (activeDragNode) {
+        const nodeEl = document.getElementById(`node-${activeDragNode.id}`);
+        if (nodeEl) nodeEl.classList.remove('active-node');
+      }
+      activeDragNode = null;
+      window.removeEventListener('mousemove', onNodeDrag);
+      window.removeEventListener('mouseup', stopNodeDrag);
+    }
+
+    function startPan(e) {
+      if (e.target.closest('.graph-node')) return;
+      isPanning = true;
+      startPoint = { x: e.clientX - pan.x, y: e.clientY - pan.y };
+      window.addEventListener('mousemove', onPan);
+      window.addEventListener('mouseup', stopPan);
+    }
+
+    function onPan(e) {
+      if (!isPanning) return;
+      pan.x = e.clientX - startPoint.x;
+      pan.y = e.clientY - startPoint.y;
+
+      const world = document.getElementById('graph-world');
+      if (world) world.style.transform = `translate(${pan.x}px, ${pan.y}px)`;
+      drawWires();
+    }
+
+    function stopPan() {
+      isPanning = false;
+      window.removeEventListener('mousemove', onPan);
+      window.removeEventListener('mouseup', stopPan);
+    }
+
+    function recenterGraph() {
+      pan = { x: 0, y: 0 };
+      const world = document.getElementById('graph-world');
+      if (world) world.style.transform = `translate(0px, 0px)`;
+      drawWires();
+      toast('Node graph centered at origin.', 'safe');
+    }
+
+    function triggerNodeAgent(id) {
+      toast(`Triggering Socio-${id} routine...`, 'safe');
+    }
+
+    function inspectNode(id) {
+      toast(`Inspected node telemetry for ${id.toUpperCase()}`, 'safe');
+    }
+
+    /* =================================================================
+       NAVIGATION & LOG STREAM ENGINE
+       ================================================================= */
     const LOGS_DATABASE = [
       { id: 'LOG-881', type: 'REVENUE', agent: 'Socio-Track', time: '14:22:01', desc: 'Attributed +$1,240 Net New revenue to Cristal Flowers via Square POS #tx_8104a.', hash: '0x3a4b...8921', status: 'SAFE', details: 'Square webhook cryptographically matched against baseline. Zero duplicate attempts recorded.' },
       { id: 'LOG-882', type: 'GOVERNANCE', agent: 'Socio-Governor', time: '14:18:30', desc: 'Evaluated ad budget proposal PROP-0042 ($400) for East Harlem Bites. Risk tier: HIGH.', hash: '0x9e12...44f0', status: 'SAFE', details: 'Ad budget spend gated on Founder CAS signature. Zero automated bypass allowed.' },
@@ -416,35 +667,12 @@
       { id: 'LOG-884', type: 'LOCAL_SEO', agent: 'Socio-Listings', time: '13:30:05', desc: 'Synchronized 12 local business directories for La Bodega NYC via Synup MCP.', hash: '0x1b44...9980', status: 'SAFE', details: 'Google Business Profile, Yelp, and Apple Maps sync confirmed. Rank #1 verified.' }
     ];
 
-    let currentLogs = [...LOGS_DATABASE];
-
-    function renderLogs(filterTerm = '') {
+    function renderLogs() {
       const container = document.getElementById('telemetry-log-container');
-      const countHeader = document.getElementById('log-count-header');
       if (!container) return;
 
-      const filtered = currentLogs.filter(l => 
-        l.desc.toLowerCase().includes(filterTerm.toLowerCase()) ||
-        l.agent.toLowerCase().includes(filterTerm.toLowerCase()) ||
-        l.id.toLowerCase().includes(filterTerm.toLowerCase())
-      );
-
-      if (countHeader) countHeader.innerText = `AUDITED TELEMETRY LOG STREAM (${filtered.length} ENTRIES)`;
-
-      if (filtered.length === 0) {
-        container.innerHTML = `
-          <div class="py-12 text-center text-xs font-mono text-slate-500">
-            Zero active logs detected in the live audit queue. Clean telemetry trace.
-          </div>
-        `;
-        return;
-      }
-
-      container.innerHTML = filtered.map(l => `
-        <div 
-          onclick="selectLog('${l.id}')"
-          class="p-4 rounded-xl bg-[#0E131E] border border-white/5 hover:border-blue-400/40 hover:bg-blue-500/5 transition-all cursor-pointer flex items-start justify-between gap-4 text-xs font-mono"
-        >
+      container.innerHTML = LOGS_DATABASE.map(l => `
+        <div class="p-4 rounded-xl bg-[#0E131E] border border-white/5 hover:border-blue-400/40 hover:bg-blue-500/5 transition-all cursor-pointer flex items-start justify-between gap-4 text-xs font-mono">
           <div class="space-y-1 min-w-0">
             <div class="flex items-center gap-2">
               <span class="text-blue-400 font-bold">${l.id}</span>
@@ -460,64 +688,25 @@
       `).join('');
     }
 
-    function selectLog(logId) {
-      const log = LOGS_DATABASE.find(x => x.id === logId);
-      const empty = document.getElementById('containment-empty-state');
-      const detail = document.getElementById('containment-detail-card');
-      if (!log || !empty || !detail) return;
-
-      empty.classList.add('hidden');
-      detail.classList.remove('hidden');
-
-      detail.innerHTML = `
-        <div class="p-4 rounded-xl bg-blue-500/10 border border-blue-400/30 space-y-1">
-          <div class="text-[10px] text-blue-400 uppercase font-bold">Selected Log Item</div>
-          <div class="text-sm font-bold font-sans text-white">${log.id} — ${log.type}</div>
-        </div>
-
-        <div class="p-4 rounded-xl bg-[#0B0E14] border border-white/5 space-y-2 text-xs">
-          <div class="flex justify-between"><span class="text-slate-500">Executing Agent:</span><span class="text-blue-300 font-bold">${log.agent}</span></div>
-          <div class="flex justify-between"><span class="text-slate-500">Timestamp:</span><span class="text-slate-200">${log.time} EST</span></div>
-          <div class="flex justify-between"><span class="text-slate-500">Audit Hash:</span><span class="text-emerald-400 font-bold">${log.hash}</span></div>
-        </div>
-
-        <div class="space-y-1">
-          <div class="text-[10px] text-slate-400 uppercase font-bold">Provenance Description:</div>
-          <div class="p-3 rounded-lg bg-[#0B0E14] text-slate-300 text-xs font-sans leading-relaxed">${log.desc}</div>
-        </div>
-
-        <div class="space-y-1">
-          <div class="text-[10px] text-emerald-400 uppercase font-bold">Verification Parameters:</div>
-          <div class="p-3 rounded-lg bg-emerald-500/5 border border-emerald-500/10 text-emerald-300 text-xs">${log.details}</div>
-        </div>
-
-        <div class="pt-2 flex gap-2">
-          <button onclick="toast('Log signature re-verified','safe')" class="flex-1 py-2.5 bg-[#131E33] hover:bg-[#1A2844] border border-blue-400/40 text-blue-200 font-bold text-xs rounded-xl">
-            Re-Verify Attestation
-          </button>
-          <button onclick="toast('Exported single receipt','safe')" class="px-4 py-2.5 bg-white/5 hover:bg-white/10 text-slate-300 text-xs rounded-xl border border-white/10">
-            Export
-          </button>
-        </div>
-      `;
-      lucide.createIcons();
-    }
-
-    function switchFilter(type, btn) {
-      document.querySelectorAll('.tab-pill').forEach(el => el.classList.remove('active'));
-      if (btn) btn.classList.add('active');
-
-      if (type === 'live') currentLogs = [...LOGS_DATABASE];
-      else if (type === 'recovered') currentLogs = LOGS_DATABASE.filter(x => x.type === 'REVENUE');
-      else currentLogs = [];
-
-      renderLogs();
-    }
-
     function switchNav(route, el) {
       document.querySelectorAll('.side-icon-btn').forEach(b => b.classList.remove('active'));
       if (el) el.classList.add('active');
-      toast(`Navigated to ${route.toUpperCase()} console`, 'safe');
+
+      document.querySelectorAll('.view-panel').forEach(p => p.classList.add('hidden'));
+
+      if (route === 'agents') {
+        const ag = document.getElementById('view-agents-page');
+        if (ag) ag.classList.remove('hidden');
+        drawWires();
+      } else if (route === 'governance') {
+        const gv = document.getElementById('view-governance-page');
+        if (gv) gv.classList.remove('hidden');
+      } else {
+        const ag = document.getElementById('view-agents-page');
+        if (ag) ag.classList.remove('hidden');
+      }
+
+      toast(`Switched to ${route.toUpperCase()} view`, 'safe');
     }
 
     function runComplianceSweep() {
@@ -532,6 +721,7 @@
       if (icon) icon.classList.add('animate-spin');
       setTimeout(() => {
         if (icon) icon.classList.remove('animate-spin');
+        drawWires();
         renderLogs();
         toast('Console synchronized with live POS & agent telemetry.', 'safe');
       }, 600);
@@ -539,8 +729,7 @@
 
     function handleSearch(q) {
       if (!q.trim()) return;
-      toast(`Searching logs for: "${q}"`, 'safe');
-      renderLogs(q);
+      toast(`Searching nodes & logs for: "${q}"`, 'safe');
     }
 
     function toast(msg, type = 'safe') {
@@ -553,7 +742,6 @@
       setTimeout(() => t.remove(), 3500);
     }
 
-    // Live Clock Update
     function updateClock() {
       const el = document.getElementById('live-clock');
       if (el) {
@@ -563,11 +751,10 @@
     }
     setInterval(updateClock, 1000);
 
-    // Boot
     window.addEventListener('DOMContentLoaded', () => {
+      initCanvas();
       renderLogs();
       updateClock();
-      lucide.createIcons();
     });
   </script>
 </body>
