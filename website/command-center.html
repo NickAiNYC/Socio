@@ -7,137 +7,223 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Roboto+Mono:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Michroma&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;600;700&display=swap');
 
         :root {
-            --color-appbg: #09090b;
-            --color-cardbg: linear-gradient(180deg, rgba(28, 28, 35, 0.7) 0%, rgba(18, 18, 22, 0.85) 100%);
-            --color-border: rgba(255, 255, 255, 0.08);
-            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --color-appbg: #0b0c10;
+            --font-brand: 'Michroma', sans-serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
         }
 
         body {
-            background-color: #0c0d12;
+            background-color: #0b0c10;
             color: #ffffff;
-            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-image:
-                radial-gradient(circle at 50% -10%, rgba(132, 148, 255, 0.12) 0%, transparent 60%),
-                radial-gradient(circle at 10% 40%, rgba(56, 189, 248, 0.06) 0%, transparent 50%),
-                radial-gradient(circle at 90% 80%, rgba(170, 255, 199, 0.04) 0%, transparent 50%);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.08) 0%, transparent 60%),
+                radial-gradient(circle at 100% 50%, rgba(137, 196, 244, 0.04) 0%, transparent 50%);
             background-attachment: fixed;
             min-height: 100vh;
         }
 
+        .font-brand { font-family: 'Michroma', sans-serif; }
         .font-mono { font-family: 'Roboto Mono', monospace; }
 
-        /* Atmospheric Volumetric Smoke Aura & Clean 3D Glass Cards */
-        .glass-panel, .aura-card {
+        /* Exact Scrutexity Aura Card with Soft Blue Smoke Outer Glow & Inner Radial Shading */
+        .aura-card, .glass-panel {
             position: relative;
-            background: linear-gradient(180deg, rgba(28, 28, 34, 0.85) 0%, rgba(16, 16, 20, 0.95) 100%);
+            background: linear-gradient(180deg, #16171d 0%, #0d0e12 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 28px;
+            /* Atmospheric Double-Layer Volumetric Smoke Halo Aura */
+            box-shadow: 
+                0 0 0 1px rgba(56, 189, 248, 0.12),
+                0 0 50px 10px rgba(56, 189, 248, 0.15),
+                0 0 100px 25px rgba(37, 99, 235, 0.10),
+                0 25px 60px -10px rgba(0, 0, 0, 0.95),
+                inset 0 1px 2px rgba(255, 255, 255, 0.2),
+                inset 0 0 30px rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(40px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .aura-card::before, .glass-panel::before {
+            content: "";
+            position: absolute;
+            inset: -8px;
+            border-radius: 36px;
+            background: radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.25) 0%, rgba(37, 99, 235, 0.12) 50%, transparent 75%);
+            filter: blur(20px);
+            opacity: 0.85;
+            z-index: -1;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .aura-card:hover::before, .glass-panel:hover::before {
+            opacity: 1;
+            filter: blur(26px);
+        }
+
+        .aura-card:hover, .glass-panel:hover {
+            border-color: rgba(56, 189, 248, 0.45);
+            box-shadow: 
+                0 0 0 1px rgba(56, 189, 248, 0.25),
+                0 0 70px 15px rgba(56, 189, 248, 0.25),
+                0 0 120px 30px rgba(37, 99, 235, 0.18),
+                0 30px 70px -10px rgba(0, 0, 0, 1),
+                inset 0 1px 2px rgba(255, 255, 255, 0.35);
+            transform: translateY(-2px);
+        }
+
+        /* Metric Capsule inside Card with smoky halo */
+        .metric-capsule {
+            position: relative;
+            background: linear-gradient(180deg, #13141a 0%, #0a0b0e 100%);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 24px;
-            /* Deep smoky volumetric shadow surrounding the card */
+            padding: 22px 26px;
             box-shadow: 
-                0 30px 60px -12px rgba(0, 0, 0, 0.9),
-                0 18px 36px -18px rgba(0, 0, 0, 0.8),
-                0 0 45px rgba(255, 255, 255, 0.02),
-                inset 0 1px 1px rgba(255, 255, 255, 0.15),
-                inset 0 0 20px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(30px);
-            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+                0 0 0 1px rgba(56, 189, 248, 0.08),
+                0 0 35px 5px rgba(56, 189, 248, 0.14),
+                0 0 70px 12px rgba(37, 99, 235, 0.08),
+                0 15px 35px rgba(0, 0, 0, 0.8),
+                inset 0 1px 1px rgba(255, 255, 255, 0.15);
+            transition: all 0.35s ease;
         }
 
-        .glass-panel:hover, .aura-card:hover {
-            border-color: rgba(255, 255, 255, 0.16);
+        .metric-capsule:hover {
+            border-color: rgba(56, 189, 248, 0.35);
             box-shadow: 
-                0 35px 70px -10px rgba(0, 0, 0, 0.95),
-                0 0 50px rgba(132, 148, 255, 0.08),
+                0 0 45px 8px rgba(56, 189, 248, 0.22),
+                0 0 85px 15px rgba(37, 99, 235, 0.12),
+                0 20px 40px rgba(0, 0, 0, 0.9),
                 inset 0 1px 2px rgba(255, 255, 255, 0.25);
-            transform: translateY(-1px);
         }
 
-        /* Inner sub-card with smoke depth */
-        .sub-card {
-            background: rgba(10, 10, 14, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 16px;
-            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.06), 0 8px 20px rgba(0, 0, 0, 0.4);
+        /* Pure High-Impact Clean White Titles */
+        .title-hero {
+            font-family: 'Michroma', sans-serif;
+            font-size: 2.15rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #ffffff;
+            line-height: 1.2;
+        }
+
+        .eyebrow {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            color: #64748b;
+        }
+
+        .badge-safe {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 9px;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: rgba(16, 185, 129, 0.12);
+            color: #10B981;
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            letter-spacing: 0.1em;
+        }
+
+        .badge-secure {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 9px;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #64748b;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            letter-spacing: 0.1em;
+        }
+
+        .badge-resolved {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 9px;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: rgba(16, 185, 129, 0.12);
+            color: #10B981;
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            letter-spacing: 0.1em;
+        }
+
+        /* Pill Navigation Button from Scrutexity */
+        .nav-pill {
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #64748b;
+            transition: all 0.2s ease;
+        }
+        .nav-pill:hover {
+            color: #ffffff;
+        }
+        .nav-pill.active {
+            background: #14213d;
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+        }
+
+        /* Action sweep button */
+        .btn-sweep {
+            background: rgba(14, 30, 58, 0.6);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            color: #8ac0ff;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 10px 20px;
+            border-radius: 40px;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.15);
             transition: all 0.25s ease;
         }
-        .sub-card:hover {
-            border-color: rgba(255, 255, 255, 0.12);
-            background: rgba(18, 18, 24, 0.7);
-        }
-
-        /* Clean High-Contrast Typography (NO neon glows) */
-        .text-hero {
-            font-size: 2.25rem;
-            font-weight: 800;
-            letter-spacing: -0.04em;
-            color: #ffffff;
-            line-height: 1.1;
-        }
-
-        .text-large {
-            font-size: 1.75rem;
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            color: #ffffff;
-        }
-
-        .metric-value {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 1.85rem;
-            font-weight: 800;
-            letter-spacing: -0.04em;
-            color: #ffffff;
-        }
-
-        .metric-label {
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: #94a3b8;
-        }
-
-        /* Clean Accent Badges & Buttons */
-        .btn-primary {
-            background: #ffffff;
-            color: #000000;
-            font-weight: 700;
-            border-radius: 12px;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
-            transition: all 0.2s ease;
-        }
-        .btn-primary:hover {
-            background: #e2e8f0;
+        .btn-sweep:hover {
+            background: rgba(14, 40, 80, 0.9);
+            border-color: rgba(56, 189, 248, 0.6);
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.35);
             transform: translateY(-1px);
         }
 
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.06);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            font-weight: 600;
-            border-radius: 12px;
+        /* Sidebar navigation icon button */
+        .side-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #475569;
             transition: all 0.2s ease;
         }
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(255, 255, 255, 0.2);
+        .side-icon:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .side-icon.active {
+            background: #1e293b;
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.25);
         }
 
-        .tab-active {
-            background: #ffffff !important;
-            color: #000000 !important;
-            font-weight: 800 !important;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-        }
-
+        /* Checkbox */
         .todo-checkbox {
             appearance: none;
-            width: 20px; height: 20px;
+            width: 18px; height: 18px;
             border: 2px solid rgba(255, 255, 255, 0.2);
             border-radius: 50%;
             outline: none;
@@ -147,151 +233,103 @@
             flex-shrink: 0;
             background: transparent;
         }
-        .todo-checkbox:checked { border-color: #ffffff; background-color: #ffffff; }
+        .todo-checkbox:checked { border-color: #38bdf8; background-color: #38bdf8; }
         .todo-checkbox:checked::after {
             content: '';
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 8px; height: 8px;
+            width: 6px; height: 6px;
             border-radius: 50%;
-            background-color: #000000;
+            background-color: #000;
         }
 
-        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar { width: 3px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #2a2a35; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
 
-        /* Ticker tape */
-        .ticker-wrap { overflow: hidden; white-space: nowrap; border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); background: rgba(10, 10, 14, 0.6); backdrop-filter: blur(10px); }
-        .ticker-move { display: inline-block; animation: ticker-scroll 30s linear infinite; }
-        @keyframes ticker-scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        /* View tabs */
         .view { display: none; }
         .view.active { display: block; }
-
-        /* Clean pill tags */
-        .pill { font-family:'Roboto Mono',monospace; font-size:10px; font-weight:700; padding:3px 10px; border-radius:40px; letter-spacing:.5px; }
-        .pill-green { background:rgba(255,255,255,0.08); color:#86efac; border:1px solid rgba(134,239,172,0.3); }
-        .pill-blue  { background:rgba(255,255,255,0.08); color:#93c5fd; border:1px solid rgba(147,197,253,0.3); }
-        .pill-gold  { background:rgba(255,255,255,0.08); color:#fde047; border:1px solid rgba(253,224,71,0.3); }
-        .pill-red   { background:rgba(255,255,255,0.08); color:#fca5a5; border:1px solid rgba(252,165,165,0.3); }
-        .pill-gray  { background:rgba(255,255,255,0.05); color:#94a3b8; border:1px solid rgba(255,255,255,0.1); }
-
-        /* Terminal block */
-        .terminal {
-            background: #09090d;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.06);
-            padding: 10px 14px;
-            font-family: 'Roboto Mono', monospace;
-            font-size: 10px;
-            line-height: 1.6;
-            color: #cbd5e1;
-            white-space: pre-wrap;
-            max-height: 80px;
-            overflow-y: auto;
-        }
-
-        /* Event feed item */
-        .eitem { display:flex; align-items:flex-start; gap:12px; padding:12px 14px; border-radius:14px; background:rgba(0,0,0,.3); border:1px solid rgba(255,255,255,.05); margin-bottom:6px; transition:border-color .2s; }
-        .eitem:hover { border-color:rgba(255,255,255,.15); }
-        .eicon { width:32px; height:32px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.08); }
-
-        /* Infra health dot */
-        .hdot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
-        .hdot-ok   { background:#86efac; box-shadow:0 0 6px rgba(134,239,172,.6); }
-        .hdot-warn { background:#fde047; box-shadow:0 0 6px rgba(253,224,71,.6); }
     </style>
 </head>
-<body class="min-h-screen antialiased">
+<body class="flex min-h-screen antialiased bg-[#0b0c10]">
 
 <!-- ============================
-     HEADER
+     LEFT SIDEBAR (Scrutexity exact)
      ============================ -->
-<header class="flex justify-between items-center px-8 py-5 border-b border-white/5 bg-[#09090d]/80 backdrop-blur-2xl">
-    <div class="flex items-center gap-6">
-        <div class="flex items-center gap-3">
-            <span class="w-9 h-9 rounded-2xl flex items-center justify-center text-black font-black text-base bg-white shadow-md">S</span>
-            <div class="flex flex-col">
-                <span class="text-base font-extrabold tracking-tight text-white">
-                    SOCIO <span class="text-gray-400 font-semibold text-xs tracking-normal">COMMAND</span>
-                </span>
-                <span class="text-[10px] font-mono text-gray-500 uppercase tracking-wider">Growth OS v2.4</span>
-            </div>
-        </div>
+<aside class="w-18 flex flex-col items-center py-6 gap-6 border-r border-white/5 bg-[#08090d] z-40 shrink-0 select-none">
+    <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white font-black text-lg bg-gradient-to-tr from-sky-600 to-blue-500 shadow-[0_0_20px_rgba(56,189,248,0.4)] mb-3">
+        S
+    </div>
 
-        <!-- Weather / Cloud Daily Brief Capsule (Matches FocusCommandCenter) -->
-        <div class="hidden lg:flex items-center gap-4 pl-6 border-l border-white/10">
-            <div class="flex items-center gap-3 bg-white/[0.04] border border-white/10 rounded-2xl px-4 py-2">
-                <span class="text-2xl">⛅</span>
-                <div class="flex flex-col">
-                    <div class="flex items-center gap-2">
-                        <span class="text-xs font-extrabold text-white">NYC · 16°C</span>
-                        <span class="text-[10px] text-gray-400 font-medium">Partly Cloudy</span>
-                    </div>
-                    <div class="flex items-center gap-2 text-[9px] font-mono text-gray-500">
-                        <span>↑ 16°</span> • <span>↓ 10°</span> • <span class="text-emerald-400 font-bold">AIRLOCK PASS</span>
-                    </div>
-                </div>
-            </div>
+    <button onclick="setTab('gem',this)" class="side-icon active" title="Command Center">
+        <i data-lucide="home" class="w-5 h-5"></i>
+    </button>
+    <button onclick="setTab('overview',this)" class="side-icon" title="Daily Overview">
+        <i data-lucide="users" class="w-5 h-5"></i>
+    </button>
+    <button onclick="setTab('agents',this)" class="side-icon" title="Agent Fleet">
+        <i data-lucide="clipboard-list" class="w-5 h-5"></i>
+    </button>
+    <button onclick="setTab('pipeline',this)" class="side-icon" title="Pipeline Velocity">
+        <i data-lucide="radio" class="w-5 h-5"></i>
+    </button>
+    <button onclick="setTab('governor',this)" class="side-icon" title="Governance & Risk">
+        <i data-lucide="layers" class="w-5 h-5"></i>
+    </button>
+    <button onclick="setTab('ledger',this)" class="side-icon" title="Revenue Ledger">
+        <i data-lucide="file-text" class="w-5 h-5"></i>
+    </button>
+    <button onclick="setTab('infra',this)" class="side-icon" title="Infrastructure">
+        <i data-lucide="shield-check" class="w-5 h-5"></i>
+    </button>
+
+    <div class="mt-auto flex flex-col items-center gap-4">
+        <a href="merchant-evidence.html" class="side-icon text-sky-400 hover:text-white" title="Merchant Evidence">
+            <i data-lucide="scale" class="w-5 h-5"></i>
+        </a>
+    </div>
+</aside>
+
+<!-- ============================
+     MAIN APP WRAPPER
+     ============================ -->
+<div class="flex-1 flex flex-col min-w-0 overflow-y-auto">
+
+<!-- TOP HEADER (Scrutexity exact) -->
+<header class="flex justify-between items-center px-10 py-5 border-b border-white/5 bg-[#0b0c10]/80 backdrop-blur-2xl">
+    <div class="flex items-center gap-5">
+        <div class="font-brand text-lg font-bold tracking-[0.25em] text-white flex items-center gap-2">
+            SCRUTEXITY <span class="text-xs text-sky-400 font-sans tracking-normal font-bold">OS</span>
+        </div>
+        <div class="flex items-center gap-2">
+            <span class="px-2.5 py-1 rounded-full text-[9px] font-extrabold uppercase tracking-wider bg-sky-950/40 text-sky-400 border border-sky-500/20 font-mono">
+                • LOCAL ONLY
+            </span>
+            <span class="px-2.5 py-1 rounded-full text-[9px] font-extrabold uppercase tracking-wider bg-white/5 text-gray-400 border border-white/10 font-mono">
+                SYNC CONSOLE
+            </span>
         </div>
     </div>
 
-    <!-- Center - Large Greeting / Status -->
-    <div class="hidden md:flex items-center gap-2 text-sm font-semibold text-gray-300">
-        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-        All Systems Nominal • <span class="text-white font-bold">8 Active Agents</span>
-    </div>
-
-    <!-- Right Controls -->
-    <div class="flex items-center gap-4">
-        <div class="hidden sm:flex items-center gap-2.5 bg-black/40 border border-white/10 rounded-full px-4 py-2 text-xs font-mono text-gray-400 shadow-inner">
+    <div class="flex items-center gap-5">
+        <div class="hidden sm:flex items-center gap-2.5 bg-black/40 border border-white/10 rounded-full px-5 py-2 text-xs font-mono text-gray-400">
             <i data-lucide="search" class="w-3.5 h-3.5 text-gray-500"></i>
-            <input type="text" placeholder="Quick search... (⌘K)" class="bg-transparent border-none outline-none text-white w-40 placeholder-gray-600 text-xs">
+            <input type="text" placeholder="Search or jump... Cmd K" class="bg-transparent border-none outline-none text-white w-52 placeholder-gray-600 text-xs">
         </div>
 
         <div class="text-right hidden sm:block">
-            <div class="text-xs font-bold text-white tracking-wide" id="hdr-time">--:--</div>
-            <div class="text-[10px] font-medium text-gray-500 uppercase tracking-wider" id="hdr-date">AUG 18, 2026</div>
+            <div class="text-xs font-mono font-bold text-white tracking-wider" id="hdr-time">08:47 PM</div>
+            <div class="text-[9px] font-extrabold text-sky-400 uppercase tracking-widest">NEW YORK</div>
         </div>
 
-        <div class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center cursor-pointer hover:bg-white/10 transition-colors">
-            <span class="text-xs font-extrabold text-white">NA</span>
+        <div class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center cursor-pointer hover:bg-white/10">
+            <i data-lucide="user" class="w-4 h-4 text-gray-400"></i>
         </div>
     </div>
 </header>
 
-<!-- LIVE TICKER -->
-<div class="ticker-wrap py-1.5 mb-4 px-0 bg-black/20">
-    <div class="ticker-move" id="ticker-el">
-        <!-- populated by JS -->
-    </div>
-</div>
-
-<!-- ============================
-     TOP NAV
-     ============================ -->
-<nav class="flex gap-2 px-8 mb-6 border-b border-white/5 pb-4 overflow-x-auto items-center">
-    <button class="tab-active px-4 py-1.5 rounded-full text-xs font-bold font-mono tracking-widest transition-colors" onclick="setTab('gem',this)">⚡ COMMAND DASHBOARD</button>
-    <button class="px-4 py-1.5 rounded-full text-gray-500 hover:text-white text-xs font-bold font-mono tracking-widest transition-colors" onclick="setTab('overview',this)">TODAY</button>
-    <button class="px-4 py-1.5 rounded-full text-gray-500 hover:text-white text-xs font-bold font-mono tracking-widest transition-colors" onclick="setTab('agents',this)">AGENTS</button>
-    <button class="px-4 py-1.5 rounded-full text-gray-500 hover:text-white text-xs font-bold font-mono tracking-widest transition-colors" onclick="setTab('pipeline',this)">PIPELINE</button>
-    <button class="px-4 py-1.5 rounded-full text-gray-500 hover:text-white text-xs font-bold font-mono tracking-widest transition-colors" onclick="setTab('governor',this)">GOVERNOR</button>
-    <button class="px-4 py-1.5 rounded-full text-gray-500 hover:text-white text-xs font-bold font-mono tracking-widest transition-colors" onclick="setTab('ledger',this)">LEDGER</button>
-    <button class="px-4 py-1.5 rounded-full text-gray-500 hover:text-white text-xs font-bold font-mono tracking-widest transition-colors" onclick="setTab('experiments',this)">EXPERIMENTS</button>
-    <button class="px-4 py-1.5 rounded-full text-gray-500 hover:text-white text-xs font-bold font-mono tracking-widest transition-colors" onclick="setTab('infra',this)">INFRA</button>
-    <div class="flex-1"></div>
-    <a href="merchant-evidence.html" class="text-xs font-mono text-[#8494FF] hover:underline px-3.5 py-1.5 bg-[#8494FF]/10 border border-[#8494FF]/20 rounded-full flex items-center gap-1.5 transition-colors">
-        <i data-lucide="scale" class="w-3.5 h-3.5"></i> Merchant Evidence
-    </a>
-</nav>
-
-<main class="px-8 pb-10">
+<main class="px-10 py-8 space-y-8 flex-1">
 
 <!-- ============================
      VIEW: TODAY (OVERVIEW)
@@ -769,148 +807,158 @@
 </div>
 
 <!-- ============================
-     VIEW: GEM OPS DASHBOARD
+     VIEW: GEM OPS DASHBOARD (SCRUTEXITY GOVERNANCE & COMMAND)
      ============================ -->
 <div class="view active" id="view-gem">
-    <div class="w-full space-y-7 flex flex-col items-stretch">
+    <div class="w-full space-y-8 flex flex-col items-stretch">
         
-        <!-- 1. KpiWidget + Pipeline Velocity -->
-        <div class="aura-card p-6">
-            <div class="flex items-center justify-between mb-5 pb-4 border-b border-white/5">
-                <div class="flex items-center gap-3">
-                    <h3 class="text-sm font-extrabold uppercase tracking-widest text-white">Weekly Performance Telemetry</h3>
-                    <span class="pill pill-green font-mono">LIVE FEED</span>
-                </div>
-                <button onclick="refreshGemData()" class="btn-secondary px-3.5 py-1.5 text-xs font-mono flex items-center gap-2">
-                    <i data-lucide="refresh-cw" class="w-3.5 h-3.5" id="gem-refresh-icon"></i> Refresh Telemetry
-                </button>
+        <!-- TOP TITLE & SWEEP ACTION -->
+        <div class="flex items-center justify-between shrink-0">
+            <div>
+                <div class="eyebrow mb-1.5">AUTOMATED GROWTH & COMPLIANCE ORCHESTRATION</div>
+                <h1 class="title-hero">Governance & Command</h1>
             </div>
+            <button onclick="refreshGemData()" class="btn-sweep flex items-center gap-2.5">
+                <i data-lucide="refresh-cw" class="w-3.5 h-3.5" id="gem-refresh-icon"></i> Run Compliance Sweep
+            </button>
+        </div>
 
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5 mb-5">
-                <div class="sub-card p-4">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="metric-label">DMs Sent (7d)</span>
-                        <i data-lucide="send" class="w-4 h-4 text-gray-400"></i>
-                    </div>
-                    <div class="metric-value" id="gem-kpi-dms">47</div>
-                    <div class="mt-1 text-[11px] text-gray-400 font-medium">Outbound sequences</div>
+        <!-- 4 TOP METRIC CARDS WITH VOLUMETRIC SMOKE GLOW -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div class="metric-capsule flex flex-col justify-between min-h-[110px]">
+                <div class="text-[10px] text-gray-400 font-extrabold uppercase tracking-widest font-sans">
+                    COMPLIANCE SCORE
                 </div>
-
-                <div class="sub-card p-4">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="metric-label">Replies Received</span>
-                        <i data-lucide="message-square" class="w-4 h-4 text-gray-400"></i>
-                    </div>
-                    <div class="metric-value text-emerald-400" id="gem-kpi-replies">18</div>
-                    <div class="mt-1 text-[11px] text-gray-400 font-medium">38.3% response rate</div>
-                </div>
-
-                <div class="sub-card p-4">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="metric-label">Scoping Booked</span>
-                        <i data-lucide="calendar-check" class="w-4 h-4 text-gray-400"></i>
-                    </div>
-                    <div class="metric-value" id="gem-kpi-booked">8</div>
-                    <div class="mt-1 text-[11px] text-gray-400 font-medium">48-Hour audit queue</div>
-                </div>
-
-                <div class="sub-card p-4">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="metric-label">Diagnostics Paid</span>
-                        <i data-lucide="dollar-sign" class="w-4 h-4 text-gray-400"></i>
-                    </div>
-                    <div class="metric-value text-emerald-400" id="gem-kpi-pilots">3</div>
-                    <div class="mt-1 text-[11px] text-gray-400 font-medium">$10,500 pipeline val</div>
-                </div>
-
-                <div class="sub-card p-4">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="metric-label">Active Subscriptions</span>
-                        <i data-lucide="target" class="w-4 h-4 text-gray-400"></i>
-                    </div>
-                    <div class="metric-value">8</div>
-                    <div class="mt-1 text-[11px] text-gray-400 font-medium">$16,000 MRR</div>
+                <div class="flex items-end justify-between mt-3">
+                    <div class="text-3xl font-extrabold text-white font-mono tracking-tight">98.6%</div>
+                    <span class="badge-safe">SAFE</span>
                 </div>
             </div>
 
-            <!-- Pipeline Velocity Sub-Card -->
-            <div class="sub-card p-4">
-                <div class="mb-3 flex items-center justify-between">
-                    <span class="text-xs font-extrabold uppercase tracking-wider text-gray-300">Pipeline Velocity</span>
-                    <span class="text-xs font-mono text-emerald-400 font-bold">DM → Paid 24% (Target 20%)</span>
+            <div class="metric-capsule flex flex-col justify-between min-h-[110px]">
+                <div class="text-[10px] text-gray-400 font-extrabold uppercase tracking-widest font-sans">
+                    ACTIVE AIRLOCK HOLDS
                 </div>
-                <div class="grid gap-3 grid-cols-2 lg:grid-cols-4">
-                    <div class="bg-black/30 border border-white/5 rounded-xl p-3">
-                        <div class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Found → DM Sent</div>
-                        <div class="mt-1.5 flex items-center justify-between">
-                            <span class="text-base font-extrabold text-white">1d avg</span>
-                            <span class="text-[10px] font-mono text-emerald-400 font-bold">↑ improving</span>
-                        </div>
-                    </div>
-                    <div class="bg-black/30 border border-white/5 rounded-xl p-3">
-                        <div class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">DM Sent → Replied</div>
-                        <div class="mt-1.5 flex items-center justify-between">
-                            <span class="text-base font-extrabold text-white">2d avg</span>
-                            <span class="text-[10px] font-mono text-emerald-400 font-bold">↑ improving</span>
-                        </div>
-                    </div>
-                    <div class="bg-black/30 border border-white/5 rounded-xl p-3">
-                        <div class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Replied → Scoping</div>
-                        <div class="mt-1.5 flex items-center justify-between">
-                            <span class="text-base font-extrabold text-white">3d avg</span>
-                            <span class="text-[10px] font-mono text-amber-300 font-bold">→ steady</span>
-                        </div>
-                    </div>
-                    <div class="bg-black/30 border border-white/5 rounded-xl p-3">
-                        <div class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Scoping → Paid</div>
-                        <div class="mt-1.5 flex items-center justify-between">
-                            <span class="text-base font-extrabold text-white">4d avg</span>
-                            <span class="text-[10px] font-mono text-amber-300 font-bold">→ steady</span>
-                        </div>
-                    </div>
+                <div class="flex items-end justify-between mt-3">
+                    <div class="text-3xl font-extrabold text-white font-mono tracking-tight">0</div>
+                    <span class="badge-secure">SECURE</span>
+                </div>
+            </div>
+
+            <div class="metric-capsule flex flex-col justify-between min-h-[110px]">
+                <div class="text-[10px] text-gray-400 font-extrabold uppercase tracking-widest font-sans">
+                    OUTBOUND CONVERSION
+                </div>
+                <div class="flex items-end justify-between mt-3">
+                    <div class="text-3xl font-extrabold text-white font-mono tracking-tight">38.3%</div>
+                    <span class="badge-safe">OPTIMAL</span>
+                </div>
+            </div>
+
+            <div class="metric-capsule flex flex-col justify-between min-h-[110px]">
+                <div class="text-[10px] text-gray-400 font-extrabold uppercase tracking-widest font-sans">
+                    GOVERNED RECOVERY VALUE
+                </div>
+                <div class="flex items-end justify-between mt-3">
+                    <div class="text-3xl font-extrabold text-[#10B981] font-mono tracking-tight">$22,890</div>
+                    <span class="badge-resolved">RESOLVED</span>
                 </div>
             </div>
         </div>
 
-        <!-- 2. OutboundWidget -->
-        <div class="aura-card p-6 h-full flex flex-col">
-            <div class="mb-5 flex items-center justify-between border-b border-white/5 pb-4">
-                <div>
-                    <h3 class="text-sm font-extrabold uppercase tracking-widest text-white">Outbound Strikes Tracker</h3>
-                    <p class="text-xs text-gray-400 mt-1" id="gem-strike-updated">Multi-channel prospecting & automated follow-ups</p>
-                </div>
-                <div class="flex items-center gap-3">
-                    <button onclick="openGemModal()" class="btn-primary px-4 py-2 text-xs font-bold">
-                        + New Strike
-                    </button>
-                </div>
+        <!-- FILTER CAPSULE BAR -->
+        <div class="flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-2 bg-black/40 border border-white/5 p-1.5 rounded-full">
+                <button class="nav-pill active" onclick="filterTab('audit', this)">Live Audit Log</button>
+                <button class="nav-pill" onclick="filterTab('strikes', this)">Outbound Strikes</button>
+                <button class="nav-pill" onclick="filterTab('focus', this)">Founder Focus</button>
+                <button class="nav-pill" onclick="filterTab('recovered', this)">Recovered</button>
             </div>
 
-            <!-- Summary Cards -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
-                <div class="sub-card p-3.5">
-                    <span class="metric-label block mb-1">Total Strikes</span>
-                    <span class="text-2xl font-extrabold text-white">47</span>
-                </div>
-                <div class="sub-card p-3.5">
-                    <span class="metric-label block mb-1 text-sky-400">Sent</span>
-                    <span class="text-2xl font-extrabold text-sky-300">28</span>
-                </div>
-                <div class="sub-card p-3.5">
-                    <span class="metric-label block mb-1 text-emerald-400">Replied</span>
-                    <span class="text-2xl font-extrabold text-emerald-400">14</span>
-                </div>
-                <div class="sub-card p-3.5">
-                    <span class="metric-label block mb-1 text-rose-400">Closed/Lost</span>
-                    <span class="text-2xl font-extrabold text-rose-300">5</span>
-                </div>
-            </div>
-
-            <!-- Strike Items List -->
-            <div class="flex-1 flex flex-col space-y-3" id="gem-strikes-list">
-                <!-- rendered by JS -->
+            <div class="flex items-center gap-2.5 bg-black/40 border border-white/10 rounded-full px-4 py-2 text-xs font-mono text-gray-400 w-72">
+                <i data-lucide="search" class="w-3.5 h-3.5 text-gray-500"></i>
+                <input type="text" placeholder="Filter logs by keyword..." class="bg-transparent border-none outline-none text-white w-full placeholder-gray-600 text-xs">
             </div>
         </div>
+
+        <!-- 2-COLUMN BIG STAGE (Telemetry Log Stream vs Containment Center) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            <!-- Left Main Screen (7 cols) -->
+            <div class="lg:col-span-7 aura-card p-6 min-h-[440px] flex flex-col">
+                <div class="flex items-center justify-between border-b border-white/5 pb-4 mb-4">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="shield-check" class="w-4 h-4 text-sky-400"></i>
+                        <span class="text-xs font-bold font-mono uppercase tracking-widest text-white">AUDITED TELEMETRY LOG STREAM (5 ENTRIES)</span>
+                    </div>
+                    <span class="text-[9px] font-mono uppercase text-gray-500 tracking-widest">REAL-TIME COMPLIANCE DATABASE</span>
+                </div>
+
+                <div class="space-y-3 flex-1 overflow-y-auto" id="gem-feed-list">
+                    <!-- rendered by JS -->
+                </div>
+            </div>
+
+            <!-- Right Containment Center (5 cols) -->
+            <div class="lg:col-span-5 aura-card p-6 min-h-[440px] flex flex-col">
+                <div class="flex items-center justify-between border-b border-white/5 pb-4 mb-4">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="lock" class="w-4 h-4 text-sky-400"></i>
+                        <span class="text-xs font-bold font-mono uppercase tracking-widest text-white">COMPLIANCE CONTAINMENT CENTER</span>
+                    </div>
+                </div>
+
+                <div class="space-y-3 flex-1 overflow-y-auto" id="gem-focus-list">
+                    <!-- rendered by JS -->
+                </div>
+
+                <div class="mt-4 pt-3 border-t border-white/5 flex gap-2">
+                    <input type="text" id="gem-new-task" placeholder="Add verified governance task..." class="bg-black/40 border border-white/10 rounded-xl px-4 py-2 text-xs text-white placeholder-gray-600 outline-none flex-1 font-mono focus:border-sky-500/50">
+                    <button onclick="addGemTask()" class="btn-sweep px-4 py-2 text-xs">Add</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3-Card Row: Outbound Strikes, Leads at Risk, Agent Fleet -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Outbound Strikes -->
+            <div class="aura-card p-6 flex flex-col">
+                <div class="flex items-center justify-between border-b border-white/5 pb-3 mb-4">
+                    <span class="text-xs font-bold uppercase tracking-wider text-white">Outbound Strikes Tracker</span>
+                    <button onclick="openGemModal()" class="text-[10px] font-mono text-sky-400 hover:underline">+ Strike</button>
+                </div>
+                <div class="space-y-2.5 overflow-y-auto max-h-64" id="gem-strikes-list">
+                    <!-- rendered by JS -->
+                </div>
+            </div>
+
+            <!-- Leads at Risk -->
+            <div class="aura-card p-6 flex flex-col">
+                <div class="flex items-center justify-between border-b border-white/5 pb-3 mb-4">
+                    <span class="text-xs font-bold uppercase tracking-wider text-white">Leads at Risk</span>
+                    <div class="flex gap-1" id="gem-risk-filters">
+                        <button onclick="filterRisk('all', this)" class="text-[9px] px-2 py-0.5 rounded bg-white/10 text-white font-mono">ALL</button>
+                        <button onclick="filterRisk('hot', this)" class="text-[9px] px-2 py-0.5 rounded text-gray-400 font-mono">HOT</button>
+                    </div>
+                </div>
+                <div class="space-y-2.5 overflow-y-auto max-h-64" id="gem-risk-list">
+                    <!-- rendered by JS -->
+                </div>
+            </div>
+
+            <!-- Multi-Agent Orchestration -->
+            <div class="aura-card p-6 flex flex-col">
+                <div class="flex items-center justify-between border-b border-white/5 pb-3 mb-4">
+                    <span class="text-xs font-bold uppercase tracking-wider text-white">Fleet Orchestration</span>
+                    <span class="badge-safe">6 RUNNING</span>
+                </div>
+                <div class="space-y-2 overflow-y-auto max-h-64" id="gem-orch-list">
+                    <!-- rendered by JS -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
 
         <!-- 3. NodeToggles (Agent Team) -->
         <div class="aura-card p-5">
