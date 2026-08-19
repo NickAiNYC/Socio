@@ -11,6 +11,9 @@ const app = express();
 const PORT = process.env.PORT || 3030;
 const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET || '';
 
+// Pure vertical-decision metrics (14-day sprint gates + priority score).
+const { buildRows, diagnose } = require('./lib/vertical-metrics.cjs');
+
 // Admin auth: never accept a known/weak key. If unset, fall back to a fresh
 // per-boot random key (fail closed). If set to a known weak value, refuse to start.
 const _adminPassword = process.env.ADMIN_PASSWORD || '';
@@ -21,7 +24,17 @@ if (_adminPassword && (_adminPassword.length < 16 || /^(socio2026|password|admin
 }
 
 const HERMES_SUPPORT_PROFILE = process.env.SOCIO_HERMES_PROFILE || 'socio-support';
-const DB_FILE = path.join(__dirname, 'outputs', 'socio_production.json');
+// Test isolation: override the DB file (used by the internal e2e harness so it
+// never touches production data). Default remains the production store.
+const DB_FILE = process.env.SOCIO_DB_FILE
+  ? path.resolve(process.env.SOCIO_DB_FILE)
+  : path.join(__dirname, 'outputs', 'socio_production.json');
+// Comma-separated email domains allowed to submit is_test records without an
+// admin key (e.g. "socio.nyc,socio.dev"). Empty = admin key only.
+const TEST_ALLOWLIST_EMAIL_DOMAINS = (process.env.TEST_ALLOWLIST_EMAIL_DOMAINS || '')
+  .split(',')
+  .map((d) => String(d).trim().toLowerCase().replace(/^@/, ''))
+  .filter(Boolean);
 
 // Ensure outputs dir exists
 if (!fs.existsSync(path.join(__dirname, 'outputs'))) {
@@ -38,7 +51,8 @@ function getDb() {
       referral_conversions: [],
       analytics_pageviews: [],
       analytics_events: [],
-      rli_leads: []
+      rli_leads: [],
+      test_rli_leads: []
     };
     fs.writeFileSync(DB_FILE, JSON.stringify(initial, null, 2));
     return initial;
@@ -46,7 +60,7 @@ function getDb() {
   try {
     return JSON.parse(fs.readFileSync(DB_FILE, 'utf8'));
   } catch {
-    return { leads: [], referrals: {}, referral_clicks: [], referral_conversions: [], analytics_pageviews: [], analytics_events: [], rli_leads: [] };
+    return { leads: [], referrals: {}, referral_clicks: [], referral_conversions: [], analytics_pageviews: [], analytics_events: [], rli_leads: [], test_rli_leads: [] };
   }
 }
 
@@ -150,6 +164,34 @@ function deviceFingerprint(req) {
   const forwarded = req.headers['x-forwarded-for'];
   const ip = forwarded ? String(forwarded).split(',')[0].trim() : (req.ip || 'unknown');
   return crypto.createHash('sha256').update(`${ua}::${ip}`).digest('hex');
+}
+
+// --------------------------------------------------------------------------
+// TEST-RECORD AUTHORIZATION (is_test / test_label)
+//
+// A record marked is_test is accepted ONLY when:
+//   1. an admin session/key is presented (x-admin-key or admin cookie), OR
+//   2. the submission's merchant.contact_email domain is on the
+//      TEST_ALLOWLIST_EMAIL_DOMAINS allowlist (internal testing only).
+// Anything else is rejected with 403 test_not_authorized — an unauthenticated
+// caller can never write a test record (or pollute analytics with one).
+// --------------------------------------------------------------------------
+function isTestRequestAuthorized(req, b) {
+  if (getAdminSession(req)) return { ok: true, via: 'admin' };
+  const email = String((b && b.merchant && b.merchant.contact_email) || '').trim().toLowerCase();
+  const domain = email.split('@')[1] || '';
+  if (domain && TEST_ALLOWLIST_EMAIL_DOMAINS.includes(domain)) return { ok: true, via: 'allowlist', domain };
+  return { ok: false };
+}
+
+// All RLI records a founder-visible queue should render: production first,
+// then test records flagged with is_test + test_label. Stats NEVER include test.
+function allRliLeads(db) {
+  const prod = Array.isArray(db.rli_leads) ? db.rli_leads : [];
+  const test = Array.isArray(db.test_rli_leads)
+    ? db.test_rli_leads.map((l) => ({ ...l, is_test: true, test_label: l.test_label || 'internal_test' }))
+    : [];
+  return { prod, test, all: [...prod, ...test] };
 }
 
 // Resolve a merchant token presented via Authorization: Bearer <token>.
@@ -766,22 +808,41 @@ app.post('/api/recovery-index', (req, res) => {
     return res.status(400).json({ status: 'error', message: 'Category is required' });
   }
 
+  // --- Test-record gate (is_test / test_label) ---
+  const wantsTest = b.is_test === true || String(b.is_test) === 'true';
+  const testLabel = String(b.test_label || '').slice(0, 100);
+  if (wantsTest) {
+    const auth = isTestRequestAuthorized(req, b);
+    if (!auth.ok) {
+      return res.status(403).json({
+        status: 'error',
+        code: 'test_not_authorized',
+        message: 'Test records require an admin key or an allowlisted internal email domain.'
+      });
+    }
+    console.log(`[RLI] TEST record authorized via ${auth.via} (label: ${testLabel || 'unlabeled'})`);
+  }
+
   // Authoritative assessment from raw answers (never trusts the browser).
   const serverAssessment = rliScore(b);
   const now = new Date().toISOString();
-  const followUpDue = serverAssessment.sales_tier === 'high'
+  // Test records carry NO founder SLA — they are excluded from follow-up timers.
+  const followUpDue = (!wantsTest && serverAssessment.sales_tier === 'high')
     ? new Date(Date.now() + 15 * 60 * 1000).toISOString() // founder follow-up within 15 min during business hours
     : null;
 
   const record = {
     lead_id: 'rli_' + crypto.randomBytes(8).toString('hex'),
     submitted_at: now,
+    is_test: wantsTest,
+    test_label: wantsTest ? testLabel : undefined,
     merchant: {
       business_name: String(b.merchant.business_name || '').slice(0, 200),
       website: String(b.merchant.website || '').slice(0, 300),
       zip_code: String(b.merchant.zip_code || '').slice(0, 20),
       vertical: String(b.merchant.vertical || '').slice(0, 100),
-      locations: String(b.merchant.locations || '1').slice(0, 10)
+      locations: String(b.merchant.locations || '1').slice(0, 10),
+      contact_email: String(b.merchant.contact_email || '').slice(0, 200)
     },
     economics: {
       monthly_revenue_band: String(b.economics?.monthly_revenue_band || ''),
@@ -824,28 +885,38 @@ app.post('/api/recovery-index', (req, res) => {
       data_access_state: null,
       disqualified_reason: null,
       follow_up_due: followUpDue,
-      follow_up_state: serverAssessment.sales_tier === 'high' ? 'pending' : 'waiting'
+      follow_up_state: wantsTest ? 'test' : (serverAssessment.sales_tier === 'high' ? 'pending' : 'waiting')
     }
   };
 
   const db = getDb();
-  if (!Array.isArray(db.rli_leads)) db.rli_leads = [];
-  db.rli_leads.push(record);
+  if (wantsTest) {
+    if (!Array.isArray(db.test_rli_leads)) db.test_rli_leads = [];
+    db.test_rli_leads.push(record);
+  } else {
+    if (!Array.isArray(db.rli_leads)) db.rli_leads = [];
+    db.rli_leads.push(record);
+  }
   saveDb(db);
 
-  console.log('[RLI] Qualified lead:', record.merchant.business_name, '|', record.merchant.vertical, '| server score', record.server_assessment.recovery_score, '|', record.server_assessment.sales_tier);
+  console.log(`[RLI] ${wantsTest ? 'TEST' : 'Qualified'} lead:`, record.merchant.business_name, '|', record.merchant.vertical, '| server score', record.server_assessment.recovery_score, '|', record.server_assessment.sales_tier);
 
   // Dispatch Kanban task (safe execFile, no shell) — server score only.
-  const hermesArgs = ['kanban', 'create', `RLI Lead: ${record.merchant.business_name} (${record.merchant.vertical}) — score ${record.server_assessment.recovery_score} [${record.server_assessment.sales_tier}]`, '--assignee', 'socio-prospect', '--board', 'socio'];
-  execFile('hermes', hermesArgs, (err) => {
-    if (err) console.log('[Hermes Kanban] Fallback / Hermes not active in local env:', err.message);
-  });
+  // Test records are excluded from Hermes sales tasks.
+  if (!wantsTest) {
+    const hermesArgs = ['kanban', 'create', `RLI Lead: ${record.merchant.business_name} (${record.merchant.vertical}) — score ${record.server_assessment.recovery_score} [${record.server_assessment.sales_tier}]`, '--assignee', 'socio-prospect', '--board', 'socio'];
+    execFile('hermes', hermesArgs, (err) => {
+      if (err) console.log('[Hermes Kanban] Fallback / Hermes not active in local env:', err.message);
+    });
+  }
 
   // Return ONLY the server-calculated assessment.
   return res.json({
     status: 'success',
     message: 'Revenue Leakage Index recorded.',
     lead_id: record.lead_id,
+    is_test: wantsTest,
+    test_label: wantsTest ? testLabel : undefined,
     assessment: record.server_assessment
   });
 });
@@ -856,7 +927,8 @@ app.post('/api/recovery-index', (req, res) => {
 app.post('/api/rli/booking', (req, res) => {
   const b = req.body || {};
   const db = getDb();
-  const leads = Array.isArray(db.rli_leads) ? db.rli_leads : [];
+  const { prod, test } = allRliLeads(db);
+  const leads = [...prod, ...test];
   const lead = leads.find(l => l.lead_id === b.lead_id);
   if (!lead) return res.status(404).json({ status: 'error', message: 'RLI lead not found' });
 
@@ -869,10 +941,13 @@ app.post('/api/rli/booking', (req, res) => {
   };
   saveDb(db);
 
-  const hermesArgs = ['kanban', 'create', `Booking Request: ${lead.merchant.business_name} (${lead.merchant.vertical}) — score ${lead.server_assessment.recovery_score}`, '--assignee', 'socio-prospect', '--board', 'socio'];
-  execFile('hermes', hermesArgs, (err) => {
-    if (err) console.log('[Hermes Kanban] Fallback / Hermes not active in local env:', err.message);
-  });
+  // Test records are excluded from Hermes sales tasks (nurture/sales exclusion).
+  if (!lead.is_test) {
+    const hermesArgs = ['kanban', 'create', `Booking Request: ${lead.merchant.business_name} (${lead.merchant.vertical}) — score ${lead.server_assessment.recovery_score}`, '--assignee', 'socio-prospect', '--board', 'socio'];
+    execFile('hermes', hermesArgs, (err) => {
+      if (err) console.log('[Hermes Kanban] Fallback / Hermes not active in local env:', err.message);
+    });
+  }
 
   return res.json({
     status: 'success',
@@ -889,16 +964,19 @@ app.get('/api/rli/leads', (req, res) => {
     return res.status(401).json({ status: 'error', message: 'Admin key or session required' });
   }
   const db = getDb();
-  const leads = (Array.isArray(db.rli_leads) ? db.rli_leads : []).slice().sort((a, b) => {
+  const { prod, test, all } = allRliLeads(db);
+  // Queue renders production + test (test rows carry a highly visible TEST
+  // RECORD badge in the UI). Stats and vertical ranking are production-only.
+  const leads = all.slice().sort((a, b) => {
     const sa = (a.server_assessment && a.server_assessment.recovery_score) || 0;
     const sb = (b.server_assessment && b.server_assessment.recovery_score) || 0;
     if (sa !== sb) return sb - sa;
     return String(b.submitted_at).localeCompare(String(a.submitted_at));
   });
 
-  const stats = { total: leads.length, tier: { high: 0, opportunity: 0, foundation: 0 }, by_vertical: {}, avg_score: 0, qualified: 0 };
+  const stats = { total: prod.length, tier: { high: 0, opportunity: 0, foundation: 0 }, by_vertical: {}, avg_score: 0, qualified: 0 };
   let scoreSum = 0;
-  for (const l of leads) {
+  for (const l of prod) {
     const s = (l.server_assessment && l.server_assessment.recovery_score) || 0;
     scoreSum += s;
     const t = (l.server_assessment && l.server_assessment.sales_tier) || 'foundation';
@@ -910,13 +988,13 @@ app.get('/api/rli/leads', (req, res) => {
     stats.by_vertical[v].scoreSum += s;
     if (s >= 75) stats.by_vertical[v].qualified++;
   }
-  if (leads.length) stats.avg_score = Math.round(scoreSum / leads.length);
+  if (prod.length) stats.avg_score = Math.round(scoreSum / prod.length);
   for (const v of Object.keys(stats.by_vertical)) {
     stats.by_vertical[v].avg_score = Math.round(stats.by_vertical[v].scoreSum / stats.by_vertical[v].count);
     delete stats.by_vertical[v].scoreSum;
   }
 
-  return res.json({ status: 'success', stats, leads });
+  return res.json({ status: 'success', stats, test_count: test.length, leads });
 });
 
 app.post('/api/rli/leads/:id/state', (req, res) => {
@@ -924,12 +1002,15 @@ app.post('/api/rli/leads/:id/state', (req, res) => {
     return res.status(401).json({ status: 'error', message: 'Admin key or session required' });
   }
   const db = getDb();
-  const leads = Array.isArray(db.rli_leads) ? db.rli_leads : [];
+  const { prod, test } = allRliLeads(db);
+  const leads = [...prod, ...test];
   const lead = leads.find(l => l.lead_id === req.params.id);
   if (!lead) return res.status(404).json({ status: 'error', message: 'RLI lead not found' });
 
   const b = req.body || {};
-  const validBooking = ['unbooked', 'booked', 'attended', 'no_show'];
+  // Booking intent ladder: unbooked -> booked (intent) -> scheduled (founder
+  // confirmed slot) -> attended / no_show. Reported separately, never merged.
+  const validBooking = ['unbooked', 'booked', 'scheduled', 'attended', 'no_show'];
   const validAccess = ['requested', 'granted', 'blocked'];
   if (b.booking_state != null && !validBooking.includes(b.booking_state)) {
     return res.status(400).json({ status: 'error', message: 'Invalid booking_state' });
@@ -1115,10 +1196,45 @@ app.get('/api/referrals/stats', (req, res) => {
 // --------------------------------------------------------------------------
 // 5. ANALYTICS INGESTION & ADMIN DASHBOARD
 // --------------------------------------------------------------------------
+// Normalize a landing path's query params into attribution fields so the
+// Vertical Decision Dashboard can filter events by UTM without re-parsing.
+function normalizeAnalytics(body) {
+  const path = String(body.path || '');
+  let qs = '';
+  const qIdx = path.indexOf('?');
+  if (qIdx !== -1) qs = path.slice(qIdx + 1);
+  const params = new URLSearchParams(qs);
+  return {
+    utm_source: String(params.get('utm_source') || body.utm_source || '').slice(0, 100),
+    utm_medium: String(params.get('utm_medium') || body.utm_medium || '').slice(0, 100),
+    utm_campaign: String(params.get('utm_campaign') || body.utm_campaign || '').slice(0, 100),
+    vertical: String(params.get('vertical') || body.vertical || '').slice(0, 100),
+    is_test: body.is_test === true || String(body.is_test) === 'true'
+  };
+}
+
+// Analytics test events require the same authorization as test RLI records —
+// an unauthenticated caller can never inject test events (or be excluded by
+// the "Exclude test records" toggle while others cannot).
+function analyticsTestAllowed(req, body) {
+  if (!(body.is_test === true || String(body.is_test) === 'true')) return { ok: true };
+  if (getAdminSession(req)) return { ok: true, via: 'admin' };
+  const email = String(body.email || '').trim().toLowerCase();
+  const domain = email.split('@')[1] || '';
+  if (domain && TEST_ALLOWLIST_EMAIL_DOMAINS.includes(domain)) return { ok: true, via: 'allowlist' };
+  return { ok: false };
+}
+
 app.post('/api/analytics/pageview', (req, res) => {
+  const auth = analyticsTestAllowed(req, req.body || {});
+  if (!auth.ok) {
+    return res.status(403).json({ status: 'error', code: 'test_not_authorized', message: 'Test analytics events require an admin key or an allowlisted internal email domain.' });
+  }
   const db = getDb();
+  const norm = normalizeAnalytics(req.body || {});
   db.analytics_pageviews.push({
     ...req.body,
+    ...norm,
     ip: req.ip || 'unknown',
     timestamp: new Date().toISOString()
   });
@@ -1129,15 +1245,118 @@ app.post('/api/analytics/pageview', (req, res) => {
 });
 
 app.post('/api/analytics/event', (req, res) => {
+  const auth = analyticsTestAllowed(req, req.body || {});
+  if (!auth.ok) {
+    return res.status(403).json({ status: 'error', code: 'test_not_authorized', message: 'Test analytics events require an admin key or an allowlisted internal email domain.' });
+  }
   const db = getDb();
+  const norm = normalizeAnalytics(req.body || {});
   db.analytics_events.push({
     ...req.body,
+    ...norm,
     ip: req.ip || 'unknown',
     timestamp: new Date().toISOString()
   });
   if (db.analytics_events.length > 5000) db.analytics_events.shift();
   saveDb(db);
   return res.json({ status: 'success' });
+});
+
+// --------------------------------------------------------------------------
+// 5.1 VERTICAL DECISION DASHBOARD (14-day discovery sprint)
+// --------------------------------------------------------------------------
+// Admin-gated. Returns per-vertical funnel metrics with the sprint gates:
+//   G1 >= 30 completed RLIs, G2 >= 10 leads scoring 75+. Priority score (V) is
+//   only emitted for verticals that clear BOTH gates — otherwise the UI shows
+//   "Insufficient data" (never an attractive chart standing in for a decision).
+//
+// Query params:
+//   from,to         ISO date range (inclusive)
+//   utm_source      source filter
+//   exclude_test    'true' (default) | 'false' — include test records when false
+app.get('/api/vertical/dashboard', (req, res) => {
+  if (!getAdminSession(req)) {
+    return res.status(401).json({ status: 'error', message: 'Admin key or session required' });
+  }
+  const db = getDb();
+  const { prod, test } = allRliLeads(db);
+  const includeTest = String(req.query.exclude_test || 'true') === 'false';
+  const leads = includeTest ? [...prod, ...test] : prod;
+  const events = (Array.isArray(db.analytics_events) ? db.analytics_events : [])
+    .filter((e) => includeTest || !e.is_test);
+
+  const rows = buildRows({
+    rliLeads: leads,
+    events,
+    from: req.query.from || null,
+    to: req.query.to || null,
+    utmSource: req.query.utm_source || null
+  });
+
+  return res.json({
+    status: 'success',
+    generated_at: new Date().toISOString(),
+    filters: {
+      from: req.query.from || null,
+      to: req.query.to || null,
+      utm_source: req.query.utm_source || null,
+      exclude_test: includeTest ? 'false' : 'true'
+    },
+    gates: { completed_min: 30, qualified_min: 10 },
+    booking_naming: 'booking_intent_rate | founder_scheduled_rate | attended_rate — a booking request is not a booking',
+    verticals: rows,
+    diagnosis: diagnose(rows)
+  });
+});
+
+// --------------------------------------------------------------------------
+// 5.2 FOUNDER-OWNED CONVERSION LOG (CSV export)
+// --------------------------------------------------------------------------
+// RLI completion -> booking intent -> scheduled -> attended -> data access,
+// one row per production lead (include_test=true adds flagged test rows).
+app.get('/api/rli/export', (req, res) => {
+  if (!getAdminSession(req)) {
+    return res.status(401).json({ status: 'error', message: 'Admin key or session required' });
+  }
+  const db = getDb();
+  const { prod, test } = allRliLeads(db);
+  const includeTest = String(req.query.include_test || 'false') === 'true';
+  const rows = includeTest ? [...prod, ...test] : prod;
+
+  const esc = (v) => {
+    const s = String(v == null ? '' : v);
+    return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  };
+  const header = [
+    'lead_id', 'is_test', 'test_label', 'submitted_at', 'business_name', 'website', 'zip_code',
+    'vertical', 'locations', 'contact_email', 'server_score', 'sales_tier', 'leak_type', 'data_confidence',
+    'booking_state', 'booking_requested_at', 'booking_contact_email', 'data_access_state',
+    'disqualified_reason', 'follow_up_state', 'follow_up_due', 'utm_source', 'utm_medium', 'utm_campaign',
+    'landing_path', 'referrer', 'client_score_mismatch'
+  ];
+  const lines = rows.map((l) => [
+    l.lead_id, l.is_test ? 'true' : '', l.test_label || '', l.submitted_at,
+    (l.merchant && l.merchant.business_name) || '', (l.merchant && l.merchant.website) || '',
+    (l.merchant && l.merchant.zip_code) || '', (l.merchant && l.merchant.vertical) || '',
+    (l.merchant && l.merchant.locations) || '', (l.merchant && l.merchant.contact_email) || '',
+    (l.server_assessment && l.server_assessment.recovery_score) ?? '',
+    (l.server_assessment && l.server_assessment.sales_tier) || '',
+    (l.server_assessment && l.server_assessment.leak_type) || '',
+    (l.server_assessment && l.server_assessment.data_confidence) || '',
+    (l.status && l.status.booking_state) || 'unbooked',
+    (l.status && l.status.booking && l.status.booking.requested_at) || '',
+    (l.status && l.status.booking && l.status.booking.contact_email) || '',
+    (l.status && l.status.data_access_state) || '', (l.status && l.status.disqualified_reason) || '',
+    (l.status && l.status.follow_up_state) || '', (l.status && l.status.follow_up_due) || '',
+    (l.attribution && l.attribution.utm_source) || '', (l.attribution && l.attribution.utm_medium) || '',
+    (l.attribution && l.attribution.utm_campaign) || '', (l.attribution && l.attribution.landing_path) || '',
+    (l.attribution && l.attribution.referrer) || '',
+    (l.client_assessment && l.server_assessment && l.client_assessment.recovery_score != null && l.client_assessment.recovery_score !== l.server_assessment.recovery_score) ? 'true' : ''
+  ].map(esc).join(','));
+
+  res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+  res.setHeader('Content-Disposition', 'attachment; filename="socio_rli_conversion_log.csv"');
+  return res.send([header.join(','), ...lines].join('\n'));
 });
 
 // Admin login: POST key, verify with timing-safe compare, issue 12h httpOnly session cookie.

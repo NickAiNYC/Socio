@@ -585,6 +585,59 @@
       </div>
     </section>
 
+    <!-- ===================================================================
+        7. VERTICAL DECISION DASHBOARD (14-day discovery sprint)
+        One compact table. No chart stands in for a decision: priority score
+        is "Insufficient data" until a vertical clears BOTH sample gates
+        (>= 30 completed RLIs AND >= 10 leads scoring 75+).
+        Booking naming: booking_intent_rate / founder_scheduled_rate /
+        attended_rate are reported separately — a booking request is not a booking.
+        =================================================================== -->
+    <section class="scrutexity-card p-6 space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4 flex-wrap">
+        <div>
+          <div class="page-eyebrow text-slate-900 mb-0">VERTICAL DECISION DASHBOARD</div>
+          <div class="page-subtitle text-xs mt-0.5">Four controlled acquisition cells · A: aesthetic clinics · B: salons · C: florists · D: cafés. Scores only after both gates clear.</div>
+        </div>
+        <div class="flex items-center gap-2 flex-wrap" id="vd-controls">
+          <input type="date" id="vd-from" class="bg-slate-50 border border-slate-200 rounded-lg text-xs px-2 py-1.5 text-slate-600" title="Date range from" />
+          <input type="date" id="vd-to" class="bg-slate-50 border border-slate-200 rounded-lg text-xs px-2 py-1.5 text-slate-600" title="Date range to" />
+          <input type="text" id="vd-utm" placeholder="utm_source" class="bg-slate-50 border border-slate-200 rounded-lg text-xs px-2 py-1.5 text-slate-600 w-32" title="Filter by utm_source" />
+          <label class="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-slate-500 cursor-pointer select-none">
+            <input type="checkbox" id="vd-exclude-test" checked class="accent-[#669BD2] w-3.5 h-3.5" />
+            Exclude test records
+          </label>
+          <button onclick="loadVerticalDashboard()" class="px-3 py-1.5 rounded-full bg-[#669BD2]/10 border border-[#669BD2]/30 text-[#669BD2] text-[10px] font-bold uppercase tracking-wider hover:bg-[#669BD2]/20 transition-all cursor-pointer">Apply</button>
+        </div>
+      </div>
+      <div id="vd-status" class="text-xs text-slate-400"></div>
+      <div id="vd-naming" class="text-[10px] text-slate-400 font-mono"></div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs font-sans">
+          <thead>
+            <tr class="text-slate-500 uppercase tracking-wider border-b border-slate-200 bg-slate-50 whitespace-nowrap">
+              <th class="p-3.5">Vertical</th>
+              <th class="p-3.5">Clicks</th>
+              <th class="p-3.5">Starts</th>
+              <th class="p-3.5">Completed</th>
+              <th class="p-3.5">Completion rate</th>
+              <th class="p-3.5">75+ leads</th>
+              <th class="p-3.5">Qualified rate</th>
+              <th class="p-3.5">Booking intent</th>
+              <th class="p-3.5">Scheduled</th>
+              <th class="p-3.5">Attended</th>
+              <th class="p-3.5">Data granted</th>
+              <th class="p-3.5">Access rate</th>
+              <th class="p-3.5">Sample gate</th>
+              <th class="p-3.5">Priority score</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200 text-slate-500" id="vd-table-body"></tbody>
+        </table>
+      </div>
+      <div id="vd-diagnosis" class="text-xs text-slate-500 leading-relaxed"></div>
+    </section>
+
   </main>
 
   <!-- ===================================================================
@@ -1112,8 +1165,12 @@
         const dq = st.disqualified_reason ? ' · DQ:' + st.disqualified_reason : '';
         const due = st.follow_up_due ? ' · due ' + new Date(st.follow_up_due).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) : '';
         return `
-        <tr class="border-b border-slate-200">
-          <td class="p-3 font-bold text-slate-900">${l.merchant.business_name}</td>
+        <tr class="border-b border-slate-200 ${l.is_test ? 'bg-amber-50/60' : ''}">
+          <td class="p-3 font-bold text-slate-900">
+            ${l.is_test ? '<span class="inline-flex items-center gap-1 mr-1.5 px-2 py-0.5 rounded-full bg-amber-500 text-white text-[9px] font-extrabold uppercase tracking-wider shadow-[0_0_12px_rgba(245,158,11,0.45)]">TEST RECORD</span>' : ''}
+            ${l.merchant.business_name}
+            ${l.test_label ? `<span class="text-[9px] font-mono text-amber-600 ml-1">${l.test_label}</span>` : ''}
+          </td>
           <td class="p-3 text-slate-400">${(l.merchant.vertical || '').replace(/_/g, ' ')}</td>
           <td class="p-3"><span class="font-bold text-slate-900 font-title">${s.recovery_score || 0}</span></td>
           <td class="p-3"><span class="status-pill ${tierCls}">${TIER_LABEL[s.sales_tier] || '—'}</span></td>
@@ -1162,7 +1219,7 @@
             <p class="text-slate-500">Referrer: ${a.referrer || '—'} · Follow-up: ${l.status?.follow_up_due ? new Date(l.status.follow_up_due).toLocaleString('en-US') : 'engagement-gated'}</p>
             <div class="flex flex-wrap gap-2 pt-2">
               <select onchange="updateLeadState('${l.lead_id}', 'booking_state', this.value)" class="bg-slate-100 border border-slate-200 rounded-lg text-xs px-2 py-1.5">
-                ${['unbooked', 'booked', 'attended', 'no_show'].map(b => `<option value="${b}" ${(l.status?.booking_state || 'unbooked') === b ? 'selected' : ''}>${b}</option>`).join('')}
+                ${['unbooked', 'booked', 'scheduled', 'attended', 'no_show'].map(b => `<option value="${b}" ${(l.status?.booking_state || 'unbooked') === b ? 'selected' : ''}>${b}</option>`).join('')}
               </select>
               <select onchange="updateLeadState('${l.lead_id}', 'data_access_state', this.value)" class="bg-slate-100 border border-slate-200 rounded-lg text-xs px-2 py-1.5">
                 <option value="">data: —</option>
@@ -1192,6 +1249,78 @@
           renderQueueTable();
         }
       } catch (e) { alert('Update failed: ' + e.message); }
+    }
+
+    // =====================================================================
+    // VERTICAL DECISION DASHBOARD (14-day sprint gates + priority score)
+    // =====================================================================
+    function vdFilters() {
+      const params = new URLSearchParams();
+      const from = document.getElementById('vd-from').value;
+      const to = document.getElementById('vd-to').value;
+      const utm = document.getElementById('vd-utm').value.trim();
+      const excludeTest = document.getElementById('vd-exclude-test').checked;
+      if (from) params.set('from', from + 'T00:00:00.000Z');
+      if (to) params.set('to', to + 'T23:59:59.999Z');
+      if (utm) params.set('utm_source', utm);
+      params.set('exclude_test', excludeTest ? 'true' : 'false');
+      return params.toString();
+    }
+
+    async function loadVerticalDashboard() {
+      const statusEl = document.getElementById('vd-status');
+      if (!adminKey) {
+        statusEl.textContent = 'Unlock the Founder Review Queue first (admin key required).';
+        return;
+      }
+      statusEl.textContent = 'Loading…';
+      try {
+        const res = await fetch('/api/vertical/dashboard?' + vdFilters(), { headers: { 'x-admin-key': adminKey } });
+        if (res.status === 401) { statusEl.textContent = 'Unauthorized — unlock the queue again.'; adminKey = null; return; }
+        const json = await res.json();
+        if (json.status !== 'success') throw new Error(json.message || 'load failed');
+        document.getElementById('vd-naming').textContent = json.booking_naming || '';
+        renderVerticalRows(json.verticals || []);
+        const diag = document.getElementById('vd-diagnosis');
+        diag.innerHTML = '<span class="font-bold uppercase text-[10px] tracking-wider text-slate-400">Diagnosis:</span> ' + (json.diagnosis || []).map(d => '<span class="block mt-1">· ' + d + '</span>').join('');
+        statusEl.textContent = 'Gates: ≥30 completed AND ≥10 qualified (75+) per vertical — score appears only after both clear. Refreshed ' + new Date(json.generated_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+      } catch (e) {
+        statusEl.textContent = 'Failed to load vertical dashboard: ' + e.message;
+      }
+    }
+
+    function renderVerticalRows(rows) {
+      const tbody = document.getElementById('vd-table-body');
+      if (!rows.length) {
+        tbody.innerHTML = '<tr><td colspan="14" class="p-4 text-slate-400">No vertical data yet — starts, completions, and clicks will populate as cells run.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = rows.map(r => {
+        const gate = r.gate || {};
+        const gateHtml = gate.cleared
+          ? '<span class="status-pill bg-emerald-50 text-emerald-600 border border-emerald-200">CLEARED</span>'
+          : `<span class="status-pill bg-amber-50 text-amber-600 border border-amber-200" title="Needs ${gate.completed_needed} more completions / ${gate.qualified_needed} more 75+ leads">PENDING</span>`;
+        const priorityHtml = r.priority
+          ? `<span class="font-bold font-title text-slate-900">${r.priority.score}</span><span class="block text-[9px] font-mono text-slate-400">${r.priority.components.ctr_norm}/${r.priority.components.completion_norm}/${r.priority.components.qualified_norm}/${r.priority.components.booking_norm}/${r.priority.components.data_access_norm}</span>`
+          : '<span class="text-slate-400 italic">Insufficient data</span>';
+        return `
+        <tr class="hover:bg-slate-50 transition-colors whitespace-nowrap">
+          <td class="p-3 font-bold text-slate-900">${r.label}</td>
+          <td class="p-3">${r.clicks}</td>
+          <td class="p-3">${r.starts}</td>
+          <td class="p-3">${r.completed}</td>
+          <td class="p-3">${r.completion_pct}%</td>
+          <td class="p-3 font-semibold text-slate-700">${r.qualified}</td>
+          <td class="p-3">${r.qualified_pct}%</td>
+          <td class="p-3">${r.booking_intent} <span class="text-slate-400">(${r.booking_intent_pct}%)</span></td>
+          <td class="p-3">${r.founder_scheduled} <span class="text-slate-400">(${r.founder_scheduled_pct}%)</span></td>
+          <td class="p-3">${r.attended} <span class="text-slate-400">(${r.attended_pct}%)</span></td>
+          <td class="p-3">${r.data_granted}</td>
+          <td class="p-3">${r.access_pct}%</td>
+          <td class="p-3">${gateHtml}</td>
+          <td class="p-3">${priorityHtml}</td>
+        </tr>`;
+      }).join('');
     }
 
     window.addEventListener('DOMContentLoaded', () => {

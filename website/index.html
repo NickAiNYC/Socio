@@ -389,6 +389,11 @@
 </head>
 
 <body>
+    <script>
+        // Deploy-time webhook secret injection point. CI replaces the token
+        // with the real value at deploy time; never hardcode a secret here.
+        window.SOCIO_WEBHOOK_SECRET = '__SOCIO_WEBHOOK_SECRET__';
+    </script>
 
     <!-- ============================== -->
     <!-- NAVIGATION                      -->
@@ -2272,6 +2277,32 @@
             });
         });
 
+        // Vertical card view tracking (CTR denominator) — fires once when the
+        // verticals section becomes visible, per vertical card present on page.
+        (function trackVerticalViews() {
+            const section = document.getElementById('verticals');
+            if (!section) return;
+            const verticals = Array.from(document.querySelectorAll('#verticals a[href^="/recovery-index"]')).map(a =>
+                new URL(a.href, location.origin).searchParams.get('vertical') || 'generic'
+            );
+            const fired = new Set();
+            const io = new IntersectionObserver((entries) => {
+                for (const entry of entries) {
+                    if (!entry.isIntersecting) continue;
+                    for (const v of verticals) {
+                        if (fired.has(v)) continue;
+                        fired.add(v);
+                        fetch('/api/analytics/event', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ name: 'rli_vertical_view', vertical: v, path: location.pathname })
+                        }).catch(() => {});
+                    }
+                }
+            }, { threshold: 0.4 });
+            io.observe(section);
+        })();
+
         // Sticky CTA — appears after the hero, hides when the form is on screen
         const stickyCta = document.getElementById('sticky-cta');
         const leadSection = document.getElementById('lead-capture');
@@ -2329,6 +2360,9 @@
         }
 
         // Lead capture form → POST /api/leads (same origin, Vercel server.js)
+        // Webhook secret comes from deploy-time config ONLY (never hardcoded).
+        // CI replaces __SOCIO_WEBHOOK_SECRET__ at deploy time; when unset the
+        // header is omitted and the server fails closed if a secret is configured.
         const leadForm = document.getElementById('lead-form');
         if (leadForm) {
             leadForm.addEventListener('submit', async function (e) {
@@ -2352,9 +2386,13 @@
                 submitBtn.disabled = true;
                 submitBtn.style.opacity = '0.6';
                 try {
+                    const headers = { 'Content-Type': 'application/json' };
+                    if (window.SOCIO_WEBHOOK_SECRET && window.SOCIO_WEBHOOK_SECRET !== '__SOCIO_WEBHOOK_SECRET__') {
+                        headers['X-Webhook-Secret'] = window.SOCIO_WEBHOOK_SECRET;
+                    }
                     const res = await fetch('/api/leads', {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
+                        headers,
                         body: JSON.stringify(payload)
                     });
                     const json = await res.json().catch(() => ({}));
