@@ -60,6 +60,10 @@
       "dest": "website/escaneo-de-fugas-scorecard.html"
     },
     {
+      "src": "/limpieza/?",
+      "dest": "website/limpieza.html"
+    },
+    {
       "src": "/",
       "dest": "website/contratistas.html"
     },
