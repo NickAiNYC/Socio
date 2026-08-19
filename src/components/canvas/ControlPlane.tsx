@@ -250,9 +250,9 @@ export function ControlPlane() {
           =================================================================== */}
       <header className="absolute top-0 left-0 right-0 h-14 border-b border-white/5 bg-[#080B10]/80 px-6 flex items-center justify-between backdrop-blur-xl z-30">
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1 text-base font-black tracking-tight text-white font-mono">
+          <div className="flex items-center text-base font-black tracking-tight text-white font-mono">
             <span>Socio</span>
-            <span className="w-2 h-2 rounded-[2px] bg-[#669BD2] inline-block shadow-[0_0_8px_rgba(102,155,210,0.8)] ml-0.5 self-end mb-0.5" />
+            <span className="w-1.5 h-1.5 rounded-[1px] bg-[#669BD2] inline-block shadow-[0_0_6px_rgba(102,155,210,0.8)] ml-[1.5px] self-end mb-0.5" />
           </div>
           <span className="px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20 text-[9px] font-mono font-extrabold uppercase text-cyan-300">
             AGENT CONTROL PLANE
