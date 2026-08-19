@@ -33,10 +33,10 @@ export function Header() {
         <div className="flex items-center gap-6">
           <Link
             href="/"
-            className="flex items-center gap-0.5 text-xl sm:text-2xl font-bold text-white tracking-tight group"
+            className="flex items-center gap-1 text-xl sm:text-2xl font-bold text-white tracking-tight group"
           >
             <span>Socio</span>
-            <span className="text-[#669BD2] drop-shadow-[0_0_12px_rgba(102,155,210,0.9)] animate-pulse font-extrabold">.</span>
+            <span className="w-2 h-2 rounded-[2px] bg-[#669BD2] inline-block shadow-[0_0_8px_rgba(102,155,210,0.8)] ml-0.5 self-end mb-1"></span>
           </Link>
 
           {/* Sub-pill (Desktop Only) */}
