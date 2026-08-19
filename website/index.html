@@ -642,10 +642,26 @@
 
   <!-- Header -->
   <header>
-    <div class="logo">Socio<span>.</span></div>
-    <div class="lang-toggle">
-      <button class="lang-btn active" data-lang="en">EN</button>
-      <button class="lang-btn" data-lang="es">ES</button>
+    <a href="index.html" class="logo">
+      <div style="width: 36px; height: 36px; border-radius: 10px; background: #ffffff; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(0,0,0,0.4); flex-shrink: 0;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17 7L7 17M7 7H17V17" stroke="#0b0c10" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div style="display: flex; flex-direction: column; line-height: 1.1;">
+        <span style="font-family: var(--font-brand); font-size: 1.1rem; font-weight: 700; letter-spacing: 0.2em; color: #ffffff;">SOCIO</span>
+        <span style="font-family: var(--font-mono); font-size: 0.55rem; font-weight: 700; color: #64748b; letter-spacing: 0.15em; text-transform: uppercase;">GROWTH OS</span>
+      </div>
+    </a>
+
+    <div class="header-links">
+      <div class="lang-toggle" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 30px; padding: 3px;">
+        <button class="lang-btn active" data-lang="en" style="padding: 0.35rem 0.85rem; font-size: 0.75rem; border-radius: 20px;">EN</button>
+        <button class="lang-btn" data-lang="es" style="padding: 0.35rem 0.85rem; font-size: 0.75rem; border-radius: 20px;">ES</button>
+      </div>
+      <a href="command-center.html" class="nav-btn nav-btn-dash flex items-center gap-1.5" style="display: flex; align-items: center; gap: 0.4rem;">
+        <span>⚡ Command Center</span>
+      </a>
     </div>
   </header>
 
