@@ -12,8 +12,6 @@
  *   - promotion is a governed action (executed approval required in the MCP
  *     layer) and flips the active flag by compare-and-swap
  */
-import { randomUUID } from 'node:crypto';
-
 const METRICS = Object.freeze(['conversion', 'roi', 'approval']);
 const MIN_SAMPLE = 10;
 

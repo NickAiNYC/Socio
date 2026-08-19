@@ -33,7 +33,7 @@ export function parsePermitRecord(raw) {
 export async function fetchDobPermits({ borough = 'QUEENS', limit = 20, fetchFn = globalThis.fetch } = {}) {
   const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
   const url = new URL(NYC_DOB_API_ENDPOINT);
-  url.searchParams.set('$where', `borough = '${borough.toUpperCase()}'`);
+  url.searchParams.set('$where', `issuance_date >= '${yesterday}' AND borough = '${borough.toUpperCase()}'`);
   url.searchParams.set('$limit', String(limit));
   url.searchParams.set('$order', 'issuance_date DESC');
 
