@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revenue Leakage Index — Socio</title>
+    <meta name="description" content="A 3-minute operational assessment to identify where repeat revenue, leads, and follow-up are leaking. Directional diagnosis first — verified growth only after data connection and baseline validation.">
+    <meta property="og:title" content="Revenue Leakage Index — Socio">
+    <meta property="og:description" content="Find your highest-priority revenue leak. Directional recovery range + data-confidence score — not a generic marketing estimate.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://socio-one.vercel.app/recovery-index">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        heading: ['Space Grotesk', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        accent: '#669BD2',
+                        light: '#FAFAFA',
+                        neon: '#CCFF00',
+                    },
+                }
+            }
+        }
+    </script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            background: #FAFAFA;
+            color: #475569;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Space Grotesk', sans-serif; }
+
+        .neon-dot {
+            background: #669BD2;
+            box-shadow: 0 0 8px rgba(102, 155, 210, 0.6);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #669BD2 0%, #5B8EC4 50%, #7BAEE0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Neon CTA (matches landing page) */
+        .btn-neon {
+            background: #0f172a;
+            color: #ffffff;
+            box-shadow:
+                0 0 0 1px rgba(204, 255, 0, 0.30),
+                0 0 28px -6px rgba(204, 255, 0, 0.45),
+                inset 0 0 14px rgba(204, 255, 0, 0.10);
+            transition: all 0.3s ease;
+        }
+        .btn-neon:hover {
+            box-shadow:
+                0 0 0 1px rgba(204, 255, 0, 0.55),
+                0 0 40px -6px rgba(204, 255, 0, 0.65),
+                inset 0 0 18px rgba(204, 255, 0, 0.16);
+        }
+
+        /* Aura card */
+        .aura-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            border-radius: 1.5rem;
+            box-shadow:
+                0 0 0 1px rgba(226, 232, 240, 0.9),
+                inset 0 1px 0 rgba(255, 255, 255, 1),
+                0 8px 40px -12px rgba(15, 23, 42, 0.08);
+        }
+
+        /* Form fields */
+        .form-field {
+            width: 100%;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            padding: 0.8rem 1rem;
+            font-size: 0.875rem;
+            color: #0f172a;
+            font-weight: 300;
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+        .form-field:focus {
+            border-color: #669BD2;
+            box-shadow: 0 0 0 3px rgba(102, 155, 210, 0.15);
+            background: #ffffff;
+        }
+        .form-label { font-size: 0.75rem; font-weight: 500; color: #475569; letter-spacing: 0.02em; }
+
+        /* Radio card */
+        .radio-card { cursor: pointer; }
+        .radio-card input { position: absolute; opacity: 0; pointer-events: none; }
+        .radio-card .rc-box {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.8rem 1rem;
+            border-radius: 0.75rem;
+            border: 1px solid #e2e8f0;
+            background: #ffffff;
+            font-size: 0.875rem;
+            color: #475569;
+            transition: all 0.2s ease;
+        }
+        .radio-card:hover .rc-box { border-color: rgba(102, 155, 210, 0.5); }
+        .radio-card input:checked + .rc-box {
+            border-color: #669BD2;
+            background: rgba(102, 155, 210, 0.08);
+            color: #0f172a;
+            box-shadow: 0 0 0 1px rgba(102, 155, 210, 0.35);
+        }
+        .rc-dot {
+            width: 16px; height: 16px; border-radius: 50%;
+            border: 1.5px solid #cbd5e1; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            transition: border-color 0.2s ease;
+        }
+        .radio-card input:checked + .rc-box .rc-dot { border-color: #669BD2; }
+        .radio-card input:checked + .rc-box .rc-dot::after {
+            content: ''; width: 8px; height: 8px; border-radius: 50%; background: #669BD2;
+        }
+
+        /* Checkbox chip (systems) */
+        .chip-box { cursor: pointer; }
+        .chip-box input { position: absolute; opacity: 0; pointer-events: none; }
+        .chip-box .cb-box {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1rem;
+            border-radius: 9999px;
+            border: 1px solid #e2e8f0;
+            background: #ffffff;
+            font-size: 0.8rem;
+            color: #475569;
+            transition: all 0.2s ease;
+        }
+        .chip-box input:checked + .cb-box {
+            border-color: #669BD2;
+            background: rgba(102, 155, 210, 0.1);
+            color: #0f172a;
+        }
+
+        /* Step transitions */
+        .step-pane { display: none; }
+        .step-pane.active { display: block; animation: fadeUp 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Progress */
+        .progress-track { height: 3px; background: #e2e8f0; border-radius: 2px; overflow: hidden; }
+        .progress-fill {
+            height: 100%; width: 25%;
+            background: linear-gradient(90deg, #669BD2, #7BAEE0);
+            transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .step-indicator { display: flex; align-items: center; gap: 0.5rem; font-size: 0.7rem; color: #94a3b8; }
+        .step-indicator .si-num {
+            width: 24px; height: 24px; border-radius: 50%;
+            border: 1.5px solid #cbd5e1; color: #94a3b8;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 500; transition: all 0.3s ease;
+        }
+        .step-indicator.active .si-num { border-color: #669BD2; background: #669BD2; color: #fff; }
+        .step-indicator.done .si-num { border-color: #669BD2; color: #669BD2; }
+        .step-indicator.done .si-label { color: #64748b; }
+        .step-indicator.active .si-label { color: #0f172a; font-weight: 500; }
+
+        .cta-shimmer { position: relative; overflow: hidden; }
+        .cta-shimmer::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+        .cta-shimmer:hover::before { left: 100%; }
+    </style>
+</head>
+<body>
+
+    <!-- ============================== -->
+    <!-- NAV                            -->
+    <!-- ============================== -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-white/70 backdrop-blur-2xl border-b border-slate-200/60">
+        <div class="max-w-5xl mx-auto px-6 py-3 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-1 text-slate-900 text-lg tracking-tight">
+                <span class="font-semibold font-heading">SOCIO</span>
+                <span class="w-2 h-2 neon-dot rounded-sm ml-0.5 animate-pulse"></span>
+            </a>
+            <a href="/#lead-capture" class="text-sm text-slate-500 font-light hover:text-slate-900 transition-colors">Skip to quick form</a>
+        </div>
+    </nav>
+
+    <!-- ============================== -->
+    <!-- HERO                           -->
+    <!-- ============================== -->
+    <section class="pt-28 pb-12">
+        <div class="max-w-3xl mx-auto px-6 text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/5 border border-accent/20 text-sm text-accent mb-8">
+                <iconify-icon icon="solar:chart-square-linear" width="14"></iconify-icon>
+                Revenue Leakage Index
+            </div>
+            <h1 class="text-4xl lg:text-6xl font-light text-slate-900 tracking-tight mb-6">
+                Where is your revenue<br>
+                <span class="font-medium gradient-text">leaking?</span>
+            </h1>
+            <p class="text-lg text-slate-500 font-light leading-relaxed max-w-xl mx-auto mb-4">
+                A 3-minute operational assessment to identify where repeat revenue, leads, and follow-up are leaking.
+            </p>
+            <p class="text-sm text-slate-400 font-light max-w-xl mx-auto mb-8">
+                Built for high-repeat local businesses. You will receive a <strong class="text-slate-600">directional recovery range</strong>, a <strong class="text-slate-600">data-confidence score</strong>, and your <strong class="text-slate-600">highest-priority revenue leak</strong> — not a generic marketing estimate.
+            </p>
+            <div class="flex items-center justify-center gap-3 flex-wrap text-xs text-slate-400 font-light">
+                <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200">3 minutes</span>
+                <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200">4 short steps</span>
+                <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200">No email until the end</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- ASSESSMENT                     -->
+    <!-- ============================== -->
+    <section id="assessment" class="pb-24">
+        <div class="max-w-2xl mx-auto px-6">
+
+            <!-- Step indicators -->
+            <div class="flex items-center justify-between mb-6 px-1" id="step-indicators">
+                <div class="step-indicator active" data-si="1">
+                    <span class="si-num">1</span><span class="si-label hidden sm:inline">Merchant</span>
+                </div>
+                <div class="step-indicator" data-si="2">
+                    <span class="si-num">2</span><span class="si-label hidden sm:inline">Economics</span>
+                </div>
+                <div class="step-indicator" data-si="3">
+                    <span class="si-num">3</span><span class="si-label hidden sm:inline">Recoverability</span>
+                </div>
+                <div class="step-indicator" data-si="4">
+                    <span class="si-num">4</span><span class="si-label hidden sm:inline">Readiness</span>
+                </div>
+            </div>
+            <div class="progress-track mb-10">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+
+            <div class="aura-card p-8 lg:p-10">
+
+                <!-- STEP 1: Merchant context -->
+                <div class="step-pane active" data-step="1">
+                    <h2 class="text-2xl font-light text-slate-900 tracking-tight mb-6">About your business</h2>
+
+                    <div class="space-y-5">
+                        <div>
+                            <label class="form-label block mb-1.5" for="rli-name">Business name *</label>
+                            <input type="text" id="rli-name" class="form-field" placeholder="Cristal Flowers" />
+                        </div>
+                        <div>
+                            <label class="form-label block mb-1.5" for="rli-website">Website</label>
+                            <input type="text" id="rli-website" class="form-field" placeholder="cristalflowersnyc.com" />
+                        </div>
+                        <div>
+                            <label class="form-label block mb-1.5" for="rli-zip">NYC neighborhood / ZIP</label>
+                            <input type="text" id="rli-zip" class="form-field" placeholder="East Harlem · 10029" />
+                        </div>
+                        <div>
+                            <label class="form-label block mb-2">Category *</label>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5" id="rli-vertical-group">
+                                <label class="radio-card"><input type="radio" name="rli-vertical" value="aesthetic_clinic"><span class="rc-box"><span class="rc-dot"></span>Aesthetic clinic / med spa</span></label>
+                                <label class="radio-card"><input type="radio" name="rli-vertical" value="salon_wellness"><span class="rc-box"><span class="rc-dot"></span>Salon / wellness</span></label>
+                                <label class="radio-card"><input type="radio" name="rli-vertical" value="florist"><span class="rc-box"><span class="rc-dot"></span>Florist</span></label>
+                                <label class="radio-card"><input type="radio" name="rli-vertical" value="cafe"><span class="rc-box"><span class="rc-dot"></span>Café / hospitality</span></label>
+                                <label class="radio-card"><input type="radio" name="rli-vertical" value="other"><span class="rc-box"><span class="rc-dot"></span>Other</span></label>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label block mb-2">Number of locations</label>
+                            <div class="grid grid-cols-3 gap-2.5">
+                                <label class="radio-card"><input type="radio" name="rli-locations" value="1" checked><span class="rc-box"><span class="rc-dot"></span>1</span></label>
+                                <label class="radio-card"><input type="radio" name="rli-locations" value="2_3"><span class="rc-box"><span class="rc-dot"></span>2–3</span></label>
+                                <label class="radio-card"><input type="radio" name="rli-locations" value="4_plus"><span class="rc-box"><span class="rc-dot"></span>4+</span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2: Economic inputs -->
+                <div class="step-pane" data-step="2">
+                    <h2 class="text-2xl font-light text-slate-900 tracking-tight mb-6">Your economics</h2>
+
+                    <div class="space-y-5">
+                        <div>
+                            <label class="form-label block mb-2">Approximate monthly revenue band *</label>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                                <label class="radio-card"><input type="radio" name="rli-band" value="under_25k"><span class="rc-box"><span class="rc-dot"></span>Under $25k</span></label>
+                                <label class="radio-card"><input type="radio" name="rli-band" value="25_75k"><span class="rc-box"><span class="rc-dot"></span>$25k–$75k</span></label>
+                                <label class="radio-card"><input type="radio" name="rli-band" value="75_150k"><span class="rc-box"><span class="rc-dot"></span>$75k–$150k</span></label>
+                                <label class="radio-card"><input type="radio" name="rli-band" value="150_500k"><span class="rc-box"><span class="rc-dot"></span>$150k–$500k</span></label>
+                                <label class="radio-card"><input type="radio" name="rli-band" value="500k_plus"><span class="rc-box"><span class="rc-dot"></span>$500k+</span></label>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div>
+                                <label class="form-label block mb-1.5" for="rli-ticket">Average transaction / booking value *</label>
+                                <input type="number" id="rli-ticket" class="form-field" placeholder="85" min="0" />
+                            </div>
+                            <div>
+                                <label class="form-label block mb-1.5" for="rli-volume">Monthly customers or leads</label>
+                                <input type="number" id="rli-volume" class="form-field" placeholder="1200" min="0" />
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label block mb-2">Repeat-cycle expectation *</label>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                                <label class="radio-card"><input type="radio" name="rli-repeat" value="weekly"><span class="rc-box"><span class="rc-dot"></span>Weekly</span></label>
+                                <label class="radio-card"><input type="radio" name="rli-repeat" value="monthly"><span class="rc-box"><span class="rc-dot"></span>Monthly</span></label>
+                                <label class="radio-card"><input type="radio" name="rli-repeat" value="2_3_months"><span class="rc-box"><span class="rc-dot"></span>Every 2–3 months</span></label>
+                                <label class="radio-card"><input type="radio" name="rli-repeat" value="quarterly"><span class="rc-box"><span class="rc-dot"></span>Quarterly</span></label>
+                                <label class="radio-card"><input type="radio" name="rli-repeat" value="six_months_plus"><span class="rc-box"><span class="rc-dot"></span>Six months+</span></label>
+                                <label class="radio-card"><input type="radio" name="rli-repeat" value="one_time"><span class="rc-box"><span class="rc-dot"></span>Mostly one-time</span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 3: Recoverability -->
+                <div class="step-pane" data-step="3">
+                    <h2 class="text-2xl font-light text-slate-900 tracking-tight mb-6">Recoverability</h2>
+
+                    <div class="space-y-5">
+                        <div>
+                            <label class="form-label block mb-2">Do you have customer/lead history in a POS, CRM, booking, or loyalty system? *</label>
+                            <div class="grid grid-cols-2 gap-2.5 max-w-xs">
+                                <label class="radio-card"><input type="radio" name="rli-history" value="yes"><span class="rc-box"><span class="rc-dot"></span>Yes</span></label>
+                                <label class="radio-card"><input type="radio" name="rli-history" value="no"><span class="rc-box"><span class="rc-dot"></span>No</span></label>
+                            </div>
+                        </div>
+                        <div id="rli-systems-block">
+                            <label class="form-label block mb-2">Which systems do you use?</label>
+                            <div class="flex flex-wrap gap-2">
+                                <label class="chip-box"><input type="checkbox" name="rli-systems" value="pos"><span class="cb-box">POS</span></label>
+                                <label class="chip-box"><input type="checkbox" name="rli-systems" value="crm"><span class="cb-box">CRM</span></label>
+                                <label class="chip-box"><input type="checkbox" name="rli-systems" value="booking"><span class="cb-box">Booking</span></label>
+                                <label class="chip-box"><input type="checkbox" name="rli-systems" value="loyalty"><span class="cb-box">Loyalty</span></label>
+                                <label class="chip-box"><input type="checkbox" name="rli-systems" value="other_system"><span class="cb-box">Other</span></label>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label block mb-2">Can your team identify and contact prior customers or leads?</label>
+                            <div class="grid grid-cols-2 gap-2.5 max-w-xs">
+                                <label class="radio-card"><input type="radio" name="rli-contactable" value="yes"><span class="rc-box"><span class="rc-dot"></span>Yes</span></label>
+                                <label class="radio-card"><input type="radio" name="rli-contactable" value="no"><span class="rc-box"><span class="rc-dot"></span>No</span></label>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label block mb-2">Approximate share of customers/leads who have not returned in their usual cycle</label>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                                <label class="radio-card"><input type="radio" name="rli-dormant" value="under_10"><span class="rc-box"><span class="rc-dot"></span>Under 10%</span></label>
+                                <label class="radio-card"><input type="radio" name="rli-dormant" value="10_25"><span class="rc-box"><span class="rc-dot"></span>10–25%</span></label>
+                                <label class="radio-card"><input type="radio" name="rli-dormant" value="25_50"><span class="rc-box"><span class="rc-dot"></span>25–50%</span></label>
+                                <label class="radio-card"><input type="radio" name="rli-dormant" value="over_50"><span class="rc-box"><span class="rc-dot"></span>Over 50%</span></label>
+                                <label class="radio-card"><input type="radio" name="rli-dormant" value="not_sure"><span class="rc-box"><span class="rc-dot"></span>Not sure</span></label>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label block mb-2">How fast are new web, call, and social leads usually answered? *</label>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                                <label class="radio-card"><input type="radio" name="rli-sla" value="under_5min"><span class="rc-box"><span class="rc-dot"></span>Under 5 minutes</span></label>
+                                <label class="radio-card"><input type="radio" name="rli-sla" value="under_1hr"><span class="rc-box"><span class="rc-dot"></span>Under 1 hour</span></label>
+                                <label class="radio-card"><input type="radio" name="rli-sla" value="same_day"><span class="rc-box"><span class="rc-dot"></span>Same day</span></label>
+                                <label class="radio-card"><input type="radio" name="rli-sla" value="next_day"><span class="rc-box"><span class="rc-dot"></span>Next day or later</span></label>
+                                <label class="radio-card"><input type="radio" name="rli-sla" value="not_tracked"><span class="rc-box"><span class="rc-dot"></span>Not consistently tracked</span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 4: Readiness & contact -->
+                <div class="step-pane" data-step="4">
+                    <h2 class="text-2xl font-light text-slate-900 tracking-tight mb-6">Readiness &amp; contact</h2>
+
+                    <div class="space-y-5">
+                        <div>
+                            <label class="form-label block mb-2">What is the most urgent growth problem?</label>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                                <label class="radio-card"><input type="radio" name="rli-priority" value="repeat_visits"><span class="rc-box"><span class="rc-dot"></span>More repeat visits/orders</span></label>
+                                <label class="radio-card"><input type="radio" name="rli-priority" value="lost_leads"><span class="rc-box"><span class="rc-dot"></span>Recover lost leads</span></label>
+                                <label class="radio-card"><input type="radio" name="rli-priority" value="no_shows"><span class="rc-box"><span class="rc-dot"></span>Reduce no-shows</span></label>
+                                <label class="radio-card"><input type="radio" name="rli-priority" value="slow_days"><span class="rc-box"><span class="rc-dot"></span>Fill slow days</span></label>
+                                <label class="radio-card"><input type="radio" name="rli-priority" value="rebooking"><span class="rc-box"><span class="rc-dot"></span>Improve rebooking</span></label>
+                                <label class="radio-card"><input type="radio" name="rli-priority" value="new_service"><span class="rc-box"><span class="rc-dot"></span>Launch a new service/location</span></label>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div>
+                                <label class="form-label block mb-1.5" for="rli-contact-name">Name *</label>
+                                <input type="text" id="rli-contact-name" class="form-field" placeholder="Jane Owner" />
+                            </div>
+                            <div>
+                                <label class="form-label block mb-1.5" for="rli-email">Work email *</label>
+                                <input type="email" id="rli-email" class="form-field" placeholder="owner@business.com" />
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label block mb-1.5" for="rli-mobile">Mobile number</label>
+                            <input type="tel" id="rli-mobile" class="form-field" placeholder="(212) 555-0142" />
+                        </div>
+                        <label class="flex items-start gap-3 cursor-pointer pt-1">
+                            <input type="checkbox" id="rli-consent" class="mt-1 w-4 h-4 accent-[#669BD2]" />
+                            <span class="text-xs text-slate-500 font-light leading-relaxed">
+                                I agree to be contacted about my Revenue Leakage Index and recovery opportunities. I understand this is a <strong class="text-slate-700">directional diagnosis, not a guarantee</strong> — verified results require connection to merchant systems and a defined baseline. <span class="text-slate-400">(Consent v1.0)</span>
+                            </span>
+                        </label>
+
+                        <p class="text-xs text-red-500 font-light hidden" id="rli-error"></p>
+                    </div>
+                </div>
+
+                <!-- Step nav -->
+                <div class="flex items-center justify-between mt-10 pt-6 border-t border-slate-200">
+                    <button type="button" id="rli-back" class="inline-flex items-center gap-2 px-5 py-3 text-sm text-slate-500 font-light hover:text-slate-900 transition-colors">
+                        <iconify-icon icon="solar:arrow-right-linear" width="16" class="rotate-180"></iconify-icon>
+                        Back
+                    </button>
+                    <button type="button" id="rli-next" class="btn-neon cta-shimmer inline-flex items-center gap-3 px-7 py-3.5 rounded-2xl font-light text-sm">
+                        Next
+                        <iconify-icon icon="solar:arrow-right-linear" width="16"></iconify-icon>
+                    </button>
+                </div>
+            </div>
+
+            <p class="text-center text-xs text-slate-400 font-light mt-6">
+                Directional diagnosis first. Verified growth only after data connection and baseline validation.
+            </p>
+        </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- RESULTS                        -->
+    <!-- ============================== -->
+    <section id="results" class="pb-24 hidden">
+        <div class="max-w-2xl mx-auto px-6">
+            <div class="aura-card p-8 lg:p-12">
+                <div class="text-center mb-10">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/5 text-accent text-xs font-medium mb-6">
+                        <iconify-icon icon="solar:chart-square-linear" width="14"></iconify-icon>
+                        Your Revenue Leakage Index
+                    </div>
+                    <h2 class="text-3xl lg:text-4xl font-light text-slate-900 tracking-tight mb-3" id="result-tier-label">…</h2>
+                    <p class="text-lg text-slate-500 font-light" id="result-range">Index 0–100</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+                    <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200">
+                        <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1">Strongest leak</div>
+                        <div class="text-lg font-heading font-medium text-slate-900" id="result-leak">—</div>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200">
+                        <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1">Data confidence</div>
+                        <div class="text-lg font-heading font-medium text-slate-900" id="result-confidence">—</div>
+                    </div>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-[#669BD2]/5 border border-[#669BD2]/20 mb-8">
+                    <p class="text-sm text-slate-600 font-light leading-relaxed" id="result-next-step">…</p>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="mailto:hello@socio.nyc" id="result-cta-mailto" class="btn-neon inline-flex items-center gap-3 px-7 py-4 rounded-2xl font-light text-sm">
+                        Book a founder call
+                        <iconify-icon icon="solar:arrow-right-up-linear" width="16"></iconify-icon>
+                    </a>
+                    <a href="/" class="inline-flex items-center gap-2 px-5 py-4 text-slate-500 text-sm font-light hover:text-slate-900 transition-colors">
+                        Back to Socio
+                    </a>
+                </div>
+
+                <p class="text-center text-[11px] text-slate-400 font-light mt-8 leading-relaxed">
+                    This is a directional diagnosis — not a guarantee or a revenue estimate. Verified results require connection to your merchant systems, an eligible-audience review, and a defined baseline before any growth claim is made.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- FOOTER                         -->
+    <!-- ============================== -->
+    <footer class="bg-slate-900 text-white py-10">
+        <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-400 font-light">
+            <div class="flex items-center gap-1">
+                <span class="font-semibold text-slate-300 font-heading">SOCIO</span>
+                <span class="w-1.5 h-1.5 rounded-sm bg-accent ml-0.5"></span>
+                <span class="ml-2">NYC's verified revenue partner for high-repeat local businesses.</span>
+            </div>
+            <div class="flex items-center gap-6">
+                <a href="mailto:hello@socio.nyc" class="hover:text-white transition-colors">hello@socio.nyc</a>
+                <a href="/" class="hover:text-white transition-colors">Home</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ==============================
+        // Revenue Leakage Index — qualification engine
+        // ==============================
+
+        // --- URL params: vertical prefill + attribution capture ---
+        const params = new URLSearchParams(window.location.search);
+        const VERTICAL_MAP = {
+            'aesthetic-clinic': 'aesthetic_clinic',
+            'salon-wellness': 'salon_wellness',
+            'florist': 'florist',
+            'cafe': 'cafe'
+        };
+        const prefillVertical = VERTICAL_MAP[params.get('vertical')] || '';
+
+        const attribution = {
+            landing_path: window.location.pathname + window.location.search,
+            utm_source: params.get('utm_source') || '',
+            utm_medium: params.get('utm_medium') || '',
+            utm_campaign: params.get('utm_campaign') || '',
+            referrer: document.referrer || ''
+        };
+
+        // --- Analytics helper (best-effort, fire and forget) ---
+        function trackEvent(name, extra) {
+            try {
+                fetch('/api/analytics/event', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name: name, path: attribution.landing_path, vertical: prefillVertical, ...(extra || {}) })
+                }).catch(() => {});
+            } catch (e) {}
+        }
+
+        // --- Vertical prefill ---
+        if (prefillVertical) {
+            document.querySelectorAll('input[name="rli-vertical"]').forEach(r => {
+                if (r.value === prefillVertical) r.checked = true;
+            });
+        }
+
+        // --- State ---
+        const state = {
+            merchant: { business_name: '', website: '', zip_code: '', vertical: prefillVertical, locations: '1' },
+            economics: { monthly_revenue_band: '', average_ticket: null, monthly_customers_or_leads: null, repeat_cycle: '' },
+            systems: { has_customer_history: null, systems: [], contactable_history: null },
+            operations: { dormant_share_band: '', lead_response_sla: '', growth_priority: '' },
+            contact: { name: '', email: '', mobile: '' },
+            consent: { follow_up_opt_in: false, consent_timestamp: '', consent_copy_version: 'v1.0' }
+        };
+
+        // --- Step flow ---
+        let currentStep = 1;
+        const TOTAL_STEPS = 4;
+
+        function showStep(n) {
+            currentStep = n;
+            document.querySelectorAll('.step-pane').forEach(p => p.classList.toggle('active', Number(p.dataset.step) === n));
+            document.querySelectorAll('.step-indicator').forEach(si => {
+                const siNum = Number(si.dataset.si);
+                si.classList.toggle('active', siNum === n);
+                si.classList.toggle('done', siNum < n);
+            });
+            document.getElementById('progress-fill').style.width = (n / TOTAL_STEPS * 100) + '%';
+            const backBtn = document.getElementById('rli-back');
+            backBtn.style.visibility = n === 1 ? 'hidden' : 'visible';
+            const nextBtn = document.getElementById('rli-next');
+            nextBtn.innerHTML = n === TOTAL_STEPS
+                ? 'Calculate my recovery score<iconify-icon icon="solar:arrow-right-linear" width="16"></iconify-icon>'
+                : 'Next<iconify-icon icon="solar:arrow-right-linear" width="16"></iconify-icon>';
+            document.getElementById('rli-error').classList.add('hidden');
+            trackEvent('rli_step_' + n);
+            window.scrollTo({ top: document.getElementById('assessment').offsetTop - 90, behavior: 'smooth' });
+        }
+
+        function captureStep(n) {
+            if (n === 1) {
+                state.merchant.business_name = document.getElementById('rli-name').value.trim();
+                state.merchant.website = document.getElementById('rli-website').value.trim();
+                state.merchant.zip_code = document.getElementById('rli-zip').value.trim();
+                state.merchant.vertical = (document.querySelector('input[name="rli-vertical"]:checked') || {}).value || '';
+                state.merchant.locations = (document.querySelector('input[name="rli-locations"]:checked') || {}).value || '1';
+            } else if (n === 2) {
+                state.economics.monthly_revenue_band = (document.querySelector('input[name="rli-band"]:checked') || {}).value || '';
+                state.economics.average_ticket = document.getElementById('rli-ticket').value === '' ? null : Number(document.getElementById('rli-ticket').value);
+                state.economics.monthly_customers_or_leads = document.getElementById('rli-volume').value === '' ? null : Number(document.getElementById('rli-volume').value);
+                state.economics.repeat_cycle = (document.querySelector('input[name="rli-repeat"]:checked') || {}).value || '';
+            } else if (n === 3) {
+                state.systems.has_customer_history = (document.querySelector('input[name="rli-history"]:checked') || {}).value || null;
+                state.systems.systems = Array.from(document.querySelectorAll('input[name="rli-systems"]:checked')).map(c => c.value);
+                state.systems.contactable_history = (document.querySelector('input[name="rli-contactable"]:checked') || {}).value || null;
+                state.operations.dormant_share_band = (document.querySelector('input[name="rli-dormant"]:checked') || {}).value || '';
+                state.operations.lead_response_sla = (document.querySelector('input[name="rli-sla"]:checked') || {}).value || '';
+            } else if (n === 4) {
+                state.operations.growth_priority = (document.querySelector('input[name="rli-priority"]:checked') || {}).value || '';
+                state.contact.name = document.getElementById('rli-contact-name').value.trim();
+                state.contact.email = document.getElementById('rli-email').value.trim();
+                state.contact.mobile = document.getElementById('rli-mobile').value.trim();
+                state.consent.follow_up_opt_in = document.getElementById('rli-consent').checked;
+                state.consent.consent_timestamp = new Date().toISOString();
+            }
+        }
+
+        function validateStep(n) {
+            const err = document.getElementById('rli-error');
+            function fail(msg) { err.textContent = msg; err.classList.remove('hidden'); return false; }
+            if (n === 1) {
+                if (!state.merchant.business_name) return fail('Business name is required.');
+                if (!state.merchant.vertical) return fail('Please select your category.');
+            } else if (n === 2) {
+                if (!state.economics.monthly_revenue_band) return fail('Please select your monthly revenue band.');
+                if (state.economics.average_ticket == null || state.economics.average_ticket < 0) return fail('Please enter your average transaction value.');
+                if (!state.economics.repeat_cycle) return fail('Please select your repeat-cycle expectation.');
+            } else if (n === 3) {
+                if (!state.systems.has_customer_history) return fail('Please answer whether you have customer/lead history.');
+                if (!state.operations.lead_response_sla) return fail('Please select how fast leads are answered.');
+            } else if (n === 4) {
+                if (!state.contact.name) return fail('Please enter your name.');
+                if (!state.contact.email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(state.contact.email)) return fail('Please enter a valid work email.');
+                if (!state.consent.follow_up_opt_in) return fail('Please consent to follow-up to receive your results.');
+            }
+            return true;
+        }
+
+        // --- Scoring (internal — never exposed) ---
+        function clamp(n, lo, hi) { return Math.max(lo, Math.min(hi, n)); }
+
+        function dimensionScores() {
+            const e = state.economics, s = state.systems, o = state.operations, m = state.merchant;
+
+            const dormantMap = { under_10: 2, '10_25': 6, '25_50': 8, over_50: 6, not_sure: 0 };
+            const volume = e.monthly_customers_or_leads;
+            const volumePts = volume == null ? 0 : volume < 500 ? 2 : volume < 2000 ? 5 : volume < 10000 ? 8 : 10;
+            const repeatMap = { weekly: 8, monthly: 7, '2_3_months': 5, quarterly: 4, six_months_plus: 2, one_time: 0 };
+            const demandRaw = (dormantMap[o.dormant_share_band] || 0) + volumePts + (repeatMap[e.repeat_cycle] || 0);
+
+            const ticket = e.average_ticket;
+            const ticketPts = ticket == null ? 0 : ticket < 30 ? 3 : ticket < 60 ? 6 : ticket < 150 ? 8 : ticket < 500 ? 6 : 5;
+            const bandMap = { under_25k: 2, '25_75k': 5, '75_150k': 7, '150_500k': 9, '500k_plus': 10 };
+            const unitRaw = ticketPts + (bandMap[e.monthly_revenue_band] || 0);
+
+            const hasHistory = s.has_customer_history === 'yes';
+            const systemsPts = !hasHistory ? 0 : s.systems.length === 0 ? 0 : s.systems.length === 1 ? 3 : 6;
+            const contactablePts = !hasHistory ? 0 : s.contactable_history === 'yes' ? 5 : 0;
+            const dataRaw = (hasHistory ? 8 : 0) + systemsPts + contactablePts;
+
+            const slaMap = { under_5min: 8, under_1hr: 6, same_day: 4, next_day: 2, not_tracked: 0 };
+            const priorityMap = { repeat_visits: 7, lost_leads: 7, rebooking: 7, no_shows: 6, slow_days: 4, new_service: 2 };
+            const opsRaw = (slaMap[o.lead_response_sla] || 0) + (priorityMap[o.growth_priority] || 0);
+
+            const vertMap = { aesthetic_clinic: 6, salon_wellness: 5, florist: 4, cafe: 3, other: 2 };
+            const locMap = { '1': 3, '2_3': 5, '4_plus': 4 };
+            const fitRaw = (vertMap[m.vertical] || 0) + (locMap[m.locations] || 0) + (m.zip_code ? 4 : 0);
+
+            return {
+                demand: demandRaw / 26 * 30,
+                unit: unitRaw / 20 * 20,
+                data: dataRaw / 19 * 20,
+                ops: opsRaw / 15 * 15,
+                fit: fitRaw / 15 * 15
+            };
+        }
+
+        function computeScore() {
+            const d = dimensionScores();
+            return clamp(Math.round(d.demand + d.unit + d.data + d.ops + d.fit), 0, 100);
+        }
+
+        function detectLeak() {
+            const s = state.systems, o = state.operations, e = state.economics;
+            if (s.has_customer_history !== 'yes') return 'data fragmentation';
+            if (o.lead_response_sla === 'next_day' || o.lead_response_sla === 'not_tracked') return 'lead-response leakage';
+            if (o.growth_priority === 'no_shows') return 'no-show risk';
+            if (o.dormant_share_band === '25_50' || o.dormant_share_band === 'over_50') return 'dormant demand';
+            if (e.repeat_cycle === 'six_months_plus' || e.repeat_cycle === 'one_time') return 'rebooking gap';
+            const d = dimensionScores();
+            const weakest = Object.entries(d).sort((a, b) => a[1] - b[1])[0][0];
+            return { demand: 'dormant demand', unit: 'unit economics', data: 'data fragmentation', ops: 'lead-response leakage', fit: 'fit gap' }[weakest] || 'dormant demand';
+        }
+
+        function dataConfidence() {
+            const s = state.systems, e = state.economics;
+            if (s.has_customer_history === 'yes' && s.systems.length >= 2 && s.contactable_history === 'yes' && e.monthly_customers_or_leads != null) return 'High';
+            if (s.has_customer_history === 'yes' && s.systems.length >= 1) return 'Medium';
+            return 'Low';
+        }
+
+        function tierFor(score) {
+            if (score >= 75) return 'high';
+            if (score >= 50) return 'opportunity';
+            return 'foundation';
+        }
+
+        // --- Submit ---
+        function buildPayload(score, leak, confidence, tier) {
+            return {
+                merchant: {
+                    business_name: state.merchant.business_name,
+                    website: state.merchant.website,
+                    zip_code: state.merchant.zip_code,
+                    vertical: state.merchant.vertical,
+                    locations: state.merchant.locations
+                },
+                economics: state.economics,
+                systems: state.systems,
+                operations: state.operations,
+                assessment: {
+                    recovery_score: score,
+                    leak_type: leak,
+                    data_confidence: confidence,
+                    sales_tier: tier
+                },
+                consent: {
+                    follow_up_opt_in: state.consent.follow_up_opt_in,
+                    consent_timestamp: state.consent.consent_timestamp,
+                    consent_copy_version: state.consent.consent_copy_version
+                },
+                attribution: attribution
+            };
+        }
+
+        async function submit() {
+            captureStep(4);
+            if (!validateStep(4)) return;
+
+            const score = computeScore();
+            const leak = detectLeak();
+            const confidence = dataConfidence();
+            const tier = tierFor(score);
+
+            const nextBtn = document.getElementById('rli-next');
+            nextBtn.disabled = true;
+            nextBtn.innerHTML = 'Scoring…';
+
+            try {
+                const res = await fetch('/api/recovery-index', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(buildPayload(score, leak, confidence, tier))
+                });
+                const json = await res.json().catch(() => ({}));
+                if (!res.ok || json.status !== 'success') throw new Error(json.message || 'submit failed');
+                trackEvent('rli_completed', { tier: tier, score: score, leak: leak });
+                showResults(score, leak, confidence, tier);
+            } catch (err) {
+                const e = document.getElementById('rli-error');
+                e.textContent = 'Something went wrong — email us at hello@socio.nyc and we\u2019ll finish your assessment manually.';
+                e.classList.remove('hidden');
+            } finally {
+                nextBtn.disabled = false;
+            }
+        }
+
+        function showResults(score, leak, confidence, tier) {
+            const rangeLo = clamp(score - 8, 0, 100);
+            const rangeHi = clamp(score + 8, 0, 100);
+            const tierCopy = {
+                high: { label: 'High recovery potential', color: 'text-green-600' },
+                opportunity: { label: 'Recovery opportunity identified', color: 'text-[#669BD2]' },
+                foundation: { label: 'Strengthen your operating foundation first', color: 'text-amber-600' }
+            }[tier];
+
+            const leakCopy = {
+                'dormant demand': 'Dormant demand — customers who stopped returning in their usual cycle.',
+                'lead-response leakage': 'Lead-response leakage — new inquiries that go cold before follow-up.',
+                'rebooking gap': 'Rebooking gap — one-time buyers who never schedule again.',
+                'no-show risk': 'No-show risk — booked value lost at the door.',
+                'data fragmentation': 'Data fragmentation — revenue history exists but isn\u2019t organized enough to recover.',
+                'unit economics': 'Unit economics — ticket size makes recovery economics tight.',
+                'fit gap': 'Fit gap — category or footprint needs a custom approach.'
+            }[leak] || leak;
+
+            const nextStep = {
+                high: 'To turn this directional finding into verified growth, Socio reviews a read-only export or approved system connection, establishes an eligible audience and baseline, and launches a controlled recovery test. Given your score, you\u2019ll be invited to a founder-led call and a read-only data audit first.',
+                opportunity: 'To turn this directional finding into verified growth, Socio reviews a read-only export or approved system connection, establishes an eligible audience and baseline, and launches a controlled recovery test. We\u2019ll email you a roadmap after review.',
+                foundation: 'To turn this directional finding into verified growth, Socio reviews a read-only export or approved system connection, establishes an eligible audience and baseline, and launches a controlled recovery test. We\u2019ll send practical next steps by email — no pushy sales calls.'
+            }[tier];
+
+            document.getElementById('result-tier-label').textContent = tierCopy.label;
+            document.getElementById('result-tier-label').className = 'text-3xl lg:text-4xl font-light tracking-tight mb-3 ' + tierCopy.color;
+            document.getElementById('result-range').textContent = 'Index ' + rangeLo + '\u2013' + rangeHi + ' (directional range)';
+            document.getElementById('result-leak').textContent = leakCopy;
+            document.getElementById('result-confidence').textContent = confidence;
+            document.getElementById('result-next-step').textContent = nextStep;
+
+            const subject = encodeURIComponent('Founder call — ' + state.merchant.business_name + ' (' + state.merchant.vertical.replace(/_/g, ' ') + ') — RLI ' + score);
+            const body = encodeURIComponent('Business: ' + state.merchant.business_name + '\nVertical: ' + state.merchant.vertical + '\nIndex: ' + score + ' (tier: ' + tier + ')\n\nI just completed the Revenue Leakage Index and would like to book a founder call.');
+            document.getElementById('result-cta-mailto').href = 'mailto:hello@socio.nyc?subject=' + subject + '&body=' + body;
+            document.getElementById('result-cta-mailto').textContent = tier === 'high'
+                ? 'Book a founder call'
+                : tier === 'opportunity'
+                    ? 'Request my Revenue Recovery Map'
+                    : 'Get my practical roadmap';
+
+            document.getElementById('assessment').classList.add('hidden');
+            document.getElementById('results').classList.remove('hidden');
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            trackEvent('rli_tier_' + tier);
+        }
+
+        // --- Wiring ---
+        document.getElementById('rli-back').addEventListener('click', () => {
+            captureStep(currentStep);
+            showStep(currentStep - 1);
+        });
+        document.getElementById('rli-next').addEventListener('click', () => {
+            captureStep(currentStep);
+            if (currentStep < TOTAL_STEPS) {
+                if (!validateStep(currentStep)) return;
+                showStep(currentStep + 1);
+            } else {
+                submit();
+            }
+        });
+        // Enter key advances instead of submitting the page
+        document.querySelectorAll('input').forEach(inp => {
+            inp.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    document.getElementById('rli-next').click();
+                }
+            });
+        });
+
+        trackEvent('rli_started');
+        showStep(1);
+    </script>
+</body>
+</html>

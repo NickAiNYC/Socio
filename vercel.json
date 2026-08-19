@@ -28,6 +28,10 @@
       "dest": "server.js"
     },
     {
+      "src": "/recovery-index/?",
+      "dest": "website/recovery-index.html"
+    },
+    {
       "src": "/(.*)",
       "dest": "website/$1"
     }
