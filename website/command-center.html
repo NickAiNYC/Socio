@@ -552,6 +552,39 @@
       </div>
     </section>
 
+    <!-- ===================================================================
+        6. FOUNDER REVIEW QUEUE (RLI — admin-gated)
+        =================================================================== -->
+    <section class="scrutexity-card p-6 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-200 pb-4 flex-wrap gap-3">
+        <div>
+          <div class="page-eyebrow text-slate-900 mb-0">FOUNDER REVIEW QUEUE</div>
+          <div class="page-subtitle text-xs mt-0.5">Revenue Leakage Index leads — server-authoritative scores, booking & data-access states.</div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="unlockQueue()" class="px-3 py-1.5 rounded-full bg-[#669BD2]/10 border border-[#669BD2]/30 text-[#669BD2] text-[10px] font-bold uppercase tracking-wider hover:bg-[#669BD2]/20 transition-all cursor-pointer">Unlock Queue</button>
+        </div>
+      </div>
+      <div id="fq-status" class="text-xs text-slate-400"></div>
+      <div id="fq-stats" class="flex flex-wrap gap-2"></div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs font-sans">
+          <thead>
+            <tr class="text-slate-500 uppercase tracking-wider border-b border-slate-200 bg-slate-50">
+              <th class="p-3.5">Merchant</th>
+              <th class="p-3.5">Vertical</th>
+              <th class="p-3.5">Score</th>
+              <th class="p-3.5">Tier</th>
+              <th class="p-3.5">Submitted</th>
+              <th class="p-3.5">State</th>
+              <th class="p-3.5 text-right">Action</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200 text-slate-500" id="fq-table-body"></tbody>
+        </table>
+      </div>
+    </section>
+
   </main>
 
   <!-- ===================================================================
@@ -1011,6 +1044,155 @@
       }
     }
     setInterval(updateClock, 1000);
+
+    // =====================================================================
+    // FOUNDER REVIEW QUEUE (RLI — admin-gated; server-authoritative scores)
+    // =====================================================================
+    let adminKey = null;
+    let rliLeads = [];
+    let openLeadIndex = -1;
+    const TIER_LABEL = { high: 'HIGH', opportunity: 'OPPORTUNITY', foundation: 'FOUNDATION' };
+    const TIER_CLASS = {
+      high: 'bg-emerald-50 text-emerald-600 border-emerald-200',
+      opportunity: 'bg-[#669BD2]/10 text-[#669BD2] border-[#669BD2]/25',
+      foundation: 'bg-amber-50 text-amber-600 border-amber-200'
+    };
+    const DQ_REASONS = ['duplicate', 'wrong_category', 'not_nyc', 'low_quality_data', 'no_decision_maker', 'already_client', 'spam', 'other'];
+
+    function unlockQueue() {
+      const key = window.prompt('Admin key for Founder Review Queue:');
+      if (!key) return;
+      adminKey = key.trim();
+      loadFounderQueue();
+    }
+
+    async function loadFounderQueue() {
+      const statusEl = document.getElementById('fq-status');
+      statusEl.textContent = 'Loading…';
+      try {
+        const res = await fetch('/api/rli/leads', { headers: { 'x-admin-key': adminKey } });
+        if (res.status === 401) { statusEl.textContent = 'Unauthorized — check the admin key.'; return; }
+        const json = await res.json();
+        if (json.status !== 'success') throw new Error(json.message || 'load failed');
+        rliLeads = json.leads || [];
+        renderQueueStats(json.stats);
+        renderQueueTable();
+        statusEl.textContent = '';
+      } catch (e) {
+        statusEl.textContent = 'Failed to load queue: ' + e.message;
+      }
+    }
+
+    function renderQueueStats(stats) {
+      const el = document.getElementById('fq-stats');
+      if (!stats) { el.innerHTML = ''; return; }
+      const verts = Object.entries(stats.by_vertical || {}).map(([v, s]) =>
+        `<span class="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] text-slate-400">${(v || 'other').replace(/_/g, ' ')}: ${s.count} (${s.qualified} qual · avg ${s.avg_score})</span>`
+      ).join('');
+      el.innerHTML = `
+        <span class="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-200 text-[10px] font-bold">TOTAL: ${stats.total}</span>
+        <span class="px-2.5 py-1 rounded-full bg-[#669BD2]/10 text-[#669BD2] border border-[#669BD2]/25 text-[10px]">High: ${stats.tier.high}</span>
+        <span class="px-2.5 py-1 rounded-full bg-amber-50 text-amber-600 border border-amber-200 text-[10px]">Opportunity: ${stats.tier.opportunity}</span>
+        <span class="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] text-slate-400">Foundation: ${stats.tier.foundation}</span>
+        <span class="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] text-slate-400">Qualified (75+): ${stats.qualified}</span>
+        <span class="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] text-slate-400">Avg score: ${stats.avg_score}</span>
+        ${verts}`;
+    }
+
+    function renderQueueTable() {
+      const tbody = document.getElementById('fq-table-body');
+      if (!rliLeads.length) {
+        tbody.innerHTML = '<tr><td colspan="7" class="p-4 text-slate-400">No RLI submissions yet. Unlock with the admin key after the first assessment completes.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = rliLeads.map((l, i) => {
+        const s = l.server_assessment || {};
+        const st = l.status || {};
+        const tierCls = TIER_CLASS[s.sales_tier] || TIER_CLASS.foundation;
+        const dq = st.disqualified_reason ? ' · DQ:' + st.disqualified_reason : '';
+        const due = st.follow_up_due ? ' · due ' + new Date(st.follow_up_due).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) : '';
+        return `
+        <tr class="border-b border-slate-200">
+          <td class="p-3 font-bold text-slate-900">${l.merchant.business_name}</td>
+          <td class="p-3 text-slate-400">${(l.merchant.vertical || '').replace(/_/g, ' ')}</td>
+          <td class="p-3"><span class="font-bold text-slate-900 font-title">${s.recovery_score || 0}</span></td>
+          <td class="p-3"><span class="status-pill ${tierCls}">${TIER_LABEL[s.sales_tier] || '—'}</span></td>
+          <td class="p-3 text-slate-400">${(l.submitted_at || '').slice(0, 16).replace('T', ' ')}${dq}${due}</td>
+          <td class="p-3 text-slate-400">${st.booking_state || 'unbooked'}${st.data_access_state ? ' · ' + st.data_access_state : ''}</td>
+          <td class="p-3 text-right">
+            <button onclick="toggleLeadDetail(${i})" class="text-[#669BD2] hover:text-slate-900 font-semibold text-xs cursor-pointer">${i === openLeadIndex ? 'Hide' : 'Review'}</button>
+          </td>
+        </tr>
+        ${i === openLeadIndex ? renderLeadDetail(l) : ''}`;
+      }).join('');
+    }
+
+    function toggleLeadDetail(i) {
+      openLeadIndex = openLeadIndex === i ? -1 : i;
+      renderQueueTable();
+    }
+
+    function renderLeadDetail(l) {
+      const s = l.server_assessment || {};
+      const c = l.client_assessment || {};
+      const a = l.attribution || {};
+      const eco = l.economics || {};
+      const sys = ((l.systems && l.systems.systems) || []).join(', ') || '—';
+      const mismatch = c.recovery_score != null && s.recovery_score != null && c.recovery_score !== s.recovery_score
+        ? ' <span class="text-amber-600">MISMATCH</span>' : '';
+      return `<tr><td colspan="7" class="p-4 bg-slate-50">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+          <div class="space-y-1">
+            <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Answers</div>
+            <p class="text-slate-500">${l.merchant.website || 'no site'} · ${l.merchant.zip_code || 'no zip'} · ${l.merchant.locations || '1'} loc</p>
+            <p class="text-slate-500">Band: ${eco.monthly_revenue_band || '—'} · Ticket: ${eco.average_ticket ?? '—'} · Vol: ${eco.monthly_customers_or_leads ?? '—'}</p>
+            <p class="text-slate-500">Repeat: ${eco.repeat_cycle || '—'} · History: ${l.systems?.has_customer_history || '—'} · Systems: ${sys}</p>
+            <p class="text-slate-500">Dormant: ${l.operations?.dormant_share_band || '—'} · SLA: ${l.operations?.lead_response_sla || '—'} · Priority: ${l.operations?.growth_priority || '—'}</p>
+          </div>
+          <div class="space-y-1">
+            <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Assessment</div>
+            <p class="text-slate-500">Server: <span class="text-slate-900 font-bold">${s.recovery_score || 0}</span> [${s.sales_tier || '—'}] · Leak: ${s.leak_type || '—'} · Confidence: ${s.data_confidence || '—'}</p>
+            <p class="text-slate-500">Client (obs): ${c.recovery_score ?? '—'} [${c.sales_tier || '—'}]${mismatch}</p>
+            <p class="text-slate-500">Dims: ${Object.entries(s.dimensions || {}).map(([k, v]) => k + '=' + Math.round(v)).join(' · ')}</p>
+            <p class="text-slate-500">Consent: ${l.consent?.follow_up_opt_in ? 'opted-in' : 'no'} (${l.consent?.consent_copy_version || '—'}) · id: ${l.lead_id}</p>
+          </div>
+          <div class="space-y-1">
+            <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Provenance &amp; Actions</div>
+            <p class="text-slate-500 break-all">${a.landing_path || '—'}${a.utm_source ? ' · ' + a.utm_source : ''}${a.utm_medium ? '/' + a.utm_medium : ''}${a.utm_campaign ? '/' + a.utm_campaign : ''}</p>
+            <p class="text-slate-500">Referrer: ${a.referrer || '—'} · Follow-up: ${l.status?.follow_up_due ? new Date(l.status.follow_up_due).toLocaleString('en-US') : 'engagement-gated'}</p>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <select onchange="updateLeadState('${l.lead_id}', 'booking_state', this.value)" class="bg-slate-100 border border-slate-200 rounded-lg text-xs px-2 py-1.5">
+                ${['unbooked', 'booked', 'attended', 'no_show'].map(b => `<option value="${b}" ${(l.status?.booking_state || 'unbooked') === b ? 'selected' : ''}>${b}</option>`).join('')}
+              </select>
+              <select onchange="updateLeadState('${l.lead_id}', 'data_access_state', this.value)" class="bg-slate-100 border border-slate-200 rounded-lg text-xs px-2 py-1.5">
+                <option value="">data: —</option>
+                ${['requested', 'granted', 'blocked'].map(b => `<option value="${b}" ${l.status?.data_access_state === b ? 'selected' : ''}>${b}</option>`).join('')}
+              </select>
+              <select onchange="updateLeadState('${l.lead_id}', 'disqualified_reason', this.value)" class="bg-slate-100 border border-slate-200 rounded-lg text-xs px-2 py-1.5">
+                <option value="">qualify</option>
+                ${DQ_REASONS.map(b => `<option value="${b}" ${l.status?.disqualified_reason === b ? 'selected' : ''}>${b}</option>`).join('')}
+              </select>
+            </div>
+          </div>
+        </div>
+      </td></tr>`;
+    }
+
+    async function updateLeadState(id, field, value) {
+      try {
+        const res = await fetch('/api/rli/leads/' + id + '/state', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey },
+          body: JSON.stringify({ [field]: value })
+        });
+        if (res.status === 401) { alert('Admin key expired — unlock the queue again.'); adminKey = null; return; }
+        const json = await res.json();
+        if (json.status === 'success') {
+          rliLeads = rliLeads.map(l => l.lead_id === id ? json.lead : l);
+          renderQueueTable();
+        }
+      } catch (e) { alert('Update failed: ' + e.message); }
+    }
 
     window.addEventListener('DOMContentLoaded', () => {
       renderFounderQueue();

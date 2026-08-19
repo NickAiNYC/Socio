@@ -2260,6 +2260,18 @@
             });
         });
 
+        // Vertical RLI click tracking (CTR by vertical)
+        document.querySelectorAll('a[href^="/recovery-index"]').forEach(a => {
+            a.addEventListener('click', () => {
+                const v = new URL(a.href, location.origin).searchParams.get('vertical') || 'generic';
+                fetch('/api/analytics/event', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name: 'rli_vertical_click', vertical: v, path: location.pathname })
+                }).catch(() => {});
+            });
+        });
+
         // Sticky CTA — appears after the hero, hides when the form is on screen
         const stickyCta = document.getElementById('sticky-cta');
         const leadSection = document.getElementById('lead-capture');

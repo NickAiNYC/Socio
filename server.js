@@ -694,6 +694,66 @@ app.post('/api/leads', (req, res) => {
 });
 
 // --------------------------------------------------------------------------
+// 1.4 RLI SCORING ENGINE (server-authoritative — browser scores are untrusted)
+// --------------------------------------------------------------------------
+function rliScore(raw) {
+  const e = raw.economics || {}, s = raw.systems || {}, o = raw.operations || {}, m = raw.merchant || {};
+  const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
+
+  const dormantMap = { under_10: 2, '10_25': 6, '25_50': 8, over_50: 6, not_sure: 0 };
+  const volume = Number(e.monthly_customers_or_leads);
+  const volumePts = Number.isFinite(volume) && volume > 0 ? (volume < 500 ? 2 : volume < 2000 ? 5 : volume < 10000 ? 8 : 10) : 0;
+  const repeatMap = { weekly: 8, monthly: 7, '2_3_months': 5, quarterly: 4, six_months_plus: 2, one_time: 0 };
+  const demandRaw = (dormantMap[o.dormant_share_band] || 0) + volumePts + (repeatMap[e.repeat_cycle] || 0);
+
+  const ticket = Number(e.average_ticket);
+  const ticketPts = Number.isFinite(ticket) && ticket > 0 ? (ticket < 30 ? 3 : ticket < 60 ? 6 : ticket < 150 ? 8 : ticket < 500 ? 6 : 5) : 0;
+  const bandMap = { under_25k: 2, '25_75k': 5, '75_150k': 7, '150_500k': 9, '500k_plus': 10 };
+  const unitRaw = ticketPts + (bandMap[e.monthly_revenue_band] || 0);
+
+  const hasHistory = s.has_customer_history === 'yes';
+  const systems = Array.isArray(s.systems) ? s.systems : [];
+  const systemsPts = !hasHistory ? 0 : systems.length === 0 ? 0 : systems.length === 1 ? 3 : 6;
+  const contactablePts = !hasHistory ? 0 : s.contactable_history === 'yes' ? 5 : 0;
+  const dataRaw = (hasHistory ? 8 : 0) + systemsPts + contactablePts;
+
+  const slaMap = { under_5min: 8, under_1hr: 6, same_day: 4, next_day: 2, not_tracked: 0 };
+  const priorityMap = { repeat_visits: 7, lost_leads: 7, rebooking: 7, no_shows: 6, slow_days: 4, new_service: 2 };
+  const opsRaw = (slaMap[o.lead_response_sla] || 0) + (priorityMap[o.growth_priority] || 0);
+
+  const vertMap = { aesthetic_clinic: 6, salon_wellness: 5, florist: 4, cafe: 3, other: 2 };
+  const locMap = { '1': 3, '2_3': 5, '4_plus': 4 };
+  const fitRaw = (vertMap[m.vertical] || 0) + (locMap[m.locations] || 0) + (m.zip_code ? 4 : 0);
+
+  const dimensions = {
+    demand: demandRaw / 26 * 30,
+    unit: unitRaw / 20 * 20,
+    data: dataRaw / 19 * 20,
+    ops: opsRaw / 15 * 15,
+    fit: fitRaw / 15 * 15
+  };
+  const score = clamp(Math.round(dimensions.demand + dimensions.unit + dimensions.data + dimensions.ops + dimensions.fit), 0, 100);
+  const tier = score >= 75 ? 'high' : score >= 50 ? 'opportunity' : 'foundation';
+
+  let leak;
+  if (s.has_customer_history !== 'yes') leak = 'data fragmentation';
+  else if (o.lead_response_sla === 'next_day' || o.lead_response_sla === 'not_tracked') leak = 'lead-response leakage';
+  else if (o.growth_priority === 'no_shows') leak = 'no-show risk';
+  else if (o.dormant_share_band === '25_50' || o.dormant_share_band === 'over_50') leak = 'dormant demand';
+  else if (e.repeat_cycle === 'six_months_plus' || e.repeat_cycle === 'one_time') leak = 'rebooking gap';
+  else {
+    const weakest = Object.entries(dimensions).sort((a, b) => a[1] - b[1])[0][0];
+    leak = { demand: 'dormant demand', unit: 'unit economics', data: 'data fragmentation', ops: 'lead-response leakage', fit: 'fit gap' }[weakest] || 'dormant demand';
+  }
+
+  let confidence = 'Low';
+  if (hasHistory && systems.length >= 2 && s.contactable_history === 'yes' && Number.isFinite(volume) && volume > 0) confidence = 'High';
+  else if (hasHistory && systems.length >= 1) confidence = 'Medium';
+
+  return { recovery_score: score, leak_type: leak, data_confidence: confidence, sales_tier: tier, dimensions };
+}
+
+// --------------------------------------------------------------------------
 // 1.5 REVENUE LEAKAGE INDEX (RLI) — merchant qualification protocol
 // --------------------------------------------------------------------------
 app.post('/api/recovery-index', (req, res) => {
@@ -706,15 +766,22 @@ app.post('/api/recovery-index', (req, res) => {
     return res.status(400).json({ status: 'error', message: 'Category is required' });
   }
 
+  // Authoritative assessment from raw answers (never trusts the browser).
+  const serverAssessment = rliScore(b);
+  const now = new Date().toISOString();
+  const followUpDue = serverAssessment.sales_tier === 'high'
+    ? new Date(Date.now() + 15 * 60 * 1000).toISOString() // founder follow-up within 15 min during business hours
+    : null;
+
   const record = {
     lead_id: 'rli_' + crypto.randomBytes(8).toString('hex'),
-    submitted_at: new Date().toISOString(),
+    submitted_at: now,
     merchant: {
       business_name: String(b.merchant.business_name || '').slice(0, 200),
       website: String(b.merchant.website || '').slice(0, 300),
       zip_code: String(b.merchant.zip_code || '').slice(0, 20),
       vertical: String(b.merchant.vertical || '').slice(0, 100),
-      locations: Number(b.merchant.locations) || 1
+      locations: String(b.merchant.locations || '1').slice(0, 10)
     },
     economics: {
       monthly_revenue_band: String(b.economics?.monthly_revenue_band || ''),
@@ -723,20 +790,14 @@ app.post('/api/recovery-index', (req, res) => {
       repeat_cycle: String(b.economics?.repeat_cycle || '')
     },
     systems: {
-      has_customer_history: Boolean(b.systems?.has_customer_history),
+      has_customer_history: String(b.systems?.has_customer_history || ''),
       systems: Array.isArray(b.systems?.systems) ? b.systems.systems.map(String).slice(0, 10) : [],
-      contactable_history: Boolean(b.systems?.contactable_history)
+      contactable_history: String(b.systems?.contactable_history || '')
     },
     operations: {
       dormant_share_band: String(b.operations?.dormant_share_band || ''),
       lead_response_sla: String(b.operations?.lead_response_sla || ''),
       growth_priority: String(b.operations?.growth_priority || '')
-    },
-    assessment: {
-      recovery_score: Math.max(0, Math.min(100, Math.round(Number(b.assessment?.recovery_score) || 0))),
-      leak_type: String(b.assessment?.leak_type || ''),
-      data_confidence: String(b.assessment?.data_confidence || ''),
-      sales_tier: String(b.assessment?.sales_tier || '')
     },
     consent: {
       follow_up_opt_in: Boolean(b.consent?.follow_up_opt_in),
@@ -749,6 +810,21 @@ app.post('/api/recovery-index', (req, res) => {
       utm_medium: String(b.attribution?.utm_medium || '').slice(0, 100),
       utm_campaign: String(b.attribution?.utm_campaign || '').slice(0, 100),
       referrer: String(b.attribution?.referrer || '').slice(0, 300)
+    },
+    client_assessment: {
+      recovery_score: Math.max(0, Math.min(100, Math.round(Number(b.client_assessment?.recovery_score) || 0))),
+      leak_type: String(b.client_assessment?.leak_type || ''),
+      data_confidence: String(b.client_assessment?.data_confidence || ''),
+      sales_tier: String(b.client_assessment?.sales_tier || '')
+    },
+    server_assessment: serverAssessment,
+    status: {
+      booking_state: 'unbooked',
+      booking: null,
+      data_access_state: null,
+      disqualified_reason: null,
+      follow_up_due: followUpDue,
+      follow_up_state: serverAssessment.sales_tier === 'high' ? 'pending' : 'waiting'
     }
   };
 
@@ -757,15 +833,117 @@ app.post('/api/recovery-index', (req, res) => {
   db.rli_leads.push(record);
   saveDb(db);
 
-  console.log('[RLI] Qualified lead:', record.merchant.business_name, '|', record.merchant.vertical, '| score', record.assessment.recovery_score, '|', record.assessment.sales_tier);
+  console.log('[RLI] Qualified lead:', record.merchant.business_name, '|', record.merchant.vertical, '| server score', record.server_assessment.recovery_score, '|', record.server_assessment.sales_tier);
 
-  // Dispatch Kanban task (safe execFile, no shell)
-  const hermesArgs = ['kanban', 'create', `RLI Lead: ${record.merchant.business_name} (${record.merchant.vertical}) — score ${record.assessment.recovery_score} [${record.assessment.sales_tier}]`, '--assignee', 'socio-prospect', '--board', 'socio'];
+  // Dispatch Kanban task (safe execFile, no shell) — server score only.
+  const hermesArgs = ['kanban', 'create', `RLI Lead: ${record.merchant.business_name} (${record.merchant.vertical}) — score ${record.server_assessment.recovery_score} [${record.server_assessment.sales_tier}]`, '--assignee', 'socio-prospect', '--board', 'socio'];
   execFile('hermes', hermesArgs, (err) => {
     if (err) console.log('[Hermes Kanban] Fallback / Hermes not active in local env:', err.message);
   });
 
-  return res.json({ status: 'success', message: 'Revenue Leakage Index recorded.', lead_id: record.lead_id });
+  // Return ONLY the server-calculated assessment.
+  return res.json({
+    status: 'success',
+    message: 'Revenue Leakage Index recorded.',
+    lead_id: record.lead_id,
+    assessment: record.server_assessment
+  });
+});
+
+// --------------------------------------------------------------------------
+// 1.6 RLI BOOKING — 20-min Revenue Recovery Map Review (qualified leads)
+// --------------------------------------------------------------------------
+app.post('/api/rli/booking', (req, res) => {
+  const b = req.body || {};
+  const db = getDb();
+  const leads = Array.isArray(db.rli_leads) ? db.rli_leads : [];
+  const lead = leads.find(l => l.lead_id === b.lead_id);
+  if (!lead) return res.status(404).json({ status: 'error', message: 'RLI lead not found' });
+
+  lead.status.booking_state = 'booked';
+  lead.status.booking = {
+    requested_at: new Date().toISOString(),
+    event_type: String(b.event_type || 'revenue-recovery-map-review'),
+    contact_email: String(b.contact_email || '').slice(0, 200),
+    notes: String(b.notes || '').slice(0, 500)
+  };
+  saveDb(db);
+
+  const hermesArgs = ['kanban', 'create', `Booking Request: ${lead.merchant.business_name} (${lead.merchant.vertical}) — score ${lead.server_assessment.recovery_score}`, '--assignee', 'socio-prospect', '--board', 'socio'];
+  execFile('hermes', hermesArgs, (err) => {
+    if (err) console.log('[Hermes Kanban] Fallback / Hermes not active in local env:', err.message);
+  });
+
+  return res.json({
+    status: 'success',
+    message: 'Booking request recorded.',
+    confirmation: 'Your Revenue Recovery Map review is confirmed. We\u2019ll use the call to validate data access, eligibility, and the highest-confidence recovery test\u2014not to sell you a retainer.'
+  });
+});
+
+// --------------------------------------------------------------------------
+// 1.7 FOUNDER REVIEW QUEUE (admin-gated)
+// --------------------------------------------------------------------------
+app.get('/api/rli/leads', (req, res) => {
+  if (!getAdminSession(req)) {
+    return res.status(401).json({ status: 'error', message: 'Admin key or session required' });
+  }
+  const db = getDb();
+  const leads = (Array.isArray(db.rli_leads) ? db.rli_leads : []).slice().sort((a, b) => {
+    const sa = (a.server_assessment && a.server_assessment.recovery_score) || 0;
+    const sb = (b.server_assessment && b.server_assessment.recovery_score) || 0;
+    if (sa !== sb) return sb - sa;
+    return String(b.submitted_at).localeCompare(String(a.submitted_at));
+  });
+
+  const stats = { total: leads.length, tier: { high: 0, opportunity: 0, foundation: 0 }, by_vertical: {}, avg_score: 0, qualified: 0 };
+  let scoreSum = 0;
+  for (const l of leads) {
+    const s = (l.server_assessment && l.server_assessment.recovery_score) || 0;
+    scoreSum += s;
+    const t = (l.server_assessment && l.server_assessment.sales_tier) || 'foundation';
+    if (stats.tier[t] != null) stats.tier[t]++;
+    if (s >= 75) stats.qualified++;
+    const v = l.merchant.vertical || 'other';
+    if (!stats.by_vertical[v]) stats.by_vertical[v] = { count: 0, qualified: 0, scoreSum: 0 };
+    stats.by_vertical[v].count++;
+    stats.by_vertical[v].scoreSum += s;
+    if (s >= 75) stats.by_vertical[v].qualified++;
+  }
+  if (leads.length) stats.avg_score = Math.round(scoreSum / leads.length);
+  for (const v of Object.keys(stats.by_vertical)) {
+    stats.by_vertical[v].avg_score = Math.round(stats.by_vertical[v].scoreSum / stats.by_vertical[v].count);
+    delete stats.by_vertical[v].scoreSum;
+  }
+
+  return res.json({ status: 'success', stats, leads });
+});
+
+app.post('/api/rli/leads/:id/state', (req, res) => {
+  if (!getAdminSession(req)) {
+    return res.status(401).json({ status: 'error', message: 'Admin key or session required' });
+  }
+  const db = getDb();
+  const leads = Array.isArray(db.rli_leads) ? db.rli_leads : [];
+  const lead = leads.find(l => l.lead_id === req.params.id);
+  if (!lead) return res.status(404).json({ status: 'error', message: 'RLI lead not found' });
+
+  const b = req.body || {};
+  const validBooking = ['unbooked', 'booked', 'attended', 'no_show'];
+  const validAccess = ['requested', 'granted', 'blocked'];
+  if (b.booking_state != null && !validBooking.includes(b.booking_state)) {
+    return res.status(400).json({ status: 'error', message: 'Invalid booking_state' });
+  }
+  if (b.data_access_state != null && b.data_access_state !== '' && !validAccess.includes(b.data_access_state)) {
+    return res.status(400).json({ status: 'error', message: 'Invalid data_access_state' });
+  }
+  if (b.booking_state != null) lead.status.booking_state = b.booking_state;
+  if (b.data_access_state != null) lead.status.data_access_state = b.data_access_state === '' ? null : b.data_access_state;
+  if (b.disqualified_reason !== undefined) lead.status.disqualified_reason = String(b.disqualified_reason).slice(0, 300) || null;
+  if (b.follow_up_state != null) lead.status.follow_up_state = String(b.follow_up_state).slice(0, 20);
+  saveDb(db);
+
+  return res.json({ status: 'success', lead });
 });
 
 // --------------------------------------------------------------------------
