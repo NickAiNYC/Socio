@@ -8,23 +8,24 @@
   <script src="https://unpkg.com/lucide@latest"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Montserrat:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --color-appbg: #0A0E14;
-      --color-glassbg: rgba(13, 19, 26, 0.8);
-      --color-accent: #38BDF8;
-      --color-currency: #34D399;
-      --font-sans: "Plus Jakarta Sans", "Inter", sans-serif;
-      --font-brand: "Michroma", sans-serif;
-      --font-title: "Montserrat", sans-serif;
+      --color-appbg: #FAFAFA;
+      --color-glassbg: rgba(255, 255, 255, 0.8);
+      --color-accent: #669BD2;
+      --color-currency: #22c55e;
+      --font-sans: "Inter", sans-serif;
+      --font-brand: "Space Grotesk", sans-serif;
+      --font-title: "Space Grotesk", sans-serif;
     }
 
     body {
-      background-color: #0A0E14;
-      color: #FFFFFF;
+      background-color: #FAFAFA;
+      color: #475569;
       font-family: var(--font-sans);
+      font-weight: 300;
       -webkit-font-smoothing: antialiased;
       min-height: 100vh;
       margin: 0;
@@ -55,99 +56,102 @@
     .page-title {
       font-size: 42px;
       line-height: 1.1;
-      font-weight: 700;
+      font-weight: 600;
       letter-spacing: -0.03em;
-      color: #FFFFFF;
+      color: #0f172a;
       font-family: var(--font-title);
     }
 
     .page-subtitle {
       font-size: 14px;
-      color: #94A3B8;
+      color: #64748b;
       margin-top: 6px;
     }
 
     /* ── The 4-Layer Scrutexity "Deep Gloss" Aura Card Standard ── */
     .scrutexity-card {
-      background: rgba(13, 19, 26, 0.8);
+      background: rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(16px);
       border-radius: 1.25rem;
-      
-      /* 4-Layer Lighting:
-         1. Hairline Border (0 0 0 1px)
-         2. Top Edge Glass Highlight (inset 0 1px 0)
-         3. Inner Volumetric Fill (inset 0 0 20px cyan)
-         4. Contained Outer Aura (0 8px 40px -10px cyan) */
-      box-shadow: 
-        0 0 0 1px rgba(255, 255, 255, 0.03),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1),
-        inset 0 0 20px rgba(56, 189, 248, 0.05),
-        0 8px 40px -10px rgba(56, 189, 248, 0.15);
-        
+
+      /* 4-Layer Lighting (light theme):
+         1. Hairline Border (0 0 0 1px slate)
+         2. Top Edge Glass Highlight (inset 0 1px 0 white)
+         3. Inner Volumetric Fill (inset 0 0 20px accent)
+         4. Soft Outer Shadow */
+      box-shadow:
+        0 0 0 1px rgba(226, 232, 240, 0.9),
+        inset 0 1px 0 rgba(255, 255, 255, 1),
+        inset 0 0 20px rgba(102, 155, 210, 0.03),
+        0 8px 40px -12px rgba(15, 23, 42, 0.08);
+
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .scrutexity-card:hover {
-      box-shadow: 
-        0 0 0 1px rgba(255, 255, 255, 0.05),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2),
-        inset 0 0 30px rgba(56, 189, 248, 0.1),
-        0 10px 50px -10px rgba(56, 189, 248, 0.25);
+      box-shadow:
+        0 0 0 1px rgba(102, 155, 210, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 1),
+        inset 0 0 30px rgba(102, 155, 210, 0.05),
+        0 12px 48px -12px rgba(102, 155, 210, 0.18);
     }
 
     /* Verified Revenue Deep Gloss (Emerald Internal Fill) */
     .scrutexity-card-emerald {
-      background: rgba(13, 24, 20, 0.85);
+      background: rgba(240, 253, 244, 0.75);
       backdrop-filter: blur(16px);
       border-radius: 1.25rem;
-      box-shadow: 
-        0 0 0 1px rgba(52, 211, 153, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.15),
-        inset 0 0 24px rgba(52, 211, 153, 0.08),
-        0 8px 40px -10px rgba(52, 211, 153, 0.18);
+      box-shadow:
+        0 0 0 1px rgba(34, 197, 94, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        inset 0 0 24px rgba(34, 197, 94, 0.05),
+        0 8px 40px -10px rgba(34, 197, 94, 0.12);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .scrutexity-card-emerald:hover {
-      box-shadow: 
-        0 0 0 1px rgba(52, 211, 153, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.25),
-        inset 0 0 32px rgba(52, 211, 153, 0.14),
-        0 10px 50px -10px rgba(52, 211, 153, 0.28);
+      box-shadow:
+        0 0 0 1px rgba(34, 197, 94, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 1),
+        inset 0 0 32px rgba(34, 197, 94, 0.08),
+        0 10px 50px -10px rgba(34, 197, 94, 0.2);
     }
 
     /* Hero Action Card (Elevated Deep Gloss with Amber/Cyan Accent) */
     .scrutexity-card-hero {
-      background: linear-gradient(180deg, rgba(16, 24, 38, 0.9) 0%, rgba(13, 19, 26, 0.95) 100%);
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
       backdrop-filter: blur(20px);
       border-radius: 1.5rem;
-      box-shadow: 
-        0 0 0 1px rgba(56, 189, 248, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2),
-        inset 0 0 35px rgba(56, 189, 248, 0.08),
-        0 12px 50px -10px rgba(56, 189, 248, 0.25);
+      box-shadow:
+        0 0 0 1px rgba(226, 232, 240, 0.95),
+        inset 0 1px 0 rgba(255, 255, 255, 1),
+        inset 0 0 35px rgba(102, 155, 210, 0.04),
+        0 12px 50px -10px rgba(102, 155, 210, 0.12);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .scrutexity-card-hero:hover {
-      box-shadow: 
-        0 0 0 1px rgba(56, 189, 248, 0.35),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3),
-        inset 0 0 45px rgba(56, 189, 248, 0.14),
-        0 16px 60px -10px rgba(56, 189, 248, 0.35);
+      box-shadow:
+        0 0 0 1px rgba(102, 155, 210, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 1),
+        inset 0 0 45px rgba(102, 155, 210, 0.07),
+        0 16px 60px -10px rgba(102, 155, 210, 0.2);
     }
 
     /* ── Pill Capsule Glass Card ── */
     .glass-card-pill {
-      background: rgba(13, 19, 26, 0.7);
+      background: rgba(255, 255, 255, 0.8);
       backdrop-filter: blur(30px);
       border-radius: 9999px;
-      box-shadow: 
-        0 0 0 1px rgba(255, 255, 255, 0.05),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1),
-        0 4px 20px -5px rgba(56, 189, 248, 0.12);
+      box-shadow:
+        0 0 0 1px rgba(226, 232, 240, 0.9),
+        inset 0 1px 0 rgba(255, 255, 255, 1),
+        0 4px 20px -5px rgba(102, 155, 210, 0.12);
     }
 
     /* ── Status Pills ── */
     .status-pill {
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      color: #475569;
       font-size: 10px;
       font-weight: 700;
       text-transform: uppercase;
@@ -161,15 +165,15 @@
 
     /* Scrollbar */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #0A0E14; }
-    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.10); border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: rgba(56, 189, 248, 0.4); }
+    ::-webkit-scrollbar-track { background: #FAFAFA; }
+    ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.5); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(102, 155, 210, 0.6); }
 
     /* Slide-over Drawer */
     .drawer-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(10, 14, 20, 0.85);
+      background: rgba(15, 23, 42, 0.4);
       backdrop-filter: blur(8px);
       z-index: 90;
       opacity: 0;
@@ -182,8 +186,8 @@
       position: fixed;
       top: 0; right: 0; bottom: 0;
       width: 100%; max-width: 540px;
-      background: #0D131A;
-      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 0 70px rgba(0,0,0,0.95);
+      background: #ffffff;
+      box-shadow: 0 0 0 1px rgba(226, 232, 240, 0.9), 0 0 70px rgba(15, 23, 42, 0.2);
       z-index: 100;
       transform: translateX(100%);
       transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -192,34 +196,34 @@
     .drawer-panel.open { transform: translateX(0); }
   </style>
 </head>
-<body class="p-0 m-0 text-white">
+<body class="p-0 m-0 text-slate-900">
 
   <!-- ===================================================================
       GLOBAL EXECUTIVE HEADER (MATCHES SCRUTEXITY LAYOUT EXACTLY)
       =================================================================== -->
-  <header class="h-[76px] w-full border-b border-white/5 flex items-center justify-between px-8 bg-[#0A0E14]/90 backdrop-blur-xl sticky top-0 z-50 shrink-0 select-none">
+  <header class="h-[76px] w-full border-b border-slate-200 flex items-center justify-between px-8 bg-[#FAFAFA]/90 backdrop-blur-xl sticky top-0 z-50 shrink-0 select-none">
     
     <!-- Logo & Brand -->
     <div class="flex items-center gap-4">
       <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.reload()">
-        <span class="font-brand text-2xl tracking-[0.28em] text-white drop-shadow-[0_0_16px_rgba(56,189,248,0.25)]">
-          SOCIO<span class="text-[#38BDF8] drop-shadow-[0_0_14px_rgba(56,189,248,0.75)]">.</span>OS
+        <span class="font-brand text-2xl tracking-[0.28em] text-slate-900 drop-shadow-[0_0_16px_rgba(102,155,210,0.25)]">
+          SOCIO<span class="text-[#669BD2] drop-shadow-[0_0_14px_rgba(102,155,210,0.75)]">.</span>OS
         </span>
       </div>
 
       <!-- Fleet Online Status & Quick Controls -->
-      <div class="hidden lg:flex items-center gap-3 border-l border-white/5 pl-4 ml-2">
-        <span class="px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider flex items-center gap-1.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+      <div class="hidden lg:flex items-center gap-3 border-l border-slate-200 pl-4 ml-2">
+        <span class="px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider flex items-center gap-1.5 bg-emerald-50 text-emerald-600 border border-emerald-200">
           <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
           8/8 AGENTS ONLINE
         </span>
 
-        <button onclick="refreshOperatingState()" class="px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider bg-white/5 border border-white/10 text-slate-300 hover:bg-white/[0.08] hover:text-white transition-all flex items-center gap-1.5 cursor-pointer">
+        <button onclick="refreshOperatingState()" class="px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider bg-slate-100 border border-slate-200 text-slate-500 hover:bg-slate-100 hover:text-slate-900 transition-all flex items-center gap-1.5 cursor-pointer">
           <i data-lucide="refresh-cw" class="w-2.5 h-2.5" id="refresh-icon"></i>
           Sync Console
         </button>
 
-        <a href="merchant-evidence.html" target="_blank" class="px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/20 transition-all flex items-center gap-1.5">
+        <a href="merchant-evidence.html" target="_blank" class="px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider bg-[#669BD2]/10 border border-[#669BD2]/30 text-[#669BD2] hover:bg-[#669BD2]/20 transition-all flex items-center gap-1.5">
           <i data-lucide="shield-check" class="w-2.5 h-2.5"></i>
           Evidence Ledger
         </a>
@@ -228,20 +232,20 @@
 
     <!-- Center Search & Command Capsule -->
     <div class="flex items-center gap-6">
-      <div class="glass-card-pill items-center gap-3 px-6 py-2.5 hidden md:flex text-left hover:bg-white/[0.08] transition-colors cursor-pointer">
+      <div class="glass-card-pill items-center gap-3 px-6 py-2.5 hidden md:flex text-left hover:bg-slate-100 transition-colors cursor-pointer">
         <i data-lucide="search" class="w-4 h-4 text-slate-400"></i>
         <input
           type="text"
           id="global-cmd-input"
           placeholder="Search or command Socio OS... Cmd K"
-          class="bg-transparent border-none outline-none text-xs font-sans text-white w-64 placeholder-slate-500"
+          class="bg-transparent border-none outline-none text-xs font-sans text-slate-900 w-64 placeholder-slate-500"
           onkeydown="handleCommandKey(event)"
         >
-        <span class="text-[10px] font-mono bg-white/10 px-2 py-0.5 rounded text-slate-400">⌘K</span>
+        <span class="text-[10px] font-mono bg-slate-100 px-2 py-0.5 rounded text-slate-400">⌘K</span>
       </div>
 
       <!-- Clock -->
-      <div class="flex items-center gap-4 border-l border-white/10 pl-6 text-xs text-slate-400 font-mono hidden sm:flex">
+      <div class="flex items-center gap-4 border-l border-slate-200 pl-6 text-xs text-slate-400 font-mono hidden sm:flex">
         <span id="live-clock">10:42 PM</span> EST
       </div>
     </div>
@@ -255,13 +259,13 @@
     <!-- ── PAGE HEADER ── -->
     <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
       <div>
-        <div class="page-eyebrow">Autonomous Merchant Growth & Revenue Attestation</div>
+        <div class="page-eyebrow">A Revenue Partner — Paid Only on Verified Growth</div>
         <h1 class="page-title">Executive Command Center</h1>
         <div class="page-subtitle">Real-time agent fleet coordination, governor safety gates, and POS revenue recovery.</div>
       </div>
       
       <div class="flex items-center gap-3 shrink-0">
-        <button onclick="runAuditSweep()" class="flex items-center gap-2 rounded-full border border-cyan-400/25 bg-cyan-950/20 hover:bg-cyan-900/30 px-5 py-3 text-xs font-bold uppercase tracking-widest text-[#38BDF8] transition-all cursor-pointer shadow-sm hover:scale-[1.02]">
+        <button onclick="runAuditSweep()" class="flex items-center gap-2 rounded-full border border-[#669BD2]/30 bg-[#669BD2]/10 hover:bg-[#669BD2]/20 px-5 py-3 text-xs font-bold uppercase tracking-widest text-[#669BD2] transition-all cursor-pointer shadow-sm hover:scale-[1.02]">
           <i data-lucide="refresh-cw" class="w-4 h-4"></i>
           <span>Run Compliance Sweep</span>
         </button>
@@ -294,10 +298,10 @@
           ACTIVE MERCHANTS & TWINS
         </div>
         <div class="flex items-end justify-between mt-3">
-          <div class="text-3xl font-extrabold text-white tracking-tight font-title">
+          <div class="text-3xl font-extrabold text-slate-900 tracking-tight font-title">
             10 STORES
           </div>
-          <span class="text-[9px] font-extrabold text-[#38BDF8] bg-[#38BDF8]/10 border border-[#38BDF8]/25 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+          <span class="text-[9px] font-extrabold text-[#669BD2] bg-[#669BD2]/10 border border-[#669BD2]/25 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
             100% HEALTH
           </span>
         </div>
@@ -309,10 +313,10 @@
           SOCIO 15% COMMISSION (MTD)
         </div>
         <div class="flex items-end justify-between mt-3">
-          <div class="text-3xl font-extrabold text-white tracking-tight font-title">
+          <div class="text-3xl font-extrabold text-slate-900 tracking-tight font-title">
             $3,433.50
           </div>
-          <span class="text-[9px] font-extrabold text-cyan-400 bg-cyan-500/10 border border-cyan-500/25 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+          <span class="text-[9px] font-extrabold text-[#669BD2] bg-[#669BD2]/10 border border-[#669BD2]/25 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
             STRIPE INVOICED
           </span>
         </div>
@@ -324,10 +328,10 @@
           GOVERNOR SAFETY SCORE
         </div>
         <div class="flex items-end justify-between mt-3">
-          <div class="text-3xl font-extrabold text-white tracking-tight font-title">
+          <div class="text-3xl font-extrabold text-slate-900 tracking-tight font-title">
             98.6%
           </div>
-          <span class="text-[9px] font-extrabold text-emerald-400 bg-emerald-500/10 border border-emerald-500/25 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+          <span class="text-[9px] font-extrabold text-emerald-600 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
             FAIL-CLOSED SECURE
           </span>
         </div>
@@ -338,77 +342,77 @@
     <!-- ============================================================= -->
     <!-- 2. AI CHIEF OF STAFF HERO (ELEVATED DEEP GLOSS CARD)          -->
     <!-- ============================================================= -->
-    <section class="scrutexity-card-hero p-8 border-l-4 border-l-[#38BDF8]">
+    <section class="scrutexity-card-hero p-8 border-l-4 border-l-[#669BD2]">
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
         
         <div class="space-y-4 flex-1">
           <div class="flex items-center gap-3">
-            <span class="status-pill bg-[#38BDF8]/15 text-[#38BDF8] border border-[#38BDF8]/30">
+            <span class="status-pill bg-[#669BD2]/15 text-[#669BD2] border border-[#669BD2]/30">
               <i data-lucide="sparkles" class="w-3 h-3"></i>
               AI CHIEF OF STAFF
             </span>
             <span class="page-eyebrow mb-0">SINGLE NEXT BEST ACTION</span>
             <span class="text-slate-600">•</span>
-            <span class="text-xs font-mono text-[#38BDF8] font-bold">SCORE: 0.94 / 1.0</span>
+            <span class="text-xs font-mono text-[#669BD2] font-bold">SCORE: 0.94 / 1.0</span>
           </div>
 
-          <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-title leading-tight">
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight font-title leading-tight">
             Approve East Harlem Bites Paid Instagram Campaign ($400 Budget)
           </h2>
 
           <!-- 4 Executive Parameter Cells -->
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-            <div class="p-4 rounded-2xl bg-black/40 border border-white/5">
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
               <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Projected Revenue</div>
               <div class="text-2xl font-extrabold text-[#34D399] font-title mt-1">+$4,400</div>
               <div class="text-xs text-slate-500 mt-0.5">Net new recovery</div>
             </div>
-            <div class="p-4 rounded-2xl bg-black/40 border border-white/5">
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
               <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Founder Time</div>
-              <div class="text-2xl font-extrabold text-white font-title mt-1">45 sec</div>
+              <div class="text-2xl font-extrabold text-slate-900 font-title mt-1">45 sec</div>
               <div class="text-xs text-slate-500 mt-0.5">Decision review</div>
             </div>
-            <div class="p-4 rounded-2xl bg-black/40 border border-white/5">
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
               <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Risk Level</div>
               <div class="text-2xl font-extrabold text-[#FBBF24] font-title mt-1">HIGH</div>
               <div class="text-xs text-slate-500 mt-0.5">Ad budget policy</div>
             </div>
-            <div class="p-4 rounded-2xl bg-black/40 border border-white/5">
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
               <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Confidence</div>
-              <div class="text-2xl font-extrabold text-[#38BDF8] font-title mt-1">87%</div>
+              <div class="text-2xl font-extrabold text-[#669BD2] font-title mt-1">87%</div>
               <div class="text-xs text-slate-500 mt-0.5">11x test ROAS verified</div>
             </div>
           </div>
 
           <!-- Why Now & Closed-Loop Downstream Pipeline -->
-          <div class="space-y-2 pt-2 text-sm text-slate-300">
+          <div class="space-y-2 pt-2 text-sm text-slate-500">
             <p>
-              <strong class="text-white font-semibold">Why Now:</strong> Campaign produced an 11.1x ROAS on initial $50 test sample. Blocked on Governor sign-off before local weekend surge.
+              <strong class="text-slate-900 font-semibold">Why Now:</strong> Campaign produced an 11.1x ROAS on initial $50 test sample. Blocked on Governor sign-off before local weekend surge.
             </p>
             <div class="flex items-center gap-2 flex-wrap pt-1 text-xs text-slate-400">
               <span class="text-slate-500 font-semibold uppercase text-[10px]">Execution Loop:</span>
-              <span class="px-2.5 py-1 rounded-lg bg-black/50 border border-white/10 text-slate-300">Socio-Expand → Meta API</span>
+              <span class="px-2.5 py-1 rounded-lg bg-slate-50 border border-slate-200 text-slate-500">Socio-Expand → Meta API</span>
               <span>→</span>
-              <span class="px-2.5 py-1 rounded-lg bg-black/50 border border-white/10 text-slate-300">Socio-Track → Square POS</span>
+              <span class="px-2.5 py-1 rounded-lg bg-slate-50 border border-slate-200 text-slate-500">Socio-Track → Square POS</span>
               <span>→</span>
-              <span class="px-2.5 py-1 rounded-lg bg-black/50 border border-white/10 text-slate-300">Socio-Governor → Seal Hash</span>
+              <span class="px-2.5 py-1 rounded-lg bg-slate-50 border border-slate-200 text-slate-500">Socio-Governor → Seal Hash</span>
             </div>
           </div>
         </div>
 
         <!-- Right Call to Action Deck -->
         <div class="flex flex-col gap-3 shrink-0 min-w-[240px]">
-          <button onclick="approveProposal('PROP-0042')" class="px-8 py-4 bg-[#38BDF8] hover:bg-[#0284c7] text-[#0A0E14] font-extrabold text-sm rounded-full flex items-center justify-center gap-2 transition-all cursor-pointer shadow-[0_0_30px_rgba(56,189,248,0.45)] hover:scale-[1.02]">
+          <button onclick="approveProposal('PROP-0042')" class="px-8 py-4 bg-[#669BD2] hover:bg-[#5B8EC4] text-white font-extrabold text-sm rounded-full flex items-center justify-center gap-2 transition-all cursor-pointer shadow-[0_0_30px_rgba(102,155,210,0.45)] hover:scale-[1.02]">
             <i data-lucide="check-circle" class="w-5 h-5 stroke-[2.5]"></i>
             <span>APPROVE & EXECUTE</span>
           </button>
           
-          <button onclick="openEvidenceDrawer('PROP-0042')" class="px-6 py-3 bg-white/5 hover:bg-white/10 text-white font-semibold text-xs rounded-full border border-white/10 flex items-center justify-center gap-2 transition-colors cursor-pointer">
-            <i data-lucide="file-text" class="w-4 h-4 text-[#38BDF8]"></i>
+          <button onclick="openEvidenceDrawer('PROP-0042')" class="px-6 py-3 bg-slate-100 hover:bg-slate-100 text-slate-900 font-semibold text-xs rounded-full border border-slate-200 flex items-center justify-center gap-2 transition-colors cursor-pointer">
+            <i data-lucide="file-text" class="w-4 h-4 text-[#669BD2]"></i>
             <span>View Evidence (11x ROAS)</span>
           </button>
 
-          <button onclick="delegateAction('PROP-0042')" class="px-4 py-2 bg-transparent hover:bg-white/5 text-slate-400 hover:text-white text-xs rounded-lg transition-colors text-center cursor-pointer">
+          <button onclick="delegateAction('PROP-0042')" class="px-4 py-2 bg-transparent hover:bg-slate-100 text-slate-400 hover:text-slate-900 text-xs rounded-lg transition-colors text-center cursor-pointer">
             Delegate to Socio-Expand
           </button>
         </div>
@@ -424,12 +428,12 @@
       <!-- COLUMN 1: FOUNDER ACTION QUEUE (4 Cols) -->
       <div class="lg:col-span-4 scrutexity-card p-6 flex flex-col justify-between space-y-4">
         <div class="space-y-4">
-          <div class="flex items-center justify-between border-b border-white/5 pb-3">
+          <div class="flex items-center justify-between border-b border-slate-200 pb-3">
             <div class="flex items-center gap-2.5">
-              <i data-lucide="list-todo" class="w-4 h-4 text-amber-400"></i>
-              <span class="page-eyebrow text-white mb-0">FOUNDER ACTION QUEUE</span>
+              <i data-lucide="list-todo" class="w-4 h-4 text-amber-600"></i>
+              <span class="page-eyebrow text-slate-900 mb-0">FOUNDER ACTION QUEUE</span>
             </div>
-            <span class="status-pill bg-amber-500/10 text-amber-400 border border-amber-500/20" id="queue-count-badge">3 PENDING</span>
+            <span class="status-pill bg-amber-50 text-amber-600 border border-amber-200" id="queue-count-badge">3 PENDING</span>
           </div>
 
           <p class="text-xs text-slate-400 leading-relaxed">
@@ -439,7 +443,7 @@
           <div class="space-y-3" id="founder-queue-container"></div>
         </div>
 
-        <div class="pt-3 border-t border-white/5 text-xs text-slate-500 flex items-center justify-between">
+        <div class="pt-3 border-t border-slate-200 text-xs text-slate-500 flex items-center justify-between">
           <span>Sort: Impact × Urgency ÷ Time</span>
           <span class="text-[#34D399] font-semibold">+$8,600 Unlocked</span>
         </div>
@@ -448,12 +452,12 @@
       <!-- COLUMN 2: AGENT FLEET ROSTER (4 Cols) -->
       <div class="lg:col-span-4 scrutexity-card p-6 flex flex-col justify-between space-y-4">
         <div class="space-y-4">
-          <div class="flex items-center justify-between border-b border-white/5 pb-3">
+          <div class="flex items-center justify-between border-b border-slate-200 pb-3">
             <div class="flex items-center gap-2.5">
-              <i data-lucide="users" class="w-4 h-4 text-[#38BDF8]"></i>
-              <span class="page-eyebrow text-white mb-0">AUTONOMOUS FLEET</span>
+              <i data-lucide="users" class="w-4 h-4 text-[#669BD2]"></i>
+              <span class="page-eyebrow text-slate-900 mb-0">AUTONOMOUS FLEET</span>
             </div>
-            <span class="status-pill bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">8/8 ACTIVE</span>
+            <span class="status-pill bg-emerald-50 text-emerald-600 border border-emerald-200">8/8 ACTIVE</span>
           </div>
 
           <p class="text-xs text-slate-400 leading-relaxed">
@@ -463,7 +467,7 @@
           <div class="space-y-2.5" id="agent-fleet-container"></div>
         </div>
 
-        <div class="pt-3 border-t border-white/5 text-xs text-slate-500 flex items-center justify-between">
+        <div class="pt-3 border-t border-slate-200 text-xs text-slate-500 flex items-center justify-between">
           <span>Hermes Worker Mesh</span>
           <span class="text-slate-400">Avg Heartbeat: 14s</span>
         </div>
@@ -472,12 +476,12 @@
       <!-- COLUMN 3: GOVERNOR SAFETY GATES (4 Cols) -->
       <div class="lg:col-span-4 scrutexity-card p-6 flex flex-col justify-between space-y-4">
         <div class="space-y-4">
-          <div class="flex items-center justify-between border-b border-white/5 pb-3">
+          <div class="flex items-center justify-between border-b border-slate-200 pb-3">
             <div class="flex items-center gap-2.5">
-              <i data-lucide="shield-check" class="w-4 h-4 text-rose-400"></i>
-              <span class="page-eyebrow text-white mb-0">GOVERNOR GATES</span>
+              <i data-lucide="shield-check" class="w-4 h-4 text-rose-600"></i>
+              <span class="page-eyebrow text-slate-900 mb-0">GOVERNOR GATES</span>
             </div>
-            <span class="status-pill bg-rose-500/10 text-rose-400 border border-rose-500/20" id="gov-pending-badge">3 PENDING</span>
+            <span class="status-pill bg-rose-50 text-rose-600 border border-rose-200" id="gov-pending-badge">3 PENDING</span>
           </div>
 
           <p class="text-xs text-slate-400 leading-relaxed">
@@ -487,7 +491,7 @@
           <div class="space-y-3" id="governor-proposals-container"></div>
         </div>
 
-        <div class="pt-3 border-t border-white/5 text-xs text-slate-500 flex items-center justify-between">
+        <div class="pt-3 border-t border-slate-200 text-xs text-slate-500 flex items-center justify-between">
           <span>Policy: Fail-Closed</span>
           <span class="text-[#34D399] font-semibold">0 AirLock Breaches</span>
         </div>
@@ -499,18 +503,18 @@
     <!-- 4. LIVE ACTIVITY & REVENUE TELEMETRY STREAM                   -->
     <!-- ============================================================= -->
     <section class="scrutexity-card p-6 space-y-4">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5 pb-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
         <div class="flex items-center gap-2.5">
-          <i data-lucide="activity" class="w-4 h-4 text-[#38BDF8]"></i>
-          <span class="page-eyebrow text-white mb-0">LIVE GROWTH EVENT STREAM</span>
+          <i data-lucide="activity" class="w-4 h-4 text-[#669BD2]"></i>
+          <span class="page-eyebrow text-slate-900 mb-0">LIVE GROWTH EVENT STREAM</span>
         </div>
 
         <div class="flex items-center gap-1.5 flex-wrap">
-          <button onclick="filterStream('ALL', this)" class="px-3 py-1 rounded-full bg-white/10 text-white text-xs font-semibold">ALL</button>
-          <button onclick="filterStream('AGENT', this)" class="px-3 py-1 rounded-full bg-white/5 text-slate-400 hover:text-white text-xs">AGENTS</button>
-          <button onclick="filterStream('REVENUE', this)" class="px-3 py-1 rounded-full bg-white/5 text-slate-400 hover:text-white text-xs">REVENUE</button>
-          <button onclick="filterStream('GOVERNOR', this)" class="px-3 py-1 rounded-full bg-white/5 text-slate-400 hover:text-white text-xs">GOVERNOR</button>
-          <button onclick="filterStream('MERCHANT', this)" class="px-3 py-1 rounded-full bg-white/5 text-slate-400 hover:text-white text-xs">MERCHANTS</button>
+          <button onclick="filterStream('ALL', this)" class="px-3 py-1 rounded-full bg-slate-100 text-slate-900 text-xs font-semibold">ALL</button>
+          <button onclick="filterStream('AGENT', this)" class="px-3 py-1 rounded-full bg-slate-100 text-slate-400 hover:text-slate-900 text-xs">AGENTS</button>
+          <button onclick="filterStream('REVENUE', this)" class="px-3 py-1 rounded-full bg-slate-100 text-slate-400 hover:text-slate-900 text-xs">REVENUE</button>
+          <button onclick="filterStream('GOVERNOR', this)" class="px-3 py-1 rounded-full bg-slate-100 text-slate-400 hover:text-slate-900 text-xs">GOVERNOR</button>
+          <button onclick="filterStream('MERCHANT', this)" class="px-3 py-1 rounded-full bg-slate-100 text-slate-400 hover:text-slate-900 text-xs">MERCHANTS</button>
         </div>
       </div>
 
@@ -521,18 +525,18 @@
     <!-- 5. COMPACT MERCHANT CRM & TWIN DIRECTORY                      -->
     <!-- ============================================================= -->
     <section class="scrutexity-card p-6 space-y-4">
-      <div class="flex items-center justify-between border-b border-white/5 pb-4">
+      <div class="flex items-center justify-between border-b border-slate-200 pb-4">
         <div>
-          <div class="page-eyebrow text-white mb-0">MERCHANT OPERATING VIEW</div>
+          <div class="page-eyebrow text-slate-900 mb-0">MERCHANT OPERATING VIEW</div>
           <div class="page-subtitle text-xs mt-0.5">Active cohort lifecycle, assigned agents, and single next action per store.</div>
         </div>
-        <span class="status-pill bg-[#38BDF8]/10 text-[#38BDF8] border border-[#38BDF8]/20">10 STORES ACTIVE</span>
+        <span class="status-pill bg-[#669BD2]/10 text-[#669BD2] border border-[#669BD2]/20">10 STORES ACTIVE</span>
       </div>
 
       <div class="overflow-x-auto">
         <table class="w-full text-left text-xs font-sans">
           <thead>
-            <tr class="text-slate-500 uppercase tracking-wider border-b border-white/5 bg-white/[0.01]">
+            <tr class="text-slate-500 uppercase tracking-wider border-b border-slate-200 bg-slate-50">
               <th class="p-3.5">Merchant</th>
               <th class="p-3.5">Stage</th>
               <th class="p-3.5">Next Action</th>
@@ -543,7 +547,7 @@
               <th class="p-3.5">Twin</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-white/5 text-slate-300" id="merchants-table-body"></tbody>
+          <tbody class="divide-y divide-slate-200 text-slate-500" id="merchants-table-body"></tbody>
         </table>
       </div>
     </section>
@@ -555,17 +559,17 @@
       =================================================================== -->
   <div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
   <aside class="drawer-panel p-8 space-y-6" id="drawer-panel">
-    <div class="flex items-center justify-between border-b border-white/10 pb-4">
+    <div class="flex items-center justify-between border-b border-slate-200 pb-4">
       <div class="flex items-center gap-2">
-        <i data-lucide="shield-check" class="w-5 h-5 text-[#38BDF8]"></i>
-        <h3 class="font-title font-bold text-lg text-white" id="drawer-title">EVIDENCE ATTESTATION</h3>
+        <i data-lucide="shield-check" class="w-5 h-5 text-[#669BD2]"></i>
+        <h3 class="font-title font-bold text-lg text-slate-900" id="drawer-title">EVIDENCE ATTESTATION</h3>
       </div>
-      <button onclick="closeDrawer()" class="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-slate-400 hover:text-white cursor-pointer">
+      <button onclick="closeDrawer()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-100 flex items-center justify-center text-slate-400 hover:text-slate-900 cursor-pointer">
         ✕
       </button>
     </div>
 
-    <div class="space-y-4 text-xs text-slate-300" id="drawer-content"></div>
+    <div class="space-y-4 text-xs text-slate-500" id="drawer-content"></div>
   </aside>
 
   <!-- Toast Notification Deck -->
@@ -648,11 +652,11 @@
     ];
 
     const MERCHANTS_LIST = [
-      { name: 'East Harlem Bites', stage: 'Execute', nextAction: 'Approve campaign', owner: 'Governor', value: '+$4,400', risk: 'High', status: 'Waiting', badge: 'bg-amber-500/10 text-amber-400 border border-amber-500/20' },
-      { name: 'El Nuevo Cafe', stage: 'Onboarding', nextAction: 'Deliver audit', owner: 'Socio-Onboard', value: '+$1,800', risk: 'Medium', status: 'Ready', badge: 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20' },
-      { name: 'Cristal Flowers', stage: 'Expansion', nextAction: 'Activate referral', owner: 'Socio-Expand', value: '+$2,400', risk: 'Low', status: 'Ready', badge: 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' },
-      { name: 'La Bodega NYC', stage: 'Active', nextAction: 'Sync citations', owner: 'Socio-Listings', value: '+$2,100', risk: 'Low', status: 'Active', badge: 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' },
-      { name: 'Bloom & Branch', stage: 'Prospecting', nextAction: 'Follow-up WhatsApp', owner: 'Socio-Pitch', value: '+$3,500', risk: 'Medium', status: 'In-Flight', badge: 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20' }
+      { name: 'East Harlem Bites', stage: 'Execute', nextAction: 'Approve campaign', owner: 'Governor', value: '+$4,400', risk: 'High', status: 'Waiting', badge: 'bg-amber-50 text-amber-600 border border-amber-200' },
+      { name: 'El Nuevo Cafe', stage: 'Onboarding', nextAction: 'Deliver audit', owner: 'Socio-Onboard', value: '+$1,800', risk: 'Medium', status: 'Ready', badge: 'bg-[#669BD2]/10 text-[#669BD2] border border-[#669BD2]/20' },
+      { name: 'Cristal Flowers', stage: 'Expansion', nextAction: 'Activate referral', owner: 'Socio-Expand', value: '+$2,400', risk: 'Low', status: 'Ready', badge: 'bg-emerald-50 text-emerald-600 border border-emerald-200' },
+      { name: 'La Bodega NYC', stage: 'Active', nextAction: 'Sync citations', owner: 'Socio-Listings', value: '+$2,100', risk: 'Low', status: 'Active', badge: 'bg-emerald-50 text-emerald-600 border border-emerald-200' },
+      { name: 'Bloom & Branch', stage: 'Prospecting', nextAction: 'Follow-up WhatsApp', owner: 'Socio-Pitch', value: '+$3,500', risk: 'Medium', status: 'In-Flight', badge: 'bg-[#669BD2]/10 text-[#669BD2] border border-[#669BD2]/20' }
     ];
 
     function renderFounderQueue() {
@@ -664,27 +668,27 @@
       if (badge) badge.innerText = `${pending.length} PENDING`;
 
       container.innerHTML = pending.map(a => `
-        <div class="p-4 rounded-2xl bg-black/40 border border-white/5 hover:border-cyan-400/40 transition-all space-y-2">
+        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 hover:border-[#669BD2]/50 transition-all space-y-2">
           <div class="flex items-start justify-between gap-2">
-            <span class="text-xs font-bold text-white leading-snug">${a.title}</span>
+            <span class="text-xs font-bold text-slate-900 leading-snug">${a.title}</span>
             <span class="text-xs font-bold text-[#34D399] font-title shrink-0">${a.impact}</span>
           </div>
 
           <div class="flex items-center gap-2 text-[11px] text-slate-400">
-            <span class="${a.risk === 'HIGH' ? 'text-amber-400' : 'text-slate-300'} font-bold">${a.urgency}</span>
+            <span class="${a.risk === 'HIGH' ? 'text-amber-600' : 'text-slate-500'} font-bold">${a.urgency}</span>
             <span>•</span>
             <span>${a.time}</span>
             <span>•</span>
-            <span class="text-slate-300 truncate">${a.unblocks}</span>
+            <span class="text-slate-500 truncate">${a.unblocks}</span>
           </div>
 
-          <div class="flex items-center justify-between pt-2 border-t border-white/5">
+          <div class="flex items-center justify-between pt-2 border-t border-slate-200">
             <span class="text-[10px] text-slate-500">${a.merchant}</span>
             <div class="flex gap-2">
-              <button onclick="approveProposal('${a.id}')" class="px-3 py-1 bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-500/30 text-[11px] font-bold rounded-full cursor-pointer">
+              <button onclick="approveProposal('${a.id}')" class="px-3 py-1 bg-[#669BD2]/15 hover:bg-[#669BD2]/25 text-[#669BD2] border border-[#669BD2]/30 text-[11px] font-bold rounded-full cursor-pointer">
                 Approve
               </button>
-              <button onclick="openEvidenceDrawer('${a.id}')" class="px-2.5 py-1 bg-white/5 hover:bg-white/10 text-slate-400 text-[11px] rounded-full cursor-pointer">
+              <button onclick="openEvidenceDrawer('${a.id}')" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-100 text-slate-400 text-[11px] rounded-full cursor-pointer">
                 Detail
               </button>
             </div>
@@ -698,16 +702,16 @@
       if (!container) return;
 
       container.innerHTML = AGENTS_FLEET.map(a => `
-        <div class="p-3 rounded-2xl bg-black/40 border border-white/5 flex items-center justify-between text-xs">
+        <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
           <div class="min-w-0 pr-2">
             <div class="flex items-center gap-2">
-              <span class="font-bold text-white">${a.name}</span>
-              <span class="${a.status === 'ACTIVE' ? 'status-pill bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'status-pill bg-amber-500/10 text-amber-400 border border-amber-500/20'} text-[9px] py-0.5 px-2">${a.status}</span>
+              <span class="font-bold text-slate-900">${a.name}</span>
+              <span class="${a.status === 'ACTIVE' ? 'status-pill bg-emerald-50 text-emerald-600 border border-emerald-200' : 'status-pill bg-amber-50 text-amber-600 border border-amber-200'} text-[9px] py-0.5 px-2">${a.status}</span>
             </div>
             <div class="text-slate-400 truncate text-[11px] mt-0.5">${a.job}</div>
           </div>
           <div class="text-right shrink-0">
-            <div class="text-slate-300 font-semibold text-[11px]">${a.output}</div>
+            <div class="text-slate-500 font-semibold text-[11px]">${a.output}</div>
             <div class="text-slate-500 text-[10px]">${a.heartbeat}</div>
           </div>
         </div>
@@ -723,23 +727,23 @@
       if (badge) badge.innerText = `${pending.length} PENDING`;
 
       container.innerHTML = pending.map(p => `
-        <div class="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-2 text-xs">
+        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2 text-xs">
           <div class="flex items-center justify-between">
-            <span class="status-pill ${p.risk === 'HIGH' ? 'bg-rose-500/10 text-rose-400 border border-rose-500/20' : p.risk === 'MEDIUM' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'}">${p.risk} RISK</span>
+            <span class="status-pill ${p.risk === 'HIGH' ? 'bg-rose-50 text-rose-600 border border-rose-200' : p.risk === 'MEDIUM' ? 'bg-amber-50 text-amber-600 border border-amber-200' : 'bg-emerald-50 text-emerald-600 border border-emerald-200'}">${p.risk} RISK</span>
             <span class="text-[10px] text-slate-500 font-mono">${p.id}</span>
           </div>
 
-          <div class="text-white font-bold">${p.merchant} — ${p.action}</div>
-          <div class="text-slate-400 text-[11px]">${p.impact} • Policy: <span class="text-slate-300">${p.policy}</span></div>
+          <div class="text-slate-900 font-bold">${p.merchant} — ${p.action}</div>
+          <div class="text-slate-400 text-[11px]">${p.impact} • Policy: <span class="text-slate-500">${p.policy}</span></div>
 
           <div class="flex gap-2 pt-1">
-            <button onclick="approveProposal('${p.id}')" class="px-3.5 py-1.5 bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-500/30 text-[11px] font-bold rounded-full cursor-pointer">
+            <button onclick="approveProposal('${p.id}')" class="px-3.5 py-1.5 bg-[#669BD2]/15 hover:bg-[#669BD2]/25 text-[#669BD2] border border-[#669BD2]/30 text-[11px] font-bold rounded-full cursor-pointer">
               ✓ Approve
             </button>
-            <button onclick="openEvidenceDrawer('${p.id}')" class="px-3 py-1.5 bg-white/5 hover:bg-white/10 text-slate-300 text-[11px] rounded-full cursor-pointer">
+            <button onclick="openEvidenceDrawer('${p.id}')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-100 text-slate-500 text-[11px] rounded-full cursor-pointer">
               Evidence
             </button>
-            <button onclick="rejectProposal('${p.id}')" class="px-2.5 py-1.5 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 text-[11px] rounded-full cursor-pointer">
+            <button onclick="rejectProposal('${p.id}')" class="px-2.5 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 text-[11px] rounded-full cursor-pointer">
               Reject
             </button>
           </div>
@@ -754,10 +758,10 @@
       const filtered = filter === 'ALL' ? STREAM_EVENTS : STREAM_EVENTS.filter(e => e.cat === filter);
 
       container.innerHTML = filtered.map(e => `
-        <div class="p-3 rounded-2xl bg-black/40 border border-white/5 flex items-start gap-3 text-xs">
+        <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 flex items-start gap-3 text-xs">
           <span class="text-slate-500 text-[11px] font-mono shrink-0 mt-0.5">${e.time}</span>
-          <span class="status-pill bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-[9px] shrink-0">${e.agent}</span>
-          <span class="text-slate-200 leading-relaxed font-sans text-xs">${e.desc}</span>
+          <span class="status-pill bg-[#669BD2]/10 text-[#669BD2] border border-[#669BD2]/20 text-[9px] shrink-0">${e.agent}</span>
+          <span class="text-slate-600 leading-relaxed font-sans text-xs">${e.desc}</span>
         </div>
       `).join('');
     }
@@ -767,16 +771,16 @@
       if (!tbody) return;
 
       tbody.innerHTML = MERCHANTS_LIST.map(m => `
-        <tr class="hover:bg-white/[0.02] transition-colors">
-          <td class="p-3.5 font-bold text-white">${m.name}</td>
+        <tr class="hover:bg-slate-50 transition-colors">
+          <td class="p-3.5 font-bold text-slate-900">${m.name}</td>
           <td class="p-3.5 text-slate-400">${m.stage}</td>
-          <td class="p-3.5 text-slate-200 font-semibold">${m.nextAction}</td>
-          <td class="p-3.5 text-cyan-400">${m.owner}</td>
+          <td class="p-3.5 text-slate-600 font-semibold">${m.nextAction}</td>
+          <td class="p-3.5 text-[#669BD2]">${m.owner}</td>
           <td class="p-3.5 font-bold text-[#34D399] font-title">${m.value}</td>
-          <td class="p-3.5"><span class="${m.risk === 'High' ? 'text-amber-400' : 'text-slate-400'}">${m.risk}</span></td>
+          <td class="p-3.5"><span class="${m.risk === 'High' ? 'text-amber-600' : 'text-slate-400'}">${m.risk}</span></td>
           <td class="p-3.5"><span class="status-pill ${m.badge}">${m.status}</span></td>
           <td class="p-3.5">
-            <button onclick="openMerchantTwin('${m.name}')" class="text-cyan-400 hover:text-white font-semibold cursor-pointer">
+            <button onclick="openMerchantTwin('${m.name}')" class="text-[#669BD2] hover:text-slate-900 font-semibold cursor-pointer">
               Open Twin →
             </button>
           </td>
@@ -847,30 +851,30 @@
 
       title.innerText = `EVIDENCE ATTESTATION: ${p.id}`;
       content.innerHTML = `
-        <div class="p-5 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-300">
+        <div class="p-5 rounded-2xl bg-[#669BD2]/10 border border-[#669BD2]/20 text-[#669BD2]">
           <div class="font-bold uppercase text-[10px] tracking-wider">VERIFIED ROAS SIGNAL: 11.1x</div>
-          <div class="text-base font-extrabold text-white font-title mt-1">${p.action}</div>
+          <div class="text-base font-extrabold text-slate-900 font-title mt-1">${p.action}</div>
         </div>
 
-        <div class="p-5 rounded-2xl bg-black/40 border border-white/5 space-y-2.5">
-          <div class="flex justify-between"><span class="text-slate-400">Target Merchant:</span><span class="text-white font-bold">${p.merchant}</span></div>
+        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
+          <div class="flex justify-between"><span class="text-slate-400">Target Merchant:</span><span class="text-slate-900 font-bold">${p.merchant}</span></div>
           <div class="flex justify-between"><span class="text-slate-400">Projected Return:</span><span class="text-[#34D399] font-bold font-title">${p.impact}</span></div>
-          <div class="flex justify-between"><span class="text-slate-400">Policy Requirement:</span><span class="text-slate-300">${p.policy}</span></div>
-          <div class="flex justify-between"><span class="text-slate-400">Risk Assessment:</span><span class="text-amber-400 font-bold">${p.risk} RISK</span></div>
+          <div class="flex justify-between"><span class="text-slate-400">Policy Requirement:</span><span class="text-slate-500">${p.policy}</span></div>
+          <div class="flex justify-between"><span class="text-slate-400">Risk Assessment:</span><span class="text-amber-600 font-bold">${p.risk} RISK</span></div>
         </div>
 
         <div class="space-y-1.5">
           <div class="text-slate-400 uppercase text-[10px] font-bold tracking-wider">Closed-Loop Execution Plan:</div>
-          <p class="text-slate-300 leading-relaxed text-xs p-4 rounded-2xl bg-black/40 border border-white/5">
-            Upon approval, Socio-Expand will execute the Meta API strike targeting floral buyers in a 3-mile radius of East Harlem. Socio-Track will match POS receipts in real-time.
+          <p class="text-slate-500 leading-relaxed text-xs p-4 rounded-2xl bg-slate-50 border border-slate-200">
+            Upon approval, Socio-Expand will execute the Meta campaign targeting floral buyers in a 3-mile radius of East Harlem. Socio-Track will match POS receipts in real-time.
           </p>
         </div>
 
         <div class="pt-4 flex gap-3">
-          <button onclick="approveProposal('${p.id}')" class="flex-1 py-3 bg-[#38BDF8] hover:bg-[#0284c7] text-[#0A0E14] font-extrabold text-xs rounded-full cursor-pointer shadow-[0_0_20px_rgba(56,189,248,0.4)]">
+          <button onclick="approveProposal('${p.id}')" class="flex-1 py-3 bg-[#669BD2] hover:bg-[#5B8EC4] text-white font-extrabold text-xs rounded-full cursor-pointer shadow-[0_0_20px_rgba(102,155,210,0.4)]">
             Approve & Execute (+$4,400)
           </button>
-          <button onclick="closeDrawer()" class="px-5 py-3 bg-white/5 hover:bg-white/10 text-slate-300 text-xs rounded-full border border-white/10 cursor-pointer">
+          <button onclick="closeDrawer()" class="px-5 py-3 bg-slate-100 hover:bg-slate-100 text-slate-500 text-xs rounded-full border border-slate-200 cursor-pointer">
             Close
           </button>
         </div>
@@ -889,25 +893,25 @@
 
       title.innerText = `MERCHANT TWIN: ${merchantName}`;
       content.innerHTML = `
-        <div class="p-5 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-300">
+        <div class="p-5 rounded-2xl bg-[#669BD2]/10 border border-[#669BD2]/20 text-[#669BD2]">
           <div class="font-bold uppercase text-[10px] tracking-wider">BUSINESS TWIN ACTIVE</div>
-          <div class="text-lg font-bold text-white font-title mt-1">${merchantName} (NYC)</div>
+          <div class="text-lg font-bold text-slate-900 font-title mt-1">${merchantName} (NYC)</div>
         </div>
 
         <div class="grid grid-cols-2 gap-3">
-          <div class="p-4 rounded-2xl bg-black/40 border border-white/5">
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
             <div class="text-slate-400 text-[10px] uppercase font-bold">HEALTH SCORE</div>
             <div class="text-2xl font-bold text-[#34D399] font-title mt-1">94 / 100</div>
           </div>
-          <div class="p-4 rounded-2xl bg-black/40 border border-white/5">
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
             <div class="text-slate-400 text-[10px] uppercase font-bold">NET REVENUE MTD</div>
-            <div class="text-2xl font-bold text-white font-title mt-1">$4,820</div>
+            <div class="text-2xl font-bold text-slate-900 font-title mt-1">$4,820</div>
           </div>
         </div>
 
         <div class="space-y-1.5">
           <div class="text-slate-400 uppercase text-[10px] font-bold tracking-wider">Assigned Autonomous Workflows:</div>
-          <ul class="space-y-1.5 text-xs text-slate-300 list-disc list-inside p-4 rounded-2xl bg-black/40 border border-white/5">
+          <ul class="space-y-1.5 text-xs text-slate-500 list-disc list-inside p-4 rounded-2xl bg-slate-50 border border-slate-200">
             <li>Socio-Content: 30-day Instagram calendar generation</li>
             <li>Socio-Listings: Local citation synchronization across 12 directories</li>
             <li>Socio-Track: Square POS webhook attribution</li>
@@ -928,7 +932,7 @@
     }
 
     function filterStream(cat, btn) {
-      document.querySelectorAll('#live-stream-logs button').forEach(b => b.classList.remove('bg-white/10', 'text-white'));
+      document.querySelectorAll('#live-stream-logs button').forEach(b => b.classList.remove('bg-slate-100', 'text-slate-900'));
       renderLiveStream(cat);
     }
 
@@ -983,8 +987,8 @@
       const deck = document.getElementById('toast-deck');
       if (!deck) return;
       const t = document.createElement('div');
-      t.className = 'pointer-events-auto bg-[#101826] border border-cyan-400/30 shadow-2xl px-5 py-3 rounded-2xl text-xs text-white flex items-center gap-3';
-      const color = type === 'success' ? 'text-[#34D399]' : type === 'warning' ? 'text-amber-400' : 'text-cyan-400';
+      t.className = 'pointer-events-auto bg-white border border-[#669BD2]/30 shadow-2xl px-5 py-3 rounded-2xl text-xs text-slate-900 flex items-center gap-3';
+      const color = type === 'success' ? 'text-[#34D399]' : type === 'warning' ? 'text-amber-600' : 'text-[#669BD2]';
       t.innerHTML = `<span class="${color} font-bold">●</span><span>${msg}</span>`;
       deck.appendChild(t);
       setTimeout(() => t.remove(), 3500);
