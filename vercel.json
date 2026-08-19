@@ -40,6 +40,14 @@
       "dest": "website/escaneo-de-fugas-scorecard.html"
     },
     {
+      "src": "/supplier-cards/?",
+      "dest": "website/supplier-cards.html"
+    },
+    {
+      "src": "/pilot-agreement/?",
+      "dest": "website/pilot-agreement.html"
+    },
+    {
       "src": "/(.*)",
       "dest": "website/$1"
     }

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socio · Tarjetas de Referido para Pro-Desk & Proveedores (NYC)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;800;900&family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        @media print {
+            body { background: #fff; padding: 0; }
+            .no-print { display: none; }
+            @page { margin: 0.5cm; size: letter portrait; }
+        }
+        .hazard-border {
+            border-left: 6px solid #EAB308;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 p-6 md:p-10 text-slate-900">
+
+    <div class="max-w-4xl mx-auto space-y-6">
+        
+        <!-- Header Controls -->
+        <div class="flex justify-between items-center bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+            <div>
+                <h1 class="text-xl font-black text-slate-900">Tarjetas de Pro-Desk · Kamco & Feldman Lumber</h1>
+                <p class="text-xs text-slate-500 font-mono">1% Comisión Directa en Efectivo por Cada Contratista Referido que Cobre un Depósito</p>
+            </div>
+            <button onclick="window.print()" class="no-print px-5 py-2.5 bg-slate-900 text-white text-xs font-black uppercase tracking-wider rounded-xl hover:bg-slate-800 transition">
+                Imprimir 10 Tarjetas (Letter)
+            </button>
+        </div>
+
+        <!-- 3x2 Business Card Print Grid (Front & Back Cards) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <!-- CARD FRONT -->
+            <div class="w-full bg-slate-950 text-white rounded-2xl p-6 border border-slate-800 shadow-xl space-y-4 relative overflow-hidden hazard-border">
+                <div class="flex justify-between items-start">
+                    <div class="flex items-center">
+                        <span class="text-2xl font-black tracking-tight text-white">Socio</span>
+                        <span class="w-1.5 h-1.5 rounded-[1px] bg-blue-500 ml-[1.5px] self-end mb-1 inline-block"></span>
+                        <span class="ml-2 px-2 py-0.5 rounded bg-yellow-500 text-black text-[9px] font-mono font-black uppercase">
+                            PRO-DESK NYC
+                        </span>
+                    </div>
+                    <span class="text-[10px] font-mono text-emerald-400 font-bold bg-emerald-950 px-2 py-0.5 rounded border border-emerald-700">
+                        1% COMISIÓN AL PROVEEDOR
+                    </span>
+                </div>
+
+                <div class="space-y-1">
+                    <h2 class="text-base font-extrabold text-white">¿Eres Contratista en NYC?</h2>
+                    <p class="text-xs text-slate-300">
+                        Te enviamos <strong>contratos de remodelación cerrados</strong> directamente a tu WhatsApp. Cero pagos por adelantado. Solo pagas comisión cuando cobras el anticipo.
+                    </p>
+                </div>
+
+                <div class="flex items-center justify-between pt-2 border-t border-slate-800">
+                    <div class="space-y-0.5 text-[10px] font-mono text-slate-400">
+                        <div>📲 WhatsApp: <strong>(917) 555-0199</strong></div>
+                        <div>🌐 socio-one.vercel.app/contratistas</div>
+                    </div>
+                    <!-- QR Box -->
+                    <div class="p-1.5 bg-white rounded-lg">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=70x70&data=https://socio-one.vercel.app/contratistas" alt="QR Code" class="w-14 h-14">
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD BACK (Pro-Desk Referral Voucher) -->
+            <div class="w-full bg-white text-slate-900 rounded-2xl p-6 border-2 border-dashed border-slate-300 shadow-sm space-y-3">
+                <div class="flex justify-between items-center border-b border-slate-200 pb-2">
+                    <span class="text-xs font-mono font-black text-blue-700 uppercase">Vale de Referido · Mostrador</span>
+                    <span class="text-[10px] font-mono bg-yellow-100 text-yellow-900 px-2 py-0.5 rounded font-bold">KAMCO / FELDMAN</span>
+                </div>
+
+                <div class="text-xs text-slate-700 space-y-1">
+                    <p><strong>Para el Maestro / Contratista:</strong> Escanea el código QR para activar tu <em>Escaneo de Fugas 48h Gratuito</em> y recibir proyectos de construcción en tu zona.</p>
+                    <p class="text-[11px] text-slate-500"><strong>Para el Representante de Ventas:</strong> Escribe tu nombre abajo. Cuando este contratista cierre su primer contrato con Socio, recibirás el <strong>1% del total del proyecto</strong> ($350 - $1,200 en efectivo).</p>
+                </div>
+
+                <div class="pt-2 border-t border-slate-200 grid grid-cols-2 gap-2 text-[10px] font-mono">
+                    <div>
+                        <span class="text-slate-400 block">Nombre Vendedor:</span>
+                        <div class="border-b border-slate-400 h-5 mt-1"></div>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 block">Teléfono Vendedor:</span>
+                        <div class="border-b border-slate-400 h-5 mt-1"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
