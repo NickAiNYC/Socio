@@ -164,6 +164,10 @@
       "dest": "website/robots.txt"
     },
     {
+      "src": "/404",
+      "dest": "website/404.html"
+    },
+    {
       "src": "/(.*)",
       "dest": "website/$1"
     }
