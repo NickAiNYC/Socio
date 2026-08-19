@@ -48,20 +48,17 @@ workflow:
         and only surfaces records above the leakage threshold.
     - name: record-packet
       agent: socio-prospect
-      tool: growth_os_record_event
+      tool: prospect_commit_packet
       params:
+        packetPath: "outputs/prospects/{{ date }}.json"
         businessId: socio_default
         agentId: socio-prospect
-        type: lead_created
-        amount: 0
-        source: "prospect-scan-{{ date }}"
-        metadata:
-          packet: "outputs/prospects/{{ date }}.json"
-          vertical: florist
-          corridor: east-harlem
       note: >
-        Non-financial event: packet delivery is instrumented into the Growth
-        OS ledger from day one so the loop is auditable end to end.
+        Validates the packet (kind = socio-prospect-packet) and records one
+        lead_created event per selected prospect — score, gaps, coverage and
+        recoverable-revenue estimate as metadata — into the Growth OS ledger.
+        Non-financial, no Governor approval needed. The packet FILE stays the
+        single handoff artifact to Pitch; the ledger makes the handoff auditable.
     - name: handoff-to-pitch
       agent: socio-pitch
       params:

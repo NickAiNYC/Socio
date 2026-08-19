@@ -289,6 +289,61 @@ server.tool(
   }
 );
 
+// Tool: Commit scored prospect packet to the ledger (non-financial, no Governor approval).
+server.tool(
+  "prospect_commit_packet",
+  "Commits a scored prospect packet (outputs/prospects/<date>.json) into the Growth OS ledger. Validates the packet kind, then records one lead_created event per selected prospect with its score, gaps, coverage and recoverable-revenue estimate as metadata. Non-financial (amount 0) — no Governor approval required. The packet FILE remains the single handoff artifact to Pitch; this tool only makes the handoff auditable.",
+  {
+    packetPath: z.string().describe("Path to the scored packet JSON written by engines/prospect/cli.mjs (absolute or repo-relative)"),
+    businessId: z.string().default('socio_default'),
+    agentId: z.string()
+  },
+  async ({ packetPath, businessId, agentId }) => {
+    try {
+      authenticateAgent(agentId);
+      const fs = await import('node:fs');
+      const path = await import('node:path');
+      const resolved = path.isAbsolute(packetPath) ? packetPath : path.join(process.cwd(), packetPath);
+      if (!fs.existsSync(resolved)) throw new Error(`packet not found: ${resolved}`);
+      const packet = JSON.parse(fs.readFileSync(resolved, 'utf8'));
+      if (packet.kind !== 'socio-prospect-packet') {
+        throw new Error(`not a socio-prospect-packet (kind: ${JSON.stringify(packet.kind)})`);
+      }
+
+      const events = [];
+      for (const p of packet.prospects || []) {
+        const event = await revenueLedger.record({
+          businessId,
+          agentId,
+          type: 'lead_created',
+          amount: 0,
+          currency: 'USD',
+          source: `prospect-packet-${String(packet.generatedAt || '').slice(0, 10)}`,
+          metadata: {
+            prospectId: p.sourceId || p.name,
+            name: p.name,
+            area: packet.area,
+            vertical: packet.vertical,
+            score: p.score,
+            coveragePct: p.coveragePct,
+            leakageTier: p.leakageTier,
+            gaps: p.gaps,
+            recoverableRevenue: p.recoverableRevenue,
+            packetPath: resolved
+          }
+        });
+        events.push({ eventId: event.id, prospectId: p.sourceId || p.name, score: p.score });
+      }
+
+      return {
+        content: [{ type: "text", text: JSON.stringify({ recorded: events.length, packetPath: resolved, prospects: events }, null, 2) }]
+      };
+    } catch (error) {
+      return { content: [{ type: "text", text: `Commit Error: ${error.message}` }], isError: true };
+    }
+  }
+);
+
 // Tool: Record Event — financial events must reference an executed governed action
 // AND the approval's proposal payload must declare the authorized event types
 // (allowedEventTypes) and a numeric maxAmount; amounts beyond the bound are rejected.
