@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Socio Command Center — Executive Operating Cockpit</title>
+  <title>Socio Command Center — Autonomous Growth Operating System</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,24 +12,17 @@
   
   <style>
     :root {
-      --bg-base: #0B0D13;
-      --bg-surface: #11141D;
-      --bg-elevated: #161B26;
-      --border-color: rgba(255, 255, 255, 0.08);
-      --border-subtle: rgba(255, 255, 255, 0.05);
-      --text-main: #F3F4F6;
-      --text-muted: #8E9BAE;
-      --text-faint: #5A6678;
-      --accent-green: #10B981;
-      --accent-amber: #F59E0B;
-      --accent-red: #EF4444;
-      --accent-blue: #3B82F6;
-      --accent-cyan: #06B6D4;
+      --bg-base: #0A0D14;
+      --accent-cyan: #38BDF8;
+      --accent-emerald: #34D399;
+      --text-main: #FFFFFF;
+      --text-secondary: #94A3B8;
+      --text-tertiary: #64748B;
     }
 
     body {
-      background-color: var(--bg-base);
-      color: var(--text-main);
+      background-color: #0A0D14;
+      color: #FFFFFF;
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       -webkit-font-smoothing: antialiased;
       min-height: 100vh;
@@ -41,142 +34,144 @@
       font-family: 'JetBrains Mono', monospace;
     }
 
-    /* Executive Surface Cards with Atmospheric Soft Cloud Halos */
-    .exec-card {
-      background-color: var(--bg-surface);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      position: relative;
-      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7), 0 0 50px -10px rgba(59, 130, 246, 0.12);
-      transition: all 0.25s ease;
-    }
-    .exec-card:hover {
-      border-color: rgba(96, 165, 250, 0.35);
-      box-shadow: 0 15px 40px -10px rgba(0, 0, 0, 0.8), 0 0 65px -8px rgba(59, 130, 246, 0.22);
-    }
-
-    .exec-card-elevated {
-      background: radial-gradient(circle at 50% 0%, rgba(30, 58, 138, 0.25) 0%, var(--bg-elevated) 100%);
-      border: 1px solid rgba(96, 165, 250, 0.3);
-      border-radius: 18px;
-      position: relative;
-      box-shadow: 0 15px 45px -10px rgba(0, 0, 0, 0.8), 0 0 70px -10px rgba(56, 140, 246, 0.25);
-    }
-
-    /* Soft Cloud Backdrop Capsule */
-    .cloud-card {
-      background: linear-gradient(180deg, #131926 0%, #0F1420 100%);
-      border: 1px solid rgba(80, 130, 200, 0.24);
-      border-radius: 18px;
-      position: relative;
-      box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.8), 0 0 60px -12px rgba(56, 130, 246, 0.18);
-    }
-
-    /* Status Badges - Restrained and Matte */
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 2px 8px;
-      border-radius: 6px;
+    /* Standard Section Header Class */
+    .section-hdr {
+      font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
       font-weight: 600;
-      font-family: 'JetBrains Mono', monospace;
-      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #94A3B8;
     }
-    .badge-green { background: rgba(16, 185, 129, 0.12); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.25); }
+
+    /* 1. Base Glass Panel (No Hover) */
+    .base-glass-panel {
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 0 40px -10px rgba(56, 189, 248, 0.12);
+    }
+
+    /* 2. Interactive KPI Card (With Lift & Bright Cyan Hover Glow) */
+    .kpi-glass-card {
+      position: relative;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 0 40px -10px rgba(56, 189, 248, 0.08);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .kpi-glass-card:hover {
+      box-shadow: 0 0 50px -5px rgba(56, 189, 248, 0.22);
+      border-color: rgba(56, 189, 248, 0.30);
+      transform: translateY(-2px);
+    }
+
+    /* 3. Verified Revenue State Card (Emerald) */
+    .verified-revenue-card {
+      border-radius: 14px;
+      background: rgba(52, 211, 153, 0.04);
+      border: 1px solid rgba(52, 211, 153, 0.20);
+      box-shadow: 0 0 35px -10px rgba(52, 211, 153, 0.15);
+    }
+
+    /* Restrained Status Badges */
+    .badge-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .badge-cyan { background: rgba(56, 189, 248, 0.12); color: #38BDF8; border: 1px solid rgba(56, 189, 248, 0.25); }
+    .badge-emerald { background: rgba(52, 211, 153, 0.12); color: #34D399; border: 1px solid rgba(52, 211, 153, 0.25); }
     .badge-amber { background: rgba(245, 158, 11, 0.12); color: #FBBF24; border: 1px solid rgba(245, 158, 11, 0.25); }
-    .badge-red { background: rgba(239, 68, 68, 0.12); color: #F87171; border: 1px solid rgba(239, 68, 68, 0.25); }
-    .badge-blue { background: rgba(59, 130, 246, 0.12); color: #93C5FD; border: 1px solid rgba(59, 130, 246, 0.25); }
-    .badge-gray { background: rgba(255, 255, 255, 0.06); color: #9CA3AF; border: 1px solid rgba(255, 255, 255, 0.08); }
+    .badge-rose { background: rgba(244, 63, 94, 0.12); color: #FB7185; border: 1px solid rgba(244, 63, 94, 0.25); }
 
     /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 5px; height: 5px; }
     ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.08); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(56, 189, 248, 0.3); }
 
-    /* Modal / Drawer */
+    /* Slide-over Drawer */
     .drawer-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(4px);
+      background: rgba(10, 13, 20, 0.85);
+      backdrop-filter: blur(8px);
       z-index: 90;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.2s ease;
     }
-    .drawer-overlay.open {
-      opacity: 1;
-      pointer-events: auto;
-    }
+    .drawer-overlay.open { opacity: 1; pointer-events: auto; }
 
     .drawer-panel {
       position: fixed;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      width: 100%;
-      max-width: 540px;
-      background: #11141D;
-      border-left: 1px solid rgba(255, 255, 255, 0.12);
+      top: 0; right: 0; bottom: 0;
+      width: 100%; max-width: 520px;
+      background: #0D111A;
+      border-left: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 60px rgba(0,0,0,0.9);
       z-index: 100;
       transform: translateX(100%);
       transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       overflow-y: auto;
     }
-    .drawer-panel.open {
-      transform: translateX(0);
-    }
+    .drawer-panel.open { transform: translateX(0); }
   </style>
 </head>
-<body class="p-0 m-0">
+<body class="p-0 m-0 bg-[#0A0D14] text-white">
 
   <!-- ===================================================================
       PERSISTENT GLOBAL COMMAND & NAVIGATION BAR
       =================================================================== -->
-  <header class="h-14 border-b border-white/10 bg-[#0B0D13] px-6 flex items-center justify-between sticky top-0 z-40">
-    <div class="flex items-center gap-4">
+  <header class="h-14 border-b border-white/5 bg-[#0A0D14]/90 px-6 flex items-center justify-between sticky top-0 z-40 backdrop-blur-xl">
+    <div class="flex items-center gap-3">
       <a href="index.html" class="flex items-center gap-1.5 text-base font-bold text-white tracking-tight">
         <span>Socio</span>
-        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+        <span class="w-1.5 h-1.5 rounded-full bg-[#38BDF8] shadow-[0_0_8px_#38BDF8]"></span>
       </a>
-      <span class="text-xs text-gray-500 font-mono">/</span>
-      <span class="text-xs font-semibold text-gray-300">Executive Operating Cockpit</span>
+      <span class="text-xs text-slate-600 font-mono">/</span>
+      <span class="text-xs font-semibold text-slate-300 font-mono">Agent Control Plane</span>
       <div class="h-3.5 w-px bg-white/10 mx-1"></div>
-      <div class="flex items-center gap-2 text-xs font-mono text-gray-400">
-        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-        <span id="hdr-fleet-status">8/8 Agents Active</span>
+      <div class="flex items-center gap-2 text-xs font-mono text-slate-400">
+        <span class="w-2 h-2 rounded-full bg-[#34D399] animate-pulse"></span>
+        <span id="hdr-fleet-status">8/8 AGENTS ONLINE</span>
       </div>
     </div>
 
-    <!-- Center Command Bar (⌘K) -->
+    <!-- Center Command Palette (⌘K) -->
     <div class="flex-1 max-w-lg mx-6 relative">
-      <div class="flex items-center gap-2 bg-[#141822] border border-white/10 rounded-lg px-3 py-1.5 focus-within:border-blue-500 transition-colors">
-        <i data-lucide="search" class="w-3.5 h-3.5 text-gray-400"></i>
+      <div class="flex items-center gap-2 bg-white/[0.02] border border-white/5 rounded-xl px-3 py-1.5 focus-within:border-cyan-400/40 transition-colors shadow-inner">
+        <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400"></i>
         <input
           type="text"
           id="global-cmd-input"
-          placeholder="Command Socio or search (e.g. 'Show blocked agents', 'East Harlem Bites') • ⌘K"
-          class="bg-transparent border-none outline-none text-xs font-mono text-white w-full placeholder-gray-500"
+          placeholder="Command Socio or jump (e.g. 'Show blocked agents', 'East Harlem Bites') • ⌘K"
+          class="bg-transparent border-none outline-none text-xs font-mono text-white w-full placeholder-slate-500"
           onkeydown="handleCommandKey(event)"
         >
-        <span class="text-[10px] font-mono bg-white/5 px-1.5 py-0.5 rounded text-gray-400 border border-white/10">⌘K</span>
+        <span class="text-[10px] font-mono bg-white/5 px-1.5 py-0.5 rounded text-slate-400 border border-white/10">⌘K</span>
       </div>
     </div>
 
     <!-- Right Controls -->
     <div class="flex items-center gap-3">
-      <div class="text-xs font-mono text-gray-400 hidden sm:block">
-        <span id="live-clock">10:28 PM</span> EST
+      <div class="text-xs font-mono text-slate-400 hidden sm:block">
+        <span id="live-clock">10:34 PM</span> EST
       </div>
-      <button onclick="refreshOperatingState()" class="px-2.5 py-1.5 rounded-md bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-gray-300 flex items-center gap-1.5 transition-colors">
-        <i data-lucide="refresh-cw" class="w-3.5 h-3.5" id="refresh-icon"></i>
+      <button onclick="refreshOperatingState()" class="px-2.5 py-1.5 rounded-lg bg-white/[0.02] hover:bg-white/[0.05] border border-white/5 text-xs font-medium text-slate-300 flex items-center gap-1.5 transition-colors">
+        <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-cyan-400" id="refresh-icon"></i>
         <span class="hidden sm:inline">Sync</span>
       </button>
-      <a href="merchant-evidence.html" target="_blank" class="px-3 py-1.5 rounded-md bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-500/30 text-xs font-medium flex items-center gap-1.5 transition-colors">
-        <span>Evidence</span>
+      <a href="merchant-evidence.html" target="_blank" class="px-3 py-1.5 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-medium flex items-center gap-1.5 transition-colors">
+        <span>Evidence Frame</span>
         <i data-lucide="external-link" class="w-3 h-3"></i>
       </a>
     </div>
@@ -190,85 +185,85 @@
     <!-- ============================================================= -->
     <!-- LEVEL 0: "WHILE YOU WERE AWAY" BRIEFING BANNER                -->
     <!-- ============================================================= -->
-    <div class="exec-card p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-l-4 border-l-blue-500 bg-[#0E121B]">
+    <div class="base-glass-panel p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-l-2 border-l-[#38BDF8]">
       <div class="flex items-start sm:items-center gap-3">
-        <div class="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 shrink-0 mt-0.5 sm:mt-0">
+        <div class="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 shrink-0 mt-0.5 sm:mt-0 shadow-[0_0_15px_rgba(56,189,248,0.2)]">
           <i data-lucide="bell" class="w-4 h-4"></i>
         </div>
         <div>
-          <div class="text-xs font-mono uppercase font-bold text-gray-400">While you were away</div>
-          <div class="text-sm font-medium text-gray-200 mt-0.5">
-            <strong>8 agent actions completed</strong> • <span class="text-amber-400 font-semibold">3 approvals require attention</span> • <strong>+$4,820 attributed revenue</strong> • 2 merchants advanced • 1 workflow blocked.
+          <div class="section-hdr mb-0.5">WHILE YOU WERE AWAY</div>
+          <div class="text-sm font-medium text-slate-200">
+            <strong>8 agent actions completed</strong> • <span class="text-amber-400 font-semibold">3 approvals require attention</span> • <strong class="text-emerald-400">+$4,820 attributed revenue</strong> • 2 merchants advanced • 1 workflow blocked.
           </div>
         </div>
       </div>
-      <div class="flex items-center gap-2 shrink-0 text-xs font-mono text-gray-400">
+      <div class="flex items-center gap-2 shrink-0 text-xs font-mono text-slate-400">
         <span>Highest priority action isolated below</span>
-        <i data-lucide="arrow-down" class="w-3.5 h-3.5 text-blue-400"></i>
+        <i data-lucide="arrow-down" class="w-3.5 h-3.5 text-cyan-400"></i>
       </div>
     </div>
 
     <!-- ============================================================= -->
     <!-- LEVEL 1: THE AI CHIEF OF STAFF — SINGLE NEXT BEST ACTION      -->
     <!-- ============================================================= -->
-    <section class="exec-card-elevated p-6 border-l-4 border-l-emerald-500">
-      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+    <section class="base-glass-panel p-6 border-l-2 border-l-[#38BDF8] relative overflow-hidden shadow-[0_0_50px_-5px_rgba(56,189,248,0.18)]">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
         
         <!-- Left: Action Brief Details -->
         <div class="space-y-3 flex-1 max-w-4xl">
           <div class="flex items-center gap-2.5">
-            <span class="badge badge-green">AI CHIEF OF STAFF</span>
-            <span class="text-xs font-mono font-bold uppercase text-gray-400">YOUR HIGHEST-VALUE MOVE RIGHT NOW</span>
-            <span class="text-xs text-gray-600">•</span>
-            <span class="text-xs font-mono text-emerald-400 font-bold">ACTION SCORE: 0.94 / 1.0</span>
+            <span class="badge-pill badge-cyan">AI CHIEF OF STAFF</span>
+            <span class="section-hdr">YOUR HIGHEST-VALUE MOVE RIGHT NOW</span>
+            <span class="text-xs text-slate-600">•</span>
+            <span class="text-xs font-mono text-cyan-400 font-bold">ACTION SCORE: 0.94 / 1.0</span>
           </div>
 
           <!-- Hero Action Title (28–36px) -->
-          <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight" id="hero-action-title">
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-sans" id="hero-action-title">
             Approve East Harlem Bites Paid Instagram Campaign ($400 Budget)
           </h1>
 
           <!-- 4 Core Executive Parameters Grid -->
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
-            <div class="p-3 rounded-lg bg-[#11141D] border border-white/5">
-              <div class="text-[11px] font-mono text-gray-400 uppercase font-semibold">Projected Impact</div>
-              <div class="text-lg sm:text-xl font-bold text-emerald-400 mt-0.5">+$4,400</div>
-              <div class="text-[11px] text-gray-400">Net new revenue</div>
+            <div class="p-3 rounded-xl bg-white/[0.02] border border-white/5">
+              <div class="text-[10px] font-mono text-slate-400 uppercase font-semibold">Projected Impact</div>
+              <div class="text-xl font-bold text-emerald-400 font-mono mt-0.5">+$4,400</div>
+              <div class="text-[11px] text-slate-500 font-mono">Net new revenue</div>
             </div>
-            <div class="p-3 rounded-lg bg-[#11141D] border border-white/5">
-              <div class="text-[11px] font-mono text-gray-400 uppercase font-semibold">Founder Time</div>
-              <div class="text-lg sm:text-xl font-bold text-white mt-0.5">45 seconds</div>
-              <div class="text-[11px] text-gray-400">Single decision review</div>
+            <div class="p-3 rounded-xl bg-white/[0.02] border border-white/5">
+              <div class="text-[10px] font-mono text-slate-400 uppercase font-semibold">Founder Time</div>
+              <div class="text-xl font-bold text-white font-mono mt-0.5">45 seconds</div>
+              <div class="text-[11px] text-slate-500 font-mono">Single decision review</div>
             </div>
-            <div class="p-3 rounded-lg bg-[#11141D] border border-white/5">
-              <div class="text-[11px] font-mono text-gray-400 uppercase font-semibold">Risk Level</div>
-              <div class="text-lg sm:text-xl font-bold text-amber-400 mt-0.5">HIGH</div>
-              <div class="text-[11px] text-gray-400">Ad budget spend policy</div>
+            <div class="p-3 rounded-xl bg-white/[0.02] border border-white/5">
+              <div class="text-[10px] font-mono text-slate-400 uppercase font-semibold">Risk Level</div>
+              <div class="text-xl font-bold text-amber-400 font-mono mt-0.5">HIGH</div>
+              <div class="text-[11px] text-slate-500 font-mono">Ad budget spend policy</div>
             </div>
-            <div class="p-3 rounded-lg bg-[#11141D] border border-white/5">
-              <div class="text-[11px] font-mono text-gray-400 uppercase font-semibold">Evidence Confidence</div>
-              <div class="text-lg sm:text-xl font-bold text-blue-400 mt-0.5">87%</div>
-              <div class="text-[11px] text-gray-400">11x test ROAS verified</div>
+            <div class="p-3 rounded-xl bg-white/[0.02] border border-white/5">
+              <div class="text-[10px] font-mono text-slate-400 uppercase font-semibold">Evidence Confidence</div>
+              <div class="text-xl font-bold text-cyan-400 font-mono mt-0.5">87%</div>
+              <div class="text-[11px] text-slate-500 font-mono">11x test ROAS verified</div>
             </div>
           </div>
 
           <!-- Why Now & Closed-Loop Downstream Execution Pipeline -->
-          <div class="space-y-2 pt-2 text-sm text-gray-300">
+          <div class="space-y-2 pt-2 text-sm text-slate-300">
             <div class="flex items-start gap-2">
-              <strong class="text-gray-400 text-xs font-mono uppercase tracking-wider shrink-0 mt-0.5">Why Now:</strong>
-              <span class="text-gray-200">The campaign has already produced an 11x ROAS signal on the initial $50 test sample and is currently blocked on Governor approval before the local weekend dining surge.</span>
+              <strong class="text-slate-400 text-xs font-mono uppercase tracking-wider shrink-0 mt-0.5">Why Now:</strong>
+              <span class="text-slate-200">The campaign has already produced an 11x ROAS signal on the initial $50 test sample and is currently blocked on Governor approval before the local weekend dining surge.</span>
             </div>
 
             <div class="flex items-start gap-2 pt-1">
-              <strong class="text-gray-400 text-xs font-mono uppercase tracking-wider shrink-0 mt-0.5">After Approval:</strong>
-              <div class="text-xs font-mono text-gray-300 flex flex-wrap items-center gap-2">
-                <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-gray-200">Socio-Expand → launches campaign</span>
-                <span class="text-gray-600">→</span>
-                <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-gray-200">Socio-Track → monitors POS attribution</span>
-                <span class="text-gray-600">→</span>
-                <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-gray-200">Socio-Ledger → records revenue & spend</span>
-                <span class="text-gray-600">→</span>
-                <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-gray-200">Socio-Governor → seals CAS attestation</span>
+              <strong class="text-slate-400 text-xs font-mono uppercase tracking-wider shrink-0 mt-0.5">After Approval:</strong>
+              <div class="text-xs font-mono text-slate-300 flex flex-wrap items-center gap-2">
+                <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-200">Socio-Expand → launches campaign</span>
+                <span class="text-slate-600">→</span>
+                <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-200">Socio-Track → monitors POS attribution</span>
+                <span class="text-slate-600">→</span>
+                <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-200">Socio-Ledger → records revenue & spend</span>
+                <span class="text-slate-600">→</span>
+                <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-200">Socio-Governor → seals CAS attestation</span>
               </div>
             </div>
           </div>
@@ -277,17 +272,17 @@
 
         <!-- Right: Primary Call to Action Deck -->
         <div class="flex flex-col sm:flex-row lg:flex-col gap-3 shrink-0 justify-center min-w-[220px]">
-          <button onclick="approveProposal('PROP-0042')" class="px-6 py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm rounded-lg flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-md">
-            <i data-lucide="check-circle" class="w-4 h-4"></i>
+          <button onclick="approveProposal('PROP-0042')" class="px-6 py-3.5 bg-[#38BDF8] hover:bg-[#0284c7] text-[#0A0D14] font-black font-mono text-xs rounded-xl flex items-center justify-center gap-2 transition-all cursor-pointer shadow-[0_0_25px_rgba(56,189,248,0.4)] hover:scale-[1.02]">
+            <i data-lucide="check-circle" class="w-4 h-4 stroke-[3]"></i>
             <span>APPROVE & EXECUTE</span>
           </button>
           
-          <button onclick="openEvidenceDrawer('PROP-0042')" class="px-4 py-2.5 bg-white/5 hover:bg-white/10 text-gray-200 font-medium text-xs rounded-lg border border-white/10 flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
-            <i data-lucide="file-text" class="w-3.5 h-3.5 text-gray-400"></i>
+          <button onclick="openEvidenceDrawer('PROP-0042')" class="px-4 py-2.5 bg-white/[0.03] hover:bg-white/[0.08] text-slate-200 font-medium font-mono text-xs rounded-xl border border-white/10 flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
+            <i data-lucide="file-text" class="w-3.5 h-3.5 text-cyan-400"></i>
             <span>VIEW EVIDENCE (11x ROAS)</span>
           </button>
 
-          <button onclick="delegateAction('PROP-0042')" class="px-4 py-2 bg-transparent hover:bg-white/5 text-gray-400 hover:text-gray-200 font-mono text-xs rounded-lg transition-colors text-center cursor-pointer">
+          <button onclick="delegateAction('PROP-0042')" class="px-4 py-2 bg-transparent hover:bg-white/5 text-slate-400 hover:text-slate-200 font-mono text-xs rounded-lg transition-colors text-center cursor-pointer">
             Delegate to Socio-Expand
           </button>
         </div>
@@ -301,17 +296,17 @@
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
       
       <!-- COLUMN 1: FOUNDER ACTION QUEUE (4 Cols) -->
-      <div class="lg:col-span-4 exec-card p-5 space-y-4 flex flex-col justify-between">
+      <div class="lg:col-span-4 base-glass-panel p-5 space-y-4 flex flex-col justify-between">
         <div class="space-y-3">
           <div class="flex items-center justify-between border-b border-white/5 pb-3">
             <div class="flex items-center gap-2">
               <i data-lucide="list-todo" class="w-4 h-4 text-amber-400"></i>
-              <h2 class="text-base font-bold text-white">Founder Action Queue</h2>
+              <h2 class="section-hdr text-white">FOUNDER ACTION QUEUE</h2>
             </div>
-            <span class="badge badge-amber" id="queue-count-badge">3 Pending Decisions</span>
+            <span class="badge-pill badge-amber" id="queue-count-badge">3 PENDING</span>
           </div>
 
-          <p class="text-xs text-gray-400 leading-relaxed">
+          <p class="text-xs text-slate-400 leading-relaxed font-sans">
             Ranked deterministically by economic impact, urgency, confidence, and unblock leverage.
           </p>
 
@@ -321,25 +316,25 @@
           </div>
         </div>
 
-        <div class="pt-3 border-t border-white/5 text-xs text-gray-500 font-mono flex items-center justify-between">
+        <div class="pt-3 border-t border-white/5 text-xs text-slate-500 font-mono flex items-center justify-between">
           <span>Sort: Impact × Urgency ÷ Time</span>
-          <span class="text-emerald-400 font-semibold">Total: +$8,600 Unlocked</span>
+          <span class="text-emerald-400 font-semibold">+$8,600 Unlocked</span>
         </div>
       </div>
 
       <!-- COLUMN 2: AGENT FLEET ROSTER (4 Cols) -->
-      <div class="lg:col-span-4 exec-card p-5 space-y-4 flex flex-col justify-between">
+      <div class="lg:col-span-4 base-glass-panel p-5 space-y-4 flex flex-col justify-between">
         <div class="space-y-3">
           <div class="flex items-center justify-between border-b border-white/5 pb-3">
             <div class="flex items-center gap-2">
-              <i data-lucide="users" class="w-4 h-4 text-blue-400"></i>
-              <h2 class="text-base font-bold text-white">Agent Fleet Status</h2>
+              <i data-lucide="users" class="w-4 h-4 text-cyan-400"></i>
+              <h2 class="section-hdr text-white">AGENT FLEET STATUS</h2>
             </div>
-            <span class="badge badge-green">8/8 Operational</span>
+            <span class="badge-pill badge-emerald">8/8 OPERATIONAL</span>
           </div>
 
-          <p class="text-xs text-gray-400 leading-relaxed">
-            Real autonomous workers with heartbeat telemetry, current jobs, and outputs.
+          <p class="text-xs text-slate-400 leading-relaxed font-sans">
+            Real autonomous workers with heartbeat telemetry, active job payloads, and outputs.
           </p>
 
           <!-- Agent Roster -->
@@ -348,24 +343,24 @@
           </div>
         </div>
 
-        <div class="pt-3 border-t border-white/5 text-xs text-gray-500 font-mono flex items-center justify-between">
+        <div class="pt-3 border-t border-white/5 text-xs text-slate-500 font-mono flex items-center justify-between">
           <span>Hermes Worker Cluster</span>
-          <span class="text-gray-400">Avg Heartbeat: 14s</span>
+          <span class="text-slate-400">Avg Heartbeat: 14s</span>
         </div>
       </div>
 
       <!-- COLUMN 3: GOVERNOR SAFETY GATES (4 Cols) -->
-      <div class="lg:col-span-4 exec-card p-5 space-y-4 flex flex-col justify-between">
+      <div class="lg:col-span-4 base-glass-panel p-5 space-y-4 flex flex-col justify-between">
         <div class="space-y-3">
           <div class="flex items-center justify-between border-b border-white/5 pb-3">
             <div class="flex items-center gap-2">
               <i data-lucide="shield-check" class="w-4 h-4 text-rose-400"></i>
-              <h2 class="text-base font-bold text-white">Governor Safety Gates</h2>
+              <h2 class="section-hdr text-white">GOVERNOR SAFETY GATES</h2>
             </div>
-            <span class="badge badge-red" id="gov-pending-badge">3 Pending CAS Review</span>
+            <span class="badge-pill badge-rose" id="gov-pending-badge">3 PENDING</span>
           </div>
 
-          <p class="text-xs text-gray-400 leading-relaxed">
+          <p class="text-xs text-slate-400 leading-relaxed font-sans">
             CAS policy evaluation layer. High-risk actions require explicit founder attestation.
           </p>
 
@@ -375,8 +370,8 @@
           </div>
         </div>
 
-        <div class="pt-3 border-t border-white/5 text-xs text-gray-500 font-mono flex items-center justify-between">
-          <span>Security Policy: Fail-Closed</span>
+        <div class="pt-3 border-t border-white/5 text-xs text-slate-500 font-mono flex items-center justify-between">
+          <span>Policy: Fail-Closed</span>
           <span class="text-emerald-400 font-semibold">0 AirLock Breaches</span>
         </div>
       </div>
@@ -386,21 +381,20 @@
     <!-- ============================================================= -->
     <!-- LEVEL 4: LIVE OPERATIONAL ACTIVITY & TELEMETRY STREAM         -->
     <!-- ============================================================= -->
-    <section class="exec-card p-5 space-y-4">
+    <section class="base-glass-panel p-5 space-y-4">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5 pb-3">
         <div class="flex items-center gap-2">
-          <i data-lucide="activity" class="w-4 h-4 text-emerald-400"></i>
-          <h2 class="text-base font-bold text-white">Live Execution Stream</h2>
-          <span class="text-xs font-mono text-gray-500">Real-time operational event stream</span>
+          <i data-lucide="activity" class="w-4 h-4 text-cyan-400"></i>
+          <h2 class="section-hdr text-white">LIVE GROWTH EVENT STREAM</h2>
         </div>
 
         <!-- Filter Pills -->
         <div class="flex items-center gap-1.5 flex-wrap">
           <button onclick="filterStream('ALL', this)" class="px-2.5 py-1 rounded bg-white/10 text-white font-mono text-xs font-semibold">ALL</button>
-          <button onclick="filterStream('AGENT', this)" class="px-2.5 py-1 rounded bg-white/5 text-gray-400 hover:text-white font-mono text-xs">AGENTS</button>
-          <button onclick="filterStream('REVENUE', this)" class="px-2.5 py-1 rounded bg-white/5 text-gray-400 hover:text-white font-mono text-xs">REVENUE</button>
-          <button onclick="filterStream('GOVERNOR', this)" class="px-2.5 py-1 rounded bg-white/5 text-gray-400 hover:text-white font-mono text-xs">GOVERNOR</button>
-          <button onclick="filterStream('MERCHANT', this)" class="px-2.5 py-1 rounded bg-white/5 text-gray-400 hover:text-white font-mono text-xs">MERCHANTS</button>
+          <button onclick="filterStream('AGENT', this)" class="px-2.5 py-1 rounded bg-white/[0.02] text-slate-400 hover:text-white font-mono text-xs">AGENTS</button>
+          <button onclick="filterStream('REVENUE', this)" class="px-2.5 py-1 rounded bg-white/[0.02] text-slate-400 hover:text-white font-mono text-xs">REVENUE</button>
+          <button onclick="filterStream('GOVERNOR', this)" class="px-2.5 py-1 rounded bg-white/[0.02] text-slate-400 hover:text-white font-mono text-xs">GOVERNOR</button>
+          <button onclick="filterStream('MERCHANT', this)" class="px-2.5 py-1 rounded bg-white/[0.02] text-slate-400 hover:text-white font-mono text-xs">MERCHANTS</button>
         </div>
       </div>
 
@@ -413,19 +407,19 @@
     <!-- ============================================================= -->
     <!-- LEVEL 5: COMPACT MERCHANT CRM & OPERATING VIEW                -->
     <!-- ============================================================= -->
-    <section class="exec-card p-5 space-y-4">
+    <section class="base-glass-panel p-5 space-y-4">
       <div class="flex items-center justify-between border-b border-white/5 pb-3">
         <div>
-          <h2 class="text-base font-bold text-white">Merchant Operating View</h2>
-          <p class="text-xs text-gray-400">Active cohort lifecycle, assigned agents, and single next action per store.</p>
+          <h2 class="section-hdr text-white">MERCHANT OPERATING VIEW</h2>
+          <p class="text-xs text-slate-400 font-sans mt-0.5">Active cohort lifecycle, assigned agents, and single next action per store.</p>
         </div>
-        <span class="badge badge-blue">10 Stores Active</span>
+        <span class="badge-pill badge-cyan">10 Stores Active</span>
       </div>
 
       <div class="overflow-x-auto">
         <table class="w-full text-left text-xs font-mono">
           <thead>
-            <tr class="text-gray-500 uppercase border-b border-white/5 bg-white/[0.01]">
+            <tr class="text-slate-500 uppercase border-b border-white/5 bg-white/[0.01]">
               <th class="p-3">Merchant</th>
               <th class="p-3">Stage</th>
               <th class="p-3">Next Action</th>
@@ -436,7 +430,7 @@
               <th class="p-3">Twin</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-white/5 text-gray-300" id="merchants-table-body">
+          <tbody class="divide-y divide-white/5 text-slate-300" id="merchants-table-body">
             <!-- Injected by JS -->
           </tbody>
         </table>
@@ -444,47 +438,62 @@
     </section>
 
     <!-- ============================================================= -->
-    <!-- LEVEL 6: BUSINESS OUTCOMES & FORENSIC EVIDENCE HUD (DEMOTED)  -->
+    <!-- LEVEL 6: BUSINESS OUTCOMES & VERIFIED REVENUE KPI GRID        -->
     <!-- ============================================================= -->
     <section class="space-y-4 pt-2">
       <div class="flex items-center justify-between">
         <div>
-          <h2 class="text-base font-bold text-white">Business Outcomes & Evidence</h2>
-          <p class="text-xs text-gray-400">Financial proof hash-matched against verified POS webhooks.</p>
+          <h2 class="section-hdr text-white">BUSINESS OUTCOMES & EVIDENCE</h2>
+          <p class="text-xs text-slate-400 font-sans mt-0.5">Financial proof hash-matched against verified POS webhooks.</p>
         </div>
-        <span class="badge badge-green">100% Cryptographically Matched</span>
+        <div class="verified-revenue-card px-3 py-1 flex items-center gap-1.5">
+          <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>
+          <span class="text-emerald-400 font-mono font-bold text-xs">POS VERIFIED</span>
+        </div>
       </div>
 
       <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-        <div class="exec-card p-4">
-          <div class="text-[11px] font-mono text-gray-400 uppercase font-semibold">Net New Rev</div>
-          <div class="text-2xl font-bold text-white mt-1" id="stat-net-new">$15,870</div>
-          <div class="text-[11px] text-emerald-400 mt-0.5">✓ Matched POS</div>
+        
+        <!-- Net New Revenue (Interactive KPI Card with Hover) -->
+        <div class="kpi-glass-card p-4 group">
+          <div class="section-hdr text-[10px]">Net New Rev</div>
+          <div class="text-2xl font-bold font-mono text-white mt-1" id="stat-net-new">$15,870</div>
+          <div class="text-[11px] font-mono text-emerald-400 mt-0.5">✓ Matched POS</div>
         </div>
-        <div class="exec-card p-4">
-          <div class="text-[11px] font-mono text-gray-400 uppercase font-semibold">Expansion Rev</div>
-          <div class="text-2xl font-bold text-white mt-1" id="stat-expansion">$6,780</div>
-          <div class="text-[11px] text-blue-400 mt-0.5">Retention Loops</div>
+
+        <!-- Expansion Revenue -->
+        <div class="kpi-glass-card p-4 group">
+          <div class="section-hdr text-[10px]">Expansion Rev</div>
+          <div class="text-2xl font-bold font-mono text-white mt-1" id="stat-expansion">$6,780</div>
+          <div class="text-[11px] font-mono text-cyan-400 mt-0.5">Retention Loops</div>
         </div>
-        <div class="exec-card p-4">
-          <div class="text-[11px] font-mono text-gray-400 uppercase font-semibold">Recovered Rev</div>
-          <div class="text-2xl font-bold text-emerald-400 mt-1" id="stat-recovered">$22,890</div>
-          <div class="text-[11px] text-gray-400 mt-0.5">137 Dormant Leads</div>
+
+        <!-- Recovered Revenue (Verified State) -->
+        <div class="kpi-glass-card p-4 group">
+          <div class="section-hdr text-[10px]">Recovered Rev</div>
+          <div class="text-2xl font-bold font-mono text-emerald-400 mt-1" id="stat-recovered">$22,890</div>
+          <div class="text-[11px] font-mono text-slate-400 mt-0.5">137 Dormant Leads</div>
         </div>
-        <div class="exec-card p-4">
-          <div class="text-[11px] font-mono text-gray-400 uppercase font-semibold">Socio 15% Comm.</div>
-          <div class="text-2xl font-bold text-white mt-1" id="stat-commission">$3,433.50</div>
-          <div class="text-[11px] text-gray-400 mt-0.5">Stripe Invoiced</div>
+
+        <!-- Commission -->
+        <div class="kpi-glass-card p-4 group">
+          <div class="section-hdr text-[10px]">Socio 15% Comm.</div>
+          <div class="text-2xl font-bold font-mono text-white mt-1" id="stat-commission">$3,433.50</div>
+          <div class="text-[11px] font-mono text-slate-400 mt-0.5">Stripe Invoiced</div>
         </div>
-        <div class="exec-card p-4">
-          <div class="text-[11px] font-mono text-gray-400 uppercase font-semibold">Weighted Pipeline</div>
-          <div class="text-2xl font-bold text-white mt-1" id="stat-pipeline">$42,180</div>
-          <div class="text-[11px] text-blue-400 mt-0.5">10 Active Deals</div>
+
+        <!-- Weighted Pipeline -->
+        <div class="kpi-glass-card p-4 group">
+          <div class="section-hdr text-[10px]">Weighted Pipeline</div>
+          <div class="text-2xl font-bold font-mono text-white mt-1" id="stat-pipeline">$42,180</div>
+          <div class="text-[11px] font-mono text-cyan-400 mt-0.5">10 Active Deals</div>
         </div>
-        <div class="exec-card p-4">
-          <div class="text-[11px] font-mono text-gray-400 uppercase font-semibold">Pipeline at Risk</div>
-          <div class="text-2xl font-bold text-rose-400 mt-1" id="stat-risk">$6,800</div>
-          <div class="text-[11px] text-rose-400 mt-0.5">3 Stagnant Deals</div>
+
+        <!-- Pipeline at Risk -->
+        <div class="kpi-glass-card p-4 group">
+          <div class="section-hdr text-[10px]">Pipeline at Risk</div>
+          <div class="text-2xl font-bold font-mono text-rose-400 mt-1" id="stat-risk">$6,800</div>
+          <div class="text-[11px] font-mono text-rose-400 mt-0.5">3 Stagnant Deals</div>
         </div>
       </div>
     </section>
@@ -498,15 +507,15 @@
   <aside class="drawer-panel p-6 space-y-5" id="drawer-panel">
     <div class="flex items-center justify-between border-b border-white/10 pb-4">
       <div class="flex items-center gap-2">
-        <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>
-        <h3 class="text-sm font-bold text-white font-mono uppercase tracking-wider" id="drawer-title">EVIDENCE ATTESTATION</h3>
+        <i data-lucide="shield-check" class="w-4 h-4 text-cyan-400"></i>
+        <h3 class="section-hdr text-white" id="drawer-title">EVIDENCE ATTESTATION</h3>
       </div>
-      <button onclick="closeDrawer()" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-gray-400 hover:text-white cursor-pointer">
+      <button onclick="closeDrawer()" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-slate-400 hover:text-white cursor-pointer">
         ✕
       </button>
     </div>
 
-    <div class="space-y-4 font-mono text-xs text-gray-300" id="drawer-content">
+    <div class="space-y-4 font-mono text-xs text-slate-300" id="drawer-content">
       <!-- Injected by JS -->
     </div>
   </aside>
@@ -520,9 +529,6 @@
   <script>
     const API_BASE = window.location.origin;
 
-    /* =================================================================
-       STANDARDIZED ACTION OBJECT MODEL & STORE
-       ================================================================= */
     const FOUNDER_ACTIONS = [
       {
         id: 'PROP-0042',
@@ -595,45 +601,42 @@
 
     const MERCHANTS_LIST = [
       { name: 'East Harlem Bites', stage: 'Execute', nextAction: 'Approve campaign', owner: 'Governor', value: '+$4,400', risk: 'High', status: 'Waiting', badge: 'badge-amber' },
-      { name: 'El Nuevo Cafe', stage: 'Onboarding', nextAction: 'Deliver audit', owner: 'Socio-Onboard', value: '+$1,800', risk: 'Medium', status: 'Ready', badge: 'badge-blue' },
-      { name: 'Cristal Flowers', stage: 'Expansion', nextAction: 'Activate referral', owner: 'Socio-Expand', value: '+$2,400', risk: 'Low', status: 'Ready', badge: 'badge-green' },
-      { name: 'La Bodega NYC', stage: 'Active', nextAction: 'Sync citations', owner: 'Socio-Listings', value: '+$2,100', risk: 'Low', status: 'Active', badge: 'badge-green' },
-      { name: 'Bloom & Branch', stage: 'Prospecting', nextAction: 'Follow-up WhatsApp', owner: 'Socio-Pitch', value: '+$3,500', risk: 'Medium', status: 'In-Flight', badge: 'badge-gray' }
+      { name: 'El Nuevo Cafe', stage: 'Onboarding', nextAction: 'Deliver audit', owner: 'Socio-Onboard', value: '+$1,800', risk: 'Medium', status: 'Ready', badge: 'badge-cyan' },
+      { name: 'Cristal Flowers', stage: 'Expansion', nextAction: 'Activate referral', owner: 'Socio-Expand', value: '+$2,400', risk: 'Low', status: 'Ready', badge: 'badge-emerald' },
+      { name: 'La Bodega NYC', stage: 'Active', nextAction: 'Sync citations', owner: 'Socio-Listings', value: '+$2,100', risk: 'Low', status: 'Active', badge: 'badge-emerald' },
+      { name: 'Bloom & Branch', stage: 'Prospecting', nextAction: 'Follow-up WhatsApp', owner: 'Socio-Pitch', value: '+$3,500', risk: 'Medium', status: 'In-Flight', badge: 'badge-cyan' }
     ];
 
-    /* =================================================================
-       RENDERERS
-       ================================================================= */
     function renderFounderQueue() {
       const container = document.getElementById('founder-queue-container');
       const badge = document.getElementById('queue-count-badge');
       if (!container) return;
 
       const pending = FOUNDER_ACTIONS.filter(a => a.status === 'PENDING');
-      if (badge) badge.innerText = `${pending.length} Pending Decisions`;
+      if (badge) badge.innerText = `${pending.length} PENDING`;
 
       container.innerHTML = pending.map(a => `
-        <div class="p-3 rounded-lg bg-[#141822] border border-white/5 hover:border-white/15 transition-all space-y-2">
+        <div class="p-3 rounded-xl bg-white/[0.02] border border-white/5 hover:border-cyan-400/30 transition-all space-y-2">
           <div class="flex items-start justify-between gap-2">
-            <span class="text-xs font-bold text-white leading-snug">${a.title}</span>
+            <span class="text-xs font-bold text-white leading-snug font-sans">${a.title}</span>
             <span class="text-xs font-bold text-emerald-400 font-mono shrink-0">${a.impact}</span>
           </div>
 
-          <div class="flex items-center gap-2 text-[11px] font-mono text-gray-400">
-            <span class="${a.risk === 'HIGH' ? 'text-amber-400' : 'text-gray-300'} font-bold">${a.urgency}</span>
+          <div class="flex items-center gap-2 text-[11px] font-mono text-slate-400">
+            <span class="${a.risk === 'HIGH' ? 'text-amber-400' : 'text-slate-300'} font-bold">${a.urgency}</span>
             <span>•</span>
             <span>${a.time}</span>
             <span>•</span>
-            <span class="text-gray-300 truncate">${a.unblocks}</span>
+            <span class="text-slate-300 truncate">${a.unblocks}</span>
           </div>
 
           <div class="flex items-center justify-between pt-1 border-t border-white/5">
-            <span class="text-[10px] font-mono text-gray-500">${a.merchant}</span>
+            <span class="text-[10px] font-mono text-slate-500">${a.merchant}</span>
             <div class="flex gap-1.5">
-              <button onclick="approveProposal('${a.id}')" class="px-2.5 py-1 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30 text-[11px] font-mono font-bold rounded cursor-pointer">
+              <button onclick="approveProposal('${a.id}')" class="px-2.5 py-1 bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-[11px] font-mono font-bold rounded-lg cursor-pointer">
                 Approve
               </button>
-              <button onclick="openEvidenceDrawer('${a.id}')" class="px-2 py-1 bg-white/5 hover:bg-white/10 text-gray-400 text-[11px] font-mono rounded cursor-pointer">
+              <button onclick="openEvidenceDrawer('${a.id}')" class="px-2 py-1 bg-white/[0.02] hover:bg-white/[0.05] text-slate-400 text-[11px] font-mono rounded-lg cursor-pointer">
                 Detail
               </button>
             </div>
@@ -647,17 +650,17 @@
       if (!container) return;
 
       container.innerHTML = AGENTS_FLEET.map(a => `
-        <div class="p-2.5 rounded-lg bg-[#141822] border border-white/5 flex items-center justify-between text-xs font-mono">
+        <div class="p-2.5 rounded-xl bg-white/[0.02] border border-white/5 flex items-center justify-between text-xs font-mono">
           <div class="min-w-0 pr-2">
             <div class="flex items-center gap-2">
               <span class="font-bold text-white">${a.name}</span>
-              <span class="${a.status === 'ACTIVE' ? 'badge badge-green' : 'badge badge-amber'} text-[9px] py-0 px-1.5">${a.status}</span>
+              <span class="${a.status === 'ACTIVE' ? 'badge-pill badge-emerald' : 'badge-pill badge-amber'} text-[9px] py-0 px-1.5">${a.status}</span>
             </div>
-            <div class="text-gray-400 truncate text-[11px] mt-0.5">${a.job}</div>
+            <div class="text-slate-400 truncate text-[11px] mt-0.5">${a.job}</div>
           </div>
           <div class="text-right shrink-0">
-            <div class="text-gray-300 font-semibold text-[11px]">${a.output}</div>
-            <div class="text-gray-500 text-[10px]">${a.heartbeat}</div>
+            <div class="text-slate-300 font-semibold text-[11px]">${a.output}</div>
+            <div class="text-slate-500 text-[10px]">${a.heartbeat}</div>
           </div>
         </div>
       `).join('');
@@ -669,26 +672,26 @@
       if (!container) return;
 
       const pending = GOVERNOR_PROPOSALS.filter(p => p.status === 'PENDING');
-      if (badge) badge.innerText = `${pending.length} Pending CAS Review`;
+      if (badge) badge.innerText = `${pending.length} PENDING`;
 
       container.innerHTML = pending.map(p => `
-        <div class="p-3 rounded-lg bg-[#141822] border border-white/5 space-y-1.5 text-xs font-mono">
+        <div class="p-3 rounded-xl bg-white/[0.02] border border-white/5 space-y-1.5 text-xs font-mono">
           <div class="flex items-center justify-between">
-            <span class="${p.risk === 'HIGH' ? 'badge badge-red' : p.risk === 'MEDIUM' ? 'badge badge-amber' : 'badge badge-green'}">${p.risk} RISK</span>
-            <span class="text-[10px] text-gray-500">${p.id}</span>
+            <span class="${p.risk === 'HIGH' ? 'badge-pill badge-rose' : p.risk === 'MEDIUM' ? 'badge-pill badge-amber' : 'badge-pill badge-emerald'}">${p.risk} RISK</span>
+            <span class="text-[10px] text-slate-500">${p.id}</span>
           </div>
 
           <div class="text-white font-bold">${p.merchant} — ${p.action}</div>
-          <div class="text-gray-400 text-[11px]">${p.impact} • Policy: <span class="text-gray-300">${p.policy}</span></div>
+          <div class="text-slate-400 text-[11px]">${p.impact} • Policy: <span class="text-slate-300">${p.policy}</span></div>
 
           <div class="flex gap-2 pt-1">
-            <button onclick="approveProposal('${p.id}')" class="px-3 py-1 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30 text-[11px] font-bold rounded cursor-pointer">
+            <button onclick="approveProposal('${p.id}')" class="px-3 py-1 bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-500/30 text-[11px] font-bold rounded-lg cursor-pointer">
               ✓ Approve
             </button>
-            <button onclick="openEvidenceDrawer('${p.id}')" class="px-2.5 py-1 bg-white/5 hover:bg-white/10 text-gray-300 text-[11px] rounded cursor-pointer">
+            <button onclick="openEvidenceDrawer('${p.id}')" class="px-2.5 py-1 bg-white/[0.02] hover:bg-white/[0.05] text-slate-300 text-[11px] rounded-lg cursor-pointer">
               Evidence
             </button>
-            <button onclick="rejectProposal('${p.id}')" class="px-2 py-1 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 text-[11px] rounded cursor-pointer">
+            <button onclick="rejectProposal('${p.id}')" class="px-2 py-1 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 text-[11px] rounded-lg cursor-pointer">
               Reject
             </button>
           </div>
@@ -703,10 +706,10 @@
       const filtered = filter === 'ALL' ? STREAM_EVENTS : STREAM_EVENTS.filter(e => e.cat === filter);
 
       container.innerHTML = filtered.map(e => `
-        <div class="p-2.5 rounded bg-[#141822] border border-white/5 flex items-start gap-3 text-xs font-mono">
-          <span class="text-gray-500 text-[11px] shrink-0 mt-0.5">${e.time}</span>
-          <span class="badge badge-gray text-[10px] shrink-0">${e.agent}</span>
-          <span class="text-gray-200 leading-relaxed font-sans text-xs">${e.desc}</span>
+        <div class="p-2.5 rounded-xl bg-white/[0.02] border border-white/5 flex items-start gap-3 text-xs font-mono">
+          <span class="text-slate-500 text-[11px] shrink-0 mt-0.5">${e.time}</span>
+          <span class="badge-pill badge-cyan text-[9px] shrink-0">${e.agent}</span>
+          <span class="text-slate-200 leading-relaxed font-sans text-xs">${e.desc}</span>
         </div>
       `).join('');
     }
@@ -718,14 +721,14 @@
       tbody.innerHTML = MERCHANTS_LIST.map(m => `
         <tr class="hover:bg-white/[0.02] transition-colors">
           <td class="p-3 font-bold text-white">${m.name}</td>
-          <td class="p-3 text-gray-400">${m.stage}</td>
-          <td class="p-3 text-gray-200 font-semibold">${m.nextAction}</td>
-          <td class="p-3 text-blue-400">${m.owner}</td>
+          <td class="p-3 text-slate-400">${m.stage}</td>
+          <td class="p-3 text-slate-200 font-semibold">${m.nextAction}</td>
+          <td class="p-3 text-cyan-400">${m.owner}</td>
           <td class="p-3 font-bold text-emerald-400">${m.value}</td>
-          <td class="p-3"><span class="${m.risk === 'High' ? 'text-amber-400' : 'text-gray-400'}">${m.risk}</span></td>
-          <td class="p-3"><span class="badge ${m.badge}">${m.status}</span></td>
+          <td class="p-3"><span class="${m.risk === 'High' ? 'text-amber-400' : 'text-slate-400'}">${m.risk}</span></td>
+          <td class="p-3"><span class="badge-pill ${m.badge}">${m.status}</span></td>
           <td class="p-3">
-            <button onclick="openMerchantTwin('${m.name}')" class="text-blue-400 hover:text-blue-300 font-semibold cursor-pointer">
+            <button onclick="openMerchantTwin('${m.name}')" class="text-cyan-400 hover:text-cyan-300 font-semibold cursor-pointer">
               Open Twin →
             </button>
           </td>
@@ -733,16 +736,12 @@
       `).join('');
     }
 
-    /* =================================================================
-       ACTION CONTROLLERS & DRAWER HANDLERS
-       ================================================================= */
     async function approveProposal(proposalId) {
       toast(`Approving proposal ${proposalId}...`, 'info');
       try {
         await fetch(`${API_BASE}/api/governor/${proposalId}/approve`, { method: 'POST' });
       } catch (e) {}
 
-      // Update Local State
       const p = GOVERNOR_PROPOSALS.find(x => x.id === proposalId);
       if (p) p.status = 'APPROVED';
 
@@ -793,30 +792,30 @@
 
       title.innerText = `EVIDENCE BRIEF: ${p.id}`;
       content.innerHTML = `
-        <div class="p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-300">
+        <div class="p-4 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-300">
           <div class="font-bold uppercase text-[10px]">VERIFIED ROAS SIGNAL: 11.1x</div>
           <div class="text-sm font-bold text-white mt-1">${p.action}</div>
         </div>
 
-        <div class="p-4 rounded-lg bg-[#161B26] border border-white/10 space-y-2">
-          <div class="flex justify-between"><span class="text-gray-400">Target Merchant:</span><span class="text-white font-bold">${p.merchant}</span></div>
-          <div class="flex justify-between"><span class="text-gray-400">Projected Return:</span><span class="text-emerald-400 font-bold">${p.impact}</span></div>
-          <div class="flex justify-between"><span class="text-gray-400">Policy Requirement:</span><span class="text-gray-300">${p.policy}</span></div>
-          <div class="flex justify-between"><span class="text-gray-400">Risk Assessment:</span><span class="text-amber-400 font-bold">${p.risk} RISK</span></div>
+        <div class="p-4 rounded-xl bg-white/[0.02] border border-white/5 space-y-2">
+          <div class="flex justify-between"><span class="text-slate-400">Target Merchant:</span><span class="text-white font-bold">${p.merchant}</span></div>
+          <div class="flex justify-between"><span class="text-slate-400">Projected Return:</span><span class="text-emerald-400 font-bold">${p.impact}</span></div>
+          <div class="flex justify-between"><span class="text-slate-400">Policy Requirement:</span><span class="text-slate-300">${p.policy}</span></div>
+          <div class="flex justify-between"><span class="text-slate-400">Risk Assessment:</span><span class="text-amber-400 font-bold">${p.risk} RISK</span></div>
         </div>
 
         <div class="space-y-1">
-          <div class="text-gray-400 uppercase text-[10px] font-bold">Closed-Loop Execution Plan:</div>
-          <p class="text-gray-300 leading-relaxed font-sans text-xs p-3 rounded bg-[#161B26]">
+          <div class="text-slate-400 uppercase text-[10px] font-bold">Closed-Loop Execution Plan:</div>
+          <p class="text-slate-300 leading-relaxed font-sans text-xs p-3 rounded-xl bg-white/[0.02] border border-white/5">
             Upon approval, Socio-Expand will execute the Meta API strike targeting floral buyers in a 3-mile radius of East Harlem. Socio-Track will match POS receipts in real-time.
           </p>
         </div>
 
         <div class="pt-4 flex gap-2">
-          <button onclick="approveProposal('${p.id}')" class="flex-1 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs rounded-lg cursor-pointer">
+          <button onclick="approveProposal('${p.id}')" class="flex-1 py-2.5 bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-bold text-xs rounded-xl cursor-pointer">
             Approve & Execute (+$4,400)
           </button>
-          <button onclick="closeDrawer()" class="px-4 py-2.5 bg-white/5 hover:bg-white/10 text-gray-300 text-xs rounded-lg border border-white/10 cursor-pointer">
+          <button onclick="closeDrawer()" class="px-4 py-2.5 bg-white/[0.02] hover:bg-white/[0.05] text-slate-300 text-xs rounded-xl border border-white/10 cursor-pointer">
             Close
           </button>
         </div>
@@ -835,25 +834,25 @@
 
       title.innerText = `MERCHANT TWIN: ${merchantName}`;
       content.innerHTML = `
-        <div class="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-300">
+        <div class="p-4 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-300">
           <div class="font-bold uppercase text-[10px]">BUSINESS TWIN ACTIVE</div>
           <div class="text-base font-bold text-white mt-1">${merchantName} (NYC)</div>
         </div>
 
         <div class="grid grid-cols-2 gap-2">
-          <div class="p-3 rounded bg-[#161B26] border border-white/5">
-            <div class="text-gray-400 text-[10px]">HEALTH SCORE</div>
-            <div class="text-lg font-bold text-emerald-400">94 / 100</div>
+          <div class="p-3 rounded-xl bg-white/[0.02] border border-white/5">
+            <div class="text-slate-400 text-[10px]">HEALTH SCORE</div>
+            <div class="text-lg font-bold text-emerald-400 font-mono">94 / 100</div>
           </div>
-          <div class="p-3 rounded bg-[#161B26] border border-white/5">
-            <div class="text-gray-400 text-[10px]">NET REVENUE MTD</div>
-            <div class="text-lg font-bold text-white">$4,820</div>
+          <div class="p-3 rounded-xl bg-white/[0.02] border border-white/5">
+            <div class="text-slate-400 text-[10px]">NET REVENUE MTD</div>
+            <div class="text-lg font-bold text-white font-mono">$4,820</div>
           </div>
         </div>
 
         <div class="space-y-1">
-          <div class="text-gray-400 uppercase text-[10px] font-bold">Assigned Autonomous Workflows:</div>
-          <ul class="space-y-1 text-xs text-gray-300 font-sans list-disc list-inside p-3 rounded bg-[#161B26]">
+          <div class="text-slate-400 uppercase text-[10px] font-bold">Assigned Autonomous Workflows:</div>
+          <ul class="space-y-1 text-xs text-slate-300 font-sans list-disc list-inside p-3 rounded-xl bg-white/[0.02] border border-white/5">
             <li>Socio-Content: 30-day Instagram calendar generation</li>
             <li>Socio-Listings: Local citation synchronization across 12 directories</li>
             <li>Socio-Track: Square POS webhook attribution</li>
@@ -931,14 +930,13 @@
       const deck = document.getElementById('toast-deck');
       if (!deck) return;
       const t = document.createElement('div');
-      t.className = 'pointer-events-auto bg-[#161B26] border border-white/15 shadow-2xl px-4 py-2.5 rounded-lg font-mono text-xs text-gray-200 flex items-center gap-2.5';
-      const color = type === 'success' ? 'text-emerald-400' : type === 'warning' ? 'text-amber-400' : 'text-blue-400';
+      t.className = 'pointer-events-auto bg-[#141824] border border-cyan-400/20 shadow-2xl px-4 py-2.5 rounded-xl font-mono text-xs text-slate-200 flex items-center gap-2.5';
+      const color = type === 'success' ? 'text-emerald-400' : type === 'warning' ? 'text-amber-400' : 'text-cyan-400';
       t.innerHTML = `<span class="${color} font-bold">●</span><span>${msg}</span>`;
       deck.appendChild(t);
       setTimeout(() => t.remove(), 3500);
     }
 
-    // Keyboard-First ⌘K
     window.addEventListener('keydown', (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
@@ -949,7 +947,6 @@
       }
     });
 
-    // Update Live Clock
     function updateClock() {
       const el = document.getElementById('live-clock');
       if (el) {
@@ -958,7 +955,6 @@
     }
     setInterval(updateClock, 1000);
 
-    // Initialize OS
     window.addEventListener('DOMContentLoaded', () => {
       renderFounderQueue();
       renderAgentFleet();
