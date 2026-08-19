@@ -34,7 +34,7 @@ export function CommissionSimulator({ lang = 'es' }: { lang?: 'es' | 'en' }) {
               : 'Tiers: 12% (<$10k) · 8% ($10k–$50k) · 5% (>$50k) | Annual Cap: $40,000'}
           </p>
         </div>
-        <div className="px-3.5 py-1.5 bg-blue-50 border border-blue-200 text-blue-800 font-mono text-xs font-bold rounded-xl self-start md:self-auto">
+        <div className="px-3.5 py-1.5 bg-orange-50 border border-orange-200 text-[#FF5500] font-mono text-xs font-bold rounded-xl self-start md:self-auto">
           {lang === 'es' ? 'Tasa Efectiva:' : 'Effective Fee:'} {(effectiveRate * 100).toFixed(1)}%
         </div>
       </div>
@@ -44,7 +44,7 @@ export function CommissionSimulator({ lang = 'es' }: { lang?: 'es' | 'en' }) {
           <label className="text-sm font-bold text-slate-700">
             {lang === 'es' ? 'Valor Total del Contrato:' : 'Total Contract Value:'}
           </label>
-          <span className="text-3xl font-black font-mono text-blue-700">
+          <span className="text-3xl font-black font-mono text-[#FF5500]">
             ${contractValue.toLocaleString()}
           </span>
         </div>
@@ -55,7 +55,7 @@ export function CommissionSimulator({ lang = 'es' }: { lang?: 'es' | 'en' }) {
           step="2500"
           value={contractValue}
           onChange={(e) => setContractValue(Number(e.target.value))}
-          className="w-full h-3 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-700"
+          className="w-full h-3 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#FF5500]"
         />
         <div className="flex justify-between text-[11px] font-mono text-slate-400">
           <span>$5,000 (Menor)</span>
