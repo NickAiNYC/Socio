@@ -258,10 +258,8 @@
      LEFT SIDEBAR (Scrutexity exact)
      ============================ -->
 <aside class="w-18 flex flex-col items-center py-6 gap-6 border-r border-white/5 bg-[#08090d] z-40 shrink-0 select-none">
-    <a href="index.html" class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-[0_0_20px_rgba(255,255,255,0.2)] mb-3 hover:scale-105 transition-transform" title="Socio Home">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M17 7L7 17M7 7H17V17" stroke="#0b0c10" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+    <a href="index.html" class="w-10 h-10 rounded-xl bg-black border border-white/10 flex items-center justify-center font-black text-lg text-white mb-3 hover:scale-105 transition-transform" title="Socio Home">
+        S<span class="text-[#ccff00] drop-shadow-[0_0_6px_rgba(204,255,0,0.8)]">.</span>
     </a>
 
     <button onclick="setTab('gem',this)" class="side-icon active" title="Command Center">
@@ -301,22 +299,15 @@
 <!-- TOP HEADER (Scrutexity exact) -->
 <header class="flex justify-between items-center px-10 py-5 border-b border-white/5 bg-[#0b0c10]/80 backdrop-blur-2xl">
     <div class="flex items-center gap-5">
-        <a href="index.html" class="flex items-center gap-3">
-            <div class="w-8 h-8 rounded-lg bg-white flex items-center justify-center shadow-md">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M17 7L7 17M7 7H17V17" stroke="#0b0c10" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </div>
-            <div class="font-brand text-lg font-bold tracking-[0.25em] text-white flex items-center gap-2">
-                SOCIO <span class="text-xs text-sky-400 font-sans tracking-normal font-bold">OS</span>
-            </div>
+        <a href="index.html" class="flex items-center gap-1.5 text-xl font-black tracking-tight text-white">
+            Socio<span class="text-[#ccff00] drop-shadow-[0_0_8px_rgba(204,255,0,0.9)]">.</span>
         </a>
         <div class="flex items-center gap-2">
-            <span class="px-2.5 py-1 rounded-full text-[9px] font-extrabold uppercase tracking-wider bg-sky-950/40 text-sky-400 border border-sky-500/20 font-mono">
+            <span class="px-2.5 py-1 rounded-full text-[9px] font-extrabold uppercase tracking-wider bg-white/5 text-gray-300 border border-white/10 font-mono">
                 • LOCAL ONLY
             </span>
             <span class="px-2.5 py-1 rounded-full text-[9px] font-extrabold uppercase tracking-wider bg-white/5 text-gray-400 border border-white/10 font-mono">
-                SYNC CONSOLE
+                COMMAND CENTER
             </span>
         </div>
     </div>
