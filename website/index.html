@@ -891,160 +891,326 @@
     </div>
   </section>
 
-  <!-- Section 1.5: Giant Revenue Leakage → Recovery Macro Visual (Scroll-Pinned) -->
-  <section id="leakage-architecture" style="background: #ffffff; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; padding: 6rem 6%; position: relative;">
-    <div class="container">
-      <div style="text-align: center; margin-bottom: 5rem;" class="reveal">
-        <div class="eyebrow-capsule">REVENUE LEAKAGE ARCHITECTURE</div>
-        <h2 style="font-size: 2.5rem; font-weight: 900; color: #0f172a; letter-spacing: -0.03em;">Socio finds money already inside your store.</h2>
-        <p style="margin-top: 0.5rem; color: #64748b; font-size: 1.05rem;">We plug 3 specific leakage channels without spending a dollar on risky ads.</p>
-        <p style="margin-top: 0.5rem; color: #94a3b8; font-size: 0.8rem; font-family: var(--font-mono);">Illustrative monthly estimates for a typical NYC store profile — your real numbers come from the 48-hour audit.</p>
+  <!-- Section 1.5: Giant Revenue Leakage → Recovery Macro Visual (Aura Glass & 3D Engine) -->
+  <section id="leakage-architecture" style="background: radial-gradient(circle at 50% 0%, #0d1527 0%, #070a12 100%); border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 7rem 6%; position: relative; color: #ffffff; overflow: hidden;">
+    
+    <!-- Background Ambient Glow -->
+    <div style="position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: 800px; height: 450px; background: radial-gradient(ellipse, rgba(56, 189, 248, 0.12) 0%, rgba(204, 255, 0, 0.04) 50%, transparent 70%); filter: blur(60px); pointer-events: none;"></div>
+
+    <div class="container" style="position: relative; z-index: 2;">
+      <div style="text-align: center; margin-bottom: 4.5rem;" class="reveal">
+        <div class="eyebrow-capsule" style="background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); color: #38bdf8; box-shadow: 0 0 20px rgba(56,189,248,0.15);">
+          <span class="dot" style="background: #38bdf8; box-shadow: 0 0 8px #38bdf8;"></span>
+          REVENUE LEAKAGE ARCHITECTURE
+        </div>
+        <h2 style="font-size: clamp(2.2rem, 4vw, 3.4rem); font-weight: 900; color: #ffffff; letter-spacing: -0.03em; margin-top: 0.5rem;">
+          Socio captures revenue trapped inside your store.
+        </h2>
+        <p style="margin-top: 0.85rem; color: #94a3b8; font-size: 1.15rem; max-width: 680px; margin-left: auto; margin-right: auto; line-height: 1.6;">
+          Three autonomous recovery channels connected directly to your Square POS. No ad spend. No retainers.
+        </p>
+        <p style="margin-top: 0.5rem; color: #64748b; font-size: 0.8rem; font-family: var(--font-mono);">
+          Illustrative monthly estimates for a typical NYC store profile — verified via 48-hour audit.
+        </p>
       </div>
 
-      <!-- Two-Column Scroll Pinned Layout -->
-      <div style="display: flex; flex-direction: column; gap: 4rem; position: relative;" class="scroll-pinned-container">
+      <!-- Scrutexity Deep Gloss Aura Glassmorphic Styling -->
+      <style>
+        .aura-glass-stream {
+          position: relative;
+          background: linear-gradient(135deg, rgba(15, 23, 42, 0.75) 0%, rgba(10, 15, 26, 0.92) 100%);
+          backdrop-filter: blur(24px);
+          -webkit-backdrop-filter: blur(24px);
+          border-radius: 24px;
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          box-shadow: 
+            0 0 0 1px rgba(255, 255, 255, 0.03),
+            inset 0 1px 0 rgba(255, 255, 255, 0.15),
+            inset 0 0 25px rgba(56, 189, 248, 0.04),
+            0 15px 35px -10px rgba(0, 0, 0, 0.7);
+          padding: 2rem 2.25rem;
+          margin-bottom: 1.75rem;
+          transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+          cursor: pointer;
+          overflow: hidden;
+        }
+
+        .aura-glass-stream::before {
+          content: '';
+          position: absolute;
+          top: 0; left: 0; right: 0;
+          height: 2px;
+          background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.8), transparent);
+          opacity: 0;
+          transition: opacity 0.4s ease;
+        }
+
+        .aura-glass-stream:hover, .aura-glass-stream.active-stream {
+          border-color: rgba(56, 189, 248, 0.4);
+          transform: translateY(-2px) scale(1.01);
+          box-shadow: 
+            0 0 0 1px rgba(56, 189, 248, 0.25),
+            inset 0 1px 0 rgba(255, 255, 255, 0.25),
+            inset 0 0 35px rgba(56, 189, 248, 0.12),
+            0 25px 50px -10px rgba(0, 0, 0, 0.8),
+            0 0 30px rgba(56, 189, 248, 0.18);
+        }
+
+        .aura-glass-stream.active-stream::before {
+          opacity: 1;
+        }
+
+        .aura-glass-stream.inactive {
+          opacity: 0.5;
+          transform: scale(0.985);
+          filter: grayscale(25%);
+        }
+
+        .aura-telemetry-tag {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.4rem;
+          padding: 0.3rem 0.75rem;
+          border-radius: 100px;
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          font-family: var(--font-mono);
+          font-size: 0.75rem;
+          color: #94a3b8;
+          margin-right: 0.5rem;
+          margin-bottom: 0.5rem;
+        }
+
+        @media (min-width: 992px) {
+          .leakage-grid-container {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 3.5rem;
+            align-items: start;
+          }
+          .pinned-engine-wrap {
+            position: sticky;
+            top: 110px;
+          }
+        }
+      </style>
+
+      <!-- Two-Column Grid Layout -->
+      <div class="leakage-grid-container">
         
-        <!-- Desktop Grid (Left: Scroll, Right: Pinned) -->
-        <style>
-          @media (min-width: 992px) {
-            .scroll-pinned-container {
-              flex-direction: row;
-              align-items: flex-start;
-              gap: 6rem;
-            }
-            .scroll-left-col {
-              flex: 1;
-              padding-bottom: 20vh;
-            }
-            .scroll-right-col {
-              flex: 1;
-              position: sticky;
-              top: 140px;
-              height: auto;
-            }
-          }
-          .stream-card {
-            transition: opacity 0.5s ease, transform 0.5s ease;
-          }
-          .stream-card.inactive {
-            opacity: 0.3;
-            transform: scale(0.98);
-          }
-        </style>
-
-        <!-- Left Column: Scrolling Text -->
-        <div class="scroll-left-col">
+        <!-- Left Column: Compact Aura Glass Stream Cards -->
+        <div class="streams-col">
           
-          <div class="clean-card stream-card" data-stream="A" style="padding: 2.5rem; background: #f8fafc; border-top: 4px solid #f87171; margin-bottom: 40vh;">
-            <div style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 800; color: #dc2626; text-transform: uppercase; margin-bottom: 1rem;">LEAKAGE STREAM A</div>
-            <h3 style="font-size: 1.75rem; font-weight: 800; color: #0f172a; margin-bottom: 1rem;">Dormant CRM Leads</h3>
-            <p style="font-size: 1rem; color: #64748b; line-height: 1.7; margin-bottom: 2rem;">Past customers who haven't ordered in >90 days because no one reached out. Our autonomous agents reach out via SMS with localized win-back offers.</p>
-            <div style="font-family: var(--font-mono); font-size: 2rem; font-weight: 900; color: #dc2626;" class="count-up" data-target="8240">~$8,240/mo</div>
+          <!-- Stream A: CRM -->
+          <div class="aura-glass-stream stream-card active-stream" data-stream="A" onclick="selectStream('A')">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+              <div style="display: flex; align-items: center; gap: 0.6rem;">
+                <span style="width: 8px; height: 8px; border-radius: 50%; background: #f87171; box-shadow: 0 0 10px #f87171;"></span>
+                <span style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 800; color: #f87171; letter-spacing: 0.08em; text-transform: uppercase;">
+                  STREAM 01 // CRM REACTIVATION
+                </span>
+              </div>
+              <span class="aura-telemetry-tag" style="margin: 0; color: #f87171; border-color: rgba(248,113,113,0.3); background: rgba(248,113,113,0.08);">
+                SMS + VIP Strike
+              </span>
+            </div>
+
+            <h3 style="font-size: 1.5rem; font-weight: 800; color: #ffffff; margin-bottom: 0.65rem; letter-spacing: -0.02em;">
+              Dormant Customer Win-Back
+            </h3>
+            <p style="font-size: 0.95rem; color: #94a3b8; line-height: 1.65; margin-bottom: 1.25rem;">
+              Customers >90 days inactive re-engaged with customized SMS & WhatsApp offers. Zero generic spam — all verified on POS.
+            </p>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.25rem;">
+              <span class="aura-telemetry-tag">⚡ 1,240 Profiles Scanned</span>
+              <span class="aura-telemetry-tag">🎯 24.8% Direct Re-order Rate</span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1rem;">
+              <span style="font-size: 0.75rem; font-family: var(--font-mono); color: #64748b; text-transform: uppercase;">Recoverable Run-Rate</span>
+              <div style="font-family: var(--font-mono); font-size: 1.75rem; font-weight: 900; color: #ffffff; text-shadow: 0 0 16px rgba(255,255,255,0.3);" class="count-up" data-target="8240">
+                ~$8,240/mo
+              </div>
+            </div>
           </div>
 
-          <div class="clean-card stream-card inactive" data-stream="B" style="padding: 2.5rem; background: #f8fafc; border-top: 4px solid #fbbf24; margin-bottom: 40vh;">
-            <div style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 800; color: #d97706; text-transform: uppercase; margin-bottom: 1rem;">LEAKAGE STREAM B</div>
-            <h3 style="font-size: 1.75rem; font-weight: 800; color: #0f172a; margin-bottom: 1rem;">Local Map Citations</h3>
-            <p style="font-size: 1rem; color: #64748b; line-height: 1.7; margin-bottom: 2rem;">Missing directory citations and unresponded reviews dropping map pack rank. We sync your data to 60+ networks and auto-reply to Google reviews.</p>
-            <div style="font-family: var(--font-mono); font-size: 2rem; font-weight: 900; color: #d97706;" class="count-up" data-target="3100">~$3,100/mo</div>
+          <!-- Stream B: Local Maps -->
+          <div class="aura-glass-stream stream-card inactive" data-stream="B" onclick="selectStream('B')">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+              <div style="display: flex; align-items: center; gap: 0.6rem;">
+                <span style="width: 8px; height: 8px; border-radius: 50%; background: #fbbf24; box-shadow: 0 0 10px #fbbf24;"></span>
+                <span style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 800; color: #fbbf24; letter-spacing: 0.08em; text-transform: uppercase;">
+                  STREAM 02 // LOCAL RADAR & SEO
+                </span>
+              </div>
+              <span class="aura-telemetry-tag" style="margin: 0; color: #fbbf24; border-color: rgba(251,191,36,0.3); background: rgba(251,191,36,0.08);">
+                60+ Citations Sync
+              </span>
+            </div>
+
+            <h3 style="font-size: 1.5rem; font-weight: 800; color: #ffffff; margin-bottom: 0.65rem; letter-spacing: -0.02em;">
+              Map Pack Defense & Review Engine
+            </h3>
+            <p style="font-size: 0.95rem; color: #94a3b8; line-height: 1.65; margin-bottom: 1.25rem;">
+              Resolves missing local directory listings, repairs broken metadata, and deploys automated responses to Google & Apple Maps reviews.
+            </p>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.25rem;">
+              <span class="aura-telemetry-tag">📍 60+ Networks Active</span>
+              <span class="aura-telemetry-tag">⭐ +42 Broken Links Fixed</span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1rem;">
+              <span style="font-size: 0.75rem; font-family: var(--font-mono); color: #64748b; text-transform: uppercase;">Incremental Footfall</span>
+              <div style="font-family: var(--font-mono); font-size: 1.75rem; font-weight: 900; color: #ffffff; text-shadow: 0 0 16px rgba(255,255,255,0.3);" class="count-up" data-target="3100">
+                ~$3,100/mo
+              </div>
+            </div>
           </div>
 
-          <div class="clean-card stream-card inactive" data-stream="C" style="padding: 2.5rem; background: #f8fafc; border-top: 4px solid #38bdf8;">
-            <div style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 800; color: #0284c7; text-transform: uppercase; margin-bottom: 1rem;">LEAKAGE STREAM C</div>
-            <h3 style="font-size: 1.75rem; font-weight: 800; color: #0f172a; margin-bottom: 1rem;">Corporate Accounts</h3>
-            <p style="font-size: 1rem; color: #64748b; line-height: 1.7; margin-bottom: 2rem;">Local corporate offices, medical centers, and event planners ordering elsewhere. We identify local offices and send high-touch catering outreach.</p>
-            <div style="font-family: var(--font-mono); font-size: 2rem; font-weight: 900; color: #0284c7;" class="count-up" data-target="4700">~$4,700/mo</div>
+          <!-- Stream C: Corporate -->
+          <div class="aura-glass-stream stream-card inactive" data-stream="C" onclick="selectStream('C')">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+              <div style="display: flex; align-items: center; gap: 0.6rem;">
+                <span style="width: 8px; height: 8px; border-radius: 50%; background: #38bdf8; box-shadow: 0 0 10px #38bdf8;"></span>
+                <span style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 800; color: #38bdf8; letter-spacing: 0.08em; text-transform: uppercase;">
+                  STREAM 03 // B2B CORRIDOR
+                </span>
+              </div>
+              <span class="aura-telemetry-tag" style="margin: 0; color: #38bdf8; border-color: rgba(56,189,248,0.3); background: rgba(56,189,248,0.08);">
+                High-Ticket B2B
+              </span>
+            </div>
+
+            <h3 style="font-size: 1.5rem; font-weight: 800; color: #ffffff; margin-bottom: 0.65rem; letter-spacing: -0.02em;">
+              Local Corporate Accounts
+            </h3>
+            <p style="font-size: 0.95rem; color: #94a3b8; line-height: 1.65; margin-bottom: 1.25rem;">
+              Identifies nearby medical centers, agencies, law firms, and studios to capture recurring high-margin catering and corporate gifts.
+            </p>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.25rem;">
+              <span class="aura-telemetry-tag">🏢 0.8mi Proximity Radius</span>
+              <span class="aura-telemetry-tag">💼 B2B Catering Pipeline</span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1rem;">
+              <span style="font-size: 0.75rem; font-family: var(--font-mono); color: #64748b; text-transform: uppercase;">Corporate Volume</span>
+              <div style="font-family: var(--font-mono); font-size: 1.75rem; font-weight: 900; color: #ffffff; text-shadow: 0 0 16px rgba(255,255,255,0.3);" class="count-up" data-target="4700">
+                ~$4,700/mo
+              </div>
+            </div>
           </div>
 
         </div>
 
-        <!-- Right Column: Pinned Engine Visual -->
-        <div class="scroll-right-col">
-          <div class="clean-card" style="background: #0f172a; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); overflow: hidden; position: relative;">
+        <!-- Right Column: Pinned 3D Three.js Kinetic Engine & HUD Panel -->
+        <div class="pinned-engine-wrap">
+          <div class="aura-glass-stream" style="padding: 0; margin-bottom: 1.75rem; background: linear-gradient(180deg, rgba(15, 23, 42, 0.9) 0%, rgba(10, 15, 26, 0.98) 100%); border-color: rgba(56, 189, 248, 0.2);">
             
-            <!-- Dynamic Dashboard Header -->
-            <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center;">
-              <div style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 800; color: var(--accent-yellow); text-transform: uppercase; letter-spacing: 0.1em;">
-                SOCIO STREAMING ENGINE
+            <!-- Terminal Header -->
+            <div style="padding: 1.2rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.2);">
+              <div style="display: flex; align-items: center; gap: 0.6rem;">
+                <span style="width: 7px; height: 7px; border-radius: 50%; background: #34d399; box-shadow: 0 0 8px #34d399;"></span>
+                <span style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 800; color: #ffffff; letter-spacing: 0.08em; text-transform: uppercase;">
+                  AUTONOMOUS GROWTH ENGINE 3D
+                </span>
               </div>
-              <div style="display: flex; gap: 0.4rem;">
-                <span style="width: 8px; height: 8px; border-radius: 50%; background: #ef4444;"></span>
-                <span style="width: 8px; height: 8px; border-radius: 50%; background: #f59e0b;"></span>
-                <span style="width: 8px; height: 8px; border-radius: 50%; background: #10b981;"></span>
+              <div style="display: flex; gap: 0.35rem;">
+                <span style="width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.2);"></span>
+                <span style="width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.2);"></span>
+                <span style="width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.2);"></span>
               </div>
             </div>
 
-            <!-- Dynamic Content Area -->
-            <div id="engine-visual-content" style="padding: 2.5rem; height: 320px; display: flex; flex-direction: column; justify-content: center; position: relative;">
+            <!-- Embedded 3D Kinetic Canvas Stage -->
+            <div style="position: relative; height: 220px; width: 100%; overflow: hidden; background: radial-gradient(circle at 50% 50%, rgba(15,23,42,0.6) 0%, rgba(5,8,15,0.95) 100%);">
+              <canvas id="stream-kinetic-canvas" style="width: 100%; height: 100%; display: block;"></canvas>
               
-              <!-- State A: CRM -->
-              <div class="engine-state" id="state-A" style="position: absolute; inset: 2.5rem; display: flex; flex-direction: column; justify-content: center; transition: opacity 0.4s ease, transform 0.4s ease;">
-                <div style="font-family: var(--font-mono); color: #f87171; font-size: 0.85rem; margin-bottom: 1rem;">> INITIALIZING WIN-BACK SEQUENCE...</div>
-                <div style="background: rgba(248, 113, 113, 0.1); border-left: 3px solid #f87171; padding: 1rem; color: #e2e8f0; font-size: 0.9rem; margin-bottom: 0.8rem;">
-                  <strong style="color: #ffffff;">Target:</strong> 1,240 inactive profiles<br>
-                  <strong style="color: #ffffff;">Action:</strong> Dispatching SMS offer
+              <div style="position: absolute; top: 12px; left: 16px; font-family: var(--font-mono); font-size: 0.68rem; color: #64748b;">
+                STREAM: <span id="stream-indicator-label" style="color: #38bdf8; font-weight: 700;">STREAM_A // CRM_CORE</span>
+              </div>
+              
+              <div style="position: absolute; bottom: 12px; right: 16px; font-family: var(--font-mono); font-size: 0.68rem; color: #64748b;">
+                FPS: <span style="color: #34d399;">60.0</span> · LATENCY: <span style="color: #38bdf8;">14ms</span>
+              </div>
+            </div>
+
+            <!-- Dynamic State HUD Content -->
+            <div style="padding: 1.5rem 1.75rem; min-height: 180px; position: relative;" id="engine-visual-content">
+              
+              <!-- State A: CRM Live Telemetry -->
+              <div class="engine-state" id="state-A" style="transition: opacity 0.4s ease, transform 0.4s ease;">
+                <div style="font-family: var(--font-mono); color: #f87171; font-size: 0.8rem; margin-bottom: 0.75rem; font-weight: 700;">
+                  > CRM WIN-BACK SEQUENCE DISPATCHED
                 </div>
-                <div style="background: rgba(248, 113, 113, 0.1); border-left: 3px solid #f87171; padding: 1rem; color: #e2e8f0; font-size: 0.9rem;">
-                  <span style="color: #10b981;">✓</span> Reply received: "Yes, I'll take the 20% off!"
+                <div style="background: rgba(248, 113, 113, 0.08); border-left: 3px solid #f87171; border-radius: 0 10px 10px 0; padding: 0.85rem 1rem; color: #e2e8f0; font-size: 0.85rem; margin-bottom: 0.65rem; font-family: var(--font-mono);">
+                  <span style="color: #94a3b8;">Target:</span> 1,240 lapsed profiles<br>
+                  <span style="color: #94a3b8;">Offer:</span> VIP 20% Return Voucher
+                </div>
+                <div style="background: rgba(16, 185, 129, 0.08); border-left: 3px solid #34d399; border-radius: 0 10px 10px 0; padding: 0.85rem 1rem; color: #e2e8f0; font-size: 0.85rem; font-family: var(--font-mono);">
+                  <span style="color: #34d399;">✓ Square POS Match:</span> $185.00 Order Verified
                 </div>
               </div>
 
-              <!-- State B: Maps -->
-              <div class="engine-state" id="state-B" style="position: absolute; inset: 2.5rem; display: flex; flex-direction: column; justify-content: center; opacity: 0; transform: translateY(20px); transition: opacity 0.4s ease, transform 0.4s ease; pointer-events: none;">
-                <div style="font-family: var(--font-mono); color: #fbbf24; font-size: 0.85rem; margin-bottom: 1rem;">> SYNCING LOCAL CITATIONS...</div>
-                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                  <span style="background: rgba(251, 191, 36, 0.15); color: #fbbf24; padding: 0.4rem 0.8rem; border-radius: 4px; font-size: 0.8rem; font-family: var(--font-mono);">Google Maps Syncing</span>
-                  <span style="background: rgba(251, 191, 36, 0.15); color: #fbbf24; padding: 0.4rem 0.8rem; border-radius: 4px; font-size: 0.8rem; font-family: var(--font-mono);">Yelp Updating</span>
-                  <span style="background: rgba(251, 191, 36, 0.15); color: #fbbf24; padding: 0.4rem 0.8rem; border-radius: 4px; font-size: 0.8rem; font-family: var(--font-mono);">Apple Maps Live</span>
+              <!-- State B: Local Maps Telemetry -->
+              <div class="engine-state" id="state-B" style="position: absolute; inset: 1.5rem 1.75rem; opacity: 0; transform: translateY(12px); transition: opacity 0.4s ease, transform 0.4s ease; pointer-events: none;">
+                <div style="font-family: var(--font-mono); color: #fbbf24; font-size: 0.8rem; margin-bottom: 0.75rem; font-weight: 700;">
+                  > CITATION SYNC & MAP RADAR ACTIVE
                 </div>
-                <div style="margin-top: 1.5rem; color: #e2e8f0; font-size: 0.9rem;">
-                  <span style="color: #10b981;">+</span> 42 broken links fixed<br>
-                  <span style="color: #10b981;">+</span> 18 unresponded reviews addressed
+                <div style="display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.85rem;">
+                  <span style="background: rgba(251, 191, 36, 0.12); color: #fbbf24; padding: 0.35rem 0.65rem; border-radius: 6px; font-size: 0.75rem; font-family: var(--font-mono);">Google Maps: Synced</span>
+                  <span style="background: rgba(251, 191, 36, 0.12); color: #fbbf24; padding: 0.35rem 0.65rem; border-radius: 6px; font-size: 0.75rem; font-family: var(--font-mono);">Apple Maps: Live</span>
+                  <span style="background: rgba(251, 191, 36, 0.12); color: #fbbf24; padding: 0.35rem 0.65rem; border-radius: 6px; font-size: 0.75rem; font-family: var(--font-mono);">Yelp: Updated</span>
+                </div>
+                <div style="background: rgba(56, 189, 248, 0.08); border-left: 3px solid #38bdf8; border-radius: 0 10px 10px 0; padding: 0.85rem 1rem; color: #e2e8f0; font-size: 0.85rem; font-family: var(--font-mono);">
+                  <span style="color: #38bdf8;">+ 18 Reviews</span> auto-responded with keyword optimization
                 </div>
               </div>
 
-              <!-- State C: Corporate -->
-              <div class="engine-state" id="state-C" style="position: absolute; inset: 2.5rem; display: flex; flex-direction: column; justify-content: center; opacity: 0; transform: translateY(20px); transition: opacity 0.4s ease, transform 0.4s ease; pointer-events: none;">
-                <div style="font-family: var(--font-mono); color: #38bdf8; font-size: 0.85rem; margin-bottom: 1rem;">> RADAR: CORPORATE PROSPECTING...</div>
-                <div style="background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 8px; padding: 1rem; color: #e2e8f0;">
-                  <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+              <!-- State C: Corporate Telemetry -->
+              <div class="engine-state" id="state-C" style="position: absolute; inset: 1.5rem 1.75rem; opacity: 0; transform: translateY(12px); transition: opacity 0.4s ease, transform 0.4s ease; pointer-events: none;">
+                <div style="font-family: var(--font-mono); color: #38bdf8; font-size: 0.8rem; margin-bottom: 0.75rem; font-weight: 700;">
+                  > B2B CORRIDOR RADAR: LOCAL TARGET FOUND
+                </div>
+                <div style="background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 10px; padding: 0.85rem 1rem; color: #e2e8f0; font-size: 0.85rem; font-family: var(--font-mono);">
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 0.35rem;">
                     <strong style="color: #ffffff;">Mt. Sinai Hospital Dept.</strong>
-                    <span style="color: #38bdf8; font-size: 0.8rem;">0.8 mi</span>
+                    <span style="color: #38bdf8; font-size: 0.75rem;">0.8 mi</span>
                   </div>
-                  <div style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 0.8rem;">Catering Opportunity Detected</div>
-                  <div style="font-family: var(--font-mono); font-size: 0.75rem; color: #10b981;">> Sending personalized tasting offer...</div>
+                  <div style="font-size: 0.75rem; color: #94a3b8; margin-bottom: 0.5rem;">Catering & Gift Volume Detected</div>
+                  <div style="font-size: 0.75rem; color: #34d399;">> High-touch tasting sample dispatched</div>
                 </div>
               </div>
 
             </div>
-          </div>
-          
-          <!-- Funnel Arrow -->
-          <div style="text-align: center; margin: 3rem 0;">
-            <div style="display: inline-block; width: 50px; height: 50px; border-radius: 50%; background: var(--accent-yellow); border: 1px solid var(--accent-yellow-border); line-height: 48px; font-weight: 900; font-size: 1.5rem; color: #000; box-shadow: 0 10px 20px rgba(204,255,0,0.3);">↓</div>
+
+            <!-- Panel Footer Status -->
+            <div style="padding: 0.85rem 1.5rem; background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: #64748b; font-family: var(--font-mono);">
+              <span>POS VERIFICATION: READY</span>
+              <span style="color: #34d399; font-weight: 700;">CLOSED LOOP ACTIVE</span>
+            </div>
+
           </div>
 
-          <!-- Unified Outcome Engine -->
-          <div class="clean-card" style="padding: 2.5rem; background: #ffffff; text-align: center; border: 2px solid #0f172a; box-shadow: 0 20px 40px rgba(0,0,0,0.08);">
-            <div style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem;">
-              ILLUSTRATIVE OUTCOME
+          <!-- Total Unified Outcome Card -->
+          <div class="aura-glass-stream" style="padding: 2.25rem; text-align: center; border-color: rgba(204, 255, 0, 0.3); background: linear-gradient(135deg, rgba(20, 28, 48, 0.9) 0%, rgba(10, 15, 26, 0.95) 100%);">
+            <div style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 800; color: var(--accent-yellow); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem;">
+              COMBINED RECOVERY PIPELINE
             </div>
-            <h3 style="font-size: 2.2rem; font-weight: 900; color: #0f172a; margin-bottom: 0.5rem;">
-              <span style="color: #10b981;">+</span><span class="count-up" data-target="16040">$16,040</span> Pipeline
+            <h3 style="font-size: 2.5rem; font-weight: 900; color: #ffffff; margin-bottom: 0.5rem; letter-spacing: -0.03em;">
+              <span style="color: #34d399;">+</span><span class="count-up" data-target="16040">$16,040</span><span style="font-size: 1.25rem; color: #94a3b8;">/mo</span>
             </h3>
-            <p style="color: #64748b; font-size: 0.95rem; margin: 0 auto 1.5rem; line-height: 1.6;">
-              We don't sell marketing. We connect your store, capture the leakages, and charge 15% only when new dollars hit your account.
+            <p style="color: #94a3b8; font-size: 0.9rem; margin: 0 auto 1.5rem; line-height: 1.6;">
+              No upfront fees. We connect your store, capture the leakages, and charge 15% only when new verified sales hit your POS.
             </p>
-            <a href="#audit-tool" class="cta-btn-primary" style="width: 100%;">
-              Run Free Leakage Audit →
+            <a href="#audit-tool" class="cta-btn-primary" style="width: 100%; background: var(--accent-yellow); color: #000000; font-weight: 800; box-shadow: 0 0 25px rgba(204,255,0,0.35);">
+              Run 48-Hour Leakage Audit →
             </a>
           </div>
 
         </div>
-
-      </div>
-    </div>
-  </section>
 
       </div>
     </div>
@@ -2076,41 +2242,27 @@
   <!-- Scroll-Pinned Engine & Count-Up Animations -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      // Initialize Dedicated 3D Kinetic Visualizer
+      if (typeof initKinetic3DEngine === 'function') {
+        initKinetic3DEngine();
+      }
+
       // 1. Scroll-Pinned Engine Logic
       const streamCards = document.querySelectorAll('.stream-card');
-      const engineStates = document.querySelectorAll('.engine-state');
-      
-      if (streamCards.length > 0 && engineStates.length > 0) {
+      if (streamCards.length > 0) {
         const observerOptions = {
           root: null,
-          rootMargin: '-30% 0px -40% 0px', // Trigger when card is in the middle of viewport
-          threshold: 0
+          rootMargin: '-20% 0px -30% 0px',
+          threshold: 0.2
         };
 
         const streamObserver = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
               const activeStream = entry.target.getAttribute('data-stream');
-              
-              // Update Cards Focus State
-              streamCards.forEach(card => {
-                if (card === entry.target) {
-                  card.classList.remove('inactive');
-                } else {
-                  card.classList.add('inactive');
-                }
-              });
-
-              // Update Engine Panel States
-              engineStates.forEach(state => {
-                if (state.id === `state-${activeStream}`) {
-                  state.style.opacity = '1';
-                  state.style.transform = 'translateY(0)';
-                } else {
-                  state.style.opacity = '0';
-                  state.style.transform = 'translateY(20px)';
-                }
-              });
+              if (activeStream && typeof window.selectStream === 'function') {
+                window.selectStream(activeStream);
+              }
             }
           });
         }, observerOptions);
@@ -2127,7 +2279,6 @@
             const target = entry.target;
             const targetNumber = parseInt(target.getAttribute('data-target'), 10);
             
-            // Auto-detect formatting based on initial text content
             const initialText = target.innerText;
             let prefix = '';
             let suffix = '';
@@ -2141,12 +2292,12 @@
 
             if (!isNaN(targetNumber)) {
               let startTimestamp = null;
-              const duration = 2000; // 2 seconds
+              const duration = 2000;
 
               const step = (timestamp) => {
                 if (!startTimestamp) startTimestamp = timestamp;
                 const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                const easeProgress = progress * (2 - progress); // easeOutQuad
+                const easeProgress = progress * (2 - progress);
                 const currentNumber = Math.floor(easeProgress * targetNumber);
                 
                 target.innerText = `${prefix}${currentNumber.toLocaleString()}${suffix}`;
@@ -2166,6 +2317,155 @@
 
       countUpElements.forEach(el => countUpObserver.observe(el));
     });
+
+    /* =========================================
+       8. 3D KINETIC ENGINE CONTROLLER
+       ========================================= */
+    let kineticScene, kineticCamera, kineticRenderer, kineticCore, kineticRings = [], kineticParticles;
+    let targetCoreColor = new THREE.Color('#f87171');
+    let currentCoreColor = new THREE.Color('#f87171');
+
+    function initKinetic3DEngine() {
+      const canvas = document.getElementById('stream-kinetic-canvas');
+      if (!canvas) return;
+
+      const width = canvas.parentElement.clientWidth || 400;
+      const height = 220;
+
+      kineticScene = new THREE.Scene();
+      kineticCamera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
+      kineticCamera.position.z = 85;
+
+      kineticRenderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+      kineticRenderer.setSize(width, height);
+      kineticRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      // 1. Central Morphing Polyhedron
+      const coreGeo = new THREE.IcosahedronGeometry(18, 1);
+      const coreMat = new THREE.MeshBasicMaterial({
+        color: currentCoreColor,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.85
+      });
+      kineticCore = new THREE.Mesh(coreGeo, coreMat);
+      kineticScene.add(kineticCore);
+
+      // 2. Orbital Cyber Rings
+      const ringGeos = [
+        new THREE.RingGeometry(26, 26.8, 64),
+        new THREE.RingGeometry(32, 32.6, 64),
+        new THREE.TorusGeometry(36, 0.4, 16, 100)
+      ];
+
+      ringGeos.forEach((geo, idx) => {
+        const ringMat = new THREE.MeshBasicMaterial({
+          color: idx === 0 ? 0x38bdf8 : 0xffffff,
+          transparent: true,
+          opacity: 0.35 - idx * 0.08,
+          side: THREE.DoubleSide
+        });
+        const ring = new THREE.Mesh(geo, ringMat);
+        ring.rotation.x = Math.PI / (2 + idx * 0.5);
+        ring.rotation.y = idx * 0.4;
+        kineticScene.add(ring);
+        kineticRings.push(ring);
+      });
+
+      // 3. Orbiting Data Particles
+      const pCount = 80;
+      const pGeo = new THREE.BufferGeometry();
+      const pPos = new Float32Array(pCount * 3);
+      for (let i = 0; i < pCount * 3; i += 3) {
+        const radius = 24 + Math.random() * 24;
+        const theta = Math.random() * Math.PI * 2;
+        const phi = (Math.random() - 0.5) * Math.PI;
+        pPos[i] = radius * Math.cos(theta) * Math.cos(phi);
+        pPos[i + 1] = radius * Math.sin(phi);
+        pPos[i + 2] = radius * Math.sin(theta) * Math.cos(phi);
+      }
+      pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+      const pMat = new THREE.PointsMaterial({
+        size: 2.5,
+        color: 0x38bdf8,
+        transparent: true,
+        opacity: 0.75,
+        blending: THREE.AdditiveBlending
+      });
+      kineticParticles = new THREE.Points(pGeo, pMat);
+      kineticScene.add(kineticParticles);
+
+      function animateKinetic() {
+        requestAnimationFrame(animateKinetic);
+        
+        currentCoreColor.lerp(targetCoreColor, 0.05);
+        if (kineticCore) {
+          kineticCore.material.color.copy(currentCoreColor);
+          kineticCore.rotation.x += 0.008;
+          kineticCore.rotation.y += 0.012;
+        }
+
+        kineticRings.forEach((r, idx) => {
+          r.rotation.z += 0.005 * (idx % 2 === 0 ? 1 : -1);
+          r.rotation.x += 0.003;
+        });
+
+        if (kineticParticles) {
+          kineticParticles.rotation.y -= 0.004;
+        }
+
+        kineticRenderer.render(kineticScene, kineticCamera);
+      }
+      animateKinetic();
+
+      window.addEventListener('resize', () => {
+        if (!canvas.parentElement) return;
+        const newW = canvas.parentElement.clientWidth;
+        kineticCamera.aspect = newW / height;
+        kineticCamera.updateProjectionMatrix();
+        kineticRenderer.setSize(newW, height);
+      });
+    }
+
+    // Interactive Stream Switcher
+    window.selectStream = function(streamId) {
+      const streamCards = document.querySelectorAll('.stream-card');
+      const engineStates = document.querySelectorAll('.engine-state');
+      const label = document.getElementById('stream-indicator-label');
+
+      streamCards.forEach(card => {
+        if (card.getAttribute('data-stream') === streamId) {
+          card.classList.add('active-stream');
+          card.classList.remove('inactive');
+        } else {
+          card.classList.remove('active-stream');
+          card.classList.add('inactive');
+        }
+      });
+
+      engineStates.forEach(state => {
+        if (state.id === `state-${streamId}`) {
+          state.style.opacity = '1';
+          state.style.transform = 'translateY(0)';
+          state.style.pointerEvents = 'auto';
+        } else {
+          state.style.opacity = '0';
+          state.style.transform = 'translateY(12px)';
+          state.style.pointerEvents = 'none';
+        }
+      });
+
+      if (streamId === 'A') {
+        if (label) label.innerHTML = '<span style="color:#f87171;">STREAM_A // CRM_REACTIVATION</span>';
+        targetCoreColor = new THREE.Color('#f87171');
+      } else if (streamId === 'B') {
+        if (label) label.innerHTML = '<span style="color:#fbbf24;">STREAM_B // LOCAL_RADAR_SEO</span>';
+        targetCoreColor = new THREE.Color('#fbbf24');
+      } else if (streamId === 'C') {
+        if (label) label.innerHTML = '<span style="color:#38bdf8;">STREAM_C // B2B_CORRIDOR</span>';
+        targetCoreColor = new THREE.Color('#38bdf8');
+      }
+    };
   </script>
 </body>
 </html>
