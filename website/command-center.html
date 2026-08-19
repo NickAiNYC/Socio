@@ -41,17 +41,35 @@
       font-family: 'JetBrains Mono', monospace;
     }
 
-    /* Executive Surface Cards - Crisp, Flat, Calm */
+    /* Executive Surface Cards with Atmospheric Soft Cloud Halos */
     .exec-card {
       background-color: var(--bg-surface);
       border: 1px solid var(--border-color);
-      border-radius: 12px;
+      border-radius: 16px;
+      position: relative;
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7), 0 0 50px -10px rgba(59, 130, 246, 0.12);
+      transition: all 0.25s ease;
+    }
+    .exec-card:hover {
+      border-color: rgba(96, 165, 250, 0.35);
+      box-shadow: 0 15px 40px -10px rgba(0, 0, 0, 0.8), 0 0 65px -8px rgba(59, 130, 246, 0.22);
     }
 
     .exec-card-elevated {
-      background-color: var(--bg-elevated);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 12px;
+      background: radial-gradient(circle at 50% 0%, rgba(30, 58, 138, 0.25) 0%, var(--bg-elevated) 100%);
+      border: 1px solid rgba(96, 165, 250, 0.3);
+      border-radius: 18px;
+      position: relative;
+      box-shadow: 0 15px 45px -10px rgba(0, 0, 0, 0.8), 0 0 70px -10px rgba(56, 140, 246, 0.25);
+    }
+
+    /* Soft Cloud Backdrop Capsule */
+    .cloud-card {
+      background: linear-gradient(180deg, #131926 0%, #0F1420 100%);
+      border: 1px solid rgba(80, 130, 200, 0.24);
+      border-radius: 18px;
+      position: relative;
+      box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.8), 0 0 60px -12px rgba(56, 130, 246, 0.18);
     }
 
     /* Status Badges - Restrained and Matte */
