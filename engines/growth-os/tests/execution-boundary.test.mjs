@@ -278,13 +278,28 @@ test('LEDGER: refund of a non-payment event must fail', async () => {
   );
 });
 
-test('LEDGER: refunding the same original twice must fail', async () => {
+test('LEDGER: partial refunds accumulate; the total can never exceed the original; a replayed refund id is rejected', async () => {
   const repo = new MemoryRepository();
   const ledger = new RevenueLedger(repo);
   await ledger.record({ id: 'evt_orig', businessId: 'biz_1', type: 'revenue', amount: 100, currency: 'USD', source: 'stripe' });
-  const refund = { businessId: 'biz_1', type: 'refund', amount: 50, currency: 'USD', source: 'stripe', metadata: { originalEventId: 'evt_orig' } };
-  await ledger.record(refund);
-  await assert.rejects(ledger.record(refund), /already refunded/i);
+
+  const partialA = { businessId: 'biz_1', type: 'refund', amount: 50, currency: 'USD', source: 'stripe', idempotencyKey: 'ref:r_a', metadata: { originalEventId: 'evt_orig' } };
+  const partialB = { businessId: 'biz_1', type: 'refund', amount: 50, currency: 'USD', source: 'stripe', idempotencyKey: 'ref:r_b', metadata: { originalEventId: 'evt_orig' } };
+  await ledger.record(partialA);
+  await ledger.record(partialB); // legitimate second partial refund of the same original
+  const refunds = (await ledger.getEvents({ businessId: 'biz_1', type: 'refund' }));
+  assert.equal(refunds.length, 2);
+
+  // Over-refund: nothing left to refund.
+  await assert.rejects(
+    ledger.record({ businessId: 'biz_1', type: 'refund', amount: 1, currency: 'USD', source: 'stripe', metadata: { originalEventId: 'evt_orig' } }),
+    /exceeds the remaining refundable amount/i
+  );
+
+  // Replay of the SAME refund (same idempotency key) is rejected, never
+  // re-recorded — either by the over-refund guard (already fully refunded) or
+  // by the idempotency duplicate check when room remains.
+  await assert.rejects(ledger.record(partialA), /exceeds the remaining refundable amount|duplicate event/i);
 });
 
 test('LEDGER: negative revenue must be rejected', async () => {

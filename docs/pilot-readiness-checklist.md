@@ -36,11 +36,17 @@ architecture — one isolated VPS + PostgreSQL is the entire pilot.
 - [ ] **PostgreSQL** — provisioned; migrations `001` + `002` applied
 - [ ] **Backups** — scheduled `pg_dump` + **one restore test executed** (gate
       for any production Stripe events)
+- [ ] **Hermes gateway closed** — `API_SERVER_KEY` set (or `api_server`
+      platform disabled) and `lsof` shows no non-loopback Hermes listener
+- [ ] **Locked profiles have zero MCP servers** — `hermes mcp list` is empty;
+      DSH is never wired into the fleet (`init_hermes_fleet.sh` refuses by
+      default)
 
 ## Socio
 
 - [ ] `DATABASE_URL` set on the host
-- [ ] `MERCHANT_API_TOKENS` per business
+- [ ] `MERCHANT_API_TOKENS` per business — **required**: the Merchant API
+      fails closed without it when `DATABASE_URL` is set
 - [ ] Stripe webhook secret set on the host
 - [ ] Migrations 001 + 002 applied (idempotent re-run confirmed)
 - [ ] **Production boot verification** — both servers fail-closed checks pass
@@ -54,8 +60,10 @@ architecture — one isolated VPS + PostgreSQL is the entire pilot.
 - [ ] Test payment → recorded on the ledger
 - [ ] Duplicate webhook test → `200 duplicate`, no double-count
 - [ ] Refund test → matched to the original payment
-- [ ] **Complete lifecycle in test mode: payment → duplicate webhook → refund
-      → evidence report**
+- [ ] **Second partial refund** → recorded incrementally (accumulates);
+      resending the same refund state → `200 duplicate`
+- [ ] **Complete lifecycle in test mode: payment → duplicate webhook → two
+      partial refunds → evidence report**
 - [ ] Only after the test-mode lifecycle passes: switch to live mode
 
 ## Merchant

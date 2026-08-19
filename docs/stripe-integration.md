@@ -20,8 +20,8 @@ timestamp — returns `false`. The caller must treat `false` as **reject** (HTTP
 
 | Stripe event | Result | Notes |
 |---|---|---|
-| `payment_intent.succeeded` / `checkout.session.completed` | `revenue` ledger event | amount = minor units / 100; `idempotencyKey = stripe:<event.id>`; **requires `metadata.businessId`** — otherwise `ignored` |
-| `charge.refunded` | `refund` reference | requires `metadata.businessId`; resolved to the original payment downstream |
+| `payment_intent.succeeded` / `checkout.session.completed` | `revenue` ledger event | amount = minor units / 100 (zero-decimal currencies like JPY/KRW handled without division); `idempotencyKey = stripe:pi:<paymentIntentId>` — the SAME payment delivered via both event types (or redelivered) collapses to one ledger record; **requires `metadata.businessId`** — otherwise `ignored` |
+| `charge.refunded` | `refund` reference | requires `metadata.businessId`; carries the CHARGE with **cumulative** `amount_refunded`; the receiver records the incremental delta over prior refunds for that payment — partial refunds accumulate exactly and redelivery is idempotent; resolved to the original payment downstream |
 | `customer.created` / `customer.updated` | `customer` mapping | upserted into the economic store |
 | anything else | `ignored` with a reason | never guessed |
 
@@ -31,14 +31,18 @@ silently credited.
 
 ## Idempotency (DB-enforced)
 
-- Ledger events carry `idempotencyKey = stripe:<event.id>`.
+- Revenue events carry `idempotencyKey = stripe:pi:<paymentIntentId>`.
 - Migration `001_economic_truth` adds a partial **UNIQUE index** on
   `revenue_ledger (data->>'idempotencyKey')`.
-- A redelivered webhook (same Stripe event id) is rejected — by the
-  application pre-check and by the database (`23505` mapped to
-  `ValidationError`). **Revenue is never double-counted.**
-- Refunds carry `idempotencyKey = stripe-refund:<refund.id>` and additionally
-  require `metadata.originalEventId` of a real, not-yet-refunded payment.
+- A redelivered webhook (same payment intent, whichever event type delivered
+  it) is rejected — by the application pre-check and by the database (`23505`
+  mapped to `ValidationError`). **Revenue is never double-counted.**
+- Refunds carry
+  `idempotencyKey = stripe-refund:<chargeId>:<cumulativeMinorUnits>` and
+  additionally require `metadata.originalEventId` of a real payment. Multiple
+  partial refunds of one payment accumulate (the ledger allows more than one
+  refund per original); the total refunded can never exceed the original
+  amount; replaying the same refund state is rejected.
 
 ## Operation
 

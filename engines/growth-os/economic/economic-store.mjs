@@ -77,6 +77,10 @@ export class MemoryEconomicStore {
 export class PostgresEconomicStore {
   constructor(pool) {
     this.pool = pool instanceof pg.Pool ? pool : new pg.Pool({ connectionString: pool });
+    // Crash-prevention: a terminated idle client emits 'error' on the pool.
+    this.pool.on('error', (err) => {
+      console.error(`[pg] economic store pool error: ${err?.message || err}`);
+    });
   }
 
   async upsertCustomer({ businessId, provider, providerCustomerId, displayName = null, data = {} }) {

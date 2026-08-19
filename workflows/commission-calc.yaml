@@ -18,8 +18,18 @@ workflow:
     - name: apply-commission-rate
       agent: dsh-plugin-subagents
       tool: python-eval
-      params: "commission = amount * 0.15"
-    - name: generate-stripe-invoice
+      params: "commission = round(amount * 0.15, 2)  # pure math only — no side effects here"
+    # Governance gate — NO direct Stripe invoicing. The commission is recorded
+    # to the Revenue Ledger through the Growth OS MCP surface, which REQUIRES
+    # an executed, approved action whose proposal payload declares
+    # allowedEventTypes (e.g. ["campaign_cost"]) and a numeric maxAmount >= the
+    # commission. Without such an approval the record is rejected. Invoicing
+    # then waits for human approval (queue-for-approval) — a workflow must
+    # never move money on its own.
+    - name: record-commission-ledger
       agent: dsh-plugin-subagents
-      tool: stripe-connect-api
-      params: "Create invoice line item for merchant based on calculated commission"
+      tool: growth-os-mcp
+      params: "Call growth_os_record_event with type=campaign_cost, amount=commission, actionId=<executed approval id from the Governor>, businessId=<merchant>. The approval payload must declare allowedEventTypes including campaign_cost and maxAmount >= commission; otherwise the call fails closed."
+    - name: queue-for-approval
+      agent: dsh-plan-execute
+      params: "Queue the computed commission and ledger record for human approval before any invoice is generated or sent to the merchant."

@@ -89,7 +89,7 @@ test('WEBHOOK: revenue event with valid signature is recorded to the ledger', as
   assert.equal(events[0].amount, 50);
   assert.equal(events[0].currency, 'USD');
   assert.equal(events[0].source, 'stripe');
-  assert.equal(events[0].idempotencyKey, 'stripe:evt_pay_1');
+  assert.equal(events[0].idempotencyKey, 'stripe:pi:pi_1');
 });
 
 test('WEBHOOK: redelivered event is idempotent — 200 duplicate, no double-count', async (t) => {
@@ -137,7 +137,8 @@ test('WEBHOOK: refund maps to the original payment on the ledger', async (t) => 
   assert.equal(refunds.length, 1);
   const original = (await ledger.getEvents({ businessId: 'biz_a' })).find((e) => e.type === 'revenue');
   assert.equal(refunds[0].metadata.originalEventId, original.id);
-  assert.equal(refunds[0].idempotencyKey, 'stripe-refund:re_1');
+  assert.equal(refunds[0].idempotencyKey, 'stripe-refund:re_1:5000');
+  assert.equal(refunds[0].amount, 50);
 });
 
 test('WEBHOOK: refund with unknown original payment is ignored with a reason', async (t) => {
@@ -150,17 +151,53 @@ test('WEBHOOK: refund with unknown original payment is ignored with a reason', a
   assert.equal((await ledger.getEvents({ businessId: 'biz_a', type: 'refund' })).length, 0);
 });
 
-test('WEBHOOK: a second refund of the same original payment is rejected, not retried', async (t) => {
+test('WEBHOOK: redelivering the same refund state is a duplicate, not a new refund', async (t) => {
   const { ledger, base } = await startServer(t);
   await post(base, revenueEvent());
   await post(base, refundEvent());
 
-  const second = await post(base, refundEvent({ id: 'evt_ref_2', data: { object: { id: 're_2', amount: 5000, currency: 'usd', metadata: { businessId: 'biz_a' }, payment_intent: 'pi_1' } } }));
+  // Same charge, same cumulative amount_refunded (5000 minor = full refund).
+  const redelivery = await post(base, refundEvent({ id: 'evt_ref_1_again' }));
 
-  assert.equal(second.status, 200);
-  assert.equal(second.body.status, 'rejected');
-  assert.match(second.body.reason, /already refunded/);
+  assert.equal(redelivery.status, 200);
+  assert.equal(redelivery.body.status, 'duplicate');
+  assert.match(redelivery.body.reason, /already recorded/);
   assert.equal((await ledger.getEvents({ businessId: 'biz_a', type: 'refund' })).length, 1);
+});
+
+test('WEBHOOK: partial refunds accumulate exactly (two partials = one payment)', async (t) => {
+  const { ledger, base } = await startServer(t);
+  await post(base, revenueEvent()); // $50 payment
+
+  // First partial refund: cumulative $10.
+  const first = await post(base, refundEvent({ id: 'evt_ref_p1', data: { object: { id: 'ch_1', amount: 5000, amount_refunded: 1000, currency: 'usd', metadata: { businessId: 'biz_a' }, payment_intent: 'pi_1' } } }));
+  assert.equal(first.body.status, 'refund_recorded');
+  assert.equal(first.body.amount, 10);
+
+  // Second partial refund: cumulative $30 -> incremental $20 recorded.
+  const second = await post(base, refundEvent({ id: 'evt_ref_p2', data: { object: { id: 'ch_1', amount: 5000, amount_refunded: 3000, currency: 'usd', metadata: { businessId: 'biz_a' }, payment_intent: 'pi_1' } } }));
+  assert.equal(second.body.status, 'refund_recorded');
+  assert.equal(second.body.amount, 20);
+
+  const refunds = (await ledger.getEvents({ businessId: 'biz_a', type: 'refund' })).sort((a, b) => (a.amount > b.amount ? 1 : -1));
+  assert.equal(refunds.length, 2);
+  assert.deepEqual(refunds.map((r) => r.amount), [10, 20]);
+
+  const metrics = await ledger.calculateMetrics({ businessId: 'biz_a' });
+  assert.equal(metrics.refunds, 30, 'partial refunds must sum to the total refunded');
+  assert.equal(metrics.netRevenue, 20, 'net revenue = 50 - 30');
+});
+
+test('WEBHOOK: a cumulative refund beyond the original payment is rejected', async (t) => {
+  const { ledger, base } = await startServer(t);
+  await post(base, revenueEvent()); // $50 payment
+
+  const over = await post(base, refundEvent({ id: 'evt_ref_over', data: { object: { id: 'ch_1', amount: 5000, amount_refunded: 6000, currency: 'usd', metadata: { businessId: 'biz_a' }, payment_intent: 'pi_1' } } }));
+
+  assert.equal(over.status, 200);
+  assert.equal(over.body.status, 'rejected');
+  assert.match(over.body.reason, /exceeds the remaining refundable amount/);
+  assert.equal((await ledger.getEvents({ businessId: 'biz_a', type: 'refund' })).length, 0);
 });
 
 test('WEBHOOK: customer.created upserts the customer into the economic store', async (t) => {
