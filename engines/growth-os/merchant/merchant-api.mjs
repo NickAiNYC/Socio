@@ -35,6 +35,7 @@ import { BusinessTwinMemoryRepository, MemoryRepository } from '../repositories/
 import { PostgresRepository, BusinessTwinPostgresRepository } from '../repositories/postgres-repository.mjs';
 import { MemoryEconomicStore, PostgresEconomicStore } from '../economic/economic-store.mjs';
 import { buildMerchantEvidenceReport, verifyMerchantAuditChain, computeStripeState } from './evidence-report.mjs';
+import { getSchedule } from './revenue-schedule.mjs';
 
 const PORT = Number(process.env.MERCHANT_API_PORT || 8787);
 const HOST = process.env.MERCHANT_API_HOST || '127.0.0.1';
@@ -50,6 +51,8 @@ const CORS_ORIGIN = process.env.MERCHANT_API_CORS_ORIGIN || '*';
  * @param {import('../agent-governor.mjs').AgentGovernor} deps.agentGovernor
  * @param {Record<string,string>|null} [deps.tokens] businessId -> token map
  * @param {boolean} [deps.stripeSecretConfigured=false]
+ * @param {object|null} [deps.scheduleRepository] repository holding Revenue
+ *   Definition Schedules (generic repo; id = businessId)
  * @returns {import('node:http').Server}
  */
 export function createMerchantApi({
@@ -61,6 +64,7 @@ export function createMerchantApi({
   agentGovernor,
   tokens = null,
   stripeSecretConfigured = false,
+  scheduleRepository = null,
 }) {
   const tokenToBusiness = tokens ? new Map(Object.entries(tokens).map(([biz, tok]) => [tok, biz])) : null;
 
@@ -87,6 +91,7 @@ export function createMerchantApi({
   }
 
   async function buildReport(businessId) {
+    const revenueSchedule = await getSchedule(scheduleRepository, businessId);
     return buildMerchantEvidenceReport({
       businessTwin,
       revenueLedger,
@@ -96,6 +101,7 @@ export function createMerchantApi({
       agentGovernor,
       businessId,
       stripeSecretConfigured,
+      revenueSchedule,
     });
   }
 
@@ -181,6 +187,29 @@ export function createMerchantApi({
             stripeSecretConfigured: Boolean(stripeSecretConfigured),
             health: 'ok',
           },
+        });
+        return;
+      }
+      if (req.method === 'GET' && resource === 'schedule') {
+        const revenueSchedule = await getSchedule(scheduleRepository, businessId);
+        sendJson(res, 200, {
+          businessId,
+          generatedAt: new Date().toISOString(),
+          schedule: revenueSchedule
+            ? {
+                status: 'signed',
+                businessId: revenueSchedule.businessId,
+                attributionWindowDays: revenueSchedule.attributionWindowDays,
+                baselineMethod: revenueSchedule.baselineMethod,
+                exclusions: revenueSchedule.exclusions,
+                disputeWindowDays: revenueSchedule.disputeWindowDays,
+                paymentFrequency: revenueSchedule.paymentFrequency,
+                holdoutPercent: revenueSchedule.holdoutPercent,
+                commissionRate: revenueSchedule.commissionRate,
+                effectiveDate: revenueSchedule.effectiveDate,
+                version: revenueSchedule.version,
+              }
+            : { status: 'none', note: 'no revenue definition schedule on file — incremental revenue cannot be computed' },
         });
         return;
       }
@@ -275,6 +304,7 @@ export function main() {
   let approvalRepo;
   let experimentRepo;
   let economicStore;
+  let scheduleRepo;
 
   if (DATABASE_URL) {
     twinRepo = new BusinessTwinPostgresRepository();
@@ -282,6 +312,7 @@ export function main() {
     auditRepo = new PostgresRepository('audit_trail');
     approvalRepo = new PostgresRepository('approvals');
     experimentRepo = new PostgresRepository('experiments');
+    scheduleRepo = new PostgresRepository('revenue_schedules');
     economicStore = new PostgresEconomicStore(DATABASE_URL);
   } else {
     twinRepo = new BusinessTwinMemoryRepository();
@@ -289,6 +320,7 @@ export function main() {
     auditRepo = new MemoryRepository();
     approvalRepo = new MemoryRepository();
     experimentRepo = new MemoryRepository();
+    scheduleRepo = new MemoryRepository();
     economicStore = new MemoryEconomicStore();
   }
 
@@ -307,6 +339,7 @@ export function main() {
     agentGovernor,
     tokens,
     stripeSecretConfigured: Boolean(process.env.STRIPE_WEBHOOK_SECRET),
+    scheduleRepository: scheduleRepo,
   });
 
   server.listen(PORT, HOST, () => {
