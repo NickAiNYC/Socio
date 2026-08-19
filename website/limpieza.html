@@ -15,39 +15,13 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace'],
-                    },
-                    colors: {
-                        brandOrange: {
-                            50: '#FFF7ED',
-                            100: '#FFEDD5',
-                            200: '#FED7AA',
-                            500: '#F97316',
-                            600: '#EA580C',
-                            DEFAULT: '#FF5500',
-                            hover: '#E04B00',
-                            dark: '#C2410C',
-                        },
-                        safety: '#EAB308',
-                        industrial: '#111827',
-                        concrete: '#F3F4F6',
-                    }
-                }
-            }
-        }
-    </script>
+    <!-- Tailwind — compiled self-hosted -->
+    <link rel="stylesheet" href="/assets/output.css">
+    
     <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest" defer></script>
 
     <style>
         :root {
@@ -110,8 +84,7 @@
     <meta name="twitter:image" content="https://socio-one.vercel.app/assets/hero.jpg">
 
     <!-- CDN Preconnects -->
-    <link rel="preconnect" href="https://cdn.tailwindcss.com">
-    <link rel="preconnect" href="https://code.iconify.design">
+        <link rel="preconnect" href="https://code.iconify.design">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
 
     <script type="application/ld+json">
@@ -875,5 +848,6 @@
 
     <!-- WhatsApp Floating Widget -->
     <script src="/assets/whatsapp-widget.js" defer></script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));}</script>
 </body>
 </html>

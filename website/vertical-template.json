@@ -1,0 +1,22 @@
+{
+  "_comment": "Single template for verticals \u2014 contratistas.html and limpieza.html are data-driven variants. Add new vertical by copying this config.",
+  "verticals": {
+    "contratistas": {
+      "title": "Socio Contratistas",
+      "lang": "es",
+      "badge": "ALIANZA DE CRECIMIENTO",
+      "wa_number": "19175550199"
+    },
+    "limpieza": {
+      "title": "Socio Limpieza",
+      "lang": "es",
+      "badge": "CONTRATOS RECURRENTES",
+      "wa_number": "19175550199"
+    }
+  },
+  "shared_partials": [
+    "/partials/header.html",
+    "/partials/footer.html"
+  ],
+  "loader": "/assets/partials-loader.js"
+}
