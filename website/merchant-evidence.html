@@ -6,110 +6,159 @@
     <title>Socio — Merchant Evidence</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Roboto+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;600;700&display=swap');
+        :root {
+            --bg-base: #f8fafc;
+            --bg-card: #ffffff;
+            --accent-yellow: #ccff00;
+            --accent-yellow-soft: #f4ffc2;
+            --accent-yellow-border: #b8e600;
+            --accent-dark: #0f172a;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-subtle: #e2e8f0;
+            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'Roboto Mono', monospace;
+        }
 
         body {
-            background-color: #050507;
-            color: #ffffff;
-            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: var(--font-sans);
             background-image:
-                radial-gradient(circle at 15% 0%, rgba(16, 185, 129, 0.04) 0%, transparent 50%),
-                radial-gradient(circle at 85% 100%, rgba(99, 102, 241, 0.03) 0%, transparent 50%);
+                radial-gradient(circle at 10% 10%, rgba(204, 255, 0, 0.18) 0%, transparent 40%),
+                radial-gradient(circle at 90% 90%, rgba(244, 255, 194, 0.35) 0%, transparent 40%);
+            background-attachment: fixed;
         }
 
-        .font-mono { font-family: 'Roboto Mono', monospace; }
+        .font-mono { font-family: var(--font-mono); }
 
-        .glass-panel {
-            background-color: #0f0f14;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 12px;
-            backdrop-filter: blur(16px);
+        .clean-card, .glass-panel {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02), 0 10px 25px -5px rgba(0, 0, 0, 0.04);
+            transition: all 0.25s ease;
         }
 
-        .accent { color: #10B981; }
-        .accent-gold { color: #F59E0B; }
-        .accent-blue { color: #6366F1; }
-        .accent-red { color: #EF4444; }
+        .clean-card:hover, .glass-panel:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.07);
+        }
+
+        .accent { color: #0f172a; }
+        .accent-yellow { color: #000000; background: var(--accent-yellow); }
 
         .metric-value {
-            font-family: 'Roboto Mono', monospace;
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: -0.05em;
+            font-family: var(--font-mono);
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            color: #0f172a;
         }
 
         .nav-link {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 12px;
-            font-weight: 600;
-            padding: 6px 12px;
-            border-radius: 8px;
+            color: #64748b;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 8px 16px;
+            border-radius: 100px;
             transition: all 0.2s ease;
             cursor: pointer;
         }
-        .nav-link:hover { color: #fff; background: rgba(255, 255, 255, 0.06); }
+        .nav-link:hover { color: #0f172a; background: rgba(0, 0, 0, 0.04); }
+        .nav-link.active { color: #0f172a; background: #ffffff; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
 
         .badge {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
             font-size: 10px;
-            font-weight: 700;
+            font-weight: 800;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            padding: 2px 8px;
+            padding: 3px 10px;
             border-radius: 999px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid transparent;
         }
 
-        .badge-green  { background: rgba(16, 185, 129, 0.12); color: #34D399; border-color: rgba(16, 185, 129, 0.3); }
-        .badge-amber  { background: rgba(245, 158, 11, 0.12); color: #FBBF24; border-color: rgba(245, 158, 11, 0.3); }
-        .badge-red    { background: rgba(239, 68, 68, 0.12); color: #F87171; border-color: rgba(239, 68, 68, 0.3); }
-        .badge-blue   { background: rgba(99, 102, 241, 0.12); color: #A5B4FC; border-color: rgba(99, 102, 241, 0.3); }
-        .badge-gray   { background: rgba(255, 255, 255, 0.05); color: rgba(255, 255, 255, 0.5); border-color: rgba(255, 255, 255, 0.1); }
+        .badge-green  { background: #ecfdf5; color: #059669; border-color: #a7f3d0; }
+        .badge-amber  { background: #fffbeb; color: #d97706; border-color: #fde68a; }
+        .badge-red    { background: #fef2f2; color: #dc2626; border-color: #fecaca; }
+        .badge-yellow { background: var(--accent-yellow); color: #000000; border-color: var(--accent-yellow-border); }
+        .badge-gray   { background: #f1f5f9; color: #64748b; border-color: #e2e8f0; }
 
-        ::-webkit-scrollbar { width: 4px; }
+        .eyebrow-capsule {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.35rem 0.85rem;
+            border-radius: 100px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: #64748b;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+            margin-bottom: 1rem;
+        }
+
+        .eyebrow-capsule span.dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-yellow-border);
+            box-shadow: 0 0 6px var(--accent-yellow);
+        }
+
+        ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.08); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
 
         .empty-hint {
-            color: rgba(255, 255, 255, 0.35);
-            font-size: 12px;
+            color: #94a3b8;
+            font-size: 13px;
             font-style: italic;
         }
     </style>
 </head>
 <body class="min-h-screen">
 
-    <header class="sticky top-0 z-40 border-b border-white/5 bg-[#050507]/90 backdrop-blur-xl">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex flex-wrap items-center gap-4">
-            <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-lg bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center">
-                    <i data-lucide="scale" class="w-4 h-4 text-emerald-400"></i>
+    <!-- Header -->
+    <header class="sticky top-0 z-40 border-b border-slate-200 bg-[#f8fafc]/90 backdrop-blur-xl">
+        <div class="max-w-7xl mx-auto px-6 py-3.5 flex flex-wrap items-center gap-4">
+            <a href="index.html" class="flex items-center gap-2.5 text-decoration-none">
+                <div class="text-2xl font-black tracking-tight text-slate-900">
+                    Socio<span class="text-[#ccff00] drop-shadow-[0_0_6px_rgba(204,255,0,0.9)]">.</span>
                 </div>
-                <div>
-                    <div class="text-sm font-bold tracking-tight">Merchant Evidence</div>
-                    <div class="text-[10px] text-white/40 font-mono">socio / growth-os / evidence</div>
-                </div>
-            </div>
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-white text-slate-700 border border-slate-200 shadow-sm font-mono">
+                    MERCHANT EVIDENCE
+                </span>
+            </a>
 
             <div class="flex-1"></div>
 
             <div class="flex flex-wrap items-center gap-2 text-xs">
                 <input id="cfg-base" type="text" value="http://127.0.0.1:8787" placeholder="API base"
-                    class="bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 w-52 font-mono text-white/80 placeholder-white/30 outline-none focus:border-emerald-500/40">
+                    class="bg-white border border-slate-200 rounded-xl px-3.5 py-1.5 w-48 font-mono text-slate-800 placeholder-slate-400 outline-none focus:border-slate-800 shadow-sm">
                 <input id="cfg-business" type="text" value="socio_default" placeholder="businessId"
-                    class="bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 w-40 font-mono text-white/80 placeholder-white/30 outline-none focus:border-emerald-500/40">
-                <input id="cfg-token" type="password" placeholder="token (optional, session only)"
-                    class="bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 w-52 font-mono text-white/80 placeholder-white/30 outline-none focus:border-emerald-500/40">
-                <button id="btn-load" class="px-4 py-1.5 rounded-lg bg-emerald-500 text-black font-bold hover:shadow-[0_0_18px_rgba(16,185,129,0.4)] transition-all">
+                    class="bg-white border border-slate-200 rounded-xl px-3.5 py-1.5 w-36 font-mono text-slate-800 placeholder-slate-400 outline-none focus:border-slate-800 shadow-sm">
+                <input id="cfg-token" type="password" placeholder="token (optional)"
+                    class="bg-white border border-slate-200 rounded-xl px-3.5 py-1.5 w-44 font-mono text-slate-800 placeholder-slate-400 outline-none focus:border-slate-800 shadow-sm">
+                <button id="btn-load" class="px-4 py-1.5 rounded-xl bg-slate-900 text-white font-bold hover:bg-black transition-all shadow-sm">
                     Load
                 </button>
             </div>
         </div>
     </header>
 
-    <nav class="max-w-7xl mx-auto px-6 pt-6 flex flex-wrap items-center gap-1 border-b border-white/5 pb-4">
-        <span class="nav-link" data-scroll="overview">Overview</span>
+    <!-- Sub-Nav -->
+    <nav class="max-w-7xl mx-auto px-6 pt-6 flex flex-wrap items-center gap-1 border-b border-slate-200 pb-4">
+        <span class="nav-link active" data-scroll="overview">Overview</span>
         <span class="nav-link" data-scroll="actions">Actions</span>
         <span class="nav-link" data-scroll="revenue">Revenue</span>
         <span class="nav-link" data-scroll="attribution">Attribution</span>
@@ -117,19 +166,23 @@
         <span class="nav-link" data-scroll="audit">Audit</span>
         <span class="nav-link" data-scroll="system">System</span>
         <div class="flex-1"></div>
-        <a href="command-center.html" class="nav-link text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-3 py-1 flex items-center gap-1.5 hover:text-white">
-            <span>⚡ Command Center & GEM Ops</span>
+        <a href="command-center.html" class="nav-link text-slate-900 bg-white border border-slate-200 rounded-full px-4 py-1 flex items-center gap-1.5 hover:border-slate-400 shadow-sm">
+            <span>⚡ Command Center</span>
         </a>
         <span id="stripe-pill" class="badge badge-gray">Stripe —</span>
     </nav>
 
     <main class="max-w-7xl mx-auto px-6 py-8 space-y-10">
 
-        <div id="error-banner" class="hidden glass-panel border-red-500/30 p-4 text-sm text-red-300"></div>
+        <div id="error-banner" class="hidden clean-card border-red-200 p-4 text-sm text-red-700 bg-red-50"></div>
 
         <!-- ===================== OVERVIEW ===================== -->
         <section id="overview">
-            <h2 class="text-xs font-bold uppercase tracking-[0.18em] text-white/50 mb-4">What does the evidence say?</h2>
+            <div class="eyebrow-capsule">
+                <span class="dot"></span>
+                <span>EVIDENCE SUMMARY</span>
+            </div>
+            <h2 class="text-2xl font-black tracking-tight text-slate-900 mb-4">What does the evidence say?</h2>
             <div id="overview-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
                 <!-- rendered -->
             </div>
@@ -137,77 +190,103 @@
 
         <!-- ===================== ACTIONS ===================== -->
         <section id="actions">
-            <h2 class="text-xs font-bold uppercase tracking-[0.18em] text-white/50 mb-4">What did Socio do?</h2>
-            <div class="glass-panel p-5">
+            <div class="eyebrow-capsule">
+                <span class="dot"></span>
+                <span>AGENT EXECUTION</span>
+            </div>
+            <h2 class="text-2xl font-black tracking-tight text-slate-900 mb-4">What did Socio do?</h2>
+            <div class="clean-card p-6">
                 <div id="actions-body" class="text-sm"></div>
             </div>
         </section>
 
         <!-- ===================== REVENUE ===================== -->
         <section id="revenue">
-            <h2 class="text-xs font-bold uppercase tracking-[0.18em] text-white/50 mb-4">What happened?</h2>
-            <div id="revenue-metrics" class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4 mb-4"></div>
-            <div class="glass-panel p-5">
-                <div class="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/40 mb-3">Revenue events</div>
+            <div class="eyebrow-capsule">
+                <span class="dot"></span>
+                <span>COMMERCE TELEMETRY</span>
+            </div>
+            <h2 class="text-2xl font-black tracking-tight text-slate-900 mb-4">What happened?</h2>
+            <div id="revenue-metrics" class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4 mb-5"></div>
+            <div class="clean-card p-6">
+                <div class="text-[11px] font-bold uppercase tracking-[0.15em] text-slate-400 mb-3">Verified Revenue Events</div>
                 <div id="revenue-body" class="text-sm"></div>
             </div>
         </section>
 
         <!-- ===================== ATTRIBUTION ===================== -->
         <section id="attribution">
-            <h2 class="text-xs font-bold uppercase tracking-[0.18em] text-white/50 mb-4">What can we attribute — and what can't we prove?</h2>
+            <div class="eyebrow-capsule">
+                <span class="dot"></span>
+                <span>PROVABILITY ENGINE</span>
+            </div>
+            <h2 class="text-2xl font-black tracking-tight text-slate-900 mb-4">What can we attribute — and what can't we prove?</h2>
             <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 mb-4">
-                <div class="glass-panel p-5">
+                <div class="clean-card p-6">
                     <div class="flex items-center gap-2 mb-3">
                         <span class="badge badge-green">Evidence-based</span>
-                        <span id="attr-count" class="text-[10px] text-white/40 font-mono"></span>
+                        <span id="attr-count" class="text-[10px] text-slate-400 font-mono"></span>
                     </div>
                     <div id="attr-body" class="text-sm space-y-3"></div>
                 </div>
-                <div class="glass-panel p-5">
+                <div class="clean-card p-6">
                     <div class="flex items-center gap-2 mb-3">
                         <span class="badge badge-red">Not provable</span>
-                        <span id="unknown-count" class="text-[10px] text-white/40 font-mono"></span>
+                        <span id="unknown-count" class="text-[10px] text-slate-400 font-mono"></span>
                     </div>
                     <div id="unknown-body" class="text-sm space-y-3"></div>
                 </div>
             </div>
-            <div class="glass-panel p-5">
-                <div class="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/40 mb-2">Methodology — evidence ladder</div>
-                <p id="methodology-ladder" class="text-xs text-white/60 font-mono leading-relaxed"></p>
+            <div class="clean-card p-6">
+                <div class="text-[11px] font-bold uppercase tracking-[0.15em] text-slate-400 mb-2">Methodology — Evidence Ladder</div>
+                <p id="methodology-ladder" class="text-xs text-slate-600 font-mono leading-relaxed"></p>
             </div>
         </section>
 
         <!-- ===================== EXPERIMENTS ===================== -->
         <section id="experiments">
-            <h2 class="text-xs font-bold uppercase tracking-[0.18em] text-white/50 mb-4">What should Socio do next?</h2>
-            <div id="learnings" class="glass-panel p-5 mb-4 text-sm"></div>
+            <div class="eyebrow-capsule">
+                <span class="dot"></span>
+                <span>GROWTH HYPOTHESES</span>
+            </div>
+            <h2 class="text-2xl font-black tracking-tight text-slate-900 mb-4">What should Socio do next?</h2>
+            <div id="learnings" class="clean-card p-6 mb-4 text-sm"></div>
             <div id="experiments-content"></div>
         </section>
 
         <!-- ===================== AUDIT ===================== -->
         <section id="audit">
             <div class="flex items-center justify-between mb-4">
-                <h2 class="text-xs font-bold uppercase tracking-[0.18em] text-white/50">Audit chain</h2>
-                <button id="btn-verify" class="px-4 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs font-semibold text-white/80 hover:bg-white/10 transition-all">
+                <div>
+                    <div class="eyebrow-capsule">
+                        <span class="dot"></span>
+                        <span>IMMUTABLE LEDGER</span>
+                    </div>
+                    <h2 class="text-2xl font-black tracking-tight text-slate-900">Audit chain</h2>
+                </div>
+                <button id="btn-verify" class="px-4 py-2 rounded-xl bg-slate-900 text-xs font-bold text-white hover:bg-black transition-all shadow-sm">
                     Verify audit chain
                 </button>
             </div>
-            <div id="verify-result" class="hidden glass-panel p-4 mb-4 text-sm font-mono"></div>
-            <div class="glass-panel p-5">
+            <div id="verify-result" class="hidden clean-card p-4 mb-4 text-sm font-mono"></div>
+            <div class="clean-card p-6">
                 <div id="audit-body" class="text-sm"></div>
             </div>
         </section>
 
         <!-- ===================== SYSTEM ===================== -->
         <section id="system">
-            <h2 class="text-xs font-bold uppercase tracking-[0.18em] text-white/50 mb-4">System & integrations</h2>
-            <div class="glass-panel p-5 text-sm space-y-3">
+            <div class="eyebrow-capsule">
+                <span class="dot"></span>
+                <span>INTEGRATIONS</span>
+            </div>
+            <h2 class="text-2xl font-black tracking-tight text-slate-900 mb-4">System & integrations</h2>
+            <div class="clean-card p-6 text-sm space-y-3">
                 <div id="system-body"></div>
             </div>
         </section>
 
-        <footer class="border-t border-white/5 pt-6 pb-10 text-[10px] text-white/30 font-mono flex flex-wrap items-center gap-4">
+        <footer class="border-t border-slate-200 pt-6 pb-10 text-[11px] text-slate-400 font-mono flex flex-wrap items-center gap-4">
             <span>No fake data. Everything rendered here comes from the Growth OS evidence API.</span>
             <span class="flex-1"></span>
             <span id="generated-at"></span>
@@ -298,7 +377,7 @@
         async function api(path, options = {}) {
             const headers = { ...(options.headers || {}) };
             if (state.token) headers['Authorization'] = `Bearer ${state.token}`;
-            const res = await fetch(`${state.base}${path}`, { headers, cache: 'no-store', ...options, headers });
+            const res = await fetch(`${state.base}${path}`, { headers, cache: 'no-store', ...options });
             const body = await res.json().catch(() => ({}));
             if (!res.ok) {
                 throw new Error(`${res.status} ${body.error?.code || res.statusText} — ${body.error?.message || ''}`.trim());
@@ -314,18 +393,18 @@
             const next = q.whatShouldSocioDoNext;
             const running = next.experiments.filter((e) => e.status === 'RUNNING').length;
             const cards = [
-                { label: 'What did Socio do?', value: String(q.whatDidSocioDo.count), sub: 'governed, audited actions', tone: 'text-emerald-400' },
-                { label: 'What happened?', value: fmtMoney(m.netRevenue), sub: `net of ${fmtMoney(m.refunds)} refunds · ${m.eventCount} events`, tone: 'text-emerald-400' },
-                { label: 'What revenue followed?', value: String(q.whatRevenueFollowed.count), sub: 'events on the ledger', tone: 'text-emerald-400' },
-                { label: 'What can we attribute?', value: String(q.whatCanWeAttribute.count), sub: 'attribution + correlation records', tone: 'text-emerald-400' },
-                { label: "What can't we prove?", value: String(q.whatCantWeProve.count), sub: `unattributed ${fmtMoney(q.whatCantWeProve.unattributedRevenue.amount)}`, tone: 'text-amber-400' },
-                { label: 'What should Socio do next?', value: String(next.experiments.length), sub: `${running} running · ${next.pendingApprovals.length} pending approval`, tone: 'text-emerald-400' },
+                { label: 'What did Socio do?', value: String(q.whatDidSocioDo.count), sub: 'governed, audited actions', tone: 'text-slate-900' },
+                { label: 'What happened?', value: fmtMoney(m.netRevenue), sub: `net of ${fmtMoney(m.refunds)} refunds · ${m.eventCount} events`, tone: 'text-slate-900' },
+                { label: 'What revenue followed?', value: String(q.whatRevenueFollowed.count), sub: 'events on the ledger', tone: 'text-slate-900' },
+                { label: 'What can we attribute?', value: String(q.whatCanWeAttribute.count), sub: 'attribution + correlation records', tone: 'text-slate-900' },
+                { label: "What can't we prove?", value: String(q.whatCantWeProve.count), sub: `unattributed ${fmtMoney(q.whatCantWeProve.unattributedRevenue.amount)}`, tone: 'text-amber-600' },
+                { label: 'What should Socio do next?', value: String(next.experiments.length), sub: `${running} running · ${next.pendingApprovals.length} pending approval`, tone: 'text-slate-900' },
             ];
             $('overview-grid').innerHTML = cards.map((c) => `
-                <div class="glass-panel p-5">
-                    <div class="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/40 mb-2">${c.label}</div>
+                <div class="clean-card p-6">
+                    <div class="text-[10px] font-extrabold uppercase tracking-[0.18em] text-slate-400 mb-2">${c.label}</div>
                     <div class="metric-value ${c.tone}">${c.value}</div>
-                    <div class="text-[11px] text-white/40 mt-1">${c.sub}</div>
+                    <div class="text-[11px] text-slate-500 font-medium mt-1">${c.sub}</div>
                 </div>
             `).join('');
         }
@@ -337,29 +416,31 @@
                 return;
             }
             $('actions-body').innerHTML = `
-                <table class="w-full text-left">
-                    <thead>
-                        <tr class="text-[10px] uppercase tracking-[0.15em] text-white/30 border-b border-white/5">
-                            <th class="py-2 pr-4">Time</th>
-                            <th class="py-2 pr-4">Agent</th>
-                            <th class="py-2 pr-4">Action</th>
-                            <th class="py-2 pr-4">Status</th>
-                            <th class="py-2">Proposal</th>
-                        </tr>
-                    </thead>
-                    <tbody class="font-mono text-xs">
-                        ${actions.map((a) => `
-                            <tr class="border-b border-white/5 last:border-0">
-                                <td class="py-2 pr-4 text-white/50">${fmtDate(a.timestamp)}</td>
-                                <td class="py-2 pr-4 text-white/80">${esc(a.agentId)}</td>
-                                <td class="py-2 pr-4 text-white/90">${esc(a.actionType)}</td>
-                                <td class="py-2 pr-4">${statusBadge(a.status)}</td>
-                                <td class="py-2 text-white/40">${esc(a.proposalId)}</td>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="text-[10px] uppercase tracking-[0.15em] text-slate-400 border-b border-slate-100">
+                                <th class="py-2.5 pr-4 font-bold">Time</th>
+                                <th class="py-2.5 pr-4 font-bold">Agent</th>
+                                <th class="py-2.5 pr-4 font-bold">Action</th>
+                                <th class="py-2.5 pr-4 font-bold">Status</th>
+                                <th class="py-2.5 font-bold">Proposal</th>
                             </tr>
-                        `).join('')}
-                    </tbody>
-                </table>
-                <div class="text-[10px] text-white/30 mt-3">Source: hash-chained audit trail (append-only). Verify under Audit.</div>
+                        </thead>
+                        <tbody class="font-mono text-xs text-slate-700">
+                            ${actions.map((a) => `
+                                <tr class="border-b border-slate-100 last:border-0 hover:bg-slate-50/50 transition-colors">
+                                    <td class="py-2.5 pr-4 text-slate-400">${fmtDate(a.timestamp)}</td>
+                                    <td class="py-2.5 pr-4 font-semibold text-slate-800">${esc(a.agentId)}</td>
+                                    <td class="py-2.5 pr-4 text-slate-900">${esc(a.actionType)}</td>
+                                    <td class="py-2.5 pr-4">${statusBadge(a.status)}</td>
+                                    <td class="py-2.5 text-slate-400">${esc(a.proposalId)}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-[11px] text-slate-400 mt-3 font-mono">Source: hash-chained audit trail (append-only). Verify under Audit.</div>
             `;
         }
 
@@ -370,14 +451,14 @@
                 { label: 'Net revenue', value: fmtMoney(m.netRevenue) },
                 { label: 'Total cost', value: fmtMoney(m.totalCost) },
                 { label: 'Refunds', value: fmtMoney(m.refunds) },
-                { label: 'ROI', value: `${Number.isFinite(m.roi) ? m.roi.toFixed(1) : '—'}%`, sub: `(${fmtMoney(m.netRevenue)} net revenue − ${fmtMoney(m.totalCost)} attributed cost) ÷ ${fmtMoney(m.totalCost)}` },
+                { label: 'ROI', value: `${Number.isFinite(m.roi) ? m.roi.toFixed(1) : '—'}%`, sub: `(${fmtMoney(m.netRevenue)} net − ${fmtMoney(m.totalCost)} cost) ÷ cost` },
                 { label: 'Events', value: String(m.eventCount) },
             ];
             $('revenue-metrics').innerHTML = metrics.map((x) => `
-                <div class="glass-panel p-4">
-                    <div class="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/40 mb-1">${x.label}</div>
-                    <div class="metric-value text-white">${x.value}</div>
-                    ${x.sub ? `<div class="text-[9px] text-white/35 font-mono mt-1 leading-snug">${x.sub}</div>` : ''}
+                <div class="clean-card p-5">
+                    <div class="text-[10px] font-extrabold uppercase tracking-[0.18em] text-slate-400 mb-1">${x.label}</div>
+                    <div class="metric-value text-slate-900">${x.value}</div>
+                    ${x.sub ? `<div class="text-[10px] text-slate-400 font-mono mt-1 leading-snug">${x.sub}</div>` : ''}
                 </div>
             `).join('');
 
@@ -387,32 +468,34 @@
                 body = emptyRow('No revenue events on the ledger yet.');
             } else {
                 body = `
-                    <table class="w-full text-left">
-                        <thead>
-                            <tr class="text-[10px] uppercase tracking-[0.15em] text-white/30 border-b border-white/5">
-                                <th class="py-2 pr-4">Time</th>
-                                <th class="py-2 pr-4">Type</th>
-                                <th class="py-2 pr-4 text-right">Amount</th>
-                                <th class="py-2 pr-4">Source</th>
-                                <th class="py-2">Event</th>
-                            </tr>
-                        </thead>
-                        <tbody class="font-mono text-xs">
-                            ${events.map((e) => `
-                                <tr class="border-b border-white/5 last:border-0">
-                                    <td class="py-2 pr-4 text-white/50">${fmtDate(e.occurredAt)}</td>
-                                    <td class="py-2 pr-4">${statusBadge(e.type)}</td>
-                                    <td class="py-2 pr-4 text-right text-white/90">${fmtMoney(e.amount, e.currency)}</td>
-                                    <td class="py-2 pr-4 text-white/60">${esc(e.source)}</td>
-                                    <td class="py-2 text-white/40">${esc(e.id)}</td>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead>
+                                <tr class="text-[10px] uppercase tracking-[0.15em] text-slate-400 border-b border-slate-100">
+                                    <th class="py-2.5 pr-4 font-bold">Time</th>
+                                    <th class="py-2.5 pr-4 font-bold">Type</th>
+                                    <th class="py-2.5 pr-4 text-right font-bold">Amount</th>
+                                    <th class="py-2.5 pr-4 font-bold">Source</th>
+                                    <th class="py-2.5 font-bold">Event ID</th>
                                 </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody class="font-mono text-xs text-slate-700">
+                                ${events.map((e) => `
+                                    <tr class="border-b border-slate-100 last:border-0 hover:bg-slate-50/50 transition-colors">
+                                        <td class="py-2.5 pr-4 text-slate-400">${fmtDate(e.occurredAt)}</td>
+                                        <td class="py-2.5 pr-4">${statusBadge(e.type)}</td>
+                                        <td class="py-2.5 pr-4 text-right font-bold text-slate-900">${fmtMoney(e.amount, e.currency)}</td>
+                                        <td class="py-2.5 pr-4 text-slate-600">${esc(e.source)}</td>
+                                        <td class="py-2.5 text-slate-400">${esc(e.id)}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
                 `;
             }
             if (m.mixedCurrencies) {
-                body += `<div class="text-[10px] text-amber-300/70 mt-3">Mixed currencies present — totals shown for ${m.currencies.map(esc).join(', ')} primary; see byCurrency for the full breakdown.</div>`;
+                body += `<div class="text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-2 mt-3">Mixed currencies present — totals shown for ${m.currencies.map(esc).join(', ')} primary.</div>`;
             }
             $('revenue-body').innerHTML = body;
         }
@@ -434,16 +517,16 @@
                         ? 'Evidence supports correlation only — not a causal attribution'
                         : '';
                     return `
-                        <div class="border border-white/5 rounded-lg p-3">
-                            <div class="flex items-center gap-2 mb-1">
+                        <div class="border border-slate-200 rounded-xl p-4 bg-slate-50/50">
+                            <div class="flex items-center gap-2 mb-1.5">
                                 ${levelBadge(rec.level)}
-                                <span class="text-[10px] text-white/40 font-mono">${attributionLabel(rec.level)}</span>
-                                <span class="text-[10px] text-white/40 font-mono ml-auto">${rec.variant ? 'variant: ' + esc(rec.variant) : ''}</span>
+                                <span class="text-[11px] text-slate-500 font-mono">${attributionLabel(rec.level)}</span>
+                                <span class="text-[11px] text-slate-400 font-mono ml-auto">${rec.variant ? 'variant: ' + esc(rec.variant) : ''}</span>
                             </div>
-                            <div class="text-xs text-white/80 leading-relaxed">${esc(rec.claim)}</div>
-                            ${stats ? `<div class="text-[10px] text-white/45 font-mono mt-1">Statistical result: ${stats}</div>` : ''}
-                            ${support ? `<div class="text-[10px] text-emerald-300/60 mt-1">${support}</div>` : ''}
-                            <div class="text-[10px] text-white/30 font-mono mt-1">evidence: ${rec.evidence.map((e) => esc(e.type)).join(' → ')}</div>
+                            <div class="text-xs text-slate-800 font-medium leading-relaxed">${esc(rec.claim)}</div>
+                            ${stats ? `<div class="text-[11px] text-slate-500 font-mono mt-1.5">Statistical result: ${stats}</div>` : ''}
+                            ${support ? `<div class="text-[11px] text-emerald-700 font-medium mt-1">${support}</div>` : ''}
+                            <div class="text-[10px] text-slate-400 font-mono mt-1.5">evidence: ${rec.evidence.map((e) => esc(e.type)).join(' → ')}</div>
                         </div>
                     `;
                 }).join('');
@@ -451,18 +534,18 @@
             $('unknown-body').innerHTML = (unknown.count === 0
                 ? emptyRow('Nothing unknown right now — every recorded event has an attribution record.')
                 : unknown.records.map((rec) => `
-                    <div class="border border-red-500/10 rounded-lg p-3">
-                        <div class="flex items-center gap-2 mb-1">
+                    <div class="border border-red-200 rounded-xl p-4 bg-red-50/30">
+                        <div class="flex items-center gap-2 mb-1.5">
                             ${levelBadge(rec.level)}
-                            <span class="text-[10px] text-white/40 font-mono">no confidence</span>
+                            <span class="text-[11px] text-red-500 font-mono">no confidence</span>
                         </div>
-                        <div class="text-xs text-white/80 leading-relaxed">${esc(rec.claim)}</div>
+                        <div class="text-xs text-slate-800 font-medium leading-relaxed">${esc(rec.claim)}</div>
                     </div>
                 `).join('')
             ) + `
-                <div class="mt-3 pt-3 border-t border-white/5">
-                    <div class="text-xs text-white/80">Unattributed revenue: <span class="font-mono accent-gold">${fmtMoney(unknown.unattributedRevenue.amount)}</span></div>
-                    <div class="text-[10px] text-white/35 mt-1">${unknown.unattributedRevenue.note}</div>
+                <div class="mt-4 pt-3 border-t border-slate-200">
+                    <div class="text-xs text-slate-700 font-medium">Unattributed revenue: <span class="font-mono font-bold text-amber-700">${fmtMoney(unknown.unattributedRevenue.amount)}</span></div>
+                    <div class="text-[11px] text-slate-400 mt-1">${unknown.unattributedRevenue.note}</div>
                 </div>
             `;
 
@@ -472,42 +555,42 @@
         function renderExperiments(r) {
             const next = r.questions.whatShouldSocioDoNext;
             $('learnings').innerHTML = `
-                <div class="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/40 mb-2">Learnings</div>
-                <div class="text-xs text-white/80 font-mono">${esc(next.learnings.summary)}</div>
-                <div class="flex gap-4 mt-3 text-[11px] text-white/50 font-mono">
-                    <span>attribution-level: <span class="text-emerald-400">${next.learnings.attributedCount}</span></span>
-                    <span>correlation-level: <span class="text-amber-400">${next.learnings.correlationalCount}</span></span>
-                    <span>unknown: <span class="text-red-400">${next.learnings.unknownCount}</span></span>
+                <div class="text-[10px] font-extrabold uppercase tracking-[0.18em] text-slate-400 mb-2">Learnings & Summary</div>
+                <div class="text-xs text-slate-800 font-mono font-medium">${esc(next.learnings.summary)}</div>
+                <div class="flex flex-wrap gap-4 mt-3 text-[11px] text-slate-500 font-mono">
+                    <span>attribution-level: <span class="font-bold text-emerald-600">${next.learnings.attributedCount}</span></span>
+                    <span>correlation-level: <span class="font-bold text-amber-600">${next.learnings.correlationalCount}</span></span>
+                    <span>unknown: <span class="font-bold text-red-600">${next.learnings.unknownCount}</span></span>
                 </div>
             `;
 
             const experiments = next.experiments;
             let experimentsHtml = experiments.length === 0
-                ? `<div class="glass-panel p-5 col-span-full"><div class="empty-hint">No experiments yet — Socio has not run a designed test for this business.</div></div>`
+                ? `<div class="clean-card p-6 col-span-full"><div class="empty-hint">No experiments yet — Socio has not run a designed test for this business.</div></div>`
                 : experiments.map((e) => `
-                    <div class="glass-panel p-5">
-                        <div class="flex items-center gap-2 mb-2">${statusBadge(e.status)}${e.decision ? `<span class="badge badge-blue">${e.decision}</span>` : ''}</div>
-                        <div class="text-sm font-semibold text-white/90 leading-snug mb-1">${esc(e.hypothesis)}</div>
-                        <div class="text-[11px] text-white/40 mb-2">objective: ${esc(e.objective)} · metric: ${esc(e.metric)}</div>
-                        <div class="text-[10px] text-white/35 font-mono">${esc(e.observations)} observation(s) · ${(e.variants || []).map(esc).join(' / ')}</div>
-                        ${e.rationale ? `<div class="text-[10px] text-white/35 mt-2">${esc(e.rationale)}</div>` : ''}
+                    <div class="clean-card p-6">
+                        <div class="flex items-center gap-2 mb-2.5">${statusBadge(e.status)}${e.decision ? `<span class="badge badge-yellow">${e.decision}</span>` : ''}</div>
+                        <div class="text-sm font-bold text-slate-900 leading-snug mb-1.5">${esc(e.hypothesis)}</div>
+                        <div class="text-[11px] text-slate-500 mb-2">objective: ${esc(e.objective)} · metric: ${esc(e.metric)}</div>
+                        <div class="text-[10px] text-slate-400 font-mono">${esc(e.observations)} observation(s) · ${(e.variants || []).map(esc).join(' / ')}</div>
+                        ${e.rationale ? `<div class="text-[11px] text-slate-600 mt-2 bg-slate-50 p-2 rounded-lg">${esc(e.rationale)}</div>` : ''}
                     </div>
                 `).join('');
 
             const pending = next.pendingApprovals;
             const pendingHtml = `
-                <div class="glass-panel p-5 mt-4">
-                    <div class="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/40 mb-2">Awaiting merchant decision</div>
+                <div class="clean-card p-6 mt-4">
+                    <div class="text-[10px] font-extrabold uppercase tracking-[0.18em] text-slate-400 mb-3">Awaiting Merchant Decision</div>
                     ${pending.length === 0
                         ? `<div class="empty-hint">No pending approvals.</div>`
-                        : `<div class="space-y-2 font-mono text-xs">
+                        : `<div class="space-y-2.5 font-mono text-xs">
                             ${pending.map((p) => `
-                                <div class="flex flex-wrap items-center gap-2 border border-white/5 rounded-lg px-3 py-2">
+                                <div class="flex flex-wrap items-center gap-2 border border-slate-200 rounded-xl p-3 bg-slate-50/50">
                                     <span class="badge badge-amber">${esc(p.risk)}</span>
-                                    <span class="text-white/80">${esc(p.type)}</span>
-                                    <span class="text-white/40">${esc(p.agentId)}</span>
+                                    <span class="text-slate-900 font-semibold">${esc(p.type)}</span>
+                                    <span class="text-slate-400">${esc(p.agentId)}</span>
                                     <span class="flex-1"></span>
-                                    <span class="text-white/30">expires ${fmtDate(p.expiresAt)}</span>
+                                    <span class="text-slate-400">expires ${fmtDate(p.expiresAt)}</span>
                                 </div>
                             `).join('')}
                         </div>`
@@ -528,10 +611,10 @@
                 : 'badge-red';
             $('stripe-pill').innerHTML = `Stripe — <span class="badge ${stripeBadge} ml-1">${esc(s.status)}</span>`;
             $('system-body').innerHTML = `
-                <div class="flex items-center gap-2"><span class="text-white/40 w-40">Stripe state</span>${statusBadge(s.status)}<span class="text-[11px] text-white/50">${esc(s.reason)}</span></div>
-                <div class="flex items-center gap-2"><span class="text-white/40 w-40">Events received</span><span class="font-mono text-white/80">${esc(s.eventsReceived)}</span></div>
-                <div class="flex items-center gap-2"><span class="text-white/40 w-40">Persistence</span><span class="font-mono text-white/80">${esc(sys.persistence)}</span></div>
-                <div class="flex items-center gap-2"><span class="text-white/40 w-40">System health</span>${statusBadge(sys.health)}</div>
+                <div class="flex items-center gap-2 py-1"><span class="text-slate-400 w-44 font-medium">Stripe state</span>${statusBadge(s.status)}<span class="text-[11px] text-slate-500">${esc(s.reason)}</span></div>
+                <div class="flex items-center gap-2 py-1"><span class="text-slate-400 w-44 font-medium">Events received</span><span class="font-mono text-slate-800 font-bold">${esc(s.eventsReceived)}</span></div>
+                <div class="flex items-center gap-2 py-1"><span class="text-slate-400 w-44 font-medium">Persistence</span><span class="font-mono text-slate-800 font-bold">${esc(sys.persistence)}</span></div>
+                <div class="flex items-center gap-2 py-1"><span class="text-slate-400 w-44 font-medium">System health</span>${statusBadge(sys.health)}</div>
             `;
         }
 
@@ -547,34 +630,36 @@
                     body.innerHTML = emptyRow('No audit entries yet.');
                 } else {
                     body.innerHTML = `
-                        <table class="w-full text-left">
-                            <thead>
-                                <tr class="text-[10px] uppercase tracking-[0.15em] text-white/30 border-b border-white/5">
-                                    <th class="py-2 pr-4">Time</th>
-                                    <th class="py-2 pr-4">Agent</th>
-                                    <th class="py-2 pr-4">Action</th>
-                                    <th class="py-2 pr-4">Status</th>
-                                    <th class="py-2">Entry</th>
-                                </tr>
-                            </thead>
-                            <tbody class="font-mono text-xs">
-                                ${data.entries.map((a) => `
-                                    <tr class="border-b border-white/5 last:border-0">
-                                        <td class="py-2 pr-4 text-white/50">${fmtDate(a.timestamp)}</td>
-                                        <td class="py-2 pr-4 text-white/80">${esc(a.agentId)}</td>
-                                        <td class="py-2 pr-4 text-white/90">${esc(a.actionType)}</td>
-                                        <td class="py-2 pr-4">${statusBadge(a.status)}</td>
-                                        <td class="py-2 text-white/40">${esc(a.id)}</td>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left">
+                                <thead>
+                                    <tr class="text-[10px] uppercase tracking-[0.15em] text-slate-400 border-b border-slate-100">
+                                        <th class="py-2.5 pr-4 font-bold">Time</th>
+                                        <th class="py-2.5 pr-4 font-bold">Agent</th>
+                                        <th class="py-2.5 pr-4 font-bold">Action</th>
+                                        <th class="py-2.5 pr-4 font-bold">Status</th>
+                                        <th class="py-2.5 font-bold">Entry ID</th>
                                     </tr>
-                                `).join('')}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody class="font-mono text-xs text-slate-700">
+                                    ${data.entries.map((a) => `
+                                        <tr class="border-b border-slate-100 last:border-0 hover:bg-slate-50/50 transition-colors">
+                                            <td class="py-2.5 pr-4 text-slate-400">${fmtDate(a.timestamp)}</td>
+                                            <td class="py-2.5 pr-4 font-semibold text-slate-800">${esc(a.agentId)}</td>
+                                            <td class="py-2.5 pr-4 text-slate-900">${esc(a.actionType)}</td>
+                                            <td class="py-2.5 pr-4">${statusBadge(a.status)}</td>
+                                            <td class="py-2.5 text-slate-400">${esc(a.id)}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
                     `;
                 }
                 $('verify-result').classList.remove('hidden');
-                $('verify-result').innerHTML = `chain verification: <span class="${data.verify.valid ? 'text-emerald-400' : 'text-red-400'}">${data.verify.valid ? 'VALID' : 'BROKEN'}</span> <span class="text-white/30">(${data.verify.brokenLinks.length} broken link(s), checked ${fmtDate(data.verify.checkedAt)})</span>`;
+                $('verify-result').innerHTML = `Chain verification: <span class="${data.verify.valid ? 'text-emerald-600 font-bold' : 'text-red-600 font-bold'}">${data.verify.valid ? 'VALID' : 'BROKEN'}</span> <span class="text-slate-400">(${data.verify.brokenLinks.length} broken link(s), checked ${fmtDate(data.verify.checkedAt)})</span>`;
             } catch (err) {
-                body.innerHTML = `<div class="text-red-400 text-xs font-mono">${esc(err.message)}</div>`;
+                body.innerHTML = `<div class="text-red-500 text-xs font-mono">${esc(err.message)}</div>`;
             }
         }
 
