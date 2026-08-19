@@ -391,12 +391,12 @@
           </div>
         </div>
 
-        <!-- Right: 30-Day Hard Evidence Card -->
+        <!-- Right: Interactive Forensic Case File & Receipt Inspector -->
         <div class="lg:col-span-7 aura-card p-6 bg-gradient-to-br from-[#0e1017] to-[#141824]">
           <div class="flex items-center justify-between mb-6 pb-3 border-b border-white/5">
             <div>
-              <span class="pill-green px-2.5 py-1 rounded text-xs font-mono font-bold">AUDITED 30-DAY OUTCOME</span>
-              <div class="text-xl font-bold text-white mt-1">+$11,520 Total Revenue Generated</div>
+              <span class="pill-green px-2.5 py-1 rounded text-xs font-mono font-bold">FORENSIC CASE FILE • #CF-00421</span>
+              <div class="text-xl font-bold text-white mt-1">+$11,520 Audited Revenue</div>
             </div>
             <div class="text-right">
               <div class="text-[10px] font-mono text-gray-400">MERCHANT RETAINED</div>
@@ -404,32 +404,50 @@
             </div>
           </div>
 
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
-            <div class="bg-black/40 p-3 rounded-xl border border-white/5">
-              <div class="text-[10px] font-mono text-gray-500 uppercase">Dormant Revived</div>
-              <div class="text-lg font-bold font-mono text-white mt-0.5">42 clients</div>
-              <div class="text-[10px] text-emerald-400 font-mono">+$4,620</div>
+          <!-- Interactive Receipt & Evidence Chain Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            
+            <!-- Left: POS Receipt Simulator -->
+            <div class="bg-black/60 p-4 rounded-xl border border-white/10 font-mono text-xs">
+              <div class="flex justify-between border-b border-white/10 pb-2 mb-2 text-gray-400">
+                <span>SQUARE POS RECEIPT</span>
+                <span class="text-emerald-400">PAID</span>
+              </div>
+              <div class="space-y-1 text-gray-300">
+                <div class="flex justify-between"><span class="text-gray-500">Tx ID:</span><span>#tx_8104a</span></div>
+                <div class="flex justify-between"><span class="text-gray-500">Customer:</span><span>Maria Rodriguez</span></div>
+                <div class="flex justify-between"><span class="text-gray-500">Item:</span><span>Valentine Special</span></div>
+                <div class="flex justify-between"><span class="text-gray-500">Timestamp:</span><span>Aug 12 · 11:14 AM</span></div>
+                <div class="flex justify-between font-bold text-white pt-2 border-t border-white/10">
+                  <span>Gross Paid:</span><span class="text-[#ccff00]">$185.00</span>
+                </div>
+              </div>
+              <div class="mt-3 pt-2 border-t border-white/5 text-[10px] text-gray-500 flex items-center justify-between">
+                <span>POS ✓ CRM ✓ WhatsApp ✓</span>
+                <span class="text-sky-400">Verified</span>
+              </div>
             </div>
-            <div class="bg-black/40 p-3 rounded-xl border border-white/5">
-              <div class="text-[10px] font-mono text-gray-500 uppercase">Corporate B2B</div>
-              <div class="text-lg font-bold font-mono text-white mt-0.5">18 accounts</div>
-              <div class="text-[10px] text-emerald-400 font-mono">+$3,800</div>
+
+            <!-- Right: Evidence Interrogation Layers -->
+            <div class="bg-black/60 p-4 rounded-xl border border-white/10 font-mono text-xs flex flex-col justify-between">
+              <div>
+                <div class="text-gray-400 text-[10px] font-bold uppercase mb-2">EVIDENCE ATTRIBUTION CHAIN:</div>
+                <div class="space-y-1.5 text-[11px]">
+                  <div class="text-gray-300">1. <strong class="text-white">Identity:</strong> Customer Hash #crm_m_rod</div>
+                  <div class="text-gray-300">2. <strong class="text-white">Trigger:</strong> Socio-Pitch WhatsApp (T+48h)</div>
+                  <div class="text-gray-300">3. <strong class="text-white">Baseline:</strong> $0.00 (Dormant 124 days)</div>
+                  <div class="text-gray-300">4. <strong class="text-white">Attribution:</strong> 100% Socio Delta</div>
+                </div>
+              </div>
+              <button onclick="alert('Forensic Proof Verified:\n• CRM Touch: Aug 12, 10:42 AM\n• Link Click: Aug 12, 11:03 AM\n• POS Order: Aug 12, 11:14 AM ($185.00)\n• Socio Commission: $27.75 (15%)\n• Merchant Retained: $157.25 (85%)')" class="w-full mt-3 py-1.5 rounded bg-white/5 hover:bg-white/10 border border-white/10 text-cyan-400 text-[10px] font-bold transition-all">
+                🔍 Interrogate Complete Evidence Chain →
+              </button>
             </div>
-            <div class="bg-black/40 p-3 rounded-xl border border-white/5">
-              <div class="text-[10px] font-mono text-gray-500 uppercase">Google Pack Rank</div>
-              <div class="text-lg font-bold font-mono text-white mt-0.5">#1 in 10029</div>
-              <div class="text-[10px] text-emerald-400 font-mono">+38% Views</div>
-            </div>
-            <div class="bg-black/40 p-3 rounded-xl border border-white/5">
-              <div class="text-[10px] font-mono text-gray-500 uppercase">Review Rating</div>
-              <div class="text-lg font-bold font-mono text-white mt-0.5">4.1 → 4.7⭐</div>
-              <div class="text-[10px] text-emerald-400 font-mono">+48 reviews</div>
-            </div>
+
           </div>
 
-          <div class="bg-black/60 p-4 rounded-xl border border-white/10 text-xs font-mono text-gray-300">
-            <div class="text-[10px] font-bold text-gray-500 uppercase mb-1">Audit Trail Cryptographic Stamp:</div>
-            <div class="text-gray-400 truncate">Chain Hash: 8f4201b... verified against Square POS #tx_8104a. Zero retainer charged.</div>
+          <div class="bg-black/40 p-3 rounded-xl border border-white/5 text-[10px] font-mono text-gray-400">
+            <strong class="text-gray-300">Cryptographic CAS Log:</strong> Illustrative demonstration of Socio's tamper-proof CAS ledger. Zero retainers or upfront fees charged.
           </div>
         </div>
 
