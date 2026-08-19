@@ -669,21 +669,38 @@ app.post('/api/chat', (req, res) => {
   const vId = visitorId || 'guest_' + crypto.randomBytes(4).toString('hex');
   const isSpanish = lang === 'es' || /hola|buenas|precio|comision|cuanto/i.test(cleanMsg);
 
-  console.log(`[Live Chat] (${vId}): ${cleanMsg}`);
-
-  // Forward to Hermes support agent
-  const promptText = `Visitor query: "${cleanMsg}". You are Socio AI Support for NYC local shops. Emphasize performance-based growth, 0 upfront retainers, and 48-hour digital audit. Reply concisely in ${isSpanish ? 'Spanish' : 'English'}.`;
+  // Forward to Hermes support agent with specialized NYC Growth Qualification logic
+  const promptText = `Visitor query: "${cleanMsg}". You are Socio AI Growth Qualification Assistant for NYC local storefronts (florists, restaurants, cafes, bodegas, dry cleaners, clinics).
+Your goals:
+1. Identify business type and NYC borough/neighborhood.
+2. Ask about their dormant customer count or local Google Map listing status.
+3. Calculate or estimate potential monthly recoverable revenue ($3,000–$15,000/mo).
+4. Explain Socio's zero-risk performance model (0 upfront fees, strictly 10–15% commission on verified net-new revenue).
+5. Guide them to claim their Free 48-Hour Digital Audit.
+Reply concisely and professionally in ${isSpanish ? 'Spanish' : 'English'}.`;
   
   execFile('hermes', ['bot', 'chat', HERMES_SUPPORT_PROFILE, '-q', promptText], (err, stdout) => {
     let reply = '';
     if (!err && stdout && stdout.trim()) {
       reply = stdout.trim();
     } else {
-      // Fallback deterministic response engine
+      // Fallback deterministic qualification engine
       if (isSpanish) {
-        reply = "¡Hola! En Socio ayudamos a comercios en NYC a duplicar sus pedidos con SEO local y prospección automatizada. No cobramos mensualidades fijas, solo comisión sobre crecimiento. ¿Deseas agendar una auditoría gratuita de 48 horas?";
+        if (/precio|costo|cuanto|comision/i.test(cleanMsg)) {
+          reply = "En Socio cobramos 0 costos iniciales y 0 mensualidades fijas. Solo tomamos entre 10% y 15% de comisión sobre el crecimiento de ingresos netos nuevos que verifiquemos en tu sistema POS. ¿Qué tipo de comercio tienes?";
+        } else if (/flor|restaurante|cafe|bodega|tienda|clinica/i.test(cleanMsg)) {
+          reply = "¡Excelente sector! Estimamos entre $4,200 y $9,800 mensuales en ingresos recuperables mediante reactivación de clientes inactivos por WhatsApp y optimización de Google Maps Pack #1. ¿En qué barrio de NYC te encuentras?";
+        } else {
+          reply = "¡Hola! En Socio ayudamos a comercios locales en NYC a recuperar ingresos perdidos con SEO local y prospección automatizada sin costo inicial. ¿Qué tipo de negocio tienes y en qué zona de Nueva York te encuentras?";
+        }
       } else {
-        reply = "Hello! Socio is NYC's performance-based growth partner. We handle your local SEO, automated customer retention, and review sync with zero upfront fees — we only get paid when you grow. Would you like to claim your free 48h audit?";
+        if (/price|cost|how much|fee|commission|pricing/i.test(cleanMsg)) {
+          reply = "Socio charges $0 upfront fees and $0 monthly retainers. We strictly earn a 10–15% performance commission on verified net-new revenue proven on your POS receipt ledger. What type of store do you operate?";
+        } else if (/florist|flower|cafe|restaurant|bodega|dry cleaner|clinic|shop/i.test(cleanMsg)) {
+          reply = "Great vertical! Stores like yours typically have $4,500–$12,000/mo in recoverable revenue via dormant customer WhatsApp re-engagement and Google Maps Pack #1 sync. What NYC borough or neighborhood are you in?";
+        } else {
+          reply = "Hello! I'm Socio's growth qualification assistant. We help NYC storefronts recover lost revenue with zero upfront retainers. What type of business do you run and what NYC neighborhood are you located in?";
+        }
       }
     }
 
