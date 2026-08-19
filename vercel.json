@@ -36,6 +36,10 @@
       "dest": "website/contratistas.html"
     },
     {
+      "src": "/escaneo-de-fugas-scorecard/?",
+      "dest": "website/escaneo-de-fugas-scorecard.html"
+    },
+    {
       "src": "/(.*)",
       "dest": "website/$1"
     }
