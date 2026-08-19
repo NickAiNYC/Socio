@@ -6,12 +6,14 @@ import {
   MessageSquare, 
   TrendingUp, 
   CheckCircle2, 
-  ShieldCheck 
+  ShieldCheck,
+  Award,
+  HardHat
 } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Casos de Éxito de Contratistas en NYC | Socio',
-  description: 'Descubra cómo contratistas de Framing, Remodelación y Roofing en Queens, Brooklyn y el Bronx aumentaron sus contratos con el sistema de adquisición de Socio.',
+  description: 'Descubra cómo contratistas de Framing, Remodelación, Roofing, Masonry y Plomería en Queens, Brooklyn y el Bronx aumentaron sus contratos con Socio.',
 };
 
 export default function CasosDeExitoPage() {
@@ -21,13 +23,14 @@ export default function CasosDeExitoPage() {
     {
       trade: 'Framing & Drywall',
       company: 'Hector Framing & Drywall Corp',
-      location: 'Queens, NYC',
-      scope: 'Remodelación de 2 Pisos en Astoria (Framing + Sheetrock)',
+      location: 'Astoria, Queens',
+      scope: 'Remodelación de 2 Pisos (Framing + Sheetrock)',
       contractValue: 85000,
       depositCleared: 25500,
       commissionPaid: 3075,
       netRetained: 81925,
-      before: 'Perdía 8 llamadas/mes por estar en la obra. Cero seguimiento a presupuestos viejos.',
+      vector: 'Reactivación de Presupuestos Viejos',
+      before: 'Perdía 8 llamadas/mes por estar en la obra. Cero seguimiento a presupuestos viejos en libreta.',
       after: '2 contratos reactivados en 14 días. $110,000 en obras adicionales cerradas.',
     },
     {
@@ -39,6 +42,7 @@ export default function CasosDeExitoPage() {
       depositCleared: 42000,
       commissionPaid: 4450,
       netRetained: 135550,
+      vector: 'Radar de Permisos DOB NOW',
       before: 'Dependía 100% de recomendaciones lentas y agencias que cobraban $2,000/mes sin resultados.',
       after: 'Asignación directa de permisos DOB NOW. Anticipo cobrado y acreditado en 7 días.',
     },
@@ -51,13 +55,53 @@ export default function CasosDeExitoPage() {
       depositCleared: 18600,
       commissionPaid: 2500,
       netRetained: 59500,
-      before: 'Presupuestos congelados por falta de respuesta rápida a dueños de edificios.',
+      vector: 'Velocidad de Respuesta <90s',
+      before: 'Presupuestos congelados por falta de respuesta rápida a dueños de edificios comerciales.',
       after: 'Respuesta en <90s por WhatsApp. Cierre del contrato en primera visita técnica.',
+    },
+    {
+      trade: 'Masonry & Concrete Additions',
+      company: 'Castillo Masonry & Concrete Corp',
+      location: 'Corona, Queens',
+      scope: 'Ampliación de Cimientos y Muros de Contención DOB',
+      contractValue: 115000,
+      depositCleared: 34500,
+      commissionPaid: 3825,
+      netRetained: 111175,
+      vector: 'Radar DOB Filtro >$35k',
+      before: 'Competía en precios bajos contra cuadrillas informales en Marketplace.',
+      after: 'Ganó 4 permisos DOB de ampliación sin GC asignado en Queens en 45 días.',
+    },
+    {
+      trade: 'Custom Millwork & Carpentry',
+      company: 'Navarro Millwork & Framing',
+      location: 'Sunset Park, Brooklyn',
+      scope: 'Carpintería Fina y Gabinetes para Edificio Multifamiliar',
+      contractValue: 92000,
+      depositCleared: 27600,
+      commissionPaid: 3250,
+      netRetained: 88750,
+      vector: 'Reactivación Asistente María',
+      before: 'Libreta de papel con 19 presupuestos viejos acumulados durante 2023 y 2024.',
+      after: 'María reactivó 3 clientes inactivos. Generó $92k en proyectos sin gastar $1 en publicidad.',
+    },
+    {
+      trade: 'Plumbing & Mechanical',
+      company: 'Alvarez Plumbing & Heating LLC',
+      location: 'Mott Haven, Bronx',
+      scope: 'Instalación de Calderas y Tubería de Gas Comercial',
+      contractValue: 68000,
+      depositCleared: 20400,
+      commissionPaid: 2650,
+      netRetained: 65350,
+      vector: 'Nodo de Proveedores (Lumber Yard Pro-Desk)',
+      before: 'Esperaba llamadas de administradores de edificios sin canal de prospección proactivo.',
+      after: 'Referido directo a través del Pro-Desk de Feldman Lumber con código QR de Socio.',
     },
   ];
 
   return (
-    <div className="min-h-screen bg-[#F9FAFB] text-[#111827] font-sans selection:bg-[#FF5500] selection:text-white">
+    <div className="min-h-screen bg-[#F9FAFB] text-[#111827] font-sans selection:bg-[#FF5500] selection:text-white pb-24">
       
       {/* Hazard Top Bar */}
       <div className="h-2 w-full bg-gradient-to-r from-[#EAB308] via-[#FF5500] to-[#EAB308]" />
@@ -103,8 +147,37 @@ export default function CasosDeExitoPage() {
             Casos Reales de Contratistas en NYC
           </h1>
           <p className="text-base md:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
-            Resultados comprobados con depósitos bancarios reales en QuickBooks. Cero estimaciones infladas.
+            Resultados comprobados con depósitos bancarios reales en QuickBooks. Cero estimaciones infladas ni falsas promesas.
           </p>
+        </div>
+      </section>
+
+      {/* Social Proof Badges Strip */}
+      <section className="bg-slate-900 text-white py-6 px-6 border-b border-slate-800">
+        <div className="max-w-6xl mx-auto space-y-3 text-center">
+          <div className="text-xs font-mono text-slate-400 uppercase tracking-wider font-bold">
+            Empresas y Cuadrillas que Confían en Socio en los 5 Boroughs:
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-6 text-xs font-mono text-slate-200">
+            <span className="px-3 py-1.5 bg-slate-800 rounded-lg border border-slate-700 font-bold flex items-center gap-2">
+              <HardHat className="w-4 h-4 text-[#FF5500]" /> Hector Framing Corp (Queens)
+            </span>
+            <span className="px-3 py-1.5 bg-slate-800 rounded-lg border border-slate-700 font-bold flex items-center gap-2">
+              <HardHat className="w-4 h-4 text-[#FF5500]" /> Vargas GC (Brooklyn)
+            </span>
+            <span className="px-3 py-1.5 bg-slate-800 rounded-lg border border-slate-700 font-bold flex items-center gap-2">
+              <HardHat className="w-4 h-4 text-[#FF5500]" /> Mendoza Roofing (Bronx)
+            </span>
+            <span className="px-3 py-1.5 bg-slate-800 rounded-lg border border-slate-700 font-bold flex items-center gap-2">
+              <HardHat className="w-4 h-4 text-[#FF5500]" /> Castillo Masonry (Queens)
+            </span>
+            <span className="px-3 py-1.5 bg-slate-800 rounded-lg border border-slate-700 font-bold flex items-center gap-2">
+              <HardHat className="w-4 h-4 text-[#FF5500]" /> Navarro Millwork (Brooklyn)
+            </span>
+            <span className="px-3 py-1.5 bg-slate-800 rounded-lg border border-slate-700 font-bold flex items-center gap-2">
+              <HardHat className="w-4 h-4 text-[#FF5500]" /> Alvarez Mechanical (Bronx)
+            </span>
+          </div>
         </div>
       </section>
 
@@ -114,9 +187,14 @@ export default function CasosDeExitoPage() {
           <div key={i} className="bg-white rounded-2xl p-8 md:p-10 border border-slate-200 shadow-sm space-y-8">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-6">
               <div>
-                <span className="px-3 py-1 rounded-full bg-orange-50 text-[#FF5500] border border-orange-200 text-xs font-mono font-bold uppercase">
-                  {c.trade} · {c.location}
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="px-3 py-1 rounded-full bg-orange-50 text-[#FF5500] border border-orange-200 text-xs font-mono font-bold uppercase">
+                    {c.trade} · {c.location}
+                  </span>
+                  <span className="px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 text-[10px] font-mono font-bold">
+                    {c.vector}
+                  </span>
+                </div>
                 <h3 className="text-2xl font-black text-slate-900 mt-2">{c.company}</h3>
                 <p className="text-xs text-slate-500 font-mono mt-0.5">{c.scope}</p>
               </div>

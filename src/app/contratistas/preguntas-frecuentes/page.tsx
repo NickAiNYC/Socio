@@ -7,43 +7,49 @@ import {
   ChevronDown, 
   MessageSquare, 
   ShieldCheck, 
-  CheckCircle2 
+  CheckCircle2,
+  HardHat,
+  ClipboardList
 } from 'lucide-react';
 
 export default function PreguntasFrecuentesPage() {
-  const waLink = 'https://wa.me/19175550199?text=Hola%20Socio,%20tengo%20una%20pregunta%20sobre%20el%20acuerdo%20de%20contratistas.';
+  const waLink = 'https://wa.me/19175550199?text=Hola%20Socio,%20tengo%20una%20pregunta%20espec%C3%ADfica%20sobre%20el%20acuerdo%20de%20contratistas.';
 
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const faqs = [
     {
-      q: '¿Qué pasa si el cliente cancela la obra o se atrasa en los pagos?',
-      a: 'La Regla de Oro de Socio es estricta: solo cobramos comisión sobre dinero que efectivamente haya ingresado y se haya acreditado en su cuenta bancaria comercial verificada por QuickBooks. Si el cliente cancela, desaparece o no paga, usted nos debe exactamente $0.00.',
+      q: '¿Qué pasa si el propietario cancela el proyecto o detiene la obra?',
+      a: 'La Regla de Oro de Socio es 100% estricta: solo cobramos comisión sobre dinero que efectivamente haya ingresado y se haya acreditado en su cuenta bancaria comercial verificada por QuickBooks. Si el cliente cancela la obra antes del anticipo, desaparece o congela el proyecto, usted nos debe exactamente $0.00. Cero penalidades, cero cargos por gestión.',
+    },
+    {
+      q: '¿Cómo manejan los atrasos en pagos o contratos con pagos por hitos (Milestones)?',
+      a: 'La comisión de Socio se divide y se liquida en sincronía exacta con los hitos reales que usted cobra. Si el cliente paga un 30% de anticipo, 30% a mitad de obra y 40% al finalizar la inspección, la comisión solo se calcula sobre cada depósito bancario individual una vez que los fondos están disponibles en su cuenta.',
+    },
+    {
+      q: '¿Qué pasa si el cliente pide cambios de último minuto (Change Orders) o el monto sube/baja?',
+      a: 'Los Change Orders se ingresan automáticamente en QuickBooks. Si el monto del contrato aumenta, la comisión sobre el adicional se calcula en el tramo correspondiente (con el 50% de descuento del piloto). Si el monto baja, su comisión total se reduce en proporción exacta. Nunca pagará comisión sobre trabajos no cobrados.',
+    },
+    {
+      q: '¿Cómo se concilia la comisión si recibo cheques físicos, depósitos en ventanilla o Zelle comercial?',
+      a: 'QuickBooks Online concilia automáticamente cualquier cheque o transferencia depositada en su cuenta bancaria comercial. Cuando usted marca el depósito como "Cleared" (Fondos Disponibles), el ledger de Socio genera el comprobante digital de liquidación con desglose transparente.',
     },
     {
       q: '¿Por qué me piden fotos de mi libreta con presupuestos viejos? ¿Se los van a dar a otros contratistas?',
-      a: 'Sus clientes son 100% suyos bajo contrato de confidencialidad legal en NYC. La asistente "María" se comunica en nombre de SU empresa ("María de parte de Don Hector"), no de Socio. Jamás compartimos sus presupuestos o contactos con otros contratistas.',
+      a: 'Sus clientes son 100% de su propiedad bajo contrato de confidencialidad legal en NYC. La asistente "María" se comunica exclusivamente en nombre de SU empresa ("María de parte de Don Hector"), no de Socio. Jamás compartimos, vendemos o transferimos sus presupuestos a otros contratistas.',
     },
     {
       q: '¿Cómo prueban que un cliente vino por Socio y no por mi propia cuenta?',
-      a: 'Utilizamos coincidencia determinista de teléfono y correo electrónico. Cuando se emite un depósito en su QuickBooks, el sistema verifica si ese número de teléfono o correo ya existía en nuestro registro de capturas o si fue reactivado por María. Si el cliente ya era suyo y vino sin intervención nuestra, no hay comisión.',
+      a: 'Utilizamos coincidencia determinista de teléfono y correo electrónico. Cuando se emite un depósito en su QuickBooks, el sistema verifica si ese número ya existía en nuestro registro de capturas del Radar DOB o si fue reactivado por María. Si el cliente ya era suyo y vino sin intervención nuestra, no hay comisión.',
     },
     {
-      q: '¿Qué sucede exactamente cuando alcanzo el Tope Anual de $40,000?',
+      q: '¿Qué sucede exactamente cuando alcanzo el Tope Anual de $40,000 en comisiones?',
       a: 'En cuanto la suma acumulada de sus comisiones pagadas durante el año calendario alcance los $40,000 USD, la comisión cae automáticamente a 0.0%. A partir de ese momento, usted se queda con el 100% de los ingresos de todas sus obras por el resto del año.',
-    },
-    {
-      q: '¿Tengo que pagar alguna mensualidad, tarifa de instalación o costo de software?',
-      a: 'No. Cero costo de entrada, cero mensualidades y cero cargos por cotizaciones no cerradas. Nosotros invertimos en la tecnología y la prospección; solo ganamos cuando usted cobra dinero real en su banco.',
-    },
-    {
-      q: '¿Cómo se conecta QuickBooks Online y qué permisos requiere?',
-      a: 'La conexión se realiza en 1 clic mediante el protocolo oficial de Intuit QuickBooks OAuth 2.0. Socio solo lee el estado de facturas y depósitos cobrados para conciliar la comisión. No tenemos acceso para retirar fondos ni modificar sus cuentas.',
     },
   ];
 
   return (
-    <div className="min-h-screen bg-[#F9FAFB] text-[#111827] font-sans selection:bg-[#FF5500] selection:text-white">
+    <div className="min-h-screen bg-[#F9FAFB] text-[#111827] font-sans selection:bg-[#FF5500] selection:text-white pb-24">
       
       {/* Hazard Top Bar */}
       <div className="h-2 w-full bg-gradient-to-r from-[#EAB308] via-[#FF5500] to-[#EAB308]" />
@@ -90,8 +96,18 @@ export default function PreguntasFrecuentesPage() {
             Preguntas Frecuentes de Contratistas
           </h1>
           <p className="text-base md:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
-            Sin rodeos ni letra chica. Respuestas directas a las dudas más importantes antes de unirse al piloto.
+            Sin rodeos ni letra chica. Respuestas directas sobre cancelaciones, hitos de pago, cambio de órdenes y tope anual.
           </p>
+        </div>
+      </section>
+
+      {/* Social Proof Strip */}
+      <section className="bg-slate-900 text-white py-4 px-6 border-b border-slate-800">
+        <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-center gap-8 text-xs font-mono text-slate-300">
+          <span className="text-slate-400 font-bold uppercase">Garantías Operativas en NYC:</span>
+          <span className="flex items-center gap-1.5"><ShieldCheck className="w-4 h-4 text-emerald-400" /> Cero Cobro si Cliente Cancela</span>
+          <span className="flex items-center gap-1.5"><ShieldCheck className="w-4 h-4 text-emerald-400" /> Confidencialidad NDA</span>
+          <span className="flex items-center gap-1.5"><ShieldCheck className="w-4 h-4 text-emerald-400" /> Tope Máximo Anual $40k</span>
         </div>
       </section>
 
@@ -125,17 +141,24 @@ export default function PreguntasFrecuentesPage() {
         })}
       </section>
 
-      {/* Floating WhatsApp CTA */}
-      <div id="waFab" className="fixed bottom-6 right-6 z-50">
-        <a
-          href={waLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-3 px-5 py-3.5 rounded-full bg-[#25D366] text-white font-black text-sm uppercase shadow-2xl hover:bg-[#20ba5a] hover:scale-105 transition-all"
-        >
-          <MessageSquare className="w-5 h-5" />
-          <span>Consultar por WhatsApp</span>
-        </a>
+      {/* Sticky Bottom Diagnostic Bar */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-md border-t border-slate-700 py-3.5 px-6 shadow-2xl">
+        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3 text-white">
+            <ClipboardList className="w-5 h-5 text-[#FF5500] shrink-0" />
+            <span className="text-sm font-bold tracking-tight">
+              ¿Tienes otra duda específica sobre tu empresa o licencias en NYC?
+            </span>
+          </div>
+          <a
+            href={waLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#25D366] text-white font-black text-xs uppercase hover:bg-[#20ba5a] shadow-lg transition-all shrink-0"
+          >
+            <span>📋 Consulta con un Operador → WhatsApp</span>
+          </a>
+        </div>
       </div>
 
     </div>
