@@ -1,0 +1,6 @@
+# Socio NYC Search Engine Directives
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://socio-one.vercel.app/sitemap.xml

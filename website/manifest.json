@@ -1,0 +1,16 @@
+{
+  "name": "Socio",
+  "short_name": "Socio",
+  "description": "NYC Local Growth Partner",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAFAFA",
+  "theme_color": "#669BD2",
+  "icons": [
+    {
+      "src": "/assets/hero.jpg",
+      "sizes": "192x192 512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}

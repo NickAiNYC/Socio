@@ -90,7 +90,11 @@ function isRateLimited(ip) {
 
 // Middleware
 app.use(cors());
-app.use(express.json({ limit: '256kb' }));
+// Capture raw body for WhatsApp webhook signature verification (X-Hub-Signature-256)
+app.use(express.json({
+  limit: '256kb',
+  verify: (req, _res, buf) => { req.rawBody = buf; }
+}));
 app.use(express.urlencoded({ extended: true }));
 
 // Rate limiting middleware for APIs
@@ -1361,6 +1365,16 @@ app.get('/api/rli/export', (req, res) => {
 
 // Construction Vertical (Contratistas) API Routes
 require('./lib/construction-routes.cjs')(app, getDb, saveDb);
+
+// WhatsApp Business Cloud API Routes
+require('./lib/whatsapp-routes.cjs')(app, getDb, saveDb);
+
+// Meta CAPI + Instagram/Messenger (missing servicers)
+try { require('./lib/meta-capi-routes.cjs')(app, getDb, saveDb); } catch(e){ console.warn('[Meta CAPI] routes not loaded:', e.message); }
+try { require('./lib/instagram-routes.cjs')(app, getDb, saveDb); } catch(e){ console.warn('[Instagram] routes not loaded:', e.message); }
+
+// Zero-Trust Attribution Engine — Contratistas escrow + 60-day proxy ledger
+try { require('./lib/attribution-routes.cjs')(app, getDb, saveDb); } catch(e){ console.warn('[Attribution] routes not loaded:', e.message); }
 
 // Admin login: POST key, verify with timing-safe compare, issue 12h httpOnly session cookie.
 // The key is never accepted as a URL query parameter — that pattern leaked in older builds.

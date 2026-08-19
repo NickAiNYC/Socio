@@ -28,52 +28,8 @@
       "dest": "server.js"
     },
     {
-      "src": "/recovery-index/?",
-      "dest": "website/recovery-index.html"
-    },
-    {
       "src": "/contratistas/?",
       "dest": "website/contratistas.html"
-    },
-    {
-      "src": "/floristas/?",
-      "dest": "website/floristas.html"
-    },
-    {
-      "src": "/floristas/como-funciona/?",
-      "dest": "website/floristas/como-funciona.html"
-    },
-    {
-      "src": "/floristas/casos-de-exito/?",
-      "dest": "website/floristas/casos-de-exito.html"
-    },
-    {
-      "src": "/floristas/radar-floral/?",
-      "dest": "website/floristas/radar-floral.html"
-    },
-    {
-      "src": "/floristas/preguntas-frecuentes/?",
-      "dest": "website/floristas/preguntas-frecuentes.html"
-    },
-    {
-      "src": "/restaurantes/?",
-      "dest": "website/restaurantes.html"
-    },
-    {
-      "src": "/clinicas/?",
-      "dest": "website/clinicas.html"
-    },
-    {
-      "src": "/escaneo-de-fugas-scorecard/?",
-      "dest": "website/escaneo-de-fugas-scorecard.html"
-    },
-    {
-      "src": "/supplier-cards/?",
-      "dest": "website/supplier-cards.html"
-    },
-    {
-      "src": "/pilot-agreement/?",
-      "dest": "website/pilot-agreement.html"
     },
     {
       "src": "/contratistas/como-funciona/?",
@@ -92,20 +48,36 @@
       "dest": "website/contratistas/preguntas-frecuentes.html"
     },
     {
-      "src": "/proveedores/ferreterias/?",
-      "dest": "website/proveedores/ferreterias.html"
+      "src": "/supplier-cards/?",
+      "dest": "website/supplier-cards.html"
     },
     {
-      "src": "/proveedores/materiales/?",
-      "dest": "website/proveedores/materiales.html"
+      "src": "/pilot-agreement/?",
+      "dest": "website/pilot-agreement.html"
     },
     {
-      "src": "/proveedores/equipos/?",
-      "dest": "website/proveedores/equipos.html"
+      "src": "/escaneo-de-fugas-scorecard/?",
+      "dest": "website/escaneo-de-fugas-scorecard.html"
+    },
+    {
+      "src": "/",
+      "dest": "website/contratistas.html"
+    },
+    {
+      "src": "/floristas/?",
+      "dest": "website/contratistas.html"
+    },
+    {
+      "src": "/restaurantes/?",
+      "dest": "website/contratistas.html"
+    },
+    {
+      "src": "/clinicas/?",
+      "dest": "website/contratistas.html"
     },
     {
       "src": "/(.*)",
-      "dest": "website/$1"
+      "dest": "website/contratistas.html"
     }
   ]
 }
