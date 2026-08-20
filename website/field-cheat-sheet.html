@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SOCIO NYC — Field Cheat Sheet v1.0</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@700&display=swap');
+    
+    @page {
+      size: letter portrait;
+      margin: 0.3in;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: #0f172a;
+      background: #ffffff;
+      line-height: 1.3;
+      font-size: 11px;
+      padding: 0.1in;
+    }
+
+    .container {
+      border: 2px solid #0f172a;
+      border-radius: 8px;
+      padding: 16px 20px;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    header {
+      border-bottom: 2px solid #0f172a;
+      padding-bottom: 8px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    h1 {
+      font-size: 16px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+    }
+
+    .badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      background: #0f172a;
+      color: #ffffff;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+
+    .box {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 8px 12px;
+      margin-bottom: 8px;
+    }
+
+    .box-title {
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #ea580c;
+      margin-bottom: 3px;
+    }
+
+    .script-quote {
+      font-style: italic;
+      color: #1e293b;
+      font-weight: 600;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 8px;
+      font-size: 10.5px;
+    }
+
+    th, td {
+      border: 1px solid #cbd5e1;
+      padding: 5px 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #0f172a;
+      color: #ffffff;
+      font-size: 9.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .trigger-col {
+      font-weight: 700;
+      color: #b91c1c;
+      width: 32%;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .gold-box {
+      background: #ecfdf5;
+      border: 1.5px solid #10b981;
+      border-radius: 6px;
+      padding: 8px 12px;
+      margin-bottom: 8px;
+    }
+
+    .red-box {
+      background: #fef2f2;
+      border: 1.5px solid #ef4444;
+      border-radius: 6px;
+      padding: 8px 12px;
+      margin-bottom: 8px;
+    }
+
+    footer {
+      border-top: 2px solid #0f172a;
+      padding-top: 6px;
+      margin-top: 6px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 9.5px;
+      font-weight: 700;
+      color: #64748b;
+    }
+
+    @media print {
+      body { padding: 0; }
+      .container { border: 1.5px solid #000; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div>
+        <h1>SOCIO NYC — FIELD CHEAT SHEET v1.0</h1>
+        <div style="font-size: 10.5px; color: #ea580c; font-weight: 700;">Discovery Call Pocket Guide · Print · Fold · Back Pocket</div>
+      </div>
+      <div class="badge">SUNSET PARK / BROOKLYN GC WEDGE</div>
+    </header>
+
+    <!-- THE OPENING -->
+    <div class="box">
+      <div class="box-title">⚡ The Opening (15 Seconds)</div>
+      <div class="script-quote">
+        “Don [Nombre], vi que hace [project type] en [neighborhood]. Preparé un Escaneo de Fugas gratis que le muestra cuántos clientes nuevos se le van a [competitor]. No cobramos nada por adelantado. Solo una comisión pequeña cuando el depósito del cliente nuevo ya está en su cuenta. ¿Se lo mando?”
+      </div>
+    </div>
+
+    <!-- COMPETITOR RESPONSES -->
+    <table>
+      <thead>
+        <tr>
+          <th>If They Say... (Competitor)</th>
+          <th>You Say... (The Counter-Strike)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="trigger-col">"I use Angi / Thumbtack"</td>
+          <td><b>"Keep it.</b> We only get paid from deposits Angi didn't bring. Zero downside to running both."</td>
+        </tr>
+        <tr>
+          <td class="trigger-col">"BuildZoom is bigger"</td>
+          <td><b>"Bigger, and built for $100K+ projects.</b> You're doing $20K kitchens. Different lane."</td>
+        </tr>
+        <tr>
+          <td class="trigger-col">"Housecall Pro answers calls"</td>
+          <td><b>"Good for inbound.</b> We find you the jobs that never called — DOB permits, dead leads."</td>
+        </tr>
+        <tr>
+          <td class="trigger-col">"Local Call AI is $297/mo"</td>
+          <td><b>"Fair for answering.</b> We include that + find the leads, and charge $0 until you're paid."</td>
+        </tr>
+        <tr>
+          <td class="trigger-col">"I already have an agency"</td>
+          <td><b>"Exactly why we don't charge upfront.</b> If we don't bring deposits, you owe $0."</td>
+        </tr>
+        <tr>
+          <td class="trigger-col">"I'll just keep doing word-of-mouth"</td>
+          <td><b>"Word-of-mouth is gold until your best referrer retires.</b> We add a second engine that never sleeps."</td>
+        </tr>
+        <tr>
+          <td class="trigger-col">"I'm busy enough"</td>
+          <td><b>"Perfect — that means your work is good.</b> But what happens in January when referrals dry up?"</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- KILLER OBJECTION RESPONSES -->
+    <table>
+      <thead>
+        <tr>
+          <th>If They Object...</th>
+          <th>Killer Response (Spanish)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="trigger-col">"Too expensive"</td>
+          <td>"Entiendo. Por eso no cobramos nada por adelantado. Si no le generamos depósitos en 60 días, nos va debiendo $0.00."</td>
+        </tr>
+        <tr>
+          <td class="trigger-col">"I have a guy"</td>
+          <td>"Perfecto. Pero su 'guy' le dice cuántas llamadas perdió ayer? Nosotros sí."</td>
+        </tr>
+        <tr>
+          <td class="trigger-col">"No time"</td>
+          <td>"El Escaneo es gratis y toma 30 segundos de leer. Si no le gusta, tira el PDF."</td>
+        </tr>
+        <tr>
+          <td class="trigger-col">"Send me info"</td>
+          <td>"Aquí tiene el PDF. Pero mejor: 10 minutos de café esta semana. Sin compromiso."</td>
+        </tr>
+        <tr>
+          <td class="trigger-col">"Need to talk to wife/partner"</td>
+          <td>"Por supuesto. Mándele el PDF para que vea los números. Si quiere, agendamos una llamada los 3 juntos."</td>
+        </tr>
+        <tr>
+          <td class="trigger-col">"Déjeme pensarlo"</td>
+          <td>"Claro. Mientras tanto, en la página 2 hay un tip de 5 minutos que puede hacer hoy sin costo para ganar 2 llamadas."</td>
+        </tr>
+        <tr>
+          <td class="trigger-col">"No me gusta la tecnología"</td>
+          <td>"No necesita aprender nada. Todo pasa por WhatsApp — la misma app que ya usa. Cero dashboards."</td>
+        </tr>
+        <tr>
+          <td class="trigger-col">"Ya estoy bien así"</td>
+          <td>"Me alegro. Pero ¿sabe cuántas llamadas perdió la semana pasada? El Escaneo se lo dice en 30s gratis."</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- THE CLOSE & THE ONE RULE -->
+    <div class="gold-box">
+      <div class="box-title" style="color:#047857;">🎯 The Close (30 Seconds)</div>
+      <div class="script-quote">
+        “Le propongo esto: nos vinculamos a su QuickBooks. En 60 días, si no ve un depósito verificado de un cliente nuevo, cancelamos y no me debe nada. Si sí funciona, paga 7.5% de ese depósito. ¿Le parece justo?”
+      </div>
+      <div style="font-size:10.5px; font-weight:700; color:#0f172a; margin-top:3px;">
+        Then: “Le mando el acuerdo piloto por WhatsApp ahora mismo. Lo lee, me dice si tiene dudas, y empezamos mañana.”
+      </div>
+    </div>
+
+    <!-- BOTTOM GRID: 5-MIN GBP FIX & KILL GATES -->
+    <div class="grid-2">
+      <div class="box" style="margin-bottom:0;">
+        <div class="box-title">🎁 The 5-Minute GBP Fix (Give Away Free)</div>
+        <ul style="padding-left:14px; font-size:9.5px; color:#334155;">
+          <li>Add 5 photos of completed work to GBP (today)</li>
+          <li>Update business hours to match reality</li>
+          <li>Respond to most recent review (even from 2022)</li>
+          <li>Add services list (Brownstone, Kitchen, etc.)</li>
+          <li>Verify address on Google Maps</li>
+        </ul>
+      </div>
+
+      <div class="red-box" style="margin-bottom:0;">
+        <div class="box-title" style="color:#b91c1c;">🛡️ Kill Gate Protocol & Deadlines</div>
+        <div style="font-size:9.5px; color:#0f172a;">
+          • <b>Gate 1:</b> 5 Signed Pilots → <b>Day 30</b><br>
+          • <b>Gate 2:</b> 3 Verified Deposits → <b>Day 90</b><br>
+          • <b>Gate 3:</b> 3 Case Studies → <b>Day 120</b><br>
+          <span style="color:#b91c1c; font-weight:700;">If Gate 1 not hit by Day 30 → PAUSE. Fix message.</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center; padding:5px; font-weight:900; font-size:11px; background:#0f172a; color:#fff; border-radius:4px; margin-top:6px;">
+      🔥 THE ONE RULE: Every conversation ends with: “¿Le mando el acuerdo ahora?”
+    </div>
+
+    <footer>
+      <span>Nick | Socio NYC · +1 (718) 555-0199</span>
+      <span>Print on cardstock · Laminate if possible</span>
+      <span>socio.nyc/contratistas</span>
+    </footer>
+  </div>
+
+</body>
+</html>
