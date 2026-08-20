@@ -253,3 +253,26 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 @media (max-width: 767px) {
   body:has(.fixed.bottom-0) { padding-bottom: 5.5rem; }
 }
+
+/* ============================================================
+   HERO FALLBACK — shown when WebGL / Three.js is unavailable
+   or prefers-reduced-motion is set. Provides the dark bg +
+   colour wash so the hero headline is always readable.
+   ============================================================ */
+#hero-orbs {
+  background: #020617;
+  background-image:
+    radial-gradient(ellipse 55% 40% at 15% 30%, rgba(255, 85, 0, 0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 50% at 50% 55%, rgba(37, 99, 235, 0.14) 0%, transparent 70%),
+    radial-gradient(ellipse 45% 35% at 85% 75%, rgba(5, 150, 105, 0.16) 0%, transparent 70%);
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #hero-orbs {
+    background-image:
+      radial-gradient(ellipse 60% 50% at 20% 35%, rgba(255, 85, 0, 0.28) 0%, transparent 65%),
+      radial-gradient(ellipse 55% 55% at 50% 55%, rgba(37, 99, 235, 0.22) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 40% at 80% 70%, rgba(5, 150, 105, 0.24) 0%, transparent 65%);
+  }
+}
