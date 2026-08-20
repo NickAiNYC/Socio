@@ -120,75 +120,89 @@
         window.SOCIO_WEBHOOK_SECRET = '__SOCIO_WEBHOOK_SECRET__';
     </script>
 
+        <!-- ============================== -->
+    <!-- HEADER & NAVIGATION             -->
     <!-- ============================== -->
-    <!-- NAVIGATION                      -->
-    <!-- ============================== -->
-    <nav class="nav-bar fixed top-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-5xl px-4">
-        <div class="flex items-center justify-between px-6 py-3 rounded-2xl bg-white/70 backdrop-blur-2xl border border-slate-200/60 shadow-[0_2px_20px_rgba(0,0,0,0.04)]">
-            <a href="#" class="flex items-center text-slate-900 text-xl font-bold tracking-tight">
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-xl border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
+            <a href="/" class="flex items-center text-slate-900 text-2xl font-black tracking-tight group" title="Socio Principal">
                 <span>Socio</span>
-                <span class="w-1.5 h-1.5 rounded-[1px] bg-[#669BD2] inline-block shadow-[0_0_6px_rgba(102,155,210,0.8)] ml-[1.5px] self-end mb-1"></span>
+                <span class="w-1.5 h-1.5 rounded-[1px] bg-[#FF5500] inline-block shadow-[0_0_8px_rgba(255,85,0,0.8)] ml-[1.5px] self-end mb-1"></span>
             </a>
 
-            <div class="hidden md:flex items-center gap-7 text-sm text-slate-500 font-light">
+            <!-- Center Nav Links -->
+            <nav class="hidden md:flex items-center gap-7 text-sm text-slate-600 font-medium">
                 <div class="relative group py-2">
-                    <button class="flex items-center gap-1 hover:text-slate-900 transition-colors focus:outline-none">
+                    <button class="flex items-center gap-1 hover:text-[#FF5500] transition-colors focus:outline-none">
                         <span>Industries</span>
-                        <iconify-icon icon="solar:alt-arrow-down-linear" width="12" class="text-slate-400 group-hover:text-slate-900 transition-transform group-hover:rotate-180"></iconify-icon>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400 group-hover:text-[#FF5500] transition-transform group-hover:rotate-180"><path d="m6 9 6 6 6-6"/></svg>
                     </button>
-                    <div class="absolute top-full left-0 hidden group-hover:block w-64 p-2 bg-white/95 backdrop-blur-2xl rounded-2xl border border-slate-200/80 shadow-2xl space-y-1">
-                        <a href="/contratistas" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-orange-50/70 transition-colors group/item">
+                    <div class="absolute top-full left-0 hidden group-hover:block w-72 p-2.5 bg-white/98 backdrop-blur-2xl rounded-2xl border border-slate-200 shadow-2xl space-y-1 z-50">
+                        <a href="/contratistas" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-orange-50 transition-colors group/item">
                             <div class="flex items-center gap-2.5">
-                                <span class="w-2 h-2 rounded-full bg-[#FF5500]"></span>
-                                <span class="text-xs font-bold text-slate-800 group-hover/item:text-[#FF5500]">Construction (Español)</span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-[#FF5500]"></span>
+                                <span class="text-xs font-bold text-slate-900 group-hover/item:text-[#FF5500]">Construction & Renovation</span>
                             </div>
-                            <span class="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-orange-100 text-orange-800">ES</span>
+                            <span class="text-[9px] font-mono font-black px-2 py-0.5 rounded bg-orange-100 text-orange-800">ACTIVE WEDGE</span>
                         </a>
-                        <a href="/floristas" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-rose-50/70 transition-colors group/item">
+                        <a href="/floristas" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-rose-50 transition-colors group/item">
                             <div class="flex items-center gap-2.5">
-                                <span class="w-2 h-2 rounded-full bg-[#E11D48]"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-[#E11D48]"></span>
                                 <span class="text-xs font-bold text-slate-800 group-hover/item:text-[#E11D48]">Florists & Botanical</span>
                             </div>
-                            <span class="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">NEW</span>
                         </a>
-                        <a href="/restaurantes" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-amber-50/70 transition-colors group/item">
+                        <a href="/restaurantes" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-amber-50 transition-colors group/item">
                             <div class="flex items-center gap-2.5">
-                                <span class="w-2 h-2 rounded-full bg-[#D97706]"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-[#D97706]"></span>
                                 <span class="text-xs font-bold text-slate-800 group-hover/item:text-[#D97706]">Restaurants & Catering</span>
                             </div>
-                            <span class="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-amber-100 text-amber-800">NEW</span>
                         </a>
-                        <a href="/clinicas" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-sky-50/70 transition-colors group/item">
+                        <a href="/clinicas" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-sky-50 transition-colors group/item">
                             <div class="flex items-center gap-2.5">
-                                <span class="w-2 h-2 rounded-full bg-[#0284C7]"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-[#0284C7]"></span>
                                 <span class="text-xs font-bold text-slate-800 group-hover/item:text-[#0284C7]">Clinics & MedSpas</span>
                             </div>
-                            <span class="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-sky-100 text-sky-800">NEW</span>
                         </a>
-                        <a href="#how-it-works" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50 transition-colors">
+                        <a href="/limpieza" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50 transition-colors group/item">
                             <div class="flex items-center gap-2.5">
-                                <span class="w-2 h-2 rounded-full bg-slate-400"></span>
-                                <span class="text-xs font-medium text-slate-700">Retail & POS Merchants</span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                                <span class="text-xs font-bold text-slate-800 group-hover/item:text-emerald-600">Commercial Cleaning</span>
                             </div>
                         </a>
                     </div>
                 </div>
-                <a href="#how-it-works" class="nav-link hover:text-slate-900 transition-colors">How It Works</a>
-                <a href="#work" class="nav-link hover:text-slate-900 transition-colors">Proof</a>
-                <a href="#process" class="nav-link hover:text-slate-900 transition-colors">Process</a>
-                <a href="#faq" class="nav-link hover:text-slate-900 transition-colors">FAQ</a>
+                <a href="#how-it-works" class="hover:text-[#FF5500] transition-colors">How It Works</a>
+                <a href="#work" class="hover:text-[#FF5500] transition-colors">Proof</a>
+                <a href="#process" class="hover:text-[#FF5500] transition-colors">Process</a>
+                <a href="#faq" class="hover:text-[#FF5500] transition-colors">FAQ</a>
+            </nav>
+
+            <!-- Right CTAs -->
+            <div class="flex items-center gap-3">
+                <a href="/contratistas" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 bg-orange-50 border border-orange-200 text-orange-800 text-xs font-bold rounded-xl hover:bg-orange-100 transition-colors">
+                    <span>Contratistas (ES)</span>
+                </a>
+                <a href="#lead-capture" class="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-900 text-white text-xs font-bold rounded-xl hover:bg-slate-800 shadow transition-colors">
+                    <span>Become a Socio</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+                </a>
+                <button class="md:hidden p-2 rounded-xl text-slate-700 hover:bg-slate-100" id="mobile-menu-btn" onclick="document.getElementById('mobile-nav-menu').classList.toggle('hidden')" aria-label="Menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                </button>
             </div>
-
-            <a href="#lead-capture" class="cta-shimmer hidden md:inline-flex items-center gap-2 px-5 py-2 bg-slate-900 text-white text-sm font-light rounded-xl hover:bg-slate-800 transition-colors">
-                Become a Socio
-                <iconify-icon icon="solar:arrow-right-up-linear" width="14"></iconify-icon>
-            </a>
-
-            <button class="md:hidden text-slate-900" id="mobile-menu-btn">
-                <iconify-icon icon="solar:hamburger-menu-linear" width="24"></iconify-icon>
-            </button>
         </div>
-    </nav>
+
+        <!-- Mobile Drawer Menu -->
+        <div id="mobile-nav-menu" class="hidden md:hidden border-t border-slate-200 bg-white px-6 py-4 space-y-3 font-bold text-xs uppercase tracking-wider text-slate-700 shadow-xl">
+            <a href="/contratistas" class="block py-2 text-[#FF5500]">🔨 Contratistas (NYC Wedge)</a>
+            <a href="/floristas" class="block py-2 hover:text-[#FF5500]">🌸 Floristas & Botanical</a>
+            <a href="/restaurantes" class="block py-2 hover:text-[#FF5500]">🍽️ Restaurantes & Catering</a>
+            <a href="/clinicas" class="block py-2 hover:text-[#FF5500]">🩺 Clínicas & MedSpas</a>
+            <a href="/limpieza" class="block py-2 hover:text-[#FF5500]">🧹 Limpieza Comercial</a>
+            <a href="#how-it-works" class="block py-2 text-slate-600">How It Works</a>
+            <a href="#faq" class="block py-2 text-slate-600">FAQ</a>
+        </div>
+    </header>
 
     <!-- ============================== -->
     <!-- STICKY CTA (scrolls with user)  -->
