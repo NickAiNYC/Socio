@@ -161,6 +161,41 @@
   ]
 }
     </script>
+
+    <!-- ProfessionalService + Organization structured data (parity with /contractors) -->
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "@id": "https://socio.nyc/#organization",
+  "name": "Socio",
+  "url": "https://socio.nyc/contratistas",
+  "description": "Socio ayuda a contratistas de remodelación y construcción en NYC a recuperar y verificar oportunidades calificadas. Sin pago por adelantado; la comisión está ligada a ingresos verificados.",
+  "areaServed": [
+    {"@type": "City", "name": "New York City"},
+    {"@type": "AdministrativeArea", "name": "Manhattan"},
+    {"@type": "AdministrativeArea", "name": "Brooklyn"},
+    {"@type": "AdministrativeArea", "name": "Queens"},
+    {"@type": "AdministrativeArea", "name": "Bronx"}
+  ],
+  "availableLanguage": [
+    {"@type": "Language", "name": "English"},
+    {"@type": "Language", "name": "Spanish"}
+  ]
+}
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://socio.nyc/#organization",
+  "name": "Socio",
+  "url": "https://socio.nyc",
+  "logo": "https://socio.nyc/favicon.svg",
+  "areaServed": {"@type": "City", "name": "New York City"},
+  "sameAs": []
+}
+    </script>
 </head>
 <body class="min-h-screen pb-16 md:pb-0">
 
