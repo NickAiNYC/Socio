@@ -64,7 +64,7 @@ export class PromptOptimizer {
    * after the variant was created.
    * @param {string} agentId
    * @param {{metric?: string, minSample?: number, nowMs?: number}} [opts]
-   * @returns {Promise<{metric: string, minSample: number, variants: Array<object>}>}
+   * @returns {Promise<{metric: string, minSample: number, variants: Array<object>, note?: string}>}
    */
   async evaluate(agentId, { metric = 'conversion', minSample = MIN_SAMPLE } = {}) {
     if (!METRICS.includes(metric)) throw new Error(`metric must be one of ${METRICS.join(', ')}`);

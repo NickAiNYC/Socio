@@ -231,7 +231,7 @@ export async function saveSchedule(repository, schedule) {
 
 /**
  * Read the active schedule for a business from a repository.
- * @param {{get(id: string): Promise<object|null>}} repository
+ * @param {{get(id: string): Promise<object|null>, findByBusiness?: (id: string) => Promise<object[]>}} repository
  */
 export async function getSchedule(repository, businessId) {
   if (!repository) return null;

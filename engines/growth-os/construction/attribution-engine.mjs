@@ -19,6 +19,8 @@ export function normalizeEmail(rawEmail) {
  * Searches a collection of leads to find a match for a given customer contact.
  * Primary: 10-digit phone match
  * Fallback: Case-insensitive email match
+ * @param {object[]} leads
+ * @param {{phone?: string, email?: string}} contact
  */
 export function matchLeadInPool(leads, { phone, email }) {
   const cleanPhone = normalizePhone(phone);
