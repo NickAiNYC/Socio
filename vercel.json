@@ -32,6 +32,18 @@
       "dest": "website/contratistas.html"
     },
     {
+      "src": "/contractors/?",
+      "dest": "website/contractors.html"
+    },
+    {
+      "src": "/sitemap.xml/?",
+      "dest": "website/sitemap.xml"
+    },
+    {
+      "src": "/robots.txt/?",
+      "dest": "website/robots.txt"
+    },
+    {
       "src": "/contratistas/como-funciona/?",
       "dest": "website/contratistas/como-funciona.html"
     },
