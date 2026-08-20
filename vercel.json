@@ -80,6 +80,22 @@
       "dest": "website/supply-referral-cards.html"
     },
     {
+      "src": "/floristas/(.*)/?",
+      "dest": "website/floristas/$1.html"
+    },
+    {
+      "src": "/restaurantes/(.*)/?",
+      "dest": "website/restaurantes/$1.html"
+    },
+    {
+      "src": "/clinicas/(.*)/?",
+      "dest": "website/clinicas/$1.html"
+    },
+    {
+      "src": "/contratistas/(.*)/?",
+      "dest": "website/contratistas/$1.html"
+    },
+    {
       "src": "/assets/(.*)",
       "dest": "website/assets/$1"
     },
