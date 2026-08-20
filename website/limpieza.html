@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Socio Limpieza — Más Contratos de Limpieza Residencial y Comercial en NYC</title>
-    <meta name="description" content="Sistema de gestión de prospectos bilingüe para empresas de limpieza en NYC. Contratos recurrentes con edificios y Airbnbs. Cero pagos por adelantado. Comisión solo cuando su cliente paga el depósito.">
-    <meta property="og:title" content="Socio Contratistas · Más Contratos en NYC">
-    <meta property="og:description" content="Adquisición de proyectos de remodelación y construcción. Conectado a WhatsApp y QuickBooks.">
+    <title>Socio Limpieza — Más Contratos Comerciales y Residenciales en NYC</title>
+    <meta name="description" content="Sistema de adquisición de contratos bilingüe para empresas de limpieza en NYC. Oficinas, edificios residenciales y Airbnbs. Cero pagos por adelantado. Comisión solo cuando su cliente paga.">
+    <meta property="og:title" content="Socio Limpieza · Más Contratos en NYC">
+    <meta property="og:description" content="Adquisición de contratos comerciales y residenciales de limpieza. Conectado a WhatsApp y QuickBooks.">
     <meta property="og:type" content="website">
     
     <!-- Favicon -->
@@ -17,7 +17,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     
-    <!-- Tailwind — compiled self-hosted -->
+    <!-- Tailwind CSS & Tokens -->
     <link rel="stylesheet" href="/assets/output.css">
     <link rel="stylesheet" href="/assets/design-tokens.css">
     
@@ -26,67 +26,33 @@
 
     <style>
         :root {
-            --bg-page: #F9FAFB;
+            --bg-page: #F8FAFC;
             --brand-orange: #FF5500;
             --brand-orange-hover: #E04B00;
             --safety: #EAB308;
-            --dark: #111827;
+            --dark: #0F172A;
+            --industrial: #0B0F17;
         }
         body {
             background-color: var(--bg-page);
             font-family: 'Plus Jakarta Sans', sans-serif;
             color: var(--dark);
         }
-        .hazard-stripe {
-            background: repeating-linear-gradient(
-                45deg,
-                #EAB308,
-                #EAB308 10px,
-                #111827 10px,
-                #111827 20px
-            );
-        }
-        .clean-card {
-            background: #ffffff;
-            border: 1px solid rgba(226, 232, 240, 0.8);
-            border-radius: 16px;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.04);
-            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .clean-card:hover {
-            border-color: #FED7AA;
-            box-shadow: 0 12px 32px -8px rgba(255, 85, 0, 0.08);
-            transform: translateY(-2px);
-        }
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            height: 24px;
-            width: 24px;
-            border-radius: 6px;
-            background: #FF5500;
-            border: 2px solid #ffffff;
-            box-shadow: 0 0 0 2px #EAB308, 0 4px 8px rgba(0,0,0,0.15);
-            cursor: pointer;
-        }
     </style>
 
     <!-- Canonical & Multilingual SEO -->
-    <link rel="canonical" href="https://socio-one.vercel.app/contratistas">
+    <link rel="canonical" href="https://socio-one.vercel.app/limpieza">
     <link rel="alternate" hreflang="en" href="https://socio-one.vercel.app/">
-    <link rel="alternate" hreflang="es" href="https://socio-one.vercel.app/contratistas">
+    <link rel="alternate" hreflang="es" href="https://socio-one.vercel.app/limpieza">
     <link rel="alternate" hreflang="x-default" href="https://socio-one.vercel.app/">
 
     <!-- Open Graph & Twitter Cards -->
-    <meta property="og:url" content="https://socio-one.vercel.app/contratistas">
+    <meta property="og:url" content="https://socio-one.vercel.app/limpieza">
     <meta property="og:image" content="https://socio-one.vercel.app/assets/hero.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://socio-one.vercel.app/assets/hero.jpg">
-
-    <!-- CDN Preconnects -->
-        <link rel="preconnect" href="https://code.iconify.design">
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
 
     <script type="application/ld+json">
 {
@@ -102,747 +68,180 @@
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "Contratistas",
-      "item": "https://socio-one.vercel.app/contratistas"
+      "name": "Limpieza Comercial",
+      "item": "https://socio-one.vercel.app/limpieza"
     }
   ]
 }
     </script>
 </head>
-<body class="min-h-screen">
+<body class="min-h-screen pb-16 md:pb-0 bg-slate-50">
 
-    <!-- Industrial Top Bar -->
-    <div class="h-2 w-full hazard-stripe"></div>
-
-    <!-- Main Navigation -->
+    <!-- Standard Navigation Header -->
     <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-xl border-b border-slate-200 shadow-sm">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <!-- Unified Brand Logo (Links to Root) -->
-            <a href="/" class="flex items-center text-slate-900 text-2xl font-black tracking-tight group" title="Volver a Socio Principal">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
+            <a href="/" class="flex items-center text-slate-900 text-2xl font-black tracking-tight group" title="Socio Principal">
                 <span>Socio</span>
                 <span class="w-1.5 h-1.5 rounded-[1px] bg-[#FF5500] inline-block shadow-[0_0_8px_rgba(255,85,0,0.8)] ml-[1.5px] self-end mb-1"></span>
-                <span class="ml-2.5 px-2.5 py-0.5 rounded-full bg-orange-50 border border-orange-200 text-[10px] font-mono font-bold uppercase tracking-wider text-orange-700">
-                    CONTRATISTAS
+                <span class="hidden sm:inline-block ml-2.5 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-700">
+                    LIMPIEZA COMERCIAL
                 </span>
             </a>
 
-            <!-- Center Sub-Nav Links -->
-            <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider text-slate-600">
+            <!-- Sub-Nav Links -->
+            <nav class="hidden md:flex items-center gap-6 text-xs font-bold uppercase tracking-wider text-slate-600">
                 <a href="#calculator" class="hover:text-[#FF5500] transition-colors">Calculadora</a>
                 <a href="#enrollment" class="hover:text-[#FF5500] transition-colors">Activar Alianza</a>
             </nav>
 
-            <div class="flex items-center gap-4">
-                <!-- Language Selector -->
-                <button id="lang-toggle" onclick="toggleLanguage()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-700 hover:bg-slate-50 transition-all">
-                    <i data-lucide="globe" class="w-4 h-4 text-[#FF5500]"></i>
-                    <span id="lang-label">English</span>
-                </button>
-
-                <!-- WhatsApp Direct Dispatch CTA -->
-                <a href="https://wa.me/19175550199?text=Hola%20Socio,%20soy%20contratista%20en%20NYC%20y%20quiero%20m%C3%A1s%20contratos%20de%20construcci%C3%B3n." target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#25D366] text-white text-xs font-black tracking-wide uppercase hover:bg-[#20ba5a] shadow-sm transition-all">
+            <div class="flex items-center gap-3">
+                <a href="https://wa.me/19175550199?text=Hola%20Socio,%20tengo%20una%20empresa%20de%20limpieza%20en%20NYC%20y%20quiero%20m%C3%A1s%20contratos." target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#25D366] text-white text-xs font-black tracking-wide uppercase hover:bg-[#20ba5a] active:scale-95 shadow-md shadow-emerald-500/20 transition-all">
                     <i data-lucide="message-square" class="w-4 h-4"></i>
-                    <span id="nav-cta">WhatsApp Directo</span>
+                    <span>WhatsApp Directo</span>
                 </a>
             </div>
         </div>
     </header>
 
     <!-- Hero Section -->
-    <section class="py-16 md:py-24 px-6 bg-white border-b border-slate-200">
+    <section class="py-16 md:py-20 px-6 bg-white border-b border-slate-200">
         <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
-            <!-- Left Copy -->
             <div class="lg:col-span-7 space-y-6">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-50 border border-orange-200 text-orange-800 text-xs font-mono font-black uppercase tracking-wider">
-                    <span class="w-2 h-2 rounded-full bg-[#FF5500] animate-ping"></span>
-                    <span id="hero-badge">ALIANZA DE CRECIMIENTO · 0% ANTICIPO · 100% COMISIÓN</span>
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-mono font-black uppercase tracking-wider">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                    <span>ALIANZA DE CRECIMIENTO · 0% ANTICIPO · 100% COMISIÓN</span>
                 </div>
 
-                <h1 class="text-4xl sm:text-6xl font-black tracking-tight text-industrial leading-[1.08]" id="hero-headline">
-                    Más Contratos de Remodelación.<br>
-                    <span class="text-[#FF5500] underline decoration-safety decoration-4 underline-offset-8">Modelo de Alianza de Crecimiento.</span>
+                <h1 class="text-4xl sm:text-6xl font-black tracking-tight text-industrial leading-[1.08]">
+                    Más Contratos de Limpieza Comercial.<br>
+                    <span class="text-[#FF5500]">Cero pago adelantado.</span>
                 </h1>
 
-                <p class="text-lg text-slate-600 font-normal leading-relaxed max-w-2xl" id="hero-desc">
-                    Socio implementa un <strong>Sistema de Gestión de Prospectos Bilingüe</strong> que conecta llamadas y dueños de propiedades directamente a su WhatsApp. Depósito técnico $0.00 (100% acreditable) + 10% de éxito sobre contratos cerrados. Atribución 60 días vía línea proxy registrada.
+                <p class="text-lg text-slate-600 font-normal leading-relaxed max-w-2xl">
+                    Conectamos administradores de propiedades, oficinas comerciales y edificios residenciales en NYC directamente a su WhatsApp en español.
                 </p>
 
-                <div class="flex flex-col sm:flex-row gap-4 pt-4">
-                    <a href="https://wa.me/19175550199?text=Hola%20Socio,%20quiero%20activar%20el%20sistema%20de%20prospectos%20de%20construccion." target="_blank" class="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-[#FF5500] text-white text-base font-extrabold hover:bg-[#E04B00] shadow-lg shadow-orange-600/20 transition-all group">
-                        <i data-lucide="message-square" class="w-5 h-5 text-safety"></i>
-                        <span id="hero-cta-main">Cotizar Proyecto por WhatsApp</span>
-                        <i data-lucide="arrow-up-right" class="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
-                    </a>
+                <ul class="space-y-2.5 text-[15px] text-slate-700 max-w-xl">
+                    <li class="flex gap-2.5">
+                        <i data-lucide="check" class="w-4 h-4 mt-1 shrink-0 text-emerald-600"></i>
+                        <span>Usted paga <strong>$0.00</strong> hasta que el cliente deposite su primer mes o servicio.</span>
+                    </li>
+                    <li class="flex gap-2.5">
+                        <i data-lucide="check" class="w-4 h-4 mt-1 shrink-0 text-emerald-600"></i>
+                        <span>Si el cliente no contrata, su costo total es <strong>cero</strong>.</span>
+                    </li>
+                    <li class="flex gap-2.5">
+                        <i data-lucide="check" class="w-4 h-4 mt-1 shrink-0 text-emerald-600"></i>
+                        <span>Garantía de 60 Días: si no generamos ingresos, no debe nada.</span>
+                    </li>
+                </ul>
 
+                <div class="flex flex-col sm:flex-row gap-4 pt-2">
+                    <a href="https://wa.me/19175550199?text=Hola%20Socio,%20tengo%20una%20empresa%20de%20limpieza%20en%20NYC%20y%20quiero%20m%C3%A1s%20contratos." target="_blank" class="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-[#FF5500] text-white text-base font-extrabold hover:bg-[#E04B00] shadow-lg shadow-orange-600/20 transition-all">
+                        <i data-lucide="message-square" class="w-5 h-5 text-safety"></i>
+                        <span>Cotizar Contratos por WhatsApp</span>
+                    </a>
                     <a href="#calculator" class="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-slate-100 text-industrial border border-slate-300 text-base font-bold hover:bg-slate-200 transition-all">
                         <i data-lucide="calculator" class="w-5 h-5 text-slate-500"></i>
-                        <span id="hero-cta-sub">Ver Calculadora de Comisión</span>
+                        <span>Ver Calculadora</span>
                     </a>
                 </div>
-
-                <!-- Verified Stats Grid -->
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 border-t border-slate-200">
-                    <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
-                        <div class="text-2xl font-black font-mono text-industrial">$25 CUPOS</div>
-                        <div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mt-0.5" id="stat-1">Depósitos Verificados</div>
-                    </div>
-                    <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
-                        <div class="text-2xl font-black font-mono text-industrial">&lt; 90 seg</div>
-                        <div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mt-0.5" id="stat-2">Tiempo Respuesta</div>
-                    </div>
-                    <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
-                        <div class="text-2xl font-black font-mono text-industrial">60 DÍAS</div>
-                        <div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mt-0.5" id="stat-3">Permisos DOB NYC</div>
-                    </div>
-                    <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
-                        <div class="text-2xl font-black font-mono text-industrial">$0.00</div>
-                        <div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mt-0.5" id="stat-4">Depósito Acreditable</div>
-                    </div>
-                </div>
             </div>
 
-            <!-- Right: Master Pipeline Console Card -->
-            <div class="lg:col-span-5 bg-industrial p-7 rounded-2xl border border-slate-700 text-white shadow-2xl space-y-6">
-                <div class="flex items-center justify-between border-b border-slate-700 pb-4">
+            <!-- Right illustrative card -->
+            <div class="lg:col-span-5 p-6 rounded-2xl bg-slate-900 border border-slate-700 text-white space-y-4 shadow-xl font-mono text-xs">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-3">
                     <div class="flex items-center gap-2">
-                        <i data-lucide="hammer" class="w-5 h-5 text-safety"></i>
-                        <span class="font-mono text-xs font-bold uppercase tracking-widest text-slate-300">
-                            Master Project Pipeline
-                        </span>
+                        <i data-lucide="sparkles" class="w-4 h-4 text-emerald-400"></i>
+                        <span class="font-bold text-slate-200 uppercase">Pipeline de Limpieza NYC</span>
                     </div>
-                    <span class="text-[10px] font-mono bg-emerald-950 text-emerald-400 px-2 py-0.5 rounded border border-emerald-700 font-bold">
-                        QUICKBOOKS DEPOSIT SYNC
-                    </span>
+                    <span class="text-[9px] font-bold px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800">Activo</span>
                 </div>
-
-                <div class="space-y-3 font-mono text-xs">
-                    <div class="p-3.5 bg-slate-800 rounded-xl border-l-4 border-l-safety">
-                        <div class="text-slate-400 text-[10px] font-bold">DOB PERMIT RADAR · QUEENS</div>
-                        <div class="text-white font-bold mt-0.5">31-28 30th Ave, Astoria · Gut Rehab</div>
-                        <div class="text-yellow-400 text-[10px] mt-1">✓ WhatsApp Toque 1 enviado: $85,000 estimado</div>
+                <div class="space-y-3">
+                    <div class="p-3 bg-slate-800/90 rounded-xl border-l-4 border-l-emerald-500">
+                        <div class="text-slate-400 text-[10px]">Oficina Médica · Brooklyn Heights</div>
+                        <div class="text-white font-bold mt-1">Limpieza Nocturna Diaria · Contrato $3,200/mes</div>
+                        <div class="text-emerald-400 text-[10px] mt-1">✓ Primer depósito verificado en banco</div>
                     </div>
-
-                    <div class="p-3.5 bg-slate-800 rounded-xl border-l-4 border-l-orange-500">
-                        <div class="text-slate-400 text-[10px] font-bold">COTIZACIÓN EN PROCESO · BROOKLYN</div>
-                        <div class="text-white font-bold mt-0.5">142 Bedford Ave · Storefront & Framing</div>
-                        <div class="text-orange-400 text-[10px] mt-1">✓ Presupuesto $120,000 en revisión por cliente</div>
-                    </div>
-
-                    <div class="p-3.5 bg-emerald-950/80 rounded-xl border-l-4 border-l-emerald-500 border border-emerald-800/40">
-                        <div class="text-emerald-400 text-[10px] font-bold">DEPÓSITO COBRADO (QBO INVOICE)</div>
-                        <div class="text-white font-bold mt-0.5">Anticipo 30% Pagado en Banco: $25,500.00</div>
-                        <div class="text-emerald-300 text-[10px] mt-1">✓ Comisión Socio activada (8%): $6,800.00</div>
+                    <div class="p-3 bg-slate-800/90 rounded-xl border-l-4 border-l-blue-500">
+                        <div class="text-slate-400 text-[10px]">Edificio Residencial · Astoria, Queens</div>
+                        <div class="text-white font-bold mt-1">Limpieza de Pasillos &amp; Basura · $2,400/mes</div>
+                        <div class="text-blue-300 text-[10px] mt-1">✓ Contacto directo vía WhatsApp</div>
                     </div>
                 </div>
-
-                <div class="pt-2 text-center text-xs font-mono text-slate-400">
-                    🔒 Cero hardware POS · 100% Contratos Bancarios Reales
+                <div class="pt-2 text-[10px] text-slate-500 border-t border-slate-800">
+                    Comisión Socio: 10% únicamente sobre facturación cobrada.
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Operational Reality Features -->
-    <section class="py-20 px-6 max-w-7xl mx-auto">
-        <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
-            <h2 class="text-3xl font-black text-industrial" id="feat-main-title">Diseñado para el Flujo de Caja Real del Contratista</h2>
-            <p class="text-base text-slate-600" id="feat-main-sub">
-                Eliminamos software inútil para enfocar cuadrillas en proyectos comerciales y residenciales de alto margen.
+    <!-- Calculator Section -->
+    <section id="calculator" class="py-16 px-6 bg-slate-100 border-b border-slate-200">
+        <div class="max-w-4xl mx-auto bg-white p-8 md:p-10 rounded-2xl border border-slate-300 shadow-xl space-y-6">
+            <div class="flex justify-between items-center border-b border-slate-200 pb-4">
+                <div>
+                    <h3 class="text-2xl font-black text-industrial">Calculadora de Comisión (Limpieza)</h3>
+                    <p class="text-xs font-mono text-slate-500">Comisión fija del 10% · Sin anticipos · Tope Anual $20,000</p>
+                </div>
+                <span class="px-3 py-1 bg-emerald-50 border border-emerald-200 text-emerald-700 font-mono text-xs font-bold rounded-xl">Tasa Fija: 10%</span>
+            </div>
+            <div class="space-y-3">
+                <div class="flex justify-between items-center">
+                    <label class="text-sm font-bold text-slate-700">Facturación Mensual Nueva:</label>
+                    <span class="text-2xl font-black font-mono text-[#FF5500]">$5,000 / mes</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                        <div class="text-xs font-bold text-slate-500 uppercase">Ingreso Neto para Su Empresa</div>
+                        <div class="text-2xl font-black font-mono text-emerald-600 mt-1">$4,500 / mes</div>
+                    </div>
+                    <div class="p-4 bg-orange-50 rounded-xl border border-orange-200">
+                        <div class="text-xs font-bold text-orange-800 uppercase">Comisión Socio (10%)</div>
+                        <div class="text-2xl font-black font-mono text-[#FF5500] mt-1">$500 / mes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enrollment Form Section -->
+    <section id="enrollment" class="py-16 px-6 bg-industrial text-white">
+        <div class="max-w-3xl mx-auto text-center space-y-6">
+            <h2 class="text-3xl font-black tracking-tight">Active su Alianza de Limpieza en NYC</h2>
+            <p class="text-slate-400 text-sm max-w-xl mx-auto">
+                Sin costo de activación. Le enviamos contratos de oficinas y edificios. Usted solo paga cuando recibe el dinero del cliente.
             </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="clean-card p-8 space-y-4">
-                <div class="w-12 h-12 rounded-xl bg-orange-50 text-[#FF5500] flex items-center justify-center">
-                    <i data-lucide="message-square" class="w-6 h-6"></i>
+            <div class="p-6 rounded-2xl bg-slate-900 border border-slate-700 max-w-md mx-auto space-y-4 text-left">
+                <div class="flex justify-between items-center text-sm border-b border-slate-800 pb-3">
+                    <span class="text-slate-400">Costo de Entrada:</span>
+                    <span class="text-emerald-400 font-mono font-bold">$0.00 USD</span>
                 </div>
-                <h3 class="text-lg font-bold text-industrial" id="feat-1-title">Cierre Rápido vía WhatsApp</h3>
-                <p class="text-sm text-slate-600 leading-relaxed" id="feat-1-desc">
-                    Propietarios en NYC no abren correos electrónicos. Enviamos cotizaciones y seguimiento en 3 toques bilingües directo a WhatsApp en menos de 90 segundos.
-                </p>
-            </div>
-
-            <div class="clean-card p-8 space-y-4">
-                <div class="w-12 h-12 rounded-xl bg-yellow-50 text-yellow-700 flex items-center justify-center">
-                    <i data-lucide="file-check-2" class="w-6 h-6"></i>
+                <div class="flex justify-between items-center text-sm border-b border-slate-800 pb-3">
+                    <span class="text-slate-400">Garantía:</span>
+                    <span class="text-white font-mono font-bold">60 Días / 100% Rendimiento</span>
                 </div>
-                <h3 class="text-lg font-bold text-industrial" id="feat-2-title">Atribución Contra Depósito QuickBooks</h3>
-                <p class="text-sm text-slate-600 leading-relaxed" id="feat-2-desc">
-                    Atribución inviolable: lead registrado por proxy/WhatsApp y cerrado dentro de 60 días = atribuido a Socio. Comisión solo al acreditar anticipo 20–30%.
-                </p>
-            </div>
-
-            <div class="clean-card p-8 space-y-4">
-                <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
-                    <i data-lucide="building-2" class="w-6 h-6"></i>
-                </div>
-                <h3 class="text-lg font-bold text-industrial" id="feat-3-title">Radar de Permisos DOB de NYC</h3>
-                <p class="text-sm text-slate-600 leading-relaxed" id="feat-3-desc">
-                    Monitoreamos en tiempo real las emisiones de permisos del DOB NOW / BIS en Queens, Brooklyn, Bronx y Manhattan para contactar propietarios antes que nadie.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- 48-Hour Escaneo de Fugas Diagnostic Section -->
-    <section class="py-20 px-6 max-w-7xl mx-auto bg-white border-t border-slate-200">
-        <div class="max-w-4xl mx-auto space-y-8">
-            <div class="text-center space-y-3">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-50 border border-orange-200 text-orange-800 text-xs font-mono font-bold uppercase">
-                    <i data-lucide="scan" class="w-4 h-4 text-[#FF5500]"></i>
-                    DIAGNÓSTICO AUTOMATIZADO GRATUITO
-                </div>
-                <h2 class="text-3xl font-black text-industrial">Escaneo de Fugas de Contratos (NYC)</h2>
-                <p class="text-slate-600 text-sm max-w-xl mx-auto">
-                    Ingrese el nombre de su empresa de construcción y distrito para calcular contratos perdidos y fugas de ingresos frente a la competencia.
-                </p>
-            </div>
-
-            <div class="bg-slate-50 rounded-2xl p-8 border border-slate-300 shadow-sm space-y-6">
-                <form id="leak-scan-form" onsubmit="runDiagnosticScan(event)" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nombre de Empresa</label>
-                        <input type="text" id="scan-biz-name" required placeholder="Ej: Hector Framing Corp" class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-white text-sm font-medium focus:ring-2 focus:ring-[#FF5500] focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Distrito (Borough)</label>
-                        <select id="scan-borough" class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-white text-sm font-medium focus:ring-2 focus:ring-[#FF5500] focus:outline-none">
-                            <option value="Queens">Queens</option>
-                            <option value="Brooklyn">Brooklyn</option>
-                            <option value="Bronx">Bronx</option>
-                            <option value="Manhattan">Manhattan</option>
-                            <option value="Staten Island">Staten Island</option>
-                        </select>
-                    </div>
-                    <div class="flex items-end">
-                        <button type="submit" id="btn-run-scan" class="w-full py-3.5 px-6 rounded-xl bg-[#FF5500] text-white text-sm font-extrabold hover:bg-[#E04B00] shadow-md shadow-orange-600/20 transition-all flex items-center justify-center gap-2">
-                            <i data-lucide="zap" class="w-4 h-4 text-safety"></i>
-                            <span>Escanear Fugas</span>
-                        </button>
-                    </div>
-                </form>
-
-                <!-- Scan Results Container (Hidden until generated) -->
-                <div id="scan-result-card" class="hidden bg-white p-6 rounded-xl border border-slate-200 shadow-inner space-y-6">
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-100 pb-4">
-                        <div>
-                            <div class="text-xs font-mono text-slate-400 font-bold uppercase">REPORTE GENERADO</div>
-                            <h4 class="text-xl font-black text-industrial mt-0.5" id="res-biz-title">Hector Framing Corp</h4>
-                        </div>
-                        <div class="px-4 py-2 rounded-xl bg-red-50 border border-red-200 text-red-800 font-mono text-xs font-black">
-                            SALUD DIGITAL: <span id="res-health-score">42/100</span> (FUGA CRÍTICA)
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
-                            <div class="text-[11px] text-slate-500 font-bold uppercase">Cotizaciones Perdidas / Mes</div>
-                            <div class="text-2xl font-black font-mono text-industrial mt-1" id="res-lost-bids">8.5 llamadas</div>
-                            <div class="text-[10px] text-red-600 font-bold mt-1">Van a competidores con WhatsApp activo</div>
-                        </div>
-
-                        <div class="p-4 bg-red-50 rounded-xl border border-red-200">
-                            <div class="text-[11px] text-red-800 font-bold uppercase">Contratos Perdidos al Año</div>
-                            <div class="text-2xl font-black font-mono text-red-600 mt-1" id="res-lost-contracts">20 contratos</div>
-                            <div class="text-[10px] text-red-700 font-medium mt-1">Ticket Promedio $35,000 en NYC</div>
-                        </div>
-
-                        <div class="p-4 bg-red-100/60 rounded-xl border border-red-300">
-                            <div class="text-[11px] text-red-900 font-bold uppercase">Fuga Anual Estimada ($)</div>
-                            <div class="text-2xl font-black font-mono text-red-700 mt-1" id="res-leakage-dollars">$700,000</div>
-                            <div class="text-[10px] text-red-800 font-bold mt-1">Recuperable con el sistema Socio</div>
-                        </div>
-                    </div>
-
-                    <div class="p-4 bg-orange-50 rounded-xl border border-orange-200 text-xs text-orange-950 space-y-1">
-                        <div class="font-bold flex items-center gap-1.5"><i data-lucide="alert-triangle" class="w-4 h-4 text-[#FF5500]"></i> Fugas Principales Detectadas:</div>
-                        <ul class="list-disc list-inside text-slate-700 space-y-0.5 mt-1">
-                            <li>Llamadas fuera de horario (después de 5 PM) sin respuesta instantánea por WhatsApp.</li>
-                            <li>Perfil de Google Maps con menos de 25 reseñas recientes con fotos de obras.</li>
-                            <li>Sin conexión en tiempo real al radar de permisos DOB emitidos hoy en su borough.</li>
-                        </ul>
-                    </div>
-
-                    <div class="text-center pt-2">
-                        <a href="https://wa.me/19175550199?text=Hola%20Nick,%20vi%20mi%20Escaneo%20de%20Fugas%20y%20quiero%20recuperar%20estos%20contratos." target="_blank" class="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-[#25D366] text-white text-xs font-black uppercase tracking-wider hover:bg-[#20ba5a] shadow transition-all">
-                            <i data-lucide="message-square" class="w-4 h-4"></i>
-                            Recuperar Estos Contratos por WhatsApp
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Interactive Commission Calculator -->
-    <section id="calculator" class="py-20 bg-slate-100 border-y border-slate-200">
-        <div class="max-w-4xl mx-auto px-6">
-            <div class="bg-white rounded-2xl p-8 md:p-10 border border-slate-300 shadow-xl space-y-8">
-                
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-6">
-                    <div>
-                        <h3 class="text-2xl font-black text-industrial" id="calc-title">Calculadora de Comisión por Tramos</h3>
-                        <p class="text-xs font-mono text-slate-500 mt-1">
-                            Tramos: 12% (&lt;$10k) · 8% ($10k–$50k) · 5% (&gt;$50k) | Tope Anual: $40,000
-                        </p>
-                    </div>
-                    <div class="px-3.5 py-1.5 bg-orange-50 border border-orange-200 text-[#FF5500] font-mono text-xs font-extrabold rounded-xl self-start md:self-auto">
-                        <span id="calc-effective-label">Tasa Efectiva:</span> <span id="calc-rate-val">8.3%</span>
-                    </div>
-                </div>
-
-                <!-- Range Slider -->
-                <div class="space-y-4">
-                    <div class="flex justify-between items-center">
-                        <label class="text-sm font-bold text-slate-700" id="calc-slider-label">Valor Total del Contrato de Construcción:</label>
-                        <span class="text-3xl font-black font-mono text-[#FF5500]" id="calc-amount-display">$45,000</span>
-                    </div>
-                    <input type="range" id="contract-slider" min="5000" max="150000" step="2500" value="45000" class="w-full h-3 bg-slate-200 rounded-lg appearance-none cursor-pointer">
-                    <div class="flex justify-between text-[11px] font-mono text-slate-400">
-                        <span>$5,000 (Trabajo Menor)</span>
-                        <span>$50,000 (Remodelación Casa)</span>
-                        <span>$150,000+ (Comercial / Gut Rehab)</span>
-                    </div>
-                </div>
-
-                <!-- Breakdown Cards -->
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
-                    <div class="p-5 rounded-xl bg-slate-50 border border-slate-200">
-                        <div class="text-xs text-slate-500 font-bold uppercase" id="calc-card-1-t">Depósito Estimado (30%)</div>
-                        <div class="text-2xl font-black font-mono text-industrial mt-1" id="calc-deposit-val">$13,500</div>
-                        <div class="text-[10px] text-emerald-600 font-bold mt-1">✓ Condición para activar comisión</div>
-                    </div>
-
-                    <div class="p-5 rounded-xl bg-red-50 border border-red-200">
-                        <div class="text-xs text-red-800 font-bold uppercase" id="calc-card-2-t">Comisión Socio</div>
-                        <div class="text-2xl font-black font-mono text-red-600 mt-1" id="calc-fee-val">$4,000</div>
-                        <div class="text-[10px] text-red-700 font-medium mt-1">✓ Solo cuando el anticipo se cobra</div>
-                    </div>
-
-                    <div class="p-5 rounded-xl bg-emerald-50 border border-emerald-200">
-                        <div class="text-xs text-emerald-800 font-bold uppercase" id="calc-card-3-t">Neto para su Empresa</div>
-                        <div class="text-2xl font-black font-mono text-emerald-700 mt-1" id="calc-net-val">$41,000</div>
-                        <div class="text-[10px] text-emerald-800 font-bold mt-1">✓ 100% para materiales y mano de obra</div>
-                    </div>
-                </div>
-
-                <div class="p-4 rounded-xl bg-orange-50 border border-orange-200 flex items-center gap-3 text-xs text-orange-950 font-medium">
-                    <i data-lucide="shield-check" class="w-5 h-5 text-orange-700 shrink-0"></i>
-                    <span><strong>Tope Anual Protegido ($40,000):</strong> Una vez alcanzado el tope, la comisión se reduce a $0 y usted pasa a una tarifa plana SaaS para evitar cargos excesivos.</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Secure Checkout & Enrollment Section -->
-    <section id="enrollment" class="bg-gray-950 bg-cover py-20 w-full border-t border-white/10">
-      <style>
-        @import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap');
-      </style>
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid lg:grid-cols-2 gap-6">
-          <div class="rounded-2xl border border-white/10 bg-gradient-to-b from-gray-900/70 to-black p-6">
-            <div class="flex items-center justify-between">
-              <h3 class="text-lg tracking-tight text-white font-semibold" style="font-family: 'Geist', 'Inter', sans-serif;">Activación de Alianza</h3>
-              <span class="text-xs px-2.5 py-1 rounded-full bg-white/10 border border-white/10 text-white font-mono" style="font-family: 'Geist', 'Inter', sans-serif;">SSL 256‑bit</span>
-            </div>
-            <p class="mt-1 text-sm text-gray-400" style="font-family: 'Geist', 'Inter', sans-serif;">Depósito técnico 100% acreditable a sus comisiones. Sin cargos ocultos.</p>
-            <form class="mt-6 space-y-4" id="enroll-form">
-              <div>
-                <label for="plan" class="block text-sm mb-1 text-white font-medium" style="font-family: 'Geist', 'Inter', sans-serif;">Plan de Activación</label>
-                <div class="grid grid-cols-3 gap-2">
-                  <button type="button" data-plan="Piloto 1 Borough" data-amount="1200" class="plan-btn col-span-1 px-3 py-2 rounded-lg border border-blue-400/30 bg-blue-400/10 text-sm hover:bg-blue-400/20 ring-1 ring-inset ring-blue-400/30 text-white transition-colors" style="font-family: 'Geist', 'Inter', sans-serif;">Piloto ($1.2k)</button>
-                  <button type="button" data-plan="Expansión 2 Boroughs" data-amount="2400" class="plan-btn col-span-1 px-3 py-2 rounded-lg border border-white/10 bg-white/5 text-sm hover:bg-white/10 text-white transition-colors" style="font-family: 'Geist', 'Inter', sans-serif;">Expansión</button>
-                  <button type="button" data-plan="All-NYC Fleet" data-amount="3600" class="plan-btn col-span-1 px-3 py-2 rounded-lg border border-white/10 bg-white/5 text-sm hover:bg-white/10 text-white transition-colors" style="font-family: 'Geist', 'Inter', sans-serif;">All-NYC</button>
-                </div>
-              </div>
-              <div>
-                <label for="email" class="block text-sm mb-1 text-white font-medium" style="font-family: 'Geist', 'Inter', sans-serif;">Correo Electrónico</label>
-                <input id="email" name="email" type="email" required="" placeholder="propietario@empresa.com" class="w-full placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm text-white bg-black/40 border-white/10 border rounded-lg pt-2 pr-3 pb-2 pl-3" style="font-family: 'Geist', 'Inter', sans-serif;">
-              </div>
-              <div class="grid grid-cols-2 gap-3">
-                <div>
-                  <label for="name" class="block text-sm mb-1 text-white font-medium" style="font-family: 'Geist', 'Inter', sans-serif;">Nombre / Empresa</label>
-                  <input id="name" name="name" type="text" required="" placeholder="Ej: Hector Framing Corp" class="w-full placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm text-white bg-black/40 border-white/10 border rounded-lg pt-2 pr-3 pb-2 pl-3" style="font-family: 'Geist', 'Inter', sans-serif;">
-                </div>
-                <div>
-                  <label for="country" class="block text-sm mb-1 text-white font-medium" style="font-family: 'Geist', 'Inter', sans-serif;">Distrito Principal</label>
-                  <select id="country" name="country" class="w-full focus:outline-none focus:ring-2 focus:ring-blue-500 bg-black/40 border-white/10 border rounded-lg pt-2 pr-3 pb-2 pl-3 text-sm text-white" style="font-family: 'Geist', 'Inter', sans-serif;">
-                    <option style="font-family: 'Geist', 'Inter', sans-serif; background-color: #000; color: #fff;">Queens, NYC</option>
-                    <option style="font-family: 'Geist', 'Inter', sans-serif; background-color: #000; color: #fff;">Brooklyn, NYC</option>
-                    <option style="font-family: 'Geist', 'Inter', sans-serif; background-color: #000; color: #fff;">Bronx, NYC</option>
-                    <option style="font-family: 'Geist', 'Inter', sans-serif; background-color: #000; color: #fff;">Manhattan, NYC</option>
-                    <option style="font-family: 'Geist', 'Inter', sans-serif; background-color: #000; color: #fff;">Staten Island, NYC</option>
-                    <option style="font-family: 'Geist', 'Inter', sans-serif; background-color: #000; color: #fff;">Long Island / Westchester</option>
-                  </select>
-                </div>
-              </div>
-              <div>
-                <label for="coupon" class="block text-sm mb-1 text-white font-medium" style="font-family: 'Geist', 'Inter', sans-serif;">Código de Afiliado / Ferretería</label>
-                <div class="flex gap-2">
-                  <input id="coupon" name="coupon" type="text" placeholder="PRODESK10" class="w-full placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm text-white bg-black/40 border-white/10 border rounded-lg pt-2 pr-3 pb-2 pl-3 font-mono" style="font-family: 'Geist', 'Inter', sans-serif;">
-                  <button type="button" id="apply-coupon" class="px-3.5 py-2 rounded-lg border border-white/10 bg-white/5 text-sm hover:bg-white/10 text-white font-semibold transition-colors" style="font-family: 'Geist', 'Inter', sans-serif;">Aplicar</button>
-                </div>
-                <p id="coupon-msg" class="mt-1 text-xs text-gray-500" style="font-family: 'Geist', 'Inter', sans-serif;"></p>
-              </div>
-              <div class="pt-4 border-t border-white/10">
-                <dl class="text-sm space-y-2">
-                  <div class="flex items-center justify-between">
-                    <dt class="text-gray-400" style="font-family: 'Geist', 'Inter', sans-serif;">Plan seleccionado</dt>
-                    <dd id="summary-plan" class="text-gray-200 font-medium" style="font-family: 'Geist', 'Inter', sans-serif;">Piloto 1 Borough</dd>
-                  </div>
-                  <div class="flex items-center justify-between">
-                    <dt class="text-gray-400" style="font-family: 'Geist', 'Inter', sans-serif;">Depósito Reembolsable</dt>
-                    <dd id="summary-subtotal" class="text-gray-200 font-mono" style="font-family: 'Geist', 'Inter', sans-serif;">$0.00</dd>
-                  </div>
-                  <div class="flex items-center justify-between">
-                    <dt class="text-gray-400" style="font-family: 'Geist', 'Inter', sans-serif;">Descuento / Crédito</dt>
-                    <dd id="summary-discount" class="text-blue-300 font-mono" style="font-family: 'Geist', 'Inter', sans-serif;">-$0</dd>
-                  </div>
-                  <div class="flex items-center justify-between font-medium pt-2 border-t border-white/10">
-                    <dt class="text-white font-bold" style="font-family: 'Geist', 'Inter', sans-serif;">Total a Depositar</dt>
-                    <dd id="summary-total" class="text-white font-black font-mono text-base" style="font-family: 'Geist', 'Inter', sans-serif;">$0.00</dd>
-                  </div>
-                </dl>
-                <button type="submit" class="mt-4 inline-flex w-full items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-black bg-gradient-to-r from-[#FF5500] to-orange-500 text-white hover:from-orange-600 hover:to-orange-500 shadow-lg shadow-orange-600/30 transition-all" style="font-family: 'Geist', 'Inter', sans-serif;">
-                  Activar Piloto con Garantía de 60 Días ($0 Anticipo)
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
-                    <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                  </svg>
-                </button>
-                <p class="mt-3 text-xs text-gray-400 text-center" style="font-family: 'Geist', 'Inter', sans-serif;">El 100% de este importe se deduce directamente de sus primeras comisiones de éxito del 10%.</p>
-              </div>
-            </form>
-          </div>
-          <div class="border-white/10 border rounded-2xl bg-black/20 backdrop-blur-xl pt-6 pr-6 pb-6 pl-6 flex flex-col justify-between">
-            <div>
-              <h3 class="text-lg tracking-tight text-white font-semibold" style="font-family: 'Geist', 'Inter', sans-serif;">Lo que incluye su activación</h3>
-              <ul class="mt-4 space-y-3 text-sm text-gray-300">
-                <li class="flex items-start justify-between gap-3" style="font-family: 'Geist', 'Inter', sans-serif;">
-                  <span>Línea virtual Twilio dedicada con grabación y proxy inviolable</span>
-                  <span class="mt-0.5 inline-flex w-6 h-6 shrink-0 items-center justify-center rounded-md bg-white/5 border border-white/10">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-emerald-400">
-                      <path d="M20 6 9 17l-5-5"></path>
-                    </svg>
-                  </span>
-                </li>
-                <li class="flex items-start justify-between gap-3" style="font-family: 'Geist', 'Inter', sans-serif;">
-                  <span>Radar de Permisos DOB NOW en tiempo real (filtrado 72h)</span>
-                  <span class="mt-0.5 inline-flex w-6 h-6 shrink-0 items-center justify-center rounded-md bg-white/5 border border-white/10">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-emerald-400">
-                      <path d="M20 6 9 17l-5-5"></path>
-                    </svg>
-                  </span>
-                </li>
-                <li class="flex items-start justify-between gap-3" style="font-family: 'Geist', 'Inter', sans-serif;">
-                  <span>Notificación instantánea de leads a su WhatsApp (&lt;90s)</span>
-                  <span class="mt-0.5 inline-flex w-6 h-6 shrink-0 items-center justify-center rounded-md bg-white/5 border border-white/10">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-emerald-400">
-                      <path d="M20 6 9 17l-5-5"></path>
-                    </svg>
-                  </span>
-                </li>
-                <li class="flex items-start justify-between gap-3" style="font-family: 'Geist', 'Inter', sans-serif;">
-                  <span>Conciliación semanal 1/2/3 integrada a QuickBooks / Stripe</span>
-                  <span class="mt-0.5 inline-flex w-6 h-6 shrink-0 items-center justify-center rounded-md bg-white/5 border border-white/10">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-emerald-400">
-                      <path d="M20 6 9 17l-5-5"></path>
-                    </svg>
-                  </span>
-                </li>
-              </ul>
-              <div class="mt-8 rounded-xl border border-white/10 bg-black/40 p-4">
-                <div class="flex items-center gap-3">
-                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=96&auto=format&fit=crop" alt="Contractor" class="w-10 h-10 rounded-full object-cover border border-white/10">
-                  <div>
-                    <p class="text-sm text-gray-200 italic" style="font-family: 'Geist', 'Inter', sans-serif;">"Reactivamos $110,000 en obras en 14 días. El sistema de WhatsApp nos salvó contratos que dábamos por perdidos."</p>
-                    <p class="text-xs text-orange-400 font-bold mt-1" style="font-family: 'Geist', 'Inter', sans-serif;">— Hector, Hector Framing & Drywall (Astoria, Queens)</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="mt-6 grid sm:grid-cols-2 gap-3 pt-4 border-t border-white/10">
-              <div class="flex items-center gap-2 text-xs text-gray-400 font-medium" style="font-family: 'Geist', 'Inter', sans-serif;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-emerald-400">
-                  <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
-                  <path d="M3 3v5h5"></path>
-                  <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path>
-                  <path d="M16 16h5v5"></path>
-                </svg>
-                100% Acreditable a Comisiones
-              </div>
-              <div class="flex items-center gap-2 text-xs text-gray-400 font-medium" style="font-family: 'Geist', 'Inter', sans-serif;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-blue-400">
-                  <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path>
-                </svg>
-                Pago Seguro SSL 256‑bit
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <script>
-        document.addEventListener('DOMContentLoaded', function() {
-          const planBtns = document.querySelectorAll('.plan-btn');
-          const summaryPlan = document.getElementById('summary-plan');
-          const summarySubtotal = document.getElementById('summary-subtotal');
-          const summaryTotal = document.getElementById('summary-total');
-          const summaryDiscount = document.getElementById('summary-discount');
-          const applyCouponBtn = document.getElementById('apply-coupon');
-          const couponInput = document.getElementById('coupon');
-          const couponMsg = document.getElementById('coupon-msg');
-          let currentAmount = 1200;
-          let currentPlan = 'Piloto 1 Borough';
-          let discountAmount = 0;
-
-          planBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-              planBtns.forEach(b => {
-                b.classList.remove('border-blue-400/30', 'bg-blue-400/10', 'ring-1', 'ring-inset', 'ring-blue-400/30');
-                b.classList.add('border-white/10', 'bg-white/5');
-              });
-              this.classList.remove('border-white/10', 'bg-white/5');
-              this.classList.add('border-blue-400/30', 'bg-blue-400/10', 'ring-1', 'ring-inset', 'ring-blue-400/30');
-              currentPlan = this.dataset.plan;
-              currentAmount = parseInt(this.dataset.amount);
-              updateSummary();
-            });
-          });
-
-          function updateSummary() {
-            if (summaryPlan) summaryPlan.textContent = currentPlan;
-            if (summarySubtotal) summarySubtotal.textContent = '$' + currentAmount.toLocaleString();
-            const total = currentAmount - discountAmount;
-            if (summaryTotal) summaryTotal.textContent = '$' + total.toLocaleString();
-            if (summaryDiscount) summaryDiscount.textContent = '-$' + discountAmount.toLocaleString();
-          }
-
-          if (applyCouponBtn && couponInput && couponMsg) {
-            applyCouponBtn.addEventListener('click', function() {
-              const code = couponInput.value.trim().toUpperCase();
-              if (code === 'PRODESK10' || code === 'FERRETERIA10') {
-                discountAmount = Math.floor(currentAmount * 0.1);
-                couponMsg.textContent = '¡10% de crédito aplicado!';
-                couponMsg.className = 'mt-1 text-xs text-emerald-400';
-              } else if (code === '') {
-                couponMsg.textContent = 'Por favor ingrese un código.';
-                couponMsg.className = 'mt-1 text-xs text-red-400';
-              } else {
-                couponMsg.textContent = 'Código inválido o expirado.';
-                couponMsg.className = 'mt-1 text-xs text-red-400';
-              }
-              updateSummary();
-            });
-          }
-
-          const enrollForm = document.getElementById('enroll-form');
-          if (enrollForm) {
-            enrollForm.addEventListener('submit', function(e) {
-              e.preventDefault();
-              const btn = this.querySelector('button[type="submit"]');
-              const origText = btn.innerHTML;
-              btn.disabled = true;
-              btn.innerHTML = '<span class="animate-spin">⏳</span> Procesando activación segura...';
-              
-              setTimeout(() => {
-                btn.disabled = false;
-                btn.innerHTML = '✓ ¡Activación Registrada!';
-                btn.classList.remove('from-[#FF5500]', 'to-orange-500');
-                btn.classList.add('bg-emerald-600');
-                alert('¡Gracias! Su registro de activación ha sido recibido. Un operador de Socio se comunicará en menos de 2 horas para configurar su línea proxy Twilio y radar DOB.');
-              }, 900);
-            });
-          }
-        });
-      </script>
-    </section>
-
-    <!-- Footer Guarantee & Contact -->
-    <footer class="bg-industrial text-white py-16 px-6">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div class="space-y-4">
-                <div class="flex items-center text-2xl font-black tracking-tight text-white">
-                    <span>Socio</span>
-                    <span class="w-1.5 h-1.5 rounded-[1px] bg-[#FF5500] inline-block shadow-[0_0_8px_rgba(255,85,0,0.8)] ml-[1.5px] self-end mb-1"></span>
-                    <span class="text-xs font-mono text-slate-400 ml-2.5">NYC CONSTRUCTION PLATFORM</span>
-                </div>
-                <h4 class="text-xl font-bold text-slate-100" id="foot-title">La Regla de Oro de Socio</h4>
-                <p class="text-sm text-slate-400 leading-relaxed max-w-md" id="foot-desc">
-                    Si el cliente no deposita el anticipo en su cuenta bancaria comercial, Socio cobra $0.00. Usted mantiene el control total de sus licencias, seguros y cuadrillas.
-                </p>
-                <div class="flex flex-wrap gap-4 pt-2 text-xs text-slate-300 font-bold uppercase tracking-wider">
-                    <a href="#calculator" class="hover:text-[#FF5500] transition-colors">Calculadora</a>
-                    <a href="#enrollment" class="hover:text-[#FF5500] transition-colors">Activar Alianza</a>
-                </div>
-            </div>
-
-            <div class="flex flex-col sm:flex-row gap-4 justify-end">
-                <a href="https://wa.me/19175550199?text=Hola%20Socio,%20quiero%20hablar%20con%20un%20operador%20de%20construccion%20en%20NYC." target="_blank" class="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-[#25D366] text-white font-black text-sm uppercase hover:bg-[#20ba5a] shadow-lg transition-all">
-                    <i data-lucide="message-square" class="w-5 h-5"></i>
-                    <span id="foot-cta">Hablar con un Operador en NYC</span>
+                <a href="https://wa.me/19175550199?text=Hola%20Socio,%20quiero%20activar%20mi%20alianza%20para%20empresa%20de%20limpieza." target="_blank" class="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#25D366] text-white text-xs font-black uppercase tracking-wider hover:bg-[#20ba5a] transition-all">
+                    <i data-lucide="message-square" class="w-4 h-4"></i>
+                    Activar por WhatsApp ($0 Anticipo)
                 </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-8 bg-slate-900 border-t border-slate-800 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div>© 2026 Socio NYC · Alianza de Crecimiento para Empresas Locales</div>
+            <div class="flex gap-4">
+                <a href="/privacy" class="hover:text-white">Privacidad</a>
+                <a href="/terms" class="hover:text-white">Términos</a>
+                <a href="/" class="hover:text-white">Inicio</a>
             </div>
         </div>
     </footer>
 
-    <!-- Logic Script: Calculator + Language Toggle -->
     <script>
-        let currentLang = 'es';
-
-        const DICT = {
-            es: {
-                toggle: 'English',
-                navCta: 'WhatsApp Directo',
-                heroBadge: 'SISTEMA DE ADQUISICIÓN DE PROYECTOS · NYC',
-                headline: 'Más Contratos de Remodelación y Construcción.<br><span class="text-[#FF5500] underline decoration-safety decoration-4 underline-offset-8">Sin cobrarle por adelantado.</span>',
-                desc: 'Socio implementa un <strong>Sistema de Gestión de Prospectos Bilingüe</strong> que conecta llamadas y dueños de propiedades directamente a su WhatsApp. Depósito técnico $0.00 (100% acreditable) + 10% de éxito sobre contratos cerrados. Atribución 60 días vía línea proxy registrada.',
-                ctaMain: 'Cotizar Proyecto por WhatsApp',
-                ctaSub: 'Ver Calculadora de Comisión',
-                stat1: 'Depósitos Verificados',
-                stat2: 'Tiempo Respuesta',
-                stat3: 'Permisos DOB NYC',
-                stat4: 'Costo por Adelantado',
-                featMainTitle: 'Diseñado para el Flujo de Caja Real del Contratista',
-                featMainSub: 'Eliminamos software inútil para enfocar cuadrillas en proyectos comerciales y residenciales de alto margen.',
-                feat1Title: 'Cierre Rápido vía WhatsApp',
-                feat1Desc: 'Propietarios en NYC no abren correos electrónicos. Enviamos cotizaciones y seguimiento en 3 toques bilingües directo a WhatsApp en menos de 90 segundos.',
-                feat2Title: 'Atribución Contra Depósito QuickBooks',
-                feat2Desc: 'Atribución inviolable: lead registrado por proxy/WhatsApp y cerrado dentro de 60 días = atribuido a Socio. Comisión solo al acreditar anticipo 20–30%.',
-                feat3Title: 'Radar de Permisos DOB de NYC',
-                feat3Desc: 'Monitoreamos en tiempo real las emisiones de permisos del DOB NOW / BIS en Queens, Brooklyn, Bronx y Manhattan para contactar propietarios antes que nadie.',
-                calcTitle: 'Calculadora de Comisión por Tramos',
-                calcSliderLabel: 'Valor Total del Contrato de Construcción:',
-                calcRateLabel: 'Tasa Efectiva:',
-                card1T: 'Depósito Estimado (30%)',
-                card2T: 'Comisión Socio',
-                card3T: 'Neto para su Empresa',
-                footTitle: 'La Regla de Oro de Socio',
-                footDesc: 'Si el cliente no deposita el anticipo en su cuenta bancaria comercial, Socio cobra $0.00. Usted mantiene el control total de sus licencias, seguros y cuadrillas.',
-                footCta: 'Hablar con un Operador en NYC',
-            },
-            en: {
-                toggle: 'Español',
-                navCta: 'Launch WhatsApp',
-                heroBadge: 'PROJECT ACQUISITION ENGINE · NYC',
-                headline: 'High-Ticket Renovation & Framing Contracts.<br><span class="text-[#FF5500] underline decoration-safety decoration-4 underline-offset-8">Zero upfront fees. Paid on deposits.</span>',
-                desc: 'Socio deploys a <strong>Bilingual Lead Management System</strong> connecting property owners directly to your WhatsApp. We only earn our commission once the client clears the initial project deposit in QuickBooks.',
-                ctaMain: 'Launch WhatsApp Dispatch',
-                ctaSub: 'Simulate Commission Tiers',
-                stat1: 'Contract Volume',
-                stat2: 'Lead Response Time',
-                stat3: 'DOB Permits Scanned',
-                stat4: 'Upfront Cost',
-                featMainTitle: 'Engineered for Real Contractor Cash Flow',
-                featMainSub: 'No SaaS bloat. Just direct high-ticket renovation and commercial drywall contracts.',
-                feat1Title: 'WhatsApp-First Estimating',
-                feat1Desc: 'Homeowners in NYC ignore email. We deliver 3-touch follow-ups directly to WhatsApp within 90 seconds.',
-                feat2Title: 'QuickBooks Cleared-Deposit Ledger',
-                feat2Desc: 'Performance proof requires cleared bank deposits. Zero fees for lost bids, ghost leads, or delays.',
-                feat3Title: 'NYC DOB Permit Feeds',
-                feat3Desc: 'Ingesting daily DOB NOW filings to identify high-budget additions and full gut renovations across NYC.',
-                calcTitle: 'Tiered Project Commission Simulator',
-                calcSliderLabel: 'Total Construction Contract Value:',
-                calcRateLabel: 'Effective Fee:',
-                card1T: 'Deposit Required (30%)',
-                card2T: 'Socio Commission',
-                card3T: 'Contractor Retained',
-                footTitle: 'The Socio Contractor Pact',
-                footDesc: 'No retainer. No setup fee. If your customer deposit does not clear in your bank account, you pay $0.00.',
-                footCta: 'Speak with an NYC Operator',
-            }
-        };
-
-        function toggleLanguage() {
-            currentLang = currentLang === 'es' ? 'en' : 'es';
-            const t = DICT[currentLang];
-
-            document.getElementById('lang-label').textContent = t.toggle;
-            document.getElementById('nav-cta').textContent = t.navCta;
-            document.getElementById('hero-badge').textContent = t.heroBadge;
-            document.getElementById('hero-headline').innerHTML = t.headline;
-            document.getElementById('hero-desc').innerHTML = t.desc;
-            document.getElementById('hero-cta-main').textContent = t.ctaMain;
-            document.getElementById('hero-cta-sub').textContent = t.ctaSub;
-            document.getElementById('stat-1').textContent = t.stat1;
-            document.getElementById('stat-2').textContent = t.stat2;
-            document.getElementById('stat-3').textContent = t.stat3;
-            document.getElementById('stat-4').textContent = t.stat4;
-            document.getElementById('feat-main-title').textContent = t.featMainTitle;
-            document.getElementById('feat-main-sub').textContent = t.featMainSub;
-            document.getElementById('feat-1-title').textContent = t.feat1Title;
-            document.getElementById('feat-1-desc').textContent = t.feat1Desc;
-            document.getElementById('feat-2-title').textContent = t.feat2Title;
-            document.getElementById('feat-2-desc').textContent = t.feat2Desc;
-            document.getElementById('feat-3-title').textContent = t.feat3Title;
-            document.getElementById('feat-3-desc').textContent = t.feat3Desc;
-            document.getElementById('calc-title').textContent = t.calcTitle;
-            document.getElementById('calc-slider-label').textContent = t.calcSliderLabel;
-            document.getElementById('calc-effective-label').textContent = t.calcRateLabel;
-            document.getElementById('calc-card-1-t').textContent = t.card1T;
-            document.getElementById('calc-card-2-t').textContent = t.card2T;
-            document.getElementById('calc-card-3-t').textContent = t.card3T;
-            document.getElementById('foot-title').textContent = t.footTitle;
-            document.getElementById('foot-desc').textContent = t.footDesc;
-            document.getElementById('foot-cta').textContent = t.footCta;
-        }
-
-        // Tiered Calculation (12% <$10k, 8% $10k-$50k, 5% >$50k)
-        function calculateCommission(val) {
-            let fee = 0;
-            if (val <= 10000) {
-                fee = val * 0.12;
-            } else if (val <= 50000) {
-                fee = (10000 * 0.12) + ((val - 10000) * 0.08);
-            } else {
-                fee = (10000 * 0.12) + (40000 * 0.08) + ((val - 50000) * 0.05);
-            }
-            return fee;
-        }
-
-        const slider = document.getElementById('contract-slider');
-        function updateCalc() {
-            const val = Number(slider.value);
-            const fee = calculateCommission(val);
-            const deposit = val * 0.30;
-            const net = val - fee;
-            const rate = ((fee / val) * 100).toFixed(1);
-
-            document.getElementById('calc-amount-display').textContent = '$' + val.toLocaleString();
-            document.getElementById('calc-deposit-val').textContent = '$' + Math.round(deposit).toLocaleString();
-            document.getElementById('calc-fee-val').textContent = '$' + Math.round(fee).toLocaleString();
-            document.getElementById('calc-net-val').textContent = '$' + Math.round(net).toLocaleString();
-            document.getElementById('calc-rate-val').textContent = rate + '%';
-        }
-
-        slider.addEventListener('input', updateCalc);
-        updateCalc();
-
-        // 48-Hour Leak Scan Generator
-        function runDiagnosticScan(e) {
-            e.preventDefault();
-            const name = document.getElementById('scan-biz-name').value.trim();
-            const borough = document.getElementById('scan-borough').value;
-            const btn = document.getElementById('btn-run-scan');
-
-            btn.disabled = true;
-            btn.innerHTML = '<span class="animate-spin">⏳</span> Analizando...';
-
-            setTimeout(() => {
-                btn.disabled = false;
-                btn.innerHTML = '<i data-lucide="zap" class="w-4 h-4 text-safety"></i><span>Escanear Fugas</span>';
-                
-                document.getElementById('res-biz-title').textContent = name + ' (' + borough + ')';
-                document.getElementById('scan-result-card').classList.remove('hidden');
-                lucide.createIcons();
-                document.getElementById('scan-result-card').scrollIntoView({ behavior: 'smooth' });
-            }, 600);
-        }
-
-        // lucide.js is loaded with defer, so it is not defined yet while this
-        // inline script runs. Deferred scripts finish before DOMContentLoaded,
-        // so wait for that instead of calling createIcons() during parse.
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', function () {
                 if (window.lucide) lucide.createIcons();
@@ -851,9 +250,5 @@
             lucide.createIcons();
         }
     </script>
-
-    <!-- WhatsApp Floating Widget -->
-    <script src="/assets/whatsapp-widget.js" defer></script>
-<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));}</script>
 </body>
 </html>
