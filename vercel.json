@@ -21,11 +21,11 @@
     },
     {
       "src": "/privacy",
-      "dest": "server.js"
+      "dest": "website/privacy.html"
     },
     {
       "src": "/terms",
-      "dest": "server.js"
+      "dest": "website/terms.html"
     },
     {
       "src": "/contratistas/?",

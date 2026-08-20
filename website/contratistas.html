@@ -19,6 +19,7 @@
     
     <!-- Tailwind — compiled self-hosted -->
     <link rel="stylesheet" href="/assets/output.css">
+    <link rel="stylesheet" href="/assets/design-tokens.css">
     
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest" defer></script>
@@ -180,7 +181,7 @@
             <div class="flex items-center gap-4 text-slate-400">
                 <span>Atribución Proxy: <strong class="text-emerald-400 font-bold">Activa</strong></span>
                 <span>•</span>
-                <span>Depósito Acreditable: <strong class="text-orange-400 font-bold">$1zsh.00</strong></span>
+                <span>Costo de Entrada: <strong class="text-orange-400 font-bold">$0.00</strong></span>
             </div>
         </div>
     </div>
@@ -231,7 +232,7 @@
             <a href="/contratistas/casos-de-exito" class="block py-2 hover:text-[#FF5500]">Casos de Éxito</a>
             <a href="/contratistas/radar-de-permisos" class="block py-2 hover:text-[#FF5500]">Radar DOB</a>
             <a href="/contratistas/preguntas-frecuentes" class="block py-2 hover:text-[#FF5500]">Preguntas Frecuentes</a>
-            <a href="#enrollment" class="block py-2 text-[#FF5500]">Abonar Depósito Seguro ($1zsh.00)</a>
+            <a href="#enrollment" class="block py-2 text-[#FF5500]">Activar Piloto con Garantía ($0 Anticipo)</a>
         </div>
     </header>
 
@@ -246,7 +247,7 @@
             <div class="lg:col-span-7 space-y-6">
                 <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-50 border border-orange-200 text-orange-800 text-xs font-mono font-black uppercase tracking-wider">
                     <span class="w-2 h-2 rounded-full bg-[#FF5500] animate-ping"></span>
-                    <span id="hero-badge">ALIANZA DE CRECIMIENTO · DEPÓSITO $1zsh.00 ACREDITABLE</span>
+                    <span id="hero-badge">ALIANZA DE CRECIMIENTO · 0% ANTICIPO · 100% COMISIÓN</span>
                 </div>
 
                 <h1 class="text-4xl sm:text-6xl font-black tracking-tight text-industrial leading-[1.08]" id="hero-headline">
@@ -259,7 +260,7 @@
                         Socio implementa un <strong>Sistema de Gestión de Prospectos Bilingüe</strong> que conecta llamadas y dueños de propiedades directamente a su WhatsApp de manera inmediata.
                     </p>
                     <p class="text-sm text-slate-500 font-mono">
-                        Depósito técnico $1zsh.00 (100% acreditable a comisiones del 10%). Cero cargos fijos — si su cliente no deposita el anticipo en su banco, usted no paga nada. Atribución inviolable de 60 días vía línea proxy registrada.
+                        Depósito técnico $0.00 (100% acreditable a comisiones del 10%). Cero cargos fijos — si su cliente no deposita el anticipo en su banco, usted no paga nada. Atribución inviolable de 60 días vía línea proxy registrada.
                     </p>
                 </div>
 
@@ -307,7 +308,7 @@
                             <i data-lucide="shield-check" class="w-4 h-4"></i>
                             <span class="text-[9px] font-mono text-emerald-600 font-bold bg-emerald-50 px-1 rounded">ACREDITABLE</span>
                         </div>
-                        <div class="text-3xl font-black font-mono text-industrial">$1zsh.00</div>
+                        <div class="text-3xl font-black font-mono text-industrial">$0.00</div>
                         <div class="text-[10px] font-mono font-bold text-slate-500 uppercase tracking-wider mt-1" id="stat-4">Depósito Acreditable</div>
                     </div>
                 </div>
@@ -761,7 +762,7 @@
                   </div>
                   <div class="flex items-center justify-between">
                     <dt class="text-gray-400" style="font-family: 'Geist', 'Inter', sans-serif;">Depósito Reembolsable</dt>
-                    <dd id="summary-subtotal" class="text-gray-200 font-mono" style="font-family: 'Geist', 'Inter', sans-serif;">$1zsh.00</dd>
+                    <dd id="summary-subtotal" class="text-gray-200 font-mono" style="font-family: 'Geist', 'Inter', sans-serif;">$0.00</dd>
                   </div>
                   <div class="flex items-center justify-between">
                     <dt class="text-gray-400" style="font-family: 'Geist', 'Inter', sans-serif;">Descuento / Crédito</dt>
@@ -769,11 +770,11 @@
                   </div>
                   <div class="flex items-center justify-between font-medium pt-2 border-t border-white/10">
                     <dt class="text-white font-bold" style="font-family: 'Geist', 'Inter', sans-serif;">Total a Depositar</dt>
-                    <dd id="summary-total" class="text-white font-black font-mono text-base" style="font-family: 'Geist', 'Inter', sans-serif;">$1zsh.00</dd>
+                    <dd id="summary-total" class="text-white font-black font-mono text-base" style="font-family: 'Geist', 'Inter', sans-serif;">$0.00</dd>
                   </div>
                 </dl>
                 <button type="submit" class="mt-4 inline-flex w-full items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-black bg-gradient-to-r from-[#FF5500] to-orange-500 text-white hover:from-orange-600 hover:to-orange-500 shadow-lg shadow-orange-600/30 transition-all" style="font-family: 'Geist', 'Inter', sans-serif;">
-                  Abonar Depósito Seguro ($1zsh.00 Acreditable)
+                  Activar Piloto con Garantía de 60 Días ($0 Anticipo)
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
                     <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
                     <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
@@ -966,7 +967,7 @@
                 navCta: 'WhatsApp Directo',
                 heroBadge: 'SISTEMA DE ADQUISICIÓN DE PROYECTOS · NYC',
                 headline: 'Más Contratos de Remodelación y Construcción.<br><span class="text-[#FF5500] underline decoration-safety decoration-4 underline-offset-8">Sin cobrarle por adelantado.</span>',
-                desc: 'Socio implementa un <strong>Sistema de Gestión de Prospectos Bilingüe</strong> que conecta llamadas y dueños de propiedades directamente a su WhatsApp. Depósito técnico $1zsh.00 (100% acreditable) + 10% de éxito sobre contratos cerrados. Atribución 60 días vía línea proxy registrada.',
+                desc: 'Socio implementa un <strong>Sistema de Gestión de Prospectos Bilingüe</strong> que conecta llamadas y dueños de propiedades directamente a su WhatsApp. Depósito técnico $0.00 (100% acreditable) + 10% de éxito sobre contratos cerrados. Atribución 60 días vía línea proxy registrada.',
                 ctaMain: 'Cotizar Proyecto por WhatsApp',
                 ctaSub: 'Ver Calculadora de Comisión',
                 stat1: 'Depósitos Verificados',

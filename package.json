@@ -18,7 +18,8 @@
     "verify": "npm run lint && npm run typecheck && npm run test && npm run build",
     "build:css": "tailwindcss -i website/assets/input.css -o website/assets/output.css --minify",
     "build:vite": "vite build",
-    "build:all": "npm run build:css && npm run build"
+    "build:all": "npm run build:css && npm run build",
+    "check:links": "node scripts/check-site-links.mjs"
   },
   "dependencies": {
     "@deepseek-ai/dsh": "^0.1.0-rc.7",
