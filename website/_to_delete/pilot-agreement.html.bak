@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socio · Acuerdo de Piloto de Crecimiento (Contratistas NYC)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800;900&family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        @media print {
+            body { background: #fff; padding: 0; }
+            .no-print { display: none; }
+            @page { margin: 0.8cm; size: letter portrait; }
+        }
+    </style>
+
+    <!-- Canonical & Multilingual SEO -->
+    <link rel="canonical" href="https://socio-one.vercel.app/pilot-agreement">
+    <link rel="alternate" hreflang="en" href="https://socio-one.vercel.app/">
+    <link rel="alternate" hreflang="es" href="https://socio-one.vercel.app/contratistas">
+    <link rel="alternate" hreflang="x-default" href="https://socio-one.vercel.app/">
+
+    <!-- Open Graph & Twitter Cards -->
+    <meta property="og:url" content="https://socio-one.vercel.app/pilot-agreement">
+    <meta property="og:image" content="https://socio-one.vercel.app/assets/hero.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://socio-one.vercel.app/assets/hero.jpg">
+
+    <!-- CDN Preconnects -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://code.iconify.design">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Inicio",
+      "item": "https://socio-one.vercel.app/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Pilot Agreement",
+      "item": "https://socio-one.vercel.app/pilot-agreement"
+    }
+  ]
+}
+    </script>
+</head>
+<body class="bg-slate-100 p-4 md:p-8 flex justify-center text-slate-900">
+
+    <div class="max-w-[850px] w-full bg-white border border-slate-300 rounded-2xl shadow-xl p-8 md:p-10 space-y-6 relative overflow-hidden">
+        
+        <!-- Industrial Stripe -->
+        <div class="absolute top-0 left-0 right-0 h-2.5 bg-gradient-to-r from-yellow-500 via-[#FF5500] to-yellow-500"></div>
+
+        <!-- Header -->
+        <div class="flex justify-between items-start border-b border-slate-200 pb-4">
+            <div>
+                <div class="flex items-center gap-2">
+                    <span class="text-2xl font-black tracking-tight text-slate-900">Socio</span>
+                    <span class="w-1.5 h-1.5 rounded-[1px] bg-[#FF5500] ml-[1.5px] self-end mb-1 inline-block"></span>
+                    <span class="ml-2 px-2.5 py-0.5 rounded-full bg-orange-50 border border-orange-200 text-[10px] font-mono font-black uppercase text-orange-800">
+                        COHORTE PILOTO FUNDADOR (5 CUPOS)
+                    </span>
+                </div>
+                <h1 class="text-lg font-black text-slate-900 mt-1">Acuerdo de Crecimiento Basado en Resultados</h1>
+                <p class="text-xs text-slate-500 font-mono">50% Descuento en Comisión de Piloto · Cero Costo por Adelantado</p>
+            </div>
+            <div class="no-print">
+                <button onclick="window.print()" class="px-4 py-2 bg-slate-900 text-white rounded-xl text-xs font-bold hover:bg-slate-800 transition">
+                    Imprimir Acuerdo (1 Página)
+                </button>
+            </div>
+        </div>
+
+        <!-- Terms Grid -->
+        <div class="space-y-4 text-xs leading-relaxed text-slate-700">
+            
+            <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+                <div class="font-bold text-slate-900 uppercase font-mono text-[11px]">1. La Regla de Oro ($0.00 por Adelantado)</div>
+                <p>El Contratista <strong>NUNCA</strong> pagará tarifas fijas, costos de instalación, ni tarifas por cotizaciones no cerradas. La comisión de Socio se genera <strong>ÚNICAMENTE</strong> cuando el cliente deposita el anticipo del proyecto en la cuenta bancaria comercial del Contratista verificada por QuickBooks.</p>
+            </div>
+
+            <div class="p-3.5 bg-orange-50/70 rounded-xl border border-orange-200 space-y-1">
+                <div class="font-bold text-orange-950 uppercase font-mono text-[11px]">2. Estructura de Comisión de Piloto (50% Descuento)</div>
+                <div class="grid grid-cols-3 gap-2 pt-1 font-mono text-[11px]">
+                    <div class="p-2 bg-white rounded border border-orange-200">
+                        <span class="text-slate-500 block text-[9px]">TRAMO 1 (&lt;$10,000)</span>
+                        <strong class="text-[#FF5500] text-sm">6.0%</strong> <span class="text-[9px] text-slate-400 line-through">12%</span>
+                    </div>
+                    <div class="p-2 bg-white rounded border border-orange-200">
+                        <span class="text-slate-500 block text-[9px]">TRAMO 2 ($10k–$50k)</span>
+                        <strong class="text-[#FF5500] text-sm">4.0%</strong> <span class="text-[9px] text-slate-400 line-through">8%</span>
+                    </div>
+                    <div class="p-2 bg-white rounded border border-orange-200">
+                        <span class="text-slate-500 block text-[9px]">TRAMO 3 (&gt;$50,000)</span>
+                        <strong class="text-[#FF5500] text-sm">2.5%</strong> <span class="text-[9px] text-slate-400 line-through">5%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+                <div class="font-bold text-slate-900 uppercase font-mono text-[11px]">3. Protección de Tope Anual ($40,000 Cap)</div>
+                <p>Una vez que las comisiones pagadas por el Contratista alcancen los <strong>$40,000 USD</strong> en el año calendario, la comisión se reduce automáticamente al <strong>0.0%</strong> y el cliente pasa a una tarifa plana opcional para evitar cobros excesivos.</p>
+            </div>
+
+            <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+                <div class="font-bold text-slate-900 uppercase font-mono text-[11px]">4. Reactivación de Estimados Dormidos (Dead Leads)</div>
+                <p>El Contratista se compromete a compartir fotos de su libreta o lista de presupuestos no cerrados de los últimos 12 meses. Socio desplegará la secuencia de reactivación por WhatsApp sin costo adicional.</p>
+            </div>
+
+        </div>
+
+        <!-- Signature Block (1-Page Fit) -->
+        <div class="pt-4 border-t border-slate-200 grid grid-cols-2 gap-6 text-xs font-mono">
+            <div class="space-y-3">
+                <div class="font-bold text-slate-900">POR EL CONTRATISTA:</div>
+                <div class="space-y-2">
+                    <div>
+                        <span class="text-slate-400 text-[10px] block">Nombre de Empresa / Maestro:</span>
+                        <div class="border-b border-slate-400 h-6"></div>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 text-[10px] block">Firma y Fecha:</span>
+                        <div class="border-b border-slate-400 h-6"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-3">
+                <div class="font-bold text-slate-900">POR SOCIO INC (NYC):</div>
+                <div class="space-y-2">
+                    <div>
+                        <span class="text-slate-400 text-[10px] block">Representante Autorizado:</span>
+                        <div class="font-bold text-slate-800 text-[11px] pt-1">Nick · Socio Growth OS NYC</div>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 text-[10px] block">Firma y Fecha:</span>
+                        <div class="font-bold text-blue-700 text-[11px] pt-1">✓ Socio Verified Performance Partner</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- WhatsApp Floating Widget -->
+    <script src="/assets/whatsapp-widget.js" defer></script>
+</body>
+</html>

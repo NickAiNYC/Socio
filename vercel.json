@@ -76,22 +76,6 @@
       "dest": "website/clinicas.html"
     },
     {
-      "src": "/battlecard/?",
-      "dest": "website/battlecard.html"
-    },
-    {
-      "src": "/competitive-battlecard/?",
-      "dest": "website/competitive-battlecard.html"
-    },
-    {
-      "src": "/field-cheat-sheet/?",
-      "dest": "website/field-cheat-sheet.html"
-    },
-    {
-      "src": "/supplier-briefing/?",
-      "dest": "website/supplier-briefing.html"
-    },
-    {
       "src": "/supply-referral-cards/?",
       "dest": "website/supply-referral-cards.html"
     },

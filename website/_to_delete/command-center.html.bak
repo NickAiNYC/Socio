@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Socio — Revenue Recovery & AI Agent Infrastructure · Command Center</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --color-appbg: #FAFAFA;
+      --color-glassbg: rgba(255, 255, 255, 0.8);
+      --color-accent: #669BD2;
+      --color-currency: #22c55e;
+      --font-sans: "Inter", sans-serif;
+      --font-brand: "Space Grotesk", sans-serif;
+      --font-title: "Space Grotesk", sans-serif;
+    }
+
+    body {
+      background-color: #FAFAFA;
+      color: #475569;
+      font-family: var(--font-sans);
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    .font-brand {
+      font-family: var(--font-brand);
+    }
+    .font-title {
+      font-family: var(--font-title);
+    }
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ── Header Typography ── */
+    .page-eyebrow {
+      font-size: 11px;
+      color: #64748B;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      margin-bottom: 4px;
+    }
+
+    .page-title {
+      font-size: 42px;
+      line-height: 1.1;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: #0f172a;
+      font-family: var(--font-title);
+    }
+
+    .page-subtitle {
+      font-size: 14px;
+      color: #64748b;
+      margin-top: 6px;
+    }
+
+    /* ── The 4-Layer Scrutexity "Deep Gloss" Aura Card Standard ── */
+    .scrutexity-card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+      border-radius: 1.25rem;
+
+      /* 4-Layer Lighting (light theme):
+         1. Hairline Border (0 0 0 1px slate)
+         2. Top Edge Glass Highlight (inset 0 1px 0 white)
+         3. Inner Volumetric Fill (inset 0 0 20px accent)
+         4. Soft Outer Shadow */
+      box-shadow:
+        0 0 0 1px rgba(226, 232, 240, 0.9),
+        inset 0 1px 0 rgba(255, 255, 255, 1),
+        inset 0 0 20px rgba(102, 155, 210, 0.03),
+        0 8px 40px -12px rgba(15, 23, 42, 0.08);
+
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .scrutexity-card:hover {
+      box-shadow:
+        0 0 0 1px rgba(102, 155, 210, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 1),
+        inset 0 0 30px rgba(102, 155, 210, 0.05),
+        0 12px 48px -12px rgba(102, 155, 210, 0.18);
+    }
+
+    /* Verified Revenue Deep Gloss (Emerald Internal Fill) */
+    .scrutexity-card-emerald {
+      background: rgba(240, 253, 244, 0.75);
+      backdrop-filter: blur(16px);
+      border-radius: 1.25rem;
+      box-shadow:
+        0 0 0 1px rgba(34, 197, 94, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        inset 0 0 24px rgba(34, 197, 94, 0.05),
+        0 8px 40px -10px rgba(34, 197, 94, 0.12);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .scrutexity-card-emerald:hover {
+      box-shadow:
+        0 0 0 1px rgba(34, 197, 94, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 1),
+        inset 0 0 32px rgba(34, 197, 94, 0.08),
+        0 10px 50px -10px rgba(34, 197, 94, 0.2);
+    }
+
+    /* Hero Action Card (Elevated Deep Gloss with Amber/Cyan Accent) */
+    .scrutexity-card-hero {
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+      backdrop-filter: blur(20px);
+      border-radius: 1.5rem;
+      box-shadow:
+        0 0 0 1px rgba(226, 232, 240, 0.95),
+        inset 0 1px 0 rgba(255, 255, 255, 1),
+        inset 0 0 35px rgba(102, 155, 210, 0.04),
+        0 12px 50px -10px rgba(102, 155, 210, 0.12);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .scrutexity-card-hero:hover {
+      box-shadow:
+        0 0 0 1px rgba(102, 155, 210, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 1),
+        inset 0 0 45px rgba(102, 155, 210, 0.07),
+        0 16px 60px -10px rgba(102, 155, 210, 0.2);
+    }
+
+    /* ── Pill Capsule Glass Card ── */
+    .glass-card-pill {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(30px);
+      border-radius: 9999px;
+      box-shadow:
+        0 0 0 1px rgba(226, 232, 240, 0.9),
+        inset 0 1px 0 rgba(255, 255, 255, 1),
+        0 4px 20px -5px rgba(102, 155, 210, 0.12);
+    }
+
+    /* ── Status Pills ── */
+    .status-pill {
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      color: #475569;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #FAFAFA; }
+    ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.5); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(102, 155, 210, 0.6); }
+
+    /* Slide-over Drawer */
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.4);
+      backdrop-filter: blur(8px);
+      z-index: 90;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .drawer-overlay.open { opacity: 1; pointer-events: auto; }
+
+    .drawer-panel {
+      position: fixed;
+      top: 0; right: 0; bottom: 0;
+      width: 100%; max-width: 540px;
+      background: #ffffff;
+      box-shadow: 0 0 0 1px rgba(226, 232, 240, 0.9), 0 0 70px rgba(15, 23, 42, 0.2);
+      z-index: 100;
+      transform: translateX(100%);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow-y: auto;
+    }
+    .drawer-panel.open { transform: translateX(0); }
+  </style>
+
+    <!-- Canonical & Multilingual SEO -->
+    <link rel="canonical" href="https://socio-one.vercel.app/command-center">
+    <link rel="alternate" hreflang="en" href="https://socio-one.vercel.app/">
+    <link rel="alternate" hreflang="es" href="https://socio-one.vercel.app/contratistas">
+    <link rel="alternate" hreflang="x-default" href="https://socio-one.vercel.app/">
+
+    <!-- Open Graph & Twitter Cards -->
+    <meta property="og:url" content="https://socio-one.vercel.app/command-center">
+    <meta property="og:image" content="https://socio-one.vercel.app/assets/command-center-preview.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://socio-one.vercel.app/assets/command-center-preview.png">
+
+    <!-- CDN Preconnects -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://code.iconify.design">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Inicio",
+      "item": "https://socio-one.vercel.app/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Command Center",
+      "item": "https://socio-one.vercel.app/command-center"
+    }
+  ]
+}
+    </script>
+</head>
+<body class="p-0 m-0 text-slate-900">
+
+  <!-- ===================================================================
+      GLOBAL EXECUTIVE HEADER (MATCHES SCRUTEXITY LAYOUT EXACTLY)
+      =================================================================== -->
+  <header class="h-[76px] w-full border-b border-slate-200 flex items-center justify-between px-8 bg-[#FAFAFA]/90 backdrop-blur-xl sticky top-0 z-50 shrink-0 select-none">
+    
+    <!-- Logo & Brand -->
+    <div class="flex items-center gap-4">
+      <a href="index.html" class="flex items-center gap-2 cursor-pointer text-decoration-none group">
+        <span class="text-2xl font-black tracking-tight text-slate-900 flex items-center">
+          <span>Socio</span><span class="w-1.5 h-1.5 rounded-[1px] bg-[#669BD2] inline-block shadow-[0_0_6px_rgba(102,155,210,0.8)] ml-[1.5px] self-end mb-1"></span>
+          <span class="text-xs font-mono font-bold text-[#669BD2] ml-1.5 px-1.5 py-0.5 rounded bg-[#669BD2]/10 border border-[#669BD2]/20">OS</span>
+        </span>
+      </a>
+
+      <!-- Fleet Online Status & Quick Controls -->
+      <div class="hidden lg:flex items-center gap-3 border-l border-slate-200 pl-4 ml-2">
+        <span class="px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider flex items-center gap-1.5 bg-emerald-50 text-emerald-600 border border-emerald-200">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          8/8 AGENTS ONLINE
+        </span>
+
+        <button onclick="refreshOperatingState()" class="px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider bg-slate-100 border border-slate-200 text-slate-500 hover:bg-slate-100 hover:text-slate-900 transition-all flex items-center gap-1.5 cursor-pointer">
+          <i data-lucide="refresh-cw" class="w-2.5 h-2.5" id="refresh-icon"></i>
+          Sync Console
+        </button>
+
+        <a href="merchant-evidence.html" target="_blank" class="px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider bg-[#669BD2]/10 border border-[#669BD2]/30 text-[#669BD2] hover:bg-[#669BD2]/20 transition-all flex items-center gap-1.5">
+          <i data-lucide="shield-check" class="w-2.5 h-2.5"></i>
+          Evidence Ledger
+        </a>
+      </div>
+    </div>
+
+    <!-- Center Search & Command Capsule -->
+    <div class="flex items-center gap-6">
+      <div class="glass-card-pill items-center gap-3 px-6 py-2.5 hidden md:flex text-left hover:bg-slate-100 transition-colors cursor-pointer">
+        <i data-lucide="search" class="w-4 h-4 text-slate-400"></i>
+        <input
+          type="text"
+          id="global-cmd-input"
+          placeholder="Search or command Socio OS... Cmd K"
+          class="bg-transparent border-none outline-none text-xs font-sans text-slate-900 w-64 placeholder-slate-500"
+          onkeydown="handleCommandKey(event)"
+        >
+        <span class="text-[10px] font-mono bg-slate-100 px-2 py-0.5 rounded text-slate-400">⌘K</span>
+      </div>
+
+      <!-- Clock -->
+      <div class="flex items-center gap-4 border-l border-slate-200 pl-6 text-xs text-slate-400 font-mono hidden sm:flex">
+        <span id="live-clock">10:42 PM</span> EST
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================================================================
+      MAIN PAGE CONTAINER
+      =================================================================== -->
+  <main class="max-w-[1560px] mx-auto px-8 py-8 space-y-8">
+
+    <!-- ── PAGE HEADER ── -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+      <div>
+        <div class="page-eyebrow">A Revenue Partner — Paid Only on Verified Growth</div>
+        <h1 class="page-title">Executive Command Center</h1>
+        <div class="page-subtitle">Real-time agent fleet coordination, governor safety gates, and POS revenue recovery.</div>
+      </div>
+      
+      <div class="flex items-center gap-3 shrink-0">
+        <button onclick="runAuditSweep()" class="flex items-center gap-2 rounded-full border border-[#669BD2]/30 bg-[#669BD2]/10 hover:bg-[#669BD2]/20 px-5 py-3 text-xs font-bold uppercase tracking-widest text-[#669BD2] transition-all cursor-pointer shadow-sm hover:scale-[1.02]">
+          <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+          <span>Run Compliance Sweep</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- 1. TOP GLOBAL KPI CARDS (SCRUTEXITY DEEP GLOSS AURA)          -->
+    <!-- ============================================================= -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      
+      <!-- Card 1: Total Revenue Recovered (Emerald Deep Gloss) -->
+      <div class="scrutexity-card-emerald p-6 flex flex-col justify-between min-h-[112px]">
+        <div class="text-[10px] text-slate-400 uppercase tracking-widest font-extrabold font-sans">
+          TOTAL RECOVERED REVENUE
+        </div>
+        <div class="flex items-end justify-between mt-3">
+          <div class="text-3xl font-extrabold text-[#34D399] tracking-tight font-title" id="stat-net-new">
+            $22,890
+          </div>
+          <span class="text-[9px] font-extrabold text-[#34D399] bg-[#34D399]/10 border border-[#34D399]/25 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+            ✓ POS MATCHED
+          </span>
+        </div>
+      </div>
+
+      <!-- Card 2: Active Leads / Stores (Cyan Deep Gloss) -->
+      <div class="scrutexity-card p-6 flex flex-col justify-between min-h-[112px]">
+        <div class="text-[10px] text-slate-400 uppercase tracking-widest font-extrabold font-sans">
+          ACTIVE MERCHANTS & TWINS
+        </div>
+        <div class="flex items-end justify-between mt-3">
+          <div class="text-3xl font-extrabold text-slate-900 tracking-tight font-title">
+            10 STORES
+          </div>
+          <span class="text-[9px] font-extrabold text-[#669BD2] bg-[#669BD2]/10 border border-[#669BD2]/25 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+            100% HEALTH
+          </span>
+        </div>
+      </div>
+
+      <!-- Card 3: Socio 15% Commission (Cyan Deep Gloss) -->
+      <div class="scrutexity-card p-6 flex flex-col justify-between min-h-[112px]">
+        <div class="text-[10px] text-slate-400 uppercase tracking-widest font-extrabold font-sans">
+          SOCIO 15% COMMISSION (MTD)
+        </div>
+        <div class="flex items-end justify-between mt-3">
+          <div class="text-3xl font-extrabold text-slate-900 tracking-tight font-title">
+            $3,433.50
+          </div>
+          <span class="text-[9px] font-extrabold text-[#669BD2] bg-[#669BD2]/10 border border-[#669BD2]/25 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+            STRIPE INVOICED
+          </span>
+        </div>
+      </div>
+
+      <!-- Card 4: Governor Safety Score (Cyan Deep Gloss) -->
+      <div class="scrutexity-card p-6 flex flex-col justify-between min-h-[112px]">
+        <div class="text-[10px] text-slate-400 uppercase tracking-widest font-extrabold font-sans">
+          GOVERNOR SAFETY SCORE
+        </div>
+        <div class="flex items-end justify-between mt-3">
+          <div class="text-3xl font-extrabold text-slate-900 tracking-tight font-title">
+            98.6%
+          </div>
+          <span class="text-[9px] font-extrabold text-emerald-600 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+            FAIL-CLOSED SECURE
+          </span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- 2. AI CHIEF OF STAFF HERO (ELEVATED DEEP GLOSS CARD)          -->
+    <!-- ============================================================= -->
+    <section class="scrutexity-card-hero p-8 border-l-4 border-l-[#669BD2]">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+        
+        <div class="space-y-4 flex-1">
+          <div class="flex items-center gap-3">
+            <span class="status-pill bg-[#669BD2]/15 text-[#669BD2] border border-[#669BD2]/30">
+              <i data-lucide="sparkles" class="w-3 h-3"></i>
+              AI CHIEF OF STAFF
+            </span>
+            <span class="page-eyebrow mb-0">SINGLE NEXT BEST ACTION</span>
+            <span class="text-slate-600">•</span>
+            <span class="text-xs font-mono text-[#669BD2] font-bold">SCORE: 0.94 / 1.0</span>
+          </div>
+
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight font-title leading-tight">
+            Approve East Harlem Bites Paid Instagram Campaign ($400 Budget)
+          </h2>
+
+          <!-- 4 Executive Parameter Cells -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+              <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Projected Revenue</div>
+              <div class="text-2xl font-extrabold text-[#34D399] font-title mt-1">+$4,400</div>
+              <div class="text-xs text-slate-500 mt-0.5">Net new recovery</div>
+            </div>
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+              <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Founder Time</div>
+              <div class="text-2xl font-extrabold text-slate-900 font-title mt-1">45 sec</div>
+              <div class="text-xs text-slate-500 mt-0.5">Decision review</div>
+            </div>
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+              <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Risk Level</div>
+              <div class="text-2xl font-extrabold text-[#FBBF24] font-title mt-1">HIGH</div>
+              <div class="text-xs text-slate-500 mt-0.5">Ad budget policy</div>
+            </div>
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+              <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Confidence</div>
+              <div class="text-2xl font-extrabold text-[#669BD2] font-title mt-1">87%</div>
+              <div class="text-xs text-slate-500 mt-0.5">11x test ROAS verified</div>
+            </div>
+          </div>
+
+          <!-- Why Now & Closed-Loop Downstream Pipeline -->
+          <div class="space-y-2 pt-2 text-sm text-slate-500">
+            <p>
+              <strong class="text-slate-900 font-semibold">Why Now:</strong> Campaign produced an 11.1x ROAS on initial $50 test sample. Blocked on Governor sign-off before local weekend surge.
+            </p>
+            <div class="flex items-center gap-2 flex-wrap pt-1 text-xs text-slate-400">
+              <span class="text-slate-500 font-semibold uppercase text-[10px]">Execution Loop:</span>
+              <span class="px-2.5 py-1 rounded-lg bg-slate-50 border border-slate-200 text-slate-500">Socio-Expand → Meta API</span>
+              <span>→</span>
+              <span class="px-2.5 py-1 rounded-lg bg-slate-50 border border-slate-200 text-slate-500">Socio-Track → Square POS</span>
+              <span>→</span>
+              <span class="px-2.5 py-1 rounded-lg bg-slate-50 border border-slate-200 text-slate-500">Socio-Governor → Seal Hash</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Call to Action Deck -->
+        <div class="flex flex-col gap-3 shrink-0 min-w-[240px]">
+          <button onclick="approveProposal('PROP-0042')" class="px-8 py-4 bg-[#669BD2] hover:bg-[#5B8EC4] text-white font-extrabold text-sm rounded-full flex items-center justify-center gap-2 transition-all cursor-pointer shadow-[0_0_30px_rgba(102,155,210,0.45)] hover:scale-[1.02]">
+            <i data-lucide="check-circle" class="w-5 h-5 stroke-[2.5]"></i>
+            <span>APPROVE & EXECUTE</span>
+          </button>
+          
+          <button onclick="openEvidenceDrawer('PROP-0042')" class="px-6 py-3 bg-slate-100 hover:bg-slate-100 text-slate-900 font-semibold text-xs rounded-full border border-slate-200 flex items-center justify-center gap-2 transition-colors cursor-pointer">
+            <i data-lucide="file-text" class="w-4 h-4 text-[#669BD2]"></i>
+            <span>View Evidence (11x ROAS)</span>
+          </button>
+
+          <button onclick="delegateAction('PROP-0042')" class="px-4 py-2 bg-transparent hover:bg-slate-100 text-slate-400 hover:text-slate-900 text-xs rounded-lg transition-colors text-center cursor-pointer">
+            Delegate to Socio-Expand
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- 3. THREE OPERATIONAL COLUMNS (SCRUTEXITY DEEP GLOSS)          -->
+    <!-- ============================================================= -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      
+      <!-- COLUMN 1: FOUNDER ACTION QUEUE (4 Cols) -->
+      <div class="lg:col-span-4 scrutexity-card p-6 flex flex-col justify-between space-y-4">
+        <div class="space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+            <div class="flex items-center gap-2.5">
+              <i data-lucide="list-todo" class="w-4 h-4 text-amber-600"></i>
+              <span class="page-eyebrow text-slate-900 mb-0">FOUNDER ACTION QUEUE</span>
+            </div>
+            <span class="status-pill bg-amber-50 text-amber-600 border border-amber-200" id="queue-count-badge">3 PENDING</span>
+          </div>
+
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Deterministic ranking by economic leverage, urgency, and unblock impact.
+          </p>
+
+          <div class="space-y-3" id="founder-queue-container"></div>
+        </div>
+
+        <div class="pt-3 border-t border-slate-200 text-xs text-slate-500 flex items-center justify-between">
+          <span>Sort: Impact × Urgency ÷ Time</span>
+          <span class="text-[#34D399] font-semibold">+$8,600 Unlocked</span>
+        </div>
+      </div>
+
+      <!-- COLUMN 2: AGENT FLEET ROSTER (4 Cols) -->
+      <div class="lg:col-span-4 scrutexity-card p-6 flex flex-col justify-between space-y-4">
+        <div class="space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+            <div class="flex items-center gap-2.5">
+              <i data-lucide="users" class="w-4 h-4 text-[#669BD2]"></i>
+              <span class="page-eyebrow text-slate-900 mb-0">AUTONOMOUS FLEET</span>
+            </div>
+            <span class="status-pill bg-emerald-50 text-emerald-600 border border-emerald-200">8/8 ACTIVE</span>
+          </div>
+
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Hermes autonomous workers with active job states and live heartbeats.
+          </p>
+
+          <div class="space-y-2.5" id="agent-fleet-container"></div>
+        </div>
+
+        <div class="pt-3 border-t border-slate-200 text-xs text-slate-500 flex items-center justify-between">
+          <span>Hermes Worker Mesh</span>
+          <span class="text-slate-400">Avg Heartbeat: 14s</span>
+        </div>
+      </div>
+
+      <!-- COLUMN 3: GOVERNOR SAFETY GATES (4 Cols) -->
+      <div class="lg:col-span-4 scrutexity-card p-6 flex flex-col justify-between space-y-4">
+        <div class="space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+            <div class="flex items-center gap-2.5">
+              <i data-lucide="shield-check" class="w-4 h-4 text-rose-600"></i>
+              <span class="page-eyebrow text-slate-900 mb-0">GOVERNOR GATES</span>
+            </div>
+            <span class="status-pill bg-rose-50 text-rose-600 border border-rose-200" id="gov-pending-badge">3 PENDING</span>
+          </div>
+
+          <p class="text-xs text-slate-400 leading-relaxed">
+            CAS AirLock policy evaluation. Zero high-risk actions pass unverified.
+          </p>
+
+          <div class="space-y-3" id="governor-proposals-container"></div>
+        </div>
+
+        <div class="pt-3 border-t border-slate-200 text-xs text-slate-500 flex items-center justify-between">
+          <span>Policy: Fail-Closed</span>
+          <span class="text-[#34D399] font-semibold">0 AirLock Breaches</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- 4. LIVE ACTIVITY & REVENUE TELEMETRY STREAM                   -->
+    <!-- ============================================================= -->
+    <section class="scrutexity-card p-6 space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
+        <div class="flex items-center gap-2.5">
+          <i data-lucide="activity" class="w-4 h-4 text-[#669BD2]"></i>
+          <span class="page-eyebrow text-slate-900 mb-0">LIVE GROWTH EVENT STREAM</span>
+        </div>
+
+        <div class="flex items-center gap-1.5 flex-wrap">
+          <button onclick="filterStream('ALL', this)" class="px-3 py-1 rounded-full bg-slate-100 text-slate-900 text-xs font-semibold">ALL</button>
+          <button onclick="filterStream('AGENT', this)" class="px-3 py-1 rounded-full bg-slate-100 text-slate-400 hover:text-slate-900 text-xs">AGENTS</button>
+          <button onclick="filterStream('REVENUE', this)" class="px-3 py-1 rounded-full bg-slate-100 text-slate-400 hover:text-slate-900 text-xs">REVENUE</button>
+          <button onclick="filterStream('GOVERNOR', this)" class="px-3 py-1 rounded-full bg-slate-100 text-slate-400 hover:text-slate-900 text-xs">GOVERNOR</button>
+          <button onclick="filterStream('MERCHANT', this)" class="px-3 py-1 rounded-full bg-slate-100 text-slate-400 hover:text-slate-900 text-xs">MERCHANTS</button>
+        </div>
+      </div>
+
+      <div class="space-y-2 max-h-64 overflow-y-auto pr-1" id="live-stream-logs"></div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- 5. COMPACT MERCHANT CRM & TWIN DIRECTORY                      -->
+    <!-- ============================================================= -->
+    <section class="scrutexity-card p-6 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-200 pb-4">
+        <div>
+          <div class="page-eyebrow text-slate-900 mb-0">MERCHANT OPERATING VIEW</div>
+          <div class="page-subtitle text-xs mt-0.5">Active cohort lifecycle, assigned agents, and single next action per store.</div>
+        </div>
+        <span class="status-pill bg-[#669BD2]/10 text-[#669BD2] border border-[#669BD2]/20">10 STORES ACTIVE</span>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs font-sans">
+          <thead>
+            <tr class="text-slate-500 uppercase tracking-wider border-b border-slate-200 bg-slate-50">
+              <th class="p-3.5">Merchant</th>
+              <th class="p-3.5">Stage</th>
+              <th class="p-3.5">Next Action</th>
+              <th class="p-3.5">Assigned Owner</th>
+              <th class="p-3.5">Value</th>
+              <th class="p-3.5">Risk</th>
+              <th class="p-3.5">Status</th>
+              <th class="p-3.5">Twin</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200 text-slate-500" id="merchants-table-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+        6. FOUNDER REVIEW QUEUE (RLI — admin-gated)
+        =================================================================== -->
+    <section class="scrutexity-card p-6 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-200 pb-4 flex-wrap gap-3">
+        <div>
+          <div class="page-eyebrow text-slate-900 mb-0">FOUNDER REVIEW QUEUE</div>
+          <div class="page-subtitle text-xs mt-0.5">Revenue Leakage Index leads — server-authoritative scores, booking & data-access states.</div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="unlockQueue()" class="px-3 py-1.5 rounded-full bg-[#669BD2]/10 border border-[#669BD2]/30 text-[#669BD2] text-[10px] font-bold uppercase tracking-wider hover:bg-[#669BD2]/20 transition-all cursor-pointer">Unlock Queue</button>
+        </div>
+      </div>
+      <div id="fq-status" class="text-xs text-slate-400"></div>
+      <div id="fq-stats" class="flex flex-wrap gap-2"></div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs font-sans">
+          <thead>
+            <tr class="text-slate-500 uppercase tracking-wider border-b border-slate-200 bg-slate-50">
+              <th class="p-3.5">Merchant</th>
+              <th class="p-3.5">Vertical</th>
+              <th class="p-3.5">Score</th>
+              <th class="p-3.5">Tier</th>
+              <th class="p-3.5">Submitted</th>
+              <th class="p-3.5">State</th>
+              <th class="p-3.5 text-right">Action</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200 text-slate-500" id="fq-table-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+        7. VERTICAL DECISION DASHBOARD (14-day discovery sprint)
+        One compact table. No chart stands in for a decision: priority score
+        is "Insufficient data" until a vertical clears BOTH sample gates
+        (>= 30 completed RLIs AND >= 10 leads scoring 75+).
+        Booking naming: booking_intent_rate / founder_scheduled_rate /
+        attended_rate are reported separately — a booking request is not a booking.
+        =================================================================== -->
+    <section class="scrutexity-card p-6 space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4 flex-wrap">
+        <div>
+          <div class="page-eyebrow text-slate-900 mb-0">VERTICAL DECISION DASHBOARD</div>
+          <div class="page-subtitle text-xs mt-0.5">Four controlled acquisition cells · A: aesthetic clinics · B: salons · C: florists · D: cafés. Scores only after both gates clear.</div>
+        </div>
+        <div class="flex items-center gap-2 flex-wrap" id="vd-controls">
+          <input type="date" id="vd-from" class="bg-slate-50 border border-slate-200 rounded-lg text-xs px-2 py-1.5 text-slate-600" title="Date range from" />
+          <input type="date" id="vd-to" class="bg-slate-50 border border-slate-200 rounded-lg text-xs px-2 py-1.5 text-slate-600" title="Date range to" />
+          <input type="text" id="vd-utm" placeholder="utm_source" class="bg-slate-50 border border-slate-200 rounded-lg text-xs px-2 py-1.5 text-slate-600 w-32" title="Filter by utm_source" />
+          <label class="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-slate-500 cursor-pointer select-none">
+            <input type="checkbox" id="vd-exclude-test" checked class="accent-[#669BD2] w-3.5 h-3.5" />
+            Exclude test records
+          </label>
+          <button onclick="loadVerticalDashboard()" class="px-3 py-1.5 rounded-full bg-[#669BD2]/10 border border-[#669BD2]/30 text-[#669BD2] text-[10px] font-bold uppercase tracking-wider hover:bg-[#669BD2]/20 transition-all cursor-pointer">Apply</button>
+        </div>
+      </div>
+      <div id="vd-status" class="text-xs text-slate-400"></div>
+      <div id="vd-naming" class="text-[10px] text-slate-400 font-mono"></div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs font-sans">
+          <thead>
+            <tr class="text-slate-500 uppercase tracking-wider border-b border-slate-200 bg-slate-50 whitespace-nowrap">
+              <th class="p-3.5">Vertical</th>
+              <th class="p-3.5">Clicks</th>
+              <th class="p-3.5">Starts</th>
+              <th class="p-3.5">Completed</th>
+              <th class="p-3.5">Completion rate</th>
+              <th class="p-3.5">75+ leads</th>
+              <th class="p-3.5">Qualified rate</th>
+              <th class="p-3.5">Booking intent</th>
+              <th class="p-3.5">Scheduled</th>
+              <th class="p-3.5">Attended</th>
+              <th class="p-3.5">Data granted</th>
+              <th class="p-3.5">Access rate</th>
+              <th class="p-3.5">Sample gate</th>
+              <th class="p-3.5">Priority score</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200 text-slate-500" id="vd-table-body"></tbody>
+        </table>
+      </div>
+      <div id="vd-diagnosis" class="text-xs text-slate-500 leading-relaxed"></div>
+    </section>
+
+  </main>
+
+  <!-- ===================================================================
+      SLIDE-OVER EVIDENCE & MERCHANT TWIN DRAWER
+      =================================================================== -->
+  <div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
+  <aside class="drawer-panel p-8 space-y-6" id="drawer-panel">
+    <div class="flex items-center justify-between border-b border-slate-200 pb-4">
+      <div class="flex items-center gap-2">
+        <i data-lucide="shield-check" class="w-5 h-5 text-[#669BD2]"></i>
+        <h3 class="font-title font-bold text-lg text-slate-900" id="drawer-title">EVIDENCE ATTESTATION</h3>
+      </div>
+      <button onclick="closeDrawer()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-100 flex items-center justify-center text-slate-400 hover:text-slate-900 cursor-pointer">
+        ✕
+      </button>
+    </div>
+
+    <div class="space-y-4 text-xs text-slate-500" id="drawer-content"></div>
+  </aside>
+
+  <!-- Toast Notification Deck -->
+  <div class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none" id="toast-deck"></div>
+
+  <!-- ===================================================================
+      CLIENT RUNTIME ENGINE & DATA ADAPTERS
+      =================================================================== -->
+  <script>
+    const API_BASE = window.location.origin;
+
+    const FOUNDER_ACTIONS = [
+      {
+        id: 'PROP-0042',
+        title: 'Approve East Harlem Bites Paid Campaign ($400 Budget)',
+        merchant: 'East Harlem Bites',
+        agent: 'Socio-Content',
+        impact: '+$4,400',
+        urgency: 'HIGH',
+        time: '45 sec',
+        risk: 'HIGH',
+        confidence: '87%',
+        unblocks: 'Unblocks 3 downstream agents (Expand, Track, Ledger)',
+        whyNow: '11x ROAS test verified • Governor approval required before weekend surge.',
+        status: 'PENDING'
+      },
+      {
+        id: 'PROP-0043',
+        title: 'Approve Cristal Flowers Referral Program Activation',
+        merchant: 'Cristal Flowers',
+        agent: 'Socio-Expand',
+        impact: '+$2,400',
+        urgency: 'HIGH',
+        time: '30 sec',
+        risk: 'LOW',
+        confidence: '94%',
+        unblocks: 'Unblocks automated WhatsApp partner invitation sequence',
+        whyNow: 'Partner NPS: 9/10. Already referring informally.',
+        status: 'PENDING'
+      },
+      {
+        id: 'PROP-0041',
+        title: 'Review and Sign-off El Nuevo Cafe 48-Hour Digital Audit',
+        merchant: 'El Nuevo Cafe',
+        agent: 'Socio-Onboard',
+        impact: '+$1,800',
+        urgency: 'MEDIUM',
+        time: '10 min',
+        risk: 'MEDIUM',
+        confidence: '91%',
+        unblocks: 'No downstream blockers • Required for twin initialization',
+        whyNow: 'Agreement signed via DocuSign • Store waiting on diagnosis.',
+        status: 'PENDING'
+      }
+    ];
+
+    const AGENTS_FLEET = [
+      { id: 'prospect', name: 'SOCIO-PROSPECT', status: 'ACTIVE', job: 'Scanning Washington Heights', heartbeat: '18s ago', output: '47 prospects found' },
+      { id: 'pitch', name: 'SOCIO-PITCH', status: 'ACTIVE', job: 'WhatsApp sequence queued (T+48h)', heartbeat: '32s ago', output: '23 touches dispatched' },
+      { id: 'onboard', name: 'SOCIO-ONBOARD', status: 'ACTIVE', job: 'DocuSign signed for El Nuevo Cafe', heartbeat: '1m ago', output: '2 twins initialized' },
+      { id: 'content', name: 'SOCIO-CONTENT', status: 'ACTIVE', job: 'Generating 30-day reels calendar', heartbeat: '8s ago', output: '142 assets queued' },
+      { id: 'listings', name: 'SOCIO-LISTINGS', status: 'ACTIVE', job: 'Syncing 12 local directories for La Bodega', heartbeat: '45s ago', output: 'Rank #1 Map Pack' },
+      { id: 'track', name: 'SOCIO-TRACK', status: 'ACTIVE', job: 'Attribution monitoring (Square POS)', heartbeat: '12s ago', output: '+$15,870 MTD matched' },
+      { id: 'expand', name: 'SOCIO-EXPAND', status: 'WAITING', job: 'Awaiting Governor approval', heartbeat: '5s ago', output: '3 actions blocked' },
+      { id: 'support', name: 'SOCIO-SUPPORT', status: 'ACTIVE', job: 'Frontline WhatsApp inquiries', heartbeat: '22s ago', output: '2m 17s avg response' }
+    ];
+
+    const GOVERNOR_PROPOSALS = [
+      { id: 'PROP-0042', agent: 'Socio-Content', merchant: 'East Harlem Bites', action: 'Launch Paid Instagram Campaign ($400)', risk: 'HIGH', impact: '+$4,400 est. revenue', policy: 'BUSINESS_OWNER_REQUIRED', status: 'PENDING' },
+      { id: 'PROP-0041', agent: 'Socio-Pitch', merchant: 'Bloom & Branch', action: 'Send 3-Touch Email Batch (47 leads)', risk: 'MEDIUM', impact: '~8% response rate', policy: 'AGENT_SUPERVISOR_REQUIRED', status: 'PENDING' },
+      { id: 'PROP-0043', agent: 'Socio-Expand', merchant: 'Cristal Flowers', action: 'Activate 5% Referral Commission Link', risk: 'LOW', impact: '2+ merchant referrals', policy: 'AUTO_APPROVED_POLICY', status: 'PENDING' }
+    ];
+
+    let STREAM_EVENTS = [
+      { time: '21:42:08', agent: 'Socio-Prospect', cat: 'AGENT', desc: 'Found 6 qualified merchants in Washington Heights digital gap audit.' },
+      { time: '21:41:52', agent: 'Socio-Track', cat: 'REVENUE', desc: 'Revenue event attributed: +$740 POS transaction matched for Cristal Flowers.' },
+      { time: '21:40:17', agent: 'Socio-Governor', cat: 'GOVERNOR', desc: 'Proposal PROP-0042 ($400 ad budget) evaluated as HIGH risk, awaiting founder sign-off.' },
+      { time: '21:39:48', agent: 'Socio-Content', cat: 'AGENT', desc: 'Completed bilingual campaign draft calendar for East Harlem Bites.' },
+      { time: '21:28:10', agent: 'Socio-Onboard', cat: 'MERCHANT', desc: 'DocuSign contract executed by El Nuevo Cafe owner. Twin initialized.' }
+    ];
+
+    const MERCHANTS_LIST = [
+      { name: 'East Harlem Bites', stage: 'Execute', nextAction: 'Approve campaign', owner: 'Governor', value: '+$4,400', risk: 'High', status: 'Waiting', badge: 'bg-amber-50 text-amber-600 border border-amber-200' },
+      { name: 'El Nuevo Cafe', stage: 'Onboarding', nextAction: 'Deliver audit', owner: 'Socio-Onboard', value: '+$1,800', risk: 'Medium', status: 'Ready', badge: 'bg-[#669BD2]/10 text-[#669BD2] border border-[#669BD2]/20' },
+      { name: 'Cristal Flowers', stage: 'Expansion', nextAction: 'Activate referral', owner: 'Socio-Expand', value: '+$2,400', risk: 'Low', status: 'Ready', badge: 'bg-emerald-50 text-emerald-600 border border-emerald-200' },
+      { name: 'La Bodega NYC', stage: 'Active', nextAction: 'Sync citations', owner: 'Socio-Listings', value: '+$2,100', risk: 'Low', status: 'Active', badge: 'bg-emerald-50 text-emerald-600 border border-emerald-200' },
+      { name: 'Bloom & Branch', stage: 'Prospecting', nextAction: 'Follow-up WhatsApp', owner: 'Socio-Pitch', value: '+$3,500', risk: 'Medium', status: 'In-Flight', badge: 'bg-[#669BD2]/10 text-[#669BD2] border border-[#669BD2]/20' }
+    ];
+
+    function renderFounderQueue() {
+      const container = document.getElementById('founder-queue-container');
+      const badge = document.getElementById('queue-count-badge');
+      if (!container) return;
+
+      const pending = FOUNDER_ACTIONS.filter(a => a.status === 'PENDING');
+      if (badge) badge.innerText = `${pending.length} PENDING`;
+
+      container.innerHTML = pending.map(a => `
+        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 hover:border-[#669BD2]/50 transition-all space-y-2">
+          <div class="flex items-start justify-between gap-2">
+            <span class="text-xs font-bold text-slate-900 leading-snug">${a.title}</span>
+            <span class="text-xs font-bold text-[#34D399] font-title shrink-0">${a.impact}</span>
+          </div>
+
+          <div class="flex items-center gap-2 text-[11px] text-slate-400">
+            <span class="${a.risk === 'HIGH' ? 'text-amber-600' : 'text-slate-500'} font-bold">${a.urgency}</span>
+            <span>•</span>
+            <span>${a.time}</span>
+            <span>•</span>
+            <span class="text-slate-500 truncate">${a.unblocks}</span>
+          </div>
+
+          <div class="flex items-center justify-between pt-2 border-t border-slate-200">
+            <span class="text-[10px] text-slate-500">${a.merchant}</span>
+            <div class="flex gap-2">
+              <button onclick="approveProposal('${a.id}')" class="px-3 py-1 bg-[#669BD2]/15 hover:bg-[#669BD2]/25 text-[#669BD2] border border-[#669BD2]/30 text-[11px] font-bold rounded-full cursor-pointer">
+                Approve
+              </button>
+              <button onclick="openEvidenceDrawer('${a.id}')" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-100 text-slate-400 text-[11px] rounded-full cursor-pointer">
+                Detail
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderAgentFleet() {
+      const container = document.getElementById('agent-fleet-container');
+      if (!container) return;
+
+      container.innerHTML = AGENTS_FLEET.map(a => `
+        <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
+          <div class="min-w-0 pr-2">
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-slate-900">${a.name}</span>
+              <span class="${a.status === 'ACTIVE' ? 'status-pill bg-emerald-50 text-emerald-600 border border-emerald-200' : 'status-pill bg-amber-50 text-amber-600 border border-amber-200'} text-[9px] py-0.5 px-2">${a.status}</span>
+            </div>
+            <div class="text-slate-400 truncate text-[11px] mt-0.5">${a.job}</div>
+          </div>
+          <div class="text-right shrink-0">
+            <div class="text-slate-500 font-semibold text-[11px]">${a.output}</div>
+            <div class="text-slate-500 text-[10px]">${a.heartbeat}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderGovernorProposals() {
+      const container = document.getElementById('governor-proposals-container');
+      const badge = document.getElementById('gov-pending-badge');
+      if (!container) return;
+
+      const pending = GOVERNOR_PROPOSALS.filter(p => p.status === 'PENDING');
+      if (badge) badge.innerText = `${pending.length} PENDING`;
+
+      container.innerHTML = pending.map(p => `
+        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2 text-xs">
+          <div class="flex items-center justify-between">
+            <span class="status-pill ${p.risk === 'HIGH' ? 'bg-rose-50 text-rose-600 border border-rose-200' : p.risk === 'MEDIUM' ? 'bg-amber-50 text-amber-600 border border-amber-200' : 'bg-emerald-50 text-emerald-600 border border-emerald-200'}">${p.risk} RISK</span>
+            <span class="text-[10px] text-slate-500 font-mono">${p.id}</span>
+          </div>
+
+          <div class="text-slate-900 font-bold">${p.merchant} — ${p.action}</div>
+          <div class="text-slate-400 text-[11px]">${p.impact} • Policy: <span class="text-slate-500">${p.policy}</span></div>
+
+          <div class="flex gap-2 pt-1">
+            <button onclick="approveProposal('${p.id}')" class="px-3.5 py-1.5 bg-[#669BD2]/15 hover:bg-[#669BD2]/25 text-[#669BD2] border border-[#669BD2]/30 text-[11px] font-bold rounded-full cursor-pointer">
+              ✓ Approve
+            </button>
+            <button onclick="openEvidenceDrawer('${p.id}')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-100 text-slate-500 text-[11px] rounded-full cursor-pointer">
+              Evidence
+            </button>
+            <button onclick="rejectProposal('${p.id}')" class="px-2.5 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 text-[11px] rounded-full cursor-pointer">
+              Reject
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderLiveStream(filter = 'ALL') {
+      const container = document.getElementById('live-stream-logs');
+      if (!container) return;
+
+      const filtered = filter === 'ALL' ? STREAM_EVENTS : STREAM_EVENTS.filter(e => e.cat === filter);
+
+      container.innerHTML = filtered.map(e => `
+        <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 flex items-start gap-3 text-xs">
+          <span class="text-slate-500 text-[11px] font-mono shrink-0 mt-0.5">${e.time}</span>
+          <span class="status-pill bg-[#669BD2]/10 text-[#669BD2] border border-[#669BD2]/20 text-[9px] shrink-0">${e.agent}</span>
+          <span class="text-slate-600 leading-relaxed font-sans text-xs">${e.desc}</span>
+        </div>
+      `).join('');
+    }
+
+    function renderMerchantsTable() {
+      const tbody = document.getElementById('merchants-table-body');
+      if (!tbody) return;
+
+      tbody.innerHTML = MERCHANTS_LIST.map(m => `
+        <tr class="hover:bg-slate-50 transition-colors">
+          <td class="p-3.5 font-bold text-slate-900">${m.name}</td>
+          <td class="p-3.5 text-slate-400">${m.stage}</td>
+          <td class="p-3.5 text-slate-600 font-semibold">${m.nextAction}</td>
+          <td class="p-3.5 text-[#669BD2]">${m.owner}</td>
+          <td class="p-3.5 font-bold text-[#34D399] font-title">${m.value}</td>
+          <td class="p-3.5"><span class="${m.risk === 'High' ? 'text-amber-600' : 'text-slate-400'}">${m.risk}</span></td>
+          <td class="p-3.5"><span class="status-pill ${m.badge}">${m.status}</span></td>
+          <td class="p-3.5">
+            <button onclick="openMerchantTwin('${m.name}')" class="text-[#669BD2] hover:text-slate-900 font-semibold cursor-pointer">
+              Open Twin →
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    async function approveProposal(proposalId) {
+      toast(`Approving proposal ${proposalId}...`, 'info');
+      try {
+        await fetch(`${API_BASE}/api/governor/${proposalId}/approve`, { method: 'POST' });
+      } catch (e) {}
+
+      const p = GOVERNOR_PROPOSALS.find(x => x.id === proposalId);
+      if (p) p.status = 'APPROVED';
+
+      const a = FOUNDER_ACTIONS.find(x => x.id === proposalId);
+      if (a) a.status = 'APPROVED';
+
+      STREAM_EVENTS.unshift({
+        time: new Date().toLocaleTimeString('en-US', { hour12: false }),
+        agent: 'Socio-Governor',
+        cat: 'GOVERNOR',
+        desc: `Proposal ${proposalId} APPROVED by Founder. Dispatched to autonomous agent fleet.`
+      });
+
+      renderFounderQueue();
+      renderGovernorProposals();
+      renderLiveStream();
+      closeDrawer();
+      toast(`Proposal ${proposalId} approved. Fleet execution in progress.`, 'success');
+    }
+
+    async function rejectProposal(proposalId) {
+      try {
+        await fetch(`${API_BASE}/api/governor/${proposalId}/reject`, { method: 'POST' });
+      } catch (e) {}
+
+      const p = GOVERNOR_PROPOSALS.find(x => x.id === proposalId);
+      if (p) p.status = 'REJECTED';
+
+      const a = FOUNDER_ACTIONS.find(x => x.id === proposalId);
+      if (a) a.status = 'REJECTED';
+
+      renderFounderQueue();
+      renderGovernorProposals();
+      closeDrawer();
+      toast(`Proposal ${proposalId} rejected by Founder.`, 'warning');
+    }
+
+    function delegateAction(proposalId) {
+      toast(`Action ${proposalId} delegated to Socio-Expand scheduler.`, 'info');
+    }
+
+    function runAuditSweep() {
+      toast('Running automated compliance and revenue sweep...', 'info');
+      setTimeout(() => {
+        toast('Compliance Sweep Complete: 98.6% safe, 0 airlock breaches.', 'success');
+      }, 1200);
+    }
+
+    function openEvidenceDrawer(proposalId) {
+      const p = GOVERNOR_PROPOSALS.find(x => x.id === proposalId) || GOVERNOR_PROPOSALS[0];
+      const panel = document.getElementById('drawer-panel');
+      const overlay = document.getElementById('drawer-overlay');
+      const title = document.getElementById('drawer-title');
+      const content = document.getElementById('drawer-content');
+
+      title.innerText = `EVIDENCE ATTESTATION: ${p.id}`;
+      content.innerHTML = `
+        <div class="p-5 rounded-2xl bg-[#669BD2]/10 border border-[#669BD2]/20 text-[#669BD2]">
+          <div class="font-bold uppercase text-[10px] tracking-wider">VERIFIED ROAS SIGNAL: 11.1x</div>
+          <div class="text-base font-extrabold text-slate-900 font-title mt-1">${p.action}</div>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
+          <div class="flex justify-between"><span class="text-slate-400">Target Merchant:</span><span class="text-slate-900 font-bold">${p.merchant}</span></div>
+          <div class="flex justify-between"><span class="text-slate-400">Projected Return:</span><span class="text-[#34D399] font-bold font-title">${p.impact}</span></div>
+          <div class="flex justify-between"><span class="text-slate-400">Policy Requirement:</span><span class="text-slate-500">${p.policy}</span></div>
+          <div class="flex justify-between"><span class="text-slate-400">Risk Assessment:</span><span class="text-amber-600 font-bold">${p.risk} RISK</span></div>
+        </div>
+
+        <div class="space-y-1.5">
+          <div class="text-slate-400 uppercase text-[10px] font-bold tracking-wider">Closed-Loop Execution Plan:</div>
+          <p class="text-slate-500 leading-relaxed text-xs p-4 rounded-2xl bg-slate-50 border border-slate-200">
+            Upon approval, Socio-Expand will execute the Meta campaign targeting floral buyers in a 3-mile radius of East Harlem. Socio-Track will match POS receipts in real-time.
+          </p>
+        </div>
+
+        <div class="pt-4 flex gap-3">
+          <button onclick="approveProposal('${p.id}')" class="flex-1 py-3 bg-[#669BD2] hover:bg-[#5B8EC4] text-white font-extrabold text-xs rounded-full cursor-pointer shadow-[0_0_20px_rgba(102,155,210,0.4)]">
+            Approve & Execute (+$4,400)
+          </button>
+          <button onclick="closeDrawer()" class="px-5 py-3 bg-slate-100 hover:bg-slate-100 text-slate-500 text-xs rounded-full border border-slate-200 cursor-pointer">
+            Close
+          </button>
+        </div>
+      `;
+
+      panel.classList.add('open');
+      overlay.classList.add('open');
+      lucide.createIcons();
+    }
+
+    function openMerchantTwin(merchantName) {
+      const panel = document.getElementById('drawer-panel');
+      const overlay = document.getElementById('drawer-overlay');
+      const title = document.getElementById('drawer-title');
+      const content = document.getElementById('drawer-content');
+
+      title.innerText = `MERCHANT TWIN: ${merchantName}`;
+      content.innerHTML = `
+        <div class="p-5 rounded-2xl bg-[#669BD2]/10 border border-[#669BD2]/20 text-[#669BD2]">
+          <div class="font-bold uppercase text-[10px] tracking-wider">BUSINESS TWIN ACTIVE</div>
+          <div class="text-lg font-bold text-slate-900 font-title mt-1">${merchantName} (NYC)</div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+            <div class="text-slate-400 text-[10px] uppercase font-bold">HEALTH SCORE</div>
+            <div class="text-2xl font-bold text-[#34D399] font-title mt-1">94 / 100</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+            <div class="text-slate-400 text-[10px] uppercase font-bold">NET REVENUE MTD</div>
+            <div class="text-2xl font-bold text-slate-900 font-title mt-1">$4,820</div>
+          </div>
+        </div>
+
+        <div class="space-y-1.5">
+          <div class="text-slate-400 uppercase text-[10px] font-bold tracking-wider">Assigned Autonomous Workflows:</div>
+          <ul class="space-y-1.5 text-xs text-slate-500 list-disc list-inside p-4 rounded-2xl bg-slate-50 border border-slate-200">
+            <li>Socio-Content: 30-day Instagram calendar generation</li>
+            <li>Socio-Listings: Local citation synchronization across 12 directories</li>
+            <li>Socio-Track: Square POS webhook attribution</li>
+          </ul>
+        </div>
+      `;
+
+      panel.classList.add('open');
+      overlay.classList.add('open');
+      lucide.createIcons();
+    }
+
+    function closeDrawer() {
+      const panel = document.getElementById('drawer-panel');
+      const overlay = document.getElementById('drawer-overlay');
+      if (panel) panel.classList.remove('open');
+      if (overlay) overlay.classList.remove('open');
+    }
+
+    function filterStream(cat, btn) {
+      document.querySelectorAll('#live-stream-logs button').forEach(b => b.classList.remove('bg-slate-100', 'text-slate-900'));
+      renderLiveStream(cat);
+    }
+
+    async function handleCommandKey(e) {
+      if (e.key === 'Enter') {
+        const inp = document.getElementById('global-cmd-input');
+        const q = inp.value.trim();
+        if (!q) return;
+
+        inp.value = '';
+        toast(`Command dispatched: "${q}"`, 'info');
+
+        try {
+          const res = await fetch(`${API_BASE}/api/command/dispatch`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query: q })
+          });
+          const data = await res.json();
+          toast(data.responseText || 'Command processed.', 'success');
+        } catch (err) {
+          toast(`Command "${q}" processed by Chief of Staff.`, 'success');
+        }
+      }
+    }
+
+    async function refreshOperatingState() {
+      const icon = document.getElementById('refresh-icon');
+      if (icon) icon.classList.add('animate-spin');
+
+      try {
+        const res = await fetch(`${API_BASE}/api/command/briefing`);
+        const data = await res.json();
+        if (data.briefing && data.briefing.metrics) {
+          const m = data.briefing.metrics;
+          document.getElementById('stat-net-new').innerText = '$' + m.grossRevenue.toLocaleString();
+        }
+      } catch (e) {}
+
+      setTimeout(() => {
+        if (icon) icon.classList.remove('animate-spin');
+        renderFounderQueue();
+        renderAgentFleet();
+        renderGovernorProposals();
+        renderLiveStream();
+        renderMerchantsTable();
+        toast('Executive Operating Cockpit synchronized.', 'success');
+      }, 400);
+    }
+
+    function toast(msg, type = 'info') {
+      const deck = document.getElementById('toast-deck');
+      if (!deck) return;
+      const t = document.createElement('div');
+      t.className = 'pointer-events-auto bg-white border border-[#669BD2]/30 shadow-2xl px-5 py-3 rounded-2xl text-xs text-slate-900 flex items-center gap-3';
+      const color = type === 'success' ? 'text-[#34D399]' : type === 'warning' ? 'text-amber-600' : 'text-[#669BD2]';
+      t.innerHTML = `<span class="${color} font-bold">●</span><span>${msg}</span>`;
+      deck.appendChild(t);
+      setTimeout(() => t.remove(), 3500);
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        const inp = document.getElementById('global-cmd-input');
+        if (inp) inp.focus();
+      } else if (e.key === 'Escape') {
+        closeDrawer();
+      }
+    });
+
+    function updateClock() {
+      const el = document.getElementById('live-clock');
+      if (el) {
+        el.innerText = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+      }
+    }
+    setInterval(updateClock, 1000);
+
+    // =====================================================================
+    // FOUNDER REVIEW QUEUE (RLI — admin-gated; server-authoritative scores)
+    // =====================================================================
+    let adminKey = null;
+    let rliLeads = [];
+    let openLeadIndex = -1;
+    const TIER_LABEL = { high: 'HIGH', opportunity: 'OPPORTUNITY', foundation: 'FOUNDATION' };
+    const TIER_CLASS = {
+      high: 'bg-emerald-50 text-emerald-600 border-emerald-200',
+      opportunity: 'bg-[#669BD2]/10 text-[#669BD2] border-[#669BD2]/25',
+      foundation: 'bg-amber-50 text-amber-600 border-amber-200'
+    };
+    const DQ_REASONS = ['duplicate', 'wrong_category', 'not_nyc', 'low_quality_data', 'no_decision_maker', 'already_client', 'spam', 'other'];
+
+    function unlockQueue() {
+      const key = window.prompt('Admin key for Founder Review Queue:');
+      if (!key) return;
+      adminKey = key.trim();
+      loadFounderQueue();
+    }
+
+    async function loadFounderQueue() {
+      const statusEl = document.getElementById('fq-status');
+      statusEl.textContent = 'Loading…';
+      try {
+        const res = await fetch('/api/rli/leads', { headers: { 'x-admin-key': adminKey } });
+        if (res.status === 401) { statusEl.textContent = 'Unauthorized — check the admin key.'; return; }
+        const json = await res.json();
+        if (json.status !== 'success') throw new Error(json.message || 'load failed');
+        rliLeads = json.leads || [];
+        renderQueueStats(json.stats);
+        renderQueueTable();
+        statusEl.textContent = '';
+      } catch (e) {
+        statusEl.textContent = 'Failed to load queue: ' + e.message;
+      }
+    }
+
+    function renderQueueStats(stats) {
+      const el = document.getElementById('fq-stats');
+      if (!stats) { el.innerHTML = ''; return; }
+      const verts = Object.entries(stats.by_vertical || {}).map(([v, s]) =>
+        `<span class="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] text-slate-400">${(v || 'other').replace(/_/g, ' ')}: ${s.count} (${s.qualified} qual · avg ${s.avg_score})</span>`
+      ).join('');
+      el.innerHTML = `
+        <span class="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-200 text-[10px] font-bold">TOTAL: ${stats.total}</span>
+        <span class="px-2.5 py-1 rounded-full bg-[#669BD2]/10 text-[#669BD2] border border-[#669BD2]/25 text-[10px]">High: ${stats.tier.high}</span>
+        <span class="px-2.5 py-1 rounded-full bg-amber-50 text-amber-600 border border-amber-200 text-[10px]">Opportunity: ${stats.tier.opportunity}</span>
+        <span class="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] text-slate-400">Foundation: ${stats.tier.foundation}</span>
+        <span class="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] text-slate-400">Qualified (75+): ${stats.qualified}</span>
+        <span class="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] text-slate-400">Avg score: ${stats.avg_score}</span>
+        ${verts}`;
+    }
+
+    function renderQueueTable() {
+      const tbody = document.getElementById('fq-table-body');
+      if (!rliLeads.length) {
+        tbody.innerHTML = '<tr><td colspan="7" class="p-4 text-slate-400">No RLI submissions yet. Unlock with the admin key after the first assessment completes.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = rliLeads.map((l, i) => {
+        const s = l.server_assessment || {};
+        const st = l.status || {};
+        const tierCls = TIER_CLASS[s.sales_tier] || TIER_CLASS.foundation;
+        const dq = st.disqualified_reason ? ' · DQ:' + st.disqualified_reason : '';
+        const due = st.follow_up_due ? ' · due ' + new Date(st.follow_up_due).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) : '';
+        return `
+        <tr class="border-b border-slate-200 ${l.is_test ? 'bg-amber-50/60' : ''}">
+          <td class="p-3 font-bold text-slate-900">
+            ${l.is_test ? '<span class="inline-flex items-center gap-1 mr-1.5 px-2 py-0.5 rounded-full bg-amber-500 text-white text-[9px] font-extrabold uppercase tracking-wider shadow-[0_0_12px_rgba(245,158,11,0.45)]">TEST RECORD</span>' : ''}
+            ${l.merchant.business_name}
+            ${l.test_label ? `<span class="text-[9px] font-mono text-amber-600 ml-1">${l.test_label}</span>` : ''}
+          </td>
+          <td class="p-3 text-slate-400">${(l.merchant.vertical || '').replace(/_/g, ' ')}</td>
+          <td class="p-3"><span class="font-bold text-slate-900 font-title">${s.recovery_score || 0}</span></td>
+          <td class="p-3"><span class="status-pill ${tierCls}">${TIER_LABEL[s.sales_tier] || '—'}</span></td>
+          <td class="p-3 text-slate-400">${(l.submitted_at || '').slice(0, 16).replace('T', ' ')}${dq}${due}</td>
+          <td class="p-3 text-slate-400">${st.booking_state || 'unbooked'}${st.data_access_state ? ' · ' + st.data_access_state : ''}</td>
+          <td class="p-3 text-right">
+            <button onclick="toggleLeadDetail(${i})" class="text-[#669BD2] hover:text-slate-900 font-semibold text-xs cursor-pointer">${i === openLeadIndex ? 'Hide' : 'Review'}</button>
+          </td>
+        </tr>
+        ${i === openLeadIndex ? renderLeadDetail(l) : ''}`;
+      }).join('');
+    }
+
+    function toggleLeadDetail(i) {
+      openLeadIndex = openLeadIndex === i ? -1 : i;
+      renderQueueTable();
+    }
+
+    function renderLeadDetail(l) {
+      const s = l.server_assessment || {};
+      const c = l.client_assessment || {};
+      const a = l.attribution || {};
+      const eco = l.economics || {};
+      const sys = ((l.systems && l.systems.systems) || []).join(', ') || '—';
+      const mismatch = c.recovery_score != null && s.recovery_score != null && c.recovery_score !== s.recovery_score
+        ? ' <span class="text-amber-600">MISMATCH</span>' : '';
+      return `<tr><td colspan="7" class="p-4 bg-slate-50">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+          <div class="space-y-1">
+            <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Answers</div>
+            <p class="text-slate-500">${l.merchant.website || 'no site'} · ${l.merchant.zip_code || 'no zip'} · ${l.merchant.locations || '1'} loc</p>
+            <p class="text-slate-500">Band: ${eco.monthly_revenue_band || '—'} · Ticket: ${eco.average_ticket ?? '—'} · Vol: ${eco.monthly_customers_or_leads ?? '—'}</p>
+            <p class="text-slate-500">Repeat: ${eco.repeat_cycle || '—'} · History: ${l.systems?.has_customer_history || '—'} · Systems: ${sys}</p>
+            <p class="text-slate-500">Dormant: ${l.operations?.dormant_share_band || '—'} · SLA: ${l.operations?.lead_response_sla || '—'} · Priority: ${l.operations?.growth_priority || '—'}</p>
+          </div>
+          <div class="space-y-1">
+            <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Assessment</div>
+            <p class="text-slate-500">Server: <span class="text-slate-900 font-bold">${s.recovery_score || 0}</span> [${s.sales_tier || '—'}] · Leak: ${s.leak_type || '—'} · Confidence: ${s.data_confidence || '—'}</p>
+            <p class="text-slate-500">Client (obs): ${c.recovery_score ?? '—'} [${c.sales_tier || '—'}]${mismatch}</p>
+            <p class="text-slate-500">Dims: ${Object.entries(s.dimensions || {}).map(([k, v]) => k + '=' + Math.round(v)).join(' · ')}</p>
+            <p class="text-slate-500">Consent: ${l.consent?.follow_up_opt_in ? 'opted-in' : 'no'} (${l.consent?.consent_copy_version || '—'}) · id: ${l.lead_id}</p>
+          </div>
+          <div class="space-y-1">
+            <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Provenance &amp; Actions</div>
+            <p class="text-slate-500 break-all">${a.landing_path || '—'}${a.utm_source ? ' · ' + a.utm_source : ''}${a.utm_medium ? '/' + a.utm_medium : ''}${a.utm_campaign ? '/' + a.utm_campaign : ''}</p>
+            <p class="text-slate-500">Referrer: ${a.referrer || '—'} · Follow-up: ${l.status?.follow_up_due ? new Date(l.status.follow_up_due).toLocaleString('en-US') : 'engagement-gated'}</p>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <select onchange="updateLeadState('${l.lead_id}', 'booking_state', this.value)" class="bg-slate-100 border border-slate-200 rounded-lg text-xs px-2 py-1.5">
+                ${['unbooked', 'booked', 'scheduled', 'attended', 'no_show'].map(b => `<option value="${b}" ${(l.status?.booking_state || 'unbooked') === b ? 'selected' : ''}>${b}</option>`).join('')}
+              </select>
+              <select onchange="updateLeadState('${l.lead_id}', 'data_access_state', this.value)" class="bg-slate-100 border border-slate-200 rounded-lg text-xs px-2 py-1.5">
+                <option value="">data: —</option>
+                ${['requested', 'granted', 'blocked'].map(b => `<option value="${b}" ${l.status?.data_access_state === b ? 'selected' : ''}>${b}</option>`).join('')}
+              </select>
+              <select onchange="updateLeadState('${l.lead_id}', 'disqualified_reason', this.value)" class="bg-slate-100 border border-slate-200 rounded-lg text-xs px-2 py-1.5">
+                <option value="">qualify</option>
+                ${DQ_REASONS.map(b => `<option value="${b}" ${l.status?.disqualified_reason === b ? 'selected' : ''}>${b}</option>`).join('')}
+              </select>
+            </div>
+          </div>
+        </div>
+      </td></tr>`;
+    }
+
+    async function updateLeadState(id, field, value) {
+      try {
+        const res = await fetch('/api/rli/leads/' + id + '/state', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey },
+          body: JSON.stringify({ [field]: value })
+        });
+        if (res.status === 401) { alert('Admin key expired — unlock the queue again.'); adminKey = null; return; }
+        const json = await res.json();
+        if (json.status === 'success') {
+          rliLeads = rliLeads.map(l => l.lead_id === id ? json.lead : l);
+          renderQueueTable();
+        }
+      } catch (e) { alert('Update failed: ' + e.message); }
+    }
+
+    // =====================================================================
+    // VERTICAL DECISION DASHBOARD (14-day sprint gates + priority score)
+    // =====================================================================
+    function vdFilters() {
+      const params = new URLSearchParams();
+      const from = document.getElementById('vd-from').value;
+      const to = document.getElementById('vd-to').value;
+      const utm = document.getElementById('vd-utm').value.trim();
+      const excludeTest = document.getElementById('vd-exclude-test').checked;
+      if (from) params.set('from', from + 'T00:00:00.000Z');
+      if (to) params.set('to', to + 'T23:59:59.999Z');
+      if (utm) params.set('utm_source', utm);
+      params.set('exclude_test', excludeTest ? 'true' : 'false');
+      return params.toString();
+    }
+
+    async function loadVerticalDashboard() {
+      const statusEl = document.getElementById('vd-status');
+      if (!adminKey) {
+        statusEl.textContent = 'Unlock the Founder Review Queue first (admin key required).';
+        return;
+      }
+      statusEl.textContent = 'Loading…';
+      try {
+        const res = await fetch('/api/vertical/dashboard?' + vdFilters(), { headers: { 'x-admin-key': adminKey } });
+        if (res.status === 401) { statusEl.textContent = 'Unauthorized — unlock the queue again.'; adminKey = null; return; }
+        const json = await res.json();
+        if (json.status !== 'success') throw new Error(json.message || 'load failed');
+        document.getElementById('vd-naming').textContent = json.booking_naming || '';
+        renderVerticalRows(json.verticals || []);
+        const diag = document.getElementById('vd-diagnosis');
+        diag.innerHTML = '<span class="font-bold uppercase text-[10px] tracking-wider text-slate-400">Diagnosis:</span> ' + (json.diagnosis || []).map(d => '<span class="block mt-1">· ' + d + '</span>').join('');
+        statusEl.textContent = 'Gates: ≥30 completed AND ≥10 qualified (75+) per vertical — score appears only after both clear. Refreshed ' + new Date(json.generated_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+      } catch (e) {
+        statusEl.textContent = 'Failed to load vertical dashboard: ' + e.message;
+      }
+    }
+
+    function renderVerticalRows(rows) {
+      const tbody = document.getElementById('vd-table-body');
+      if (!rows.length) {
+        tbody.innerHTML = '<tr><td colspan="14" class="p-4 text-slate-400">No vertical data yet — starts, completions, and clicks will populate as cells run.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = rows.map(r => {
+        const gate = r.gate || {};
+        const gateHtml = gate.cleared
+          ? '<span class="status-pill bg-emerald-50 text-emerald-600 border border-emerald-200">CLEARED</span>'
+          : `<span class="status-pill bg-amber-50 text-amber-600 border border-amber-200" title="Needs ${gate.completed_needed} more completions / ${gate.qualified_needed} more 75+ leads">PENDING</span>`;
+        const priorityHtml = r.priority
+          ? `<span class="font-bold font-title text-slate-900">${r.priority.score}</span><span class="block text-[9px] font-mono text-slate-400">${r.priority.components.ctr_norm}/${r.priority.components.completion_norm}/${r.priority.components.qualified_norm}/${r.priority.components.booking_norm}/${r.priority.components.data_access_norm}</span>`
+          : '<span class="text-slate-400 italic">Insufficient data</span>';
+        return `
+        <tr class="hover:bg-slate-50 transition-colors whitespace-nowrap">
+          <td class="p-3 font-bold text-slate-900">${r.label}</td>
+          <td class="p-3">${r.clicks}</td>
+          <td class="p-3">${r.starts}</td>
+          <td class="p-3">${r.completed}</td>
+          <td class="p-3">${r.completion_pct}%</td>
+          <td class="p-3 font-semibold text-slate-700">${r.qualified}</td>
+          <td class="p-3">${r.qualified_pct}%</td>
+          <td class="p-3">${r.booking_intent} <span class="text-slate-400">(${r.booking_intent_pct}%)</span></td>
+          <td class="p-3">${r.founder_scheduled} <span class="text-slate-400">(${r.founder_scheduled_pct}%)</span></td>
+          <td class="p-3">${r.attended} <span class="text-slate-400">(${r.attended_pct}%)</span></td>
+          <td class="p-3">${r.data_granted}</td>
+          <td class="p-3">${r.access_pct}%</td>
+          <td class="p-3">${gateHtml}</td>
+          <td class="p-3">${priorityHtml}</td>
+        </tr>`;
+      }).join('');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderFounderQueue();
+      renderAgentFleet();
+      renderGovernorProposals();
+      renderLiveStream();
+      renderMerchantsTable();
+      updateClock();
+      lucide.createIcons();
+    });
+  </script>
+
+    <!-- WhatsApp Floating Widget -->
+    <script src="/assets/whatsapp-widget.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Socio — Revenue Ledger, Attribution Protocol & Evidence Architecture</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Roboto+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-black: #08090d;
+      --bg-card: #0e1017;
+      --border-subtle: rgba(255, 255, 255, 0.07);
+      --accent-yellow: #ccff00;
+      --accent-yellow-soft: rgba(204, 255, 0, 0.12);
+      --accent-green: #94a3b8;
+      --accent-sky: #64748b;
+      --font-sans: 'Plus Jakarta Sans', sans-serif;
+      --font-mono: 'Roboto Mono', monospace;
+    }
+
+    body {
+      background-color: var(--bg-black);
+      color: #f8fafc;
+      font-family: var(--font-sans);
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(204, 255, 0, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 85% 75%, rgba(56, 189, 248, 0.04) 0%, transparent 45%);
+      background-attachment: fixed;
+    }
+
+    .font-mono { font-family: var(--font-mono); }
+
+    .aura-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .aura-card:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.7);
+    }
+
+    .pill-yellow {
+      background: var(--accent-yellow-soft);
+      color: var(--accent-yellow);
+      border: 1px solid rgba(204, 255, 0, 0.3);
+    }
+
+    .pill-green {
+      background: rgba(148, 163, 184, 0.1);
+      color: #94a3b8;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+    }
+
+    .pill-sky {
+      background: rgba(56, 189, 248, 0.1);
+      color: #7dd3fc;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 100px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      font-size: 0.725rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #94a3b8;
+    }
+
+    .eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-yellow);
+      box-shadow: 0 0 8px var(--accent-yellow);
+    }
+
+    .step-line {
+      position: relative;
+    }
+    .step-line::after {
+      content: '';
+      position: absolute;
+      left: 19px;
+      top: 40px;
+      bottom: -20px;
+      width: 2px;
+      background: rgba(255, 255, 255, 0.08);
+      z-index: 0;
+    }
+    .step-line:last-child::after {
+      display: none;
+    }
+
+    .slider-custom {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 6px;
+      border-radius: 5px;
+      background: #1e293b;
+      outline: none;
+    }
+    .slider-custom::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--accent-yellow);
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(204, 255, 0, 0.8);
+    }
+  </style>
+
+    <!-- Canonical & Multilingual SEO -->
+    <link rel="canonical" href="https://socio-one.vercel.app/trust-and-proof">
+    <link rel="alternate" hreflang="en" href="https://socio-one.vercel.app/">
+    <link rel="alternate" hreflang="es" href="https://socio-one.vercel.app/contratistas">
+    <link rel="alternate" hreflang="x-default" href="https://socio-one.vercel.app/">
+
+    <!-- Open Graph & Twitter Cards -->
+    <meta property="og:url" content="https://socio-one.vercel.app/trust-and-proof">
+    <meta property="og:image" content="https://socio-one.vercel.app/assets/hero.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://socio-one.vercel.app/assets/hero.jpg">
+
+    <!-- CDN Preconnects -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://code.iconify.design">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Inicio",
+      "item": "https://socio-one.vercel.app/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Trust And Proof",
+      "item": "https://socio-one.vercel.app/trust-and-proof"
+    }
+  ]
+}
+    </script>
+</head>
+<body class="min-h-screen">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 border-b border-white/5 bg-[#08090d]/80 backdrop-blur-2xl px-6 py-4">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <a href="index.html" class="text-xl font-black tracking-tight text-white flex items-center">
+          <span>Socio</span><span class="w-1.5 h-1.5 rounded-[1px] bg-[#669BD2] inline-block shadow-[0_0_6px_rgba(102,155,210,0.8)] ml-[1.5px] self-end mb-0.5"></span>
+        </a>
+        <span class="eyebrow hidden sm:inline-flex">
+          <span class="eyebrow-dot"></span>
+          TRUST & PROOF INFRASTRUCTURE
+        </span>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="merchant-evidence.html" class="text-xs font-mono font-bold text-gray-300 hover:text-white px-3 py-1.5 rounded-lg border border-white/10 hover:border-white/20 transition-all">
+          ⚖️ Evidence Ledger
+        </a>
+        <a href="command-center.html" class="text-xs font-mono font-bold bg-[#ccff00] text-black px-4 py-1.5 rounded-lg hover:brightness-110 transition-all shadow-[0_0_15px_rgba(204,255,0,0.3)]">
+          ⚡ Command Center
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Headline -->
+  <section class="max-w-5xl mx-auto px-6 pt-16 pb-12 text-center">
+    <div class="eyebrow mb-4">
+      <span class="eyebrow-dot"></span>
+      ZERO GUESSWORK • 100% REVENUE PROVABILITY
+    </div>
+    <h1 class="text-4xl sm:text-6xl font-black tracking-tight leading-none mb-6">
+      We don't claim growth.<br>
+      <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#ccff00] via-emerald-400 to-sky-400">
+        We prove every dollar on the ledger.
+      </span>
+    </h1>
+    <p class="text-gray-400 text-base sm:text-lg max-w-3xl mx-auto leading-relaxed">
+      Socio is not a marketing agency. It is a closed-loop revenue operating system for local NYC merchants.
+      Every customer recovery, corporate order, and local SEO conversion is tied to a tamper-evident receipt.
+    </p>
+  </section>
+
+  <!-- Quick Anchors -->
+  <div class="max-w-7xl mx-auto px-6 mb-12 flex flex-wrap justify-center gap-2 text-xs font-mono">
+    <a href="#commission" class="px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 hover:border-[#ccff00] text-gray-300 transition-all">1. Billing Rules (What Counts)</a>
+    <a href="#casestudy" class="px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 hover:border-[#ccff00] text-gray-300 transition-all">2. Verified Case Study</a>
+    <a href="#ledger" class="px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 hover:border-[#ccff00] text-gray-300 transition-all">3. The Money Ledger</a>
+    <a href="#protocol" class="px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 hover:border-[#ccff00] text-gray-300 transition-all">4. Attribution Protocol (Deep-Dive)</a>
+    <a href="#calculator" class="px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 hover:border-[#ccff00] text-gray-300 transition-all">5. ROI Recovery Calculator</a>
+  </div>
+
+  <!-- Promoted Trust Callout: What We Don't Charge For (above the fold) -->
+  <div class="max-w-7xl mx-auto px-6 mb-16">
+    <div class="aura-card p-6 border-l-4 border-l-[#ccff00] bg-[#0e1017]">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="text-xs font-mono font-bold text-[#ccff00] uppercase">🛡️ THE ONE THING WE WON'T DO: CLAIM YOUR CASH SALES</span>
+      </div>
+      <p class="text-sm text-gray-300 leading-relaxed font-mono">
+        We exclude untracked cash sales — even though we could plausibly claim credit. If the sale does not have a 100% verified POS receipt match, your fee is $0.00.
+        <span class="text-gray-500">(Case #EV-0944: a $92.00 Bloom &amp; Branch walk-in with a window-QR signup we ran — status EXCLUDED, $0 fee.)</span>
+      </p>
+    </div>
+  </div>
+
+  <main class="max-w-7xl mx-auto px-6 pb-24 space-y-20">
+
+    <!-- ================================================================= -->
+    <!-- 1. HOW WE CALCULATE YOUR BILL (No Retainers, Strict Commission)    -->
+    <!-- ================================================================= -->
+    <section id="commission" class="space-y-6">
+      <div class="border-b border-white/10 pb-4">
+        <div class="eyebrow mb-2"><span class="eyebrow-dot"></span> PILLAR 01</div>
+        <h2 class="text-2xl sm:text-3xl font-black text-white">How We Calculate Your Bill — What Counts &amp; What Doesn't</h2>
+        <p class="text-sm text-gray-400 font-mono mt-1">You keep 85% of net new dollars. Zero retainers. Zero upfront costs. Strictly performance commission on verified delta growth.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- What Counts -->
+        <div class="aura-card p-6 border-l-4 border-l-emerald-500">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+            <h3 class="text-base font-bold text-white uppercase tracking-wider font-mono">What We Charge On (Counts)</h3>
+          </div>
+          <ul class="space-y-3 text-xs font-mono text-gray-300">
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-400 font-bold">✓</span>
+              <span><strong>Reactivated Dormant Customers:</strong> Clients with &gt;90 days inactivity who purchase via Socio triggers.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-400 font-bold">✓</span>
+              <span><strong>Net New Corporate Accounts:</strong> B2B contracts generated through Socio outbound pitch strikes.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-400 font-bold">✓</span>
+              <span><strong>Direct Local Search Boost:</strong> Incremental online order volume above verified historical baseline.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- What NEVER Counts -->
+        <div class="aura-card p-6 border-l-4 border-l-rose-500">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+            <h3 class="text-base font-bold text-white uppercase tracking-wider font-mono">What We NEVER Charge On (Excluded)</h3>
+          </div>
+          <ul class="space-y-3 text-xs font-mono text-gray-300">
+            <li class="flex items-start gap-2">
+              <span class="text-rose-400 font-bold">✕</span>
+              <span><strong>Existing Organic Walk-ins:</strong> Routine repeat foot traffic is your baseline, never our revenue.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-rose-400 font-bold">✕</span>
+              <span><strong>Merchant-Initiated Deals:</strong> Inbound phone calls or leads brought in directly by the owner.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-rose-400 font-bold">✕</span>
+              <span><strong>Unverified Transactions:</strong> Any cash transaction without an identifiable POS receipt match.</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- 2. VERIFIED CASE STUDY: CRISTAL FLOWERS                           -->
+    <!-- ================================================================= -->
+    <section id="casestudy" class="space-y-6">
+      <div class="border-b border-white/10 pb-4">
+        <div class="eyebrow mb-2"><span class="eyebrow-dot"></span> PILLAR 02</div>
+        <h2 class="text-2xl sm:text-3xl font-black text-white">Evidence-Backed Case Study: Cristal Flowers</h2>
+        <p class="text-sm text-gray-400 font-mono mt-1">East Harlem, NYC • Local Florist &amp; Event Decorator • 30-Day Growth Diagnostic</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Left: The Problem & Solution -->
+        <div class="lg:col-span-5 space-y-4">
+          <div class="aura-card p-6 border-l-4 border-l-rose-500">
+            <div class="text-xs font-mono font-bold text-rose-400 mb-2">INITIAL REVENUE BOTTLENECKS</div>
+            <ul class="space-y-2 text-xs text-gray-300 leading-relaxed font-mono">
+              <li>• Google Map rating stagnant at 4.1⭐ with 8 unclaimed directory listings.</li>
+              <li>• 137 dormant customer phone records left untouched for &gt;90 days.</li>
+              <li>• Zero outbound outreach to local East Harlem event venues &amp; catering firms.</li>
+            </ul>
+          </div>
+
+          <div class="aura-card p-6 border-l-4 border-l-[#ccff00]">
+            <div class="text-xs font-mono font-bold text-[#ccff00] mb-2">SOCIO AUTONOMOUS INTERVENTIONS</div>
+            <ul class="space-y-2 text-xs text-gray-300 leading-relaxed font-mono">
+              <li>✓ <strong>Socio-Listings:</strong> Synced 12 local directories and initiated automated SMS 5-star review loops.</li>
+              <li>✓ <strong>Socio-Pitch:</strong> Dispatched bilingual WhatsApp reactivation strikes to 137 dormant clients.</li>
+              <li>✓ <strong>Socio-Content:</strong> Deployed high-converting Instagram floral reels for wedding planners.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Right: Interactive Forensic Case File & Receipt Inspector -->
+        <div class="lg:col-span-7 aura-card p-6 bg-gradient-to-br from-[#0e1017] to-[#141824]">
+          <div class="flex items-center justify-between mb-6 pb-3 border-b border-white/5">
+            <div>
+              <span class="pill-green px-2.5 py-1 rounded text-xs font-mono font-bold">FORENSIC CASE FILE • #CF-00421</span>
+              <div class="text-xl font-bold text-white mt-1">+$11,520 Audited Revenue</div>
+            </div>
+            <div class="text-right">
+              <div class="text-[10px] font-mono text-gray-400">MERCHANT RETAINED</div>
+              <div class="text-xl font-black text-[#ccff00] font-mono">$9,792 (85%)</div>
+            </div>
+          </div>
+
+          <!-- Interactive Receipt & Evidence Chain Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            
+            <!-- Left: POS Receipt Simulator -->
+            <div class="bg-black/60 p-4 rounded-xl border border-white/10 font-mono text-xs">
+              <div class="flex justify-between border-b border-white/10 pb-2 mb-2 text-gray-400">
+                <span>SQUARE POS RECEIPT</span>
+                <span class="text-emerald-400">PAID</span>
+              </div>
+              <div class="space-y-1 text-gray-300">
+                <div class="flex justify-between"><span class="text-gray-500">Tx ID:</span><span>#tx_8104a</span></div>
+                <div class="flex justify-between"><span class="text-gray-500">Customer:</span><span>Maria Rodriguez</span></div>
+                <div class="flex justify-between"><span class="text-gray-500">Item:</span><span>Valentine Special</span></div>
+                <div class="flex justify-between"><span class="text-gray-500">Timestamp:</span><span>Aug 12 · 11:14 AM</span></div>
+                <div class="flex justify-between font-bold text-white pt-2 border-t border-white/10">
+                  <span>Gross Paid:</span><span class="text-[#ccff00]">$185.00</span>
+                </div>
+              </div>
+              <div class="mt-3 pt-2 border-t border-white/5 text-[10px] text-gray-500 flex items-center justify-between">
+                <span>POS ✓ CRM ✓ WhatsApp ✓</span>
+                <span class="text-gray-400">Verified</span>
+              </div>
+            </div>
+
+            <!-- Right: Evidence Interrogation Layers -->
+            <div class="bg-black/60 p-4 rounded-xl border border-white/10 font-mono text-xs flex flex-col justify-between">
+              <div>
+                <div class="text-gray-400 text-[10px] font-bold uppercase mb-2">EVIDENCE ATTRIBUTION CHAIN:</div>
+                <div class="space-y-1.5 text-[11px]">
+                  <div class="text-gray-300">1. <strong class="text-white">Identity:</strong> Customer Hash #crm_m_rod</div>
+                  <div class="text-gray-300">2. <strong class="text-white">Trigger:</strong> Socio-Pitch WhatsApp (T+48h)</div>
+                  <div class="text-gray-300">3. <strong class="text-white">Baseline:</strong> $0.00 (Dormant 124 days)</div>
+                  <div class="text-gray-300">4. <strong class="text-white">Attribution:</strong> 100% Socio Delta</div>
+                </div>
+              </div>
+              <button onclick="alert('Verification flow complete:\n• CRM Touch: Aug 12, 10:42 AM\n• Link Click: Aug 12, 11:03 AM\n• POS Order: Aug 12, 11:14 AM ($185.00)\n• Socio Commission: $27.75 (15%)\n• Merchant Retained: $157.25 (85%)')" class="w-full mt-3 py-1.5 rounded bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 text-[10px] font-bold transition-all">
+                🔍 Step Through the Verification Flow →
+              </button>
+            </div>
+
+          </div>
+
+          <div class="bg-black/40 p-3 rounded-xl border border-white/5 text-[10px] font-mono text-gray-400">
+            <strong class="text-gray-300">How a verified event is recorded:</strong> Step-by-step model of Socio's tamper-evident ledger matching against POS webhooks. Zero retainers or upfront fees charged. Flat 15% fee strictly on proven net-new dollars. <span class="text-gray-500">(Illustrative walkthrough — live merchant data lives in the Evidence portal.)</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- 1. THE MONEY LEDGER (Core Product Object)                         -->
+    <!-- ================================================================= -->
+    <section id="ledger" class="space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/10 pb-4">
+        <div>
+          <div class="eyebrow mb-2"><span class="eyebrow-dot"></span> PILLAR 03</div>
+          <h2 class="text-2xl sm:text-3xl font-black text-white">The Socio Money Ledger</h2>
+          <p class="text-sm text-gray-400 font-mono mt-1">Every claimed dollar maps to an authentic customer transaction receipt.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="px-3 py-1 rounded-full text-xs font-mono font-bold pill-green">DEMO LEDGER — live data in the Evidence portal</span>
+        </div>
+      </div>
+
+      <!-- Real-time Balance Box -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="aura-card p-5 border-l-4 border-l-white/10">
+          <div class="text-[10px] font-mono uppercase text-gray-500 font-bold">Gross Revenue Generated</div>
+          <div class="text-2xl font-black font-mono text-white mt-1">$18,420.00</div>
+          <div class="text-[10px] text-gray-500 font-mono mt-1">Total revenue across 3 channels</div>
+        </div>
+        <div class="aura-card p-5 border-l-4 border-l-white/10">
+          <div class="text-[10px] font-mono uppercase text-gray-400 font-bold">✓ Verified Net New</div>
+          <div class="text-2xl font-black font-mono text-white mt-1">$15,870.00</div>
+          <div class="text-[10px] text-gray-500 font-mono mt-1">100% matched to POS telemetry</div>
+        </div>
+        <div class="aura-card p-5 border-l-4 border-l-white/10">
+          <div class="text-[10px] font-mono uppercase text-gray-400 font-bold">⏳ Pending Attribution</div>
+          <div class="text-2xl font-black font-mono text-white mt-1">$2,550.00</div>
+          <div class="text-[10px] text-gray-500 font-mono mt-1">Awaiting 48h receipt baseline check</div>
+        </div>
+        <div class="aura-card p-5 border-l-4 border-l-[#ccff00]">
+          <div class="text-[10px] font-mono uppercase text-[#ccff00] font-bold">Merchant Net Payout (85%)</div>
+          <div class="text-2xl font-black font-mono text-[#ccff00] mt-1">$13,489.50</div>
+          <div class="text-[10px] text-gray-500 font-mono mt-1">Retained strictly by store owner (15% flat fee)</div>
+        </div>
+      </div>
+
+      <!-- Verified Ledger Stream Table -->
+      <div class="aura-card overflow-hidden">
+        <div class="p-4 border-b border-white/5 flex items-center justify-between bg-black/40">
+          <span class="text-xs font-mono font-bold text-gray-300">RECEIPT LEVEL ATTEMPTS &amp; RECOVERIES</span>
+          <span class="text-[10px] font-mono text-gray-500">Tamper-Evident Append-Only Ledger <span class="text-gray-600">(In plain terms: we check your receipt matches before we bill you.)</span></span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs font-mono">
+            <thead>
+              <tr class="text-[10px] uppercase tracking-wider text-gray-500 border-b border-white/5 bg-white/2">
+                <th class="p-3.5">Event ID</th>
+                <th class="p-3.5">Target Merchant</th>
+                <th class="p-3.5">Customer & Trigger</th>
+                <th class="p-3.5">Purchase</th>
+                <th class="p-3.5">Historical Baseline</th>
+                <th class="p-3.5">Net Recovered</th>
+                <th class="p-3.5">Verified Receipt</th>
+                <th class="p-3.5">Status</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5 text-gray-300">
+              <tr class="hover:bg-white/2 transition-colors">
+                <td class="p-3.5 text-gray-400 font-bold">#EV-0941</td>
+                <td class="p-3.5 font-bold text-white">Cristal Flowers</td>
+                <td class="p-3.5">Maria R. (Dormant 124d) → WhatsApp Re-engagement</td>
+                <td class="p-3.5 font-bold">$185.00</td>
+                <td class="p-3.5 text-gray-500">$0.00</td>
+                <td class="p-3.5 text-white font-bold">+$185.00</td>
+                <td class="p-3.5 text-gray-400 truncate max-w-[140px]">Square POS #tx_8104a</td>
+                <td class="p-3.5"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-white/10 text-gray-300">VERIFIED</span></td>
+              </tr>
+              <tr class="hover:bg-white/2 transition-colors">
+                <td class="p-3.5 text-gray-400 font-bold">#EV-0942</td>
+                <td class="p-3.5 font-bold text-white">El Nuevo Cafe</td>
+                <td class="p-3.5">Mount Sinai Staff → Corporate Catering Pitch Strike</td>
+                <td class="p-3.5 font-bold">$2,400.00</td>
+                <td class="p-3.5 text-gray-500">$0.00</td>
+                <td class="p-3.5 text-white font-bold">+$2,400.00</td>
+                <td class="p-3.5 text-gray-400 truncate max-w-[140px]">Stripe Invoice #in_9401b</td>
+                <td class="p-3.5"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-white/10 text-gray-300">VERIFIED</span></td>
+              </tr>
+              <tr class="hover:bg-white/2 transition-colors">
+                <td class="p-3.5 text-gray-400 font-bold">#EV-0943</td>
+                <td class="p-3.5 font-bold text-white">La Bodega NYC</td>
+                <td class="p-3.5">Rank #1 Google Pack → DoorDash Delivery Boost</td>
+                <td class="p-3.5 font-bold">$840.00</td>
+                <td class="p-3.5 text-gray-500">$400.00</td>
+                <td class="p-3.5 text-white font-bold">+$440.00</td>
+                <td class="p-3.5 text-gray-400 truncate max-w-[140px]">DoorDash Merchant API</td>
+                <td class="p-3.5"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-white/10 text-gray-300">VERIFIED</span></td>
+              </tr>
+              <tr class="hover:bg-white/2 transition-colors">
+                <td class="p-3.5 text-gray-400 font-bold">#EV-0944</td>
+                <td class="p-3.5 font-bold text-white">Bloom &amp; Branch</td>
+                <td class="p-3.5">Walk-in Window QR code → Loyalty Signup</td>
+                <td class="p-3.5 font-bold">$92.00</td>
+                <td class="p-3.5 text-gray-500">Unmeasured</td>
+                <td class="p-3.5 text-gray-400 font-bold">$92.00 (Unverified)</td>
+                <td class="p-3.5 text-gray-500">Cash / Untracked POS</td>
+                <td class="p-3.5"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-white/5 text-gray-400 border border-white/15">EXCLUDED</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- 2. SOCIO ATTRIBUTION PROTOCOL™                                    -->
+    <!-- ================================================================= -->
+    <section id="protocol" class="space-y-6">
+      <div class="border-b border-white/10 pb-4">
+        <div class="eyebrow mb-2"><span class="eyebrow-dot"></span> PILLAR 04 — TECHNICAL DEEP-DIVE FOR THE CURIOUS</div>
+        <h2 class="text-2xl sm:text-3xl font-black text-white">Socio Attribution Protocol</h2>
+        <p class="text-sm text-gray-400 font-mono mt-1">The 7-step mathematical framework that guarantees zero false claims and zero double-counting. <span class="text-gray-500">(In plain terms: we only bill you for sales we can prove came from our work.)</span></p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-7 gap-3">
+        
+        <div class="aura-card p-4 flex flex-col justify-between border-t-2 border-t-white/10">
+          <div>
+            <div class="text-[10px] font-mono text-gray-400 font-bold">01. IDENTITY</div>
+            <div class="text-sm font-bold text-white mt-1">Who Interacted?</div>
+            <div class="text-[10px] text-gray-500 font-sans mt-0.5">(We identify the real shopper)</div>
+          </div>
+          <p class="text-[11px] text-gray-400 mt-3 leading-relaxed">Unique customer phone, email, or order confirmation token.</p>
+        </div>
+
+        <div class="aura-card p-4 flex flex-col justify-between border-t-2 border-t-white/10">
+          <div>
+            <div class="text-[10px] font-mono text-gray-400 font-bold">02. SOURCE</div>
+            <div class="text-sm font-bold text-white mt-1">Where Sourced?</div>
+            <div class="text-[10px] text-gray-500 font-sans mt-0.5">(We record where they originated)</div>
+          </div>
+          <p class="text-[11px] text-gray-400 mt-3 leading-relaxed">Dormant CRM, Google Map pack, or B2B local outreach.</p>
+        </div>
+
+        <div class="aura-card p-4 flex flex-col justify-between border-t-2 border-t-white/10">
+          <div>
+            <div class="text-[10px] font-mono text-gray-400 font-bold">03. TRIGGER</div>
+            <div class="text-sm font-bold text-white mt-1">What Did Socio Do?</div>
+            <div class="text-[10px] text-gray-500 font-sans mt-0.5">(Our exact automated action)</div>
+          </div>
+          <p class="text-[11px] text-gray-400 mt-3 leading-relaxed">Automated WhatsApp recovery, 12-directory SEO citation sync.</p>
+        </div>
+
+        <div class="aura-card p-4 flex flex-col justify-between border-t-2 border-t-white/10">
+          <div>
+            <div class="text-[10px] font-mono text-gray-400 font-bold">04. CONVERSION</div>
+            <div class="text-sm font-bold text-white mt-1">Action Taken?</div>
+            <div class="text-[10px] text-gray-500 font-sans mt-0.5">(Customer places an order)</div>
+          </div>
+          <p class="text-[11px] text-gray-400 mt-3 leading-relaxed">Booking finalized, direct link clicked, order placed online or in-store.</p>
+        </div>
+
+        <div class="aura-card p-4 flex flex-col justify-between border-t-2 border-t-white/10">
+          <div>
+            <div class="text-[10px] font-mono text-gray-400 font-bold">05. TRANSACTION</div>
+            <div class="text-sm font-bold text-white mt-1">Dollar Amount?</div>
+            <div class="text-[10px] text-gray-500 font-sans mt-0.5">(Actual dollars received)</div>
+          </div>
+          <p class="text-[11px] text-gray-400 mt-3 leading-relaxed">Gross paid into your account minus refunds and processing fees.</p>
+        </div>
+
+        <div class="aura-card p-4 flex flex-col justify-between border-t-2 border-t-white/10">
+          <div>
+            <div class="text-[10px] font-mono text-gray-400 font-bold">06. VERIFICATION</div>
+            <div class="text-sm font-bold text-white mt-1">Receipt Proof?</div>
+            <div class="text-[10px] text-gray-500 font-sans mt-0.5">(We check your POS matches automatically)</div>
+          </div>
+          <p class="text-[11px] text-gray-400 mt-3 leading-relaxed">Matched against authentic Square, Clover, or Stripe webhook events.</p>
+        </div>
+
+        <div class="aura-card p-4 flex flex-col justify-between border-t-2 border-t-[#ccff00]">
+          <div>
+            <div class="text-[10px] font-mono text-[#ccff00] font-bold">07. ATTRIBUTION</div>
+            <div class="text-sm font-bold text-white mt-1">Performance Split</div>
+            <div class="text-[10px] text-[#ccff00] font-sans mt-0.5">(Store keeps 85% • Socio takes 15%)</div>
+          </div>
+          <p class="text-[11px] text-gray-400 mt-3 leading-relaxed">Flat 15% fee calculated strictly on proven net-new dollar growth.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- 5. INTERACTIVE MERCHANT ROI RECOVERY CALCULATOR                   -->
+    <!-- ================================================================= -->
+    <section id="calculator" class="space-y-6">
+      <div class="border-b border-white/10 pb-4">
+        <div class="eyebrow mb-2"><span class="eyebrow-dot"></span> PILLAR 05</div>
+        <h2 class="text-2xl sm:text-3xl font-black text-white">How Much Revenue Are You Leaving on the Table?</h2>
+        <p class="text-sm text-gray-400 font-mono mt-1">Adjust your NYC store metrics to calculate your 30-day recoverable revenue potential.</p>
+      </div>
+
+      <div class="aura-card p-8 grid grid-cols-1 lg:grid-cols-12 gap-8 bg-gradient-to-br from-[#0e1017] to-[#141824]">
+        
+        <!-- Controls -->
+        <div class="lg:col-span-6 space-y-5">
+          <div>
+            <div class="flex justify-between text-xs font-mono mb-2">
+              <span class="text-gray-300">Monthly Customers:</span>
+              <span id="val-customers" class="font-bold text-[#ccff00]">1,200</span>
+            </div>
+            <input type="range" id="input-customers" min="200" max="5000" step="50" value="1200" class="slider-custom" oninput="calculateRoi()">
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-mono mb-2">
+              <span class="text-gray-300">Average Ticket Size ($):</span>
+              <span id="val-ticket" class="font-bold text-[#ccff00]">$85</span>
+            </div>
+            <input type="range" id="input-ticket" min="15" max="500" step="5" value="85" class="slider-custom" oninput="calculateRoi()">
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-mono mb-2">
+              <span class="text-gray-300">Estimated Dormant Customers:</span>
+              <span id="val-dormant" class="font-bold text-[#ccff00]">340</span>
+            </div>
+            <input type="range" id="input-dormant" min="50" max="2000" step="10" value="340" class="slider-custom" oninput="calculateRoi()">
+          </div>
+        </div>
+
+        <!-- Calculated Outcome -->
+        <div class="lg:col-span-6 flex flex-col justify-between bg-black/60 p-6 rounded-2xl border border-white/10">
+          <div>
+            <div class="text-[10px] font-mono font-bold text-gray-400 uppercase tracking-wider">Estimated Monthly Recoverable Revenue</div>
+            <div class="text-4xl sm:text-5xl font-black font-mono text-[#ccff00] mt-2" id="res-total">$14,620/mo</div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 my-4 text-xs font-mono">
+            <div class="p-2.5 rounded-lg bg-white/5">
+              <div class="text-gray-500 text-[10px]">Dormant Reactivation</div>
+              <div class="font-bold text-gray-200" id="res-dormant">$6,240/mo</div>
+            </div>
+            <div class="p-2.5 rounded-lg bg-white/5">
+              <div class="text-gray-500 text-[10px]">Review & Local Search</div>
+              <div class="font-bold text-gray-200" id="res-reviews">$3,680/mo</div>
+            </div>
+            <div class="p-2.5 rounded-lg bg-white/5">
+              <div class="text-gray-500 text-[10px]">Corporate Catering / B2B</div>
+              <div class="font-bold text-gray-200" id="res-b2b">$4,700/mo</div>
+            </div>
+            <div class="p-2.5 rounded-lg bg-white/5">
+              <div class="text-gray-500 text-[10px]">Your Retained Profit (85%)</div>
+              <div class="font-bold text-[#ccff00]" id="res-retained">$12,427/mo</div>
+            </div>
+          </div>
+
+          <a href="index.html#audit-tool" class="w-full py-3 bg-[#ccff00] text-black text-center font-bold text-xs rounded-xl font-mono hover:brightness-110 transition-all shadow-[0_0_15px_rgba(204,255,0,0.3)]">
+            Claim Your Free 48-Hour Digital Audit →
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="border-t border-white/5 bg-[#08090d] py-12 px-6">
+    <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-6">
+      <div>
+        <div class="text-xl font-black text-white flex items-center"><span>Socio</span><span class="w-1.5 h-1.5 rounded-[1px] bg-[#669BD2] inline-block shadow-[0_0_6px_rgba(102,155,210,0.8)] ml-[1.5px] self-end mb-0.5"></span></div>
+        <p class="text-xs text-gray-500 font-mono mt-1">Evidence helpers for local commerce. Compliance helpers, not legal advice — attorney-reviewed 08/2024. We claim attribution, never automatic causation.</p>
+      </div>
+      <div class="flex flex-wrap gap-4 text-xs font-mono text-gray-400">
+        <a href="index.html" class="hover:text-white">Home</a>
+        <a href="merchant-evidence.html" class="hover:text-white">Merchant Evidence</a>
+        <a href="command-center.html" class="hover:text-white">Command Center</a>
+        <a href="/privacy" class="hover:text-white">Privacy Policy</a>
+        <a href="/terms" class="hover:text-white">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function calculateRoi() {
+      const customers = parseInt(document.getElementById('input-customers').value);
+      const ticket = parseInt(document.getElementById('input-ticket').value);
+      const dormant = parseInt(document.getElementById('input-dormant').value);
+
+      document.getElementById('val-customers').innerText = customers.toLocaleString();
+      document.getElementById('val-ticket').innerText = '$' + ticket.toLocaleString();
+      document.getElementById('val-dormant').innerText = dormant.toLocaleString();
+
+      // Calculation Engine
+      const dormantRecovery = Math.round(dormant * 0.22 * ticket);
+      const reviewsBoost = Math.round(customers * 0.04 * ticket);
+      const b2bRev = Math.round(ticket * 35);
+      const totalRev = dormantRecovery + reviewsBoost + b2bRev;
+      const retained = Math.round(totalRev * 0.85);
+
+      document.getElementById('res-dormant').innerText = '$' + dormantRecovery.toLocaleString() + '/mo';
+      document.getElementById('res-reviews').innerText = '$' + reviewsBoost.toLocaleString() + '/mo';
+      document.getElementById('res-b2b').innerText = '$' + b2bRev.toLocaleString() + '/mo';
+      document.getElementById('res-total').innerText = '$' + totalRev.toLocaleString() + '/mo';
+      document.getElementById('res-retained').innerText = '$' + retained.toLocaleString() + '/mo';
+    }
+
+    calculateRoi();
+    lucide.createIcons();
+
+    // Scroll-spy: highlight the quick anchor for the section in view
+    (function () {
+      const ids = ['commission', 'casestudy', 'ledger', 'protocol', 'calculator'];
+      const links = Array.from(document.querySelectorAll('a[href^="#"]'));
+      const spyObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          links.forEach((a) => {
+            if (a.getAttribute('href') === '#' + entry.target.id) {
+              a.classList.add('bg-white/10', 'text-white');
+              a.style.borderColor = '#ccff00';
+            } else {
+              a.classList.remove('bg-white/10', 'text-white');
+              a.style.borderColor = '';
+            }
+          });
+        });
+      }, { rootMargin: '-35% 0px -55% 0px', threshold: 0 });
+      ids.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) spyObserver.observe(el);
+      });
+    })();
+  </script>
+
+    <!-- WhatsApp Floating Widget -->
+    <script src="/assets/whatsapp-widget.js" defer></script>
+</body>
+</html>
