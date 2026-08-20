@@ -840,7 +840,16 @@
             }, 600);
         }
 
-        lucide.createIcons();
+        // lucide.js is loaded with defer, so it is not defined yet while this
+        // inline script runs. Deferred scripts finish before DOMContentLoaded,
+        // so wait for that instead of calling createIcons() during parse.
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function () {
+                if (window.lucide) lucide.createIcons();
+            });
+        } else if (window.lucide) {
+            lucide.createIcons();
+        }
     </script>
 
     <!-- WhatsApp Floating Widget -->

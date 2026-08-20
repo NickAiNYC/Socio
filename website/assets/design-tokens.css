@@ -133,3 +133,72 @@
 .text-success { color: var(--color-success) !important; }
 .text-money { color: var(--color-money) !important; }
 .text-safety { color: var(--safety-yellow) !important; }
+
+
+/* ============================================================
+   SOCIO TYPE & RHYTHM LAYER  (added 2026-08-20)
+   Loads on every page, so these corrections propagate site-wide
+   without touching 35 files of markup.
+   ============================================================ */
+
+/* 1. Display type. Headings were rendering loose and wide at large
+      sizes. Optical tightening scales with size, the way type wants. */
+h1, h2, h3 { text-wrap: balance; }
+h1 { letter-spacing: -0.035em; line-height: 1.02; }
+h2 { letter-spacing: -0.025em; line-height: 1.1; }
+h3 { letter-spacing: -0.015em; line-height: 1.2; }
+p  { text-wrap: pretty; }
+
+/* 2. Readable measure. Body copy was running the full grid width
+      on wide screens, which is the single biggest readability tax
+      on these pages. 65ch is the ceiling, not a suggestion. */
+main p, section p, article p { max-width: 68ch; }
+main p.max-w-none, section p.max-w-none { max-width: none; }
+
+/* 3. Numerals. Every price, tier and stat on this site is monospace
+      by design. Tabular figures stop them shifting between values. */
+.font-mono, [class*="font-mono"] { font-variant-numeric: tabular-nums; }
+
+/* 4. Shape consistency lock. The audit found 12px, 16px, 20px and
+      pill radii mixed inside single sections. One scale, applied. */
+:root { --r-control: 0.75rem; --r-surface: 1rem; }
+
+/* 5. Focus. Was browser-default outline on an orange brand, which
+      disappears against the CTA. Visible in both directions. */
+a:focus-visible, button:focus-visible,
+input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--brand-orange);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* 6. Tap targets. Traffic to this site is ~100% WhatsApp, so ~100%
+      mobile. Anything interactive clears the 44px minimum. */
+@media (max-width: 767px) {
+  a[class*="px-"][class*="py-"], button { min-height: 44px; }
+}
+
+/* 7. Motion respect. Several pages ship animate-ping and animate-pulse
+      on decorative dots. Honour the user setting. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* 8. Print. The pilot agreement and the leak-scan scorecard are both
+      meant to be handed over on paper at a coffee meeting. */
+@media print {
+  nav, header .lang-toggle, .no-print, [data-lucide="message-square"] { display: none !important; }
+  body { background: #fff !important; color: #000 !important; }
+  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 9pt; word-break: break-all; }
+}
+
+/* 9. Sticky mobile CTA bar overlays the last section on small screens.
+      Reserve its height so nothing is permanently covered. */
+@media (max-width: 767px) {
+  body:has(.fixed.bottom-0) { padding-bottom: 5.5rem; }
+}
