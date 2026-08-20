@@ -3,7 +3,7 @@
  * Monitors deposit payments and triggers commission calculation.
  */
 
-import { computeTieredCommission, evaluateCommissionWithCap } from './commission-engine.mjs';
+import { evaluateCommissionWithCap } from './commission-engine.mjs';
 import { matchLeadInPool } from './attribution-engine.mjs';
 
 export function evaluateDepositStatus(invoice) {

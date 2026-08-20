@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Critical above-fold */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+::selection { background: rgba(102,155,210,0.2); color: #0f172a; }
+html { scrollbar-width: thin; scrollbar-color: #CBD5E1 #FAFAFA; }
+body { font-family: 'Inter', sans-serif; font-weight: 300; background: #FAFAFA; color: #475569; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+h1,h2,h3,h4,h5,h6 { font-family: 'Space Grotesk', sans-serif; }
+.nav-bar { transform: translateY(-100%); }

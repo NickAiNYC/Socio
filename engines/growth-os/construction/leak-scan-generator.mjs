@@ -7,6 +7,15 @@ export function auditGoogleBusinessProfile({ claimed = false, reviewCount = 8, a
   const leaks = [];
   let score = 100;
 
+  if (avgRating < 4.0) {
+    leaks.push({
+      item: `Calificación promedio baja: ${avgRating.toFixed(1)} estrellas (Mínimo recomendado: 4.0+)`,
+      impact: 'Calificaciones por debajo de 4.0 reducen la tasa de conversión y la visibilidad en Google Maps',
+      lostBidsEstMonthly: 1.2,
+    });
+    score -= 15;
+  }
+
   if (!claimed) {
     leaks.push({
       item: 'Perfil de Google no reclamado / verificado',

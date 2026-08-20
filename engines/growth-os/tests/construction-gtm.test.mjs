@@ -2,16 +2,16 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 
 // Module 1
-import { buildPitchPayload, isWithinEstOperatingHours, GOVERNOR_LIMITS } from '../construction/pitch-agent.mjs';
+import { buildPitchPayload, isWithinEstOperatingHours } from '../construction/pitch-agent.mjs';
 
 // Module 2
-import { generateContractorLeakScan, auditGoogleBusinessProfile, auditWebsitePresence, auditMissedCallSpeed } from '../construction/leak-scan-generator.mjs';
+import { generateContractorLeakScan } from '../construction/leak-scan-generator.mjs';
 
 // Module 3
 import { parseHandwrittenEstimatePad, provisionTwilioTrackingNumber, generateQboAuthLink, evaluateOnboardingProgress } from '../construction/contractor-onboarding.mjs';
 
 // Module 4
-import { evaluateGate1, evaluateGate2, PILOT_COHORT_SPECS } from '../construction/pilot-tracker.mjs';
+import { evaluateGate1, evaluateGate2 } from '../construction/pilot-tracker.mjs';
 
 test('GTM MODULE 1: Pitch Agent generates compliant 3-touch WhatsApp payloads and enforces Governor gates', () => {
   // Touch 1: Free Leak Scan offer, requires human approval

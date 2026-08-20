@@ -4,17 +4,14 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Socio — Performance-Based Growth Partnership for NYC Local Merchants</title>
-    <meta name="description" content="Socio is NYC's AI-powered growth partner for local merchants. Zero upfront fees. We only get paid when you grow. 10–15% commission on new revenue we generate.">
+    <title>Socio — Performance-Based Growth Partnership for NYC Contractors</title>
+    <meta name="description" content="Socio is NYC's performance growth partner for local contractors and remodelers. We only get paid when you grow. 12/8/5% commission on new revenue we generate.">
     <meta property="og:title" content="Socio — We Don't Get Paid Until You Do">
-    <meta property="og:description" content="Performance-based growth partnership for NYC local merchants. Zero retainers. AI-powered. POS receipt-matched proof.">
+    <meta property="og:description" content="Performance-based growth partnership for NYC contractors. Zero retainers. POS receipt-matched proof.">
     <meta property="og:type" content="website">
-    
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Socio — NYC's Local Growth Partner">
-    <meta name="twitter:description" content="Zero upfront fees. 10–15% commission on new revenue. AI-powered growth for florists, restaurants, bodegas.">
-
-    <!-- Meta Pixel (fills META_PIXEL_ID at build/deploy) -->
+    <meta name="twitter:description" content="Zero upfront fees. 12/8/5% commission on new revenue. Growth for NYC contractors and remodelers.">
     <script>
       !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
       n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
@@ -38,1445 +35,256 @@
       }
     </script>
     <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=__SOCIO_PIXEL_ID__&ev=PageView&noscript=1"/></noscript>
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        heading: ['Space Grotesk', 'sans-serif'],
-                        body: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        accent: '#669BD2',
-                        light: '#FAFAFA',
-                        neon: '#CCFF00',
-                    },
-                }
-            }
-        }
-    </script>
-
-    <!-- Iconify -->
-    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
-
-    <!-- GSAP -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"></noscript>
+    <link rel="stylesheet" href="/assets/output.css">
+    <link rel="stylesheet" href="/assets/design-tokens.css">
     <link rel="stylesheet" href="/assets/socio.css">
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+    <script src="/assets/three.min.js" defer></script>
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#669BD2">
-
-    <!-- Canonical & Multilingual SEO -->
     <link rel="canonical" href="https://socio-one.vercel.app/">
     <link rel="alternate" hreflang="en" href="https://socio-one.vercel.app/">
     <link rel="alternate" hreflang="es" href="https://socio-one.vercel.app/contratistas">
     <link rel="alternate" hreflang="x-default" href="https://socio-one.vercel.app/">
-
-    <!-- Open Graph & Twitter Cards -->
     <meta property="og:url" content="https://socio-one.vercel.app/">
     <meta property="og:image" content="https://socio-one.vercel.app/assets/hero.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://socio-one.vercel.app/assets/hero.jpg">
-
-    <!-- CDN Preconnects -->
-    <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <link rel="preconnect" href="https://code.iconify.design">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-
     <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  "name": "Socio",
-  "alternateName": "Socio NYC Growth Partner",
-  "url": "https://socio-one.vercel.app/",
-  "logo": "https://socio-one.vercel.app/assets/hero.jpg",
-  "image": "https://socio-one.vercel.app/assets/hero.jpg",
-  "description": "Performance-based growth partnership for NYC local merchants. Zero upfront fees, 10–15% commission on net new revenue only.",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "New York",
-    "addressRegion": "NY",
-    "addressCountry": "US"
-  },
-  "priceRange": "$",
-  "telephone": "+1-917-555-0199",
-  "openingHoursSpecification": [
-    {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday"
-      ],
-      "opens": "08:00",
-      "closes": "20:00"
-    }
-  ]
-}
+{"@context":"https://schema.org","@type":"ProfessionalService","name":"Socio","alternateName":"Socio NYC Growth Partner","url":"https://socio-one.vercel.app/","logo":"https://socio-one.vercel.app/assets/hero.jpg","image":"https://socio-one.vercel.app/assets/hero.jpg","description":"Performance-based growth partnership for NYC contractors. Zero upfront fees, 12/8/5% commission on net new revenue only.","address":{"@type":"PostalAddress","addressLocality":"New York","addressRegion":"NY","addressCountry":"US"},"priceRange":"$","telephone":"+1-347-555-0142","openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"08:00","closes":"20:00"}]}
     </script>
 </head>
-
 <body>
     <a href="#hero" class="sr-only focus:not-sr-only focus:top-4 focus:left-4 focus:z-[999] focus:px-4 focus:py-2 focus:bg-slate-900 focus:text-white focus:rounded-xl focus:shadow-2xl">Skip to main content</a>
-    <script>
-        // Deploy-time webhook secret injection point. CI replaces the token
-        // with the real value at deploy time; never hardcode a secret here.
-        window.SOCIO_WEBHOOK_SECRET = '__SOCIO_WEBHOOK_SECRET__';
-    </script>
+    <script>window.SOCIO_WEBHOOK_SECRET = '__SOCIO_WEBHOOK_SECRET__';</script>
 
-    <!-- ============================== -->
-    <!-- NAVIGATION                      -->
-    <!-- ============================== -->
-    <nav class="nav-bar fixed top-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-5xl px-4">
-        <div class="flex items-center justify-between px-6 py-3 rounded-2xl bg-white/70 backdrop-blur-2xl border border-slate-200/60 shadow-[0_2px_20px_rgba(0,0,0,0.04)]">
-            <a href="#" class="flex items-center text-slate-900 text-xl font-bold tracking-tight">
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-xl border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
+            <a href="/" class="flex items-center text-slate-900 text-2xl font-black tracking-tight group" title="Socio Principal">
                 <span>Socio</span>
-                <span class="w-1.5 h-1.5 rounded-[1px] bg-[#669BD2] inline-block shadow-[0_0_6px_rgba(102,155,210,0.8)] ml-[1.5px] self-end mb-1"></span>
+                <span class="w-1.5 h-1.5 rounded-[1px] bg-[#FF5500] inline-block shadow-[0_0_8px_rgba(255,85,0,0.8)] ml-[1.5px] self-end mb-1"></span>
             </a>
-
-            <div class="hidden md:flex items-center gap-7 text-sm text-slate-500 font-light">
-                <div class="relative group py-2">
-                    <button class="flex items-center gap-1 hover:text-slate-900 transition-colors focus:outline-none">
-                        <span>Industries</span>
-                        <iconify-icon icon="solar:alt-arrow-down-linear" width="12" class="text-slate-400 group-hover:text-slate-900 transition-transform group-hover:rotate-180"></iconify-icon>
-                    </button>
-                    <div class="absolute top-full left-0 hidden group-hover:block w-64 p-2 bg-white/95 backdrop-blur-2xl rounded-2xl border border-slate-200/80 shadow-2xl space-y-1">
-                        <a href="/contratistas" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-orange-50/70 transition-colors group/item">
-                            <div class="flex items-center gap-2.5">
-                                <span class="w-2 h-2 rounded-full bg-[#FF5500]"></span>
-                                <span class="text-xs font-bold text-slate-800 group-hover/item:text-[#FF5500]">Construction (Español)</span>
-                            </div>
-                            <span class="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-orange-100 text-orange-800">ES</span>
-                        </a>
-                        <a href="/floristas" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-rose-50/70 transition-colors group/item">
-                            <div class="flex items-center gap-2.5">
-                                <span class="w-2 h-2 rounded-full bg-[#E11D48]"></span>
-                                <span class="text-xs font-bold text-slate-800 group-hover/item:text-[#E11D48]">Florists & Botanical</span>
-                            </div>
-                            <span class="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">NEW</span>
-                        </a>
-                        <a href="/restaurantes" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-amber-50/70 transition-colors group/item">
-                            <div class="flex items-center gap-2.5">
-                                <span class="w-2 h-2 rounded-full bg-[#D97706]"></span>
-                                <span class="text-xs font-bold text-slate-800 group-hover/item:text-[#D97706]">Restaurants & Catering</span>
-                            </div>
-                            <span class="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-amber-100 text-amber-800">NEW</span>
-                        </a>
-                        <a href="/clinicas" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-sky-50/70 transition-colors group/item">
-                            <div class="flex items-center gap-2.5">
-                                <span class="w-2 h-2 rounded-full bg-[#0284C7]"></span>
-                                <span class="text-xs font-bold text-slate-800 group-hover/item:text-[#0284C7]">Clinics & MedSpas</span>
-                            </div>
-                            <span class="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-sky-100 text-sky-800">NEW</span>
-                        </a>
-                        <a href="#how-it-works" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50 transition-colors">
-                            <div class="flex items-center gap-2.5">
-                                <span class="w-2 h-2 rounded-full bg-slate-400"></span>
-                                <span class="text-xs font-medium text-slate-700">Retail & POS Merchants</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <a href="#how-it-works" class="nav-link hover:text-slate-900 transition-colors">How It Works</a>
-                <a href="#work" class="nav-link hover:text-slate-900 transition-colors">Proof</a>
-                <a href="#process" class="nav-link hover:text-slate-900 transition-colors">Process</a>
-                <a href="#faq" class="nav-link hover:text-slate-900 transition-colors">FAQ</a>
+            <nav class="hidden md:flex items-center gap-7 text-sm text-slate-600 font-medium">
+                <a href="#protocol" class="hover:text-[#FF5500] transition-colors">How It Works</a>
+                <a href="#verification" class="hover:text-[#FF5500] transition-colors">Proof</a>
+                <a href="#protocol" class="hover:text-[#FF5500] transition-colors">Process</a>
+                <a href="#faq" class="hover:text-[#FF5500] transition-colors">FAQ</a>
+            </nav>
+            <div class="flex items-center gap-3">
+                <a href="/contratistas" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 bg-orange-50 border border-orange-200 text-orange-800 text-xs font-bold rounded-xl hover:bg-orange-100 transition-colors">
+                    <span>Contratistas (ES)</span>
+                </a>
+                <a href="#lead-capture" class="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-900 text-white text-xs font-bold rounded-xl hover:bg-slate-800 shadow transition-colors">
+                    <span>Become a Socio</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+                </a>
+                <button class="md:hidden p-2 rounded-xl text-slate-700 hover:bg-slate-100" id="mobile-menu-btn" onclick="document.getElementById('mobile-nav-menu').classList.toggle('hidden')" aria-label="Menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                </button>
             </div>
-
-            <a href="#lead-capture" class="cta-shimmer hidden md:inline-flex items-center gap-2 px-5 py-2 bg-slate-900 text-white text-sm font-light rounded-xl hover:bg-slate-800 transition-colors">
-                Become a Socio
-                <iconify-icon icon="solar:arrow-right-up-linear" width="14"></iconify-icon>
-            </a>
-
-            <button class="md:hidden text-slate-900" id="mobile-menu-btn">
-                <iconify-icon icon="solar:hamburger-menu-linear" width="24"></iconify-icon>
-            </button>
         </div>
-    </nav>
+        <div id="mobile-nav-menu" class="hidden md:hidden border-t border-slate-200 bg-white px-6 py-4 space-y-3 font-bold text-xs uppercase tracking-wider text-slate-700 shadow-xl">
+            <a href="/contratistas" class="block py-2 text-[#FF5500]">🔨 Contratistas (ES)</a>
+            <a href="#protocol" class="block py-2 text-slate-600">How It Works</a>
+            <a href="#faq" class="block py-2 text-slate-600">FAQ</a>
+        </div>
+    </header>
 
-    <!-- ============================== -->
-    <!-- STICKY CTA (scrolls with user)  -->
-    <!-- ============================== -->
     <div class="sticky-cta" id="sticky-cta">
         <a href="#lead-capture" class="btn-neon inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl text-sm font-medium shadow-2xl hover:scale-105 transition-all">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-            <span>⚡ Request Free Audit (Only 3 NYC Pilot Slots Left)</span>
+            <span>⚡ Request Free Audit — Pilot 2/5 Filled (Astoria + Bushwick)</span>
         </a>
     </div>
 
-
-
-    <!-- ============================== -->
-    <!-- HERO SECTION                    -->
-    <!-- ============================== -->
-    <section id="hero" class="relative min-h-screen overflow-hidden hero-container">
-        <div class="absolute inset-0 hero-grid-bg"></div>
-
-        <div class="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-blue-200/30 blur-[100px] glow-orb"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-slate-200/40 blur-[100px] glow-orb"></div>
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-blue-100/20 blur-[120px] glow-orb"></div>
-
-        <div id="particle-container" class="absolute inset-0 z-0 pointer-events-none"></div>
-
-        <div class="relative z-10 max-w-7xl mx-auto px-6 pt-40 pb-20 min-h-screen grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-
-            <!-- Left: Text -->
-            <div class="space-y-8">
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-slate-200/80 text-xs font-mono font-bold text-slate-700">
-                    <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
-                    <span>PERFORMANCE PARTNERSHIP · NYC CONTRACTORS, FLORISTS & DINING</span>
-                </div>
-
-                <h1 class="text-5xl lg:text-[5.2rem] leading-[1.05] tracking-[-0.04em] text-slate-900 text-balance">
-                    <span class="font-light">We Don't Get</span>
-                    <span class="relative inline-block">
-                        <span class="gradient-text font-semibold">Paid</span>
-                        <svg class="scribble-underline" viewBox="0 0 100 20" preserveAspectRatio="none">
-                            <path d="M0,10 Q50,20 100,10" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"></path>
-                        </svg>
-                    </span>
-                    <br><span class="font-light">Until</span> <span class="font-semibold text-slate-950">You Do</span>
+    <section id="hero" class="relative w-full min-h-[100dvh] overflow-hidden bg-[#020617]">
+        <div id="hero-orbs" class="absolute inset-0" aria-hidden="true"></div>
+        <canvas id="hero-canvas" class="absolute inset-0 w-full h-full" aria-hidden="true"></canvas>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#020617] via-transparent to-[#020617]/40 pointer-events-none"></div>
+        <div class="relative z-10 max-w-7xl mx-auto px-6 min-h-[100dvh] flex items-center">
+            <div class="max-w-2xl py-28">
+                <h1 class="text-4xl md:text-6xl font-medium text-white tracking-tight leading-[1.05] mb-6">
+                    We find your next renovation job.<br>
+                    <span class="text-[#FF5500]">You pay only when it's verified.</span>
                 </h1>
-
-                <p class="text-base lg:text-lg text-slate-600 font-normal max-w-lg leading-relaxed">
-                    <strong class="text-slate-900 font-semibold">For NYC contractors, florists, clinics & restaurants:</strong> We find revenue you're leaving on the table. Zero upfront fees. Zero retainers. We take 10–15% commission only on <strong class="text-slate-900">verified new deposits credited to your bank or POS</strong>.
+                <p class="text-lg text-slate-300 font-light leading-relaxed max-w-[46ch] mb-8">
+                    Socio finds NYC renovation leads, captures the estimate, and verifies the job before you owe a cent.
                 </p>
-
-                <div class="flex flex-wrap items-center gap-4 pt-2">
-                    <a href="#lead-capture" class="inline-flex items-center gap-3 px-8 py-4 bg-slate-900 text-white rounded-2xl font-bold text-sm hover:bg-slate-800 transition-all hover:gap-4 shadow-xl shadow-slate-900/20">
-                        <span>Start Free 48h Revenue Audit</span>
-                        <iconify-icon icon="solar:arrow-right-linear" width="16"></iconify-icon>
-                    </a>
-                    <a href="#how-it-works" class="inline-flex items-center gap-2 px-5 py-4 text-slate-600 text-sm font-medium hover:text-slate-900 transition-colors">
-                        <iconify-icon icon="solar:play-circle-linear" width="20" class="text-accent"></iconify-icon>
-                        See the 4-Phase Protocol
-                    </a>
-                </div>
-
-                <!-- Stats row -->
-                <div class="flex flex-wrap items-center gap-6 lg:gap-8 pt-6 border-t border-slate-200/80 font-mono">
-                    <div>
-                        <div class="text-2xl font-black text-slate-900 font-sans">$22.8K+</div>
-                        <div class="text-[11px] text-slate-500 font-light">Recovered Revenue</div>
-                    </div>
-                    <div class="w-px h-10 bg-slate-200"></div>
-                    <div>
-                        <div class="text-2xl font-black text-slate-900 font-sans">10+</div>
-                        <div class="text-[11px] text-slate-500 font-light">NYC Verified Partners</div>
-                    </div>
-                    <div class="w-px h-10 bg-slate-200"></div>
-                    <div>
-                        <div id="live-recovered-ticker" class="text-2xl font-black text-emerald-600 font-sans transition-all duration-300">$1,340</div>
-                        <div class="text-[11px] text-slate-500 font-light flex items-center gap-1">
-                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
-                            <span>Live Recov. Feed (Simulated)</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </div>
-
-            <!-- Right: Floating UI Components -->
-            <div class="relative hidden lg:block h-[600px]">
-
-                <!-- Main Terminal: Revenue Recovery Dashboard -->
-                <div id="float-terminal" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[380px] bg-slate-900 rounded-2xl shadow-2xl shadow-slate-900/20 overflow-hidden" style="transform: translate(-50%, -50%) rotate(-3deg);">
-                    <div class="flex items-center gap-2 px-5 py-3 border-b border-slate-800">
-                        <span class="terminal-dot bg-red-400"></span>
-                        <span class="terminal-dot bg-yellow-400"></span>
-                        <span class="terminal-dot bg-green-400 animate-pulse" style="background: #669BD2;"></span>
-                        <span class="text-xs text-slate-500 ml-2 font-mono">revenue-ledger.tsx</span>
-                    </div>
-                    <div class="p-6">
-                        <div class="text-xs text-slate-500 mb-4 font-mono">// POS-Matched Revenue Recovery</div>
-                        <div class="flex items-end gap-3 h-32">
-                            <div class="flex-1 bg-accent/80 rounded-t-lg bar-glow text-accent" style="height: 35%"></div>
-                            <div class="flex-1 bg-accent/80 rounded-t-lg bar-glow text-accent" style="height: 55%"></div>
-                            <div class="flex-1 bg-accent rounded-t-lg bar-glow text-accent" style="height: 75%"></div>
-                            <div class="flex-1 bg-accent rounded-t-lg bar-glow text-accent" style="height: 60%"></div>
-                            <div class="flex-1 bg-accent rounded-t-lg bar-glow text-accent" style="height: 90%"></div>
-                            <div class="flex-1 bg-accent/80 rounded-t-lg bar-glow text-accent" style="height: 70%"></div>
-                            <div class="flex-1 bg-accent/60 rounded-t-lg bar-glow text-accent" style="height: 50%"></div>
-                        </div>
-                        <div class="flex justify-between mt-3 text-[10px] text-slate-600 font-mono">
-                            <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
-                        </div>
-                        <div class="mt-4 flex items-center justify-between">
-                            <div>
-                                <div class="text-white text-lg font-heading font-medium">$22,890</div>
-                                <div class="text-slate-500 text-xs">Total Recovered</div>
-                            </div>
-                            <div class="flex items-center gap-1 text-green-400 text-xs">
-                                <iconify-icon icon="solar:verified-check-linear" width="14"></iconify-icon>
-                                POS Matched
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Agent Fleet Badge -->
-                <div id="float-code" class="absolute top-[15%] right-[5%] z-30 bg-white rounded-xl shadow-lg shadow-slate-200/60 p-4 border border-slate-100">
-                    <div class="flex items-center gap-2 mb-2">
-                        <span class="w-6 h-6 rounded-lg bg-green-50 flex items-center justify-center">
-                            <iconify-icon icon="solar:users-group-rounded-linear" width="14" class="text-green-600"></iconify-icon>
-                        </span>
-                        <span class="text-xs font-medium text-slate-700">Agent Fleet</span>
-                    </div>
-                    <div class="text-[10px] text-slate-500 leading-relaxed space-y-1">
-                        <div class="flex items-center gap-1.5">
-                            <span class="w-1.5 h-1.5 bg-green-400 rounded-full"></span>
-                            <span class="text-slate-600">8/8 Agents Online</span>
-                        </div>
-                        <div class="flex items-center gap-1.5">
-                            <span class="w-1.5 h-1.5 bg-green-400 rounded-full"></span>
-                            <span class="text-slate-600">Governor: 98.6%</span>
-                        </div>
-                        <div class="flex items-center gap-1.5">
-                            <span class="w-1.5 h-1.5 bg-amber-400 rounded-full"></span>
-                            <span class="text-slate-600">3 Actions Pending</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Commission Tracker Card -->
-                <div id="float-sync" class="absolute bottom-[20%] left-[0%] z-30 bg-white rounded-xl shadow-lg shadow-slate-200/60 p-4 border border-slate-100 w-52">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="w-6 h-6 rounded-lg bg-blue-50 flex items-center justify-center">
-                            <iconify-icon icon="solar:wallet-money-linear" width="14" class="text-blue-500"></iconify-icon>
-                        </span>
-                        <span class="text-xs font-medium text-slate-700">Commission</span>
-                        <span class="ml-auto text-[10px] text-green-500 bg-green-50 px-2 py-0.5 rounded-full">Stripe</span>
-                    </div>
-                    <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                        <div class="h-full bg-gradient-to-r from-blue-400 to-accent rounded-full relative overflow-hidden" style="width: 78%">
-                            <div class="absolute inset-0 bg-white/40 sync-progress-bar"></div>
-                        </div>
-                    </div>
-                    <div class="text-[10px] text-slate-400 mt-2">$3,433.50 invoiced MTD</div>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- Scroll indicator -->
-        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-slate-400">
-            <span class="text-xs font-light tracking-widest uppercase">Scroll</span>
-            <div class="w-5 h-8 border border-slate-300 rounded-full flex justify-center pt-1.5">
-                <div class="w-1 h-2 bg-slate-400 rounded-full animate-bounce"></div>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- ============================== -->
-    <!-- CAPABILITIES - STICKY STACK     -->
-    <!-- ============================== -->
-    <section id="capabilities" class="relative py-20">
-        <div class="max-w-7xl mx-auto px-6">
-
-            <div class="max-w-2xl mb-16">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/5 text-accent text-xs font-mono font-bold mb-6">
-                    <iconify-icon icon="solar:widget-linear" width="14"></iconify-icon>
-                    BUILT FOR NYC LOCAL MERCHANTS
-                </div>
-                <h2 class="text-4xl lg:text-5xl font-light text-slate-900 tracking-tight mb-4">
-                    How Socio Grows You<br>
-                    <span class="font-medium">Without Upfront Risk</span>
-                </h2>
-                <p class="text-slate-500 font-light leading-relaxed">
-                    We handle prospecting, local listings, review growth, and customer recovery using NYC-specific data feeds. You focus on your craft — we only get paid when revenue hits your register.
-                </p>
-            </div>
-
-            <div id="card-stack-container" class="relative">
-
-                <!-- Card 1: We Only Get Paid on New Customers You Can Verify -->
-                <div class="dm-card mb-8 rounded-3xl overflow-hidden" data-card-index="0">
-                    <div class="bg-slate-900 text-white p-8 lg:p-12 rounded-3xl min-h-[520px] flex flex-col justify-between border border-slate-800">
-                        <div>
-                            <div class="flex items-center justify-between mb-6">
-                                <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-mono font-bold">
-                                    <iconify-icon icon="solar:verified-check-linear" width="14"></iconify-icon>
-                                    NEW REVENUE ONLY · NYC VERTICAL FEEDS
-                                </span>
-                                <span class="text-6xl font-heading font-light text-white/10">01</span>
-                            </div>
-                            <h3 class="text-3xl lg:text-4xl font-light tracking-tight mb-4">
-                                We Only Get Paid on New Customers<br><span class="font-medium text-[#FF5500]">You Can Verify</span>
-                            </h3>
-                            <p class="text-slate-300 font-light max-w-2xl leading-relaxed mb-6">
-                                We find high-value customers you wouldn't have reached otherwise — and prove every single dollar before billing a dime:
-                            </p>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono text-slate-300">
-                                <div class="p-3 rounded-xl bg-white/5 border border-white/10">
-                                    <span class="text-[#FF5500] font-bold">🏗️ For Contractors:</span> We scan daily NYC DOB permits & unclosed bids to capture active projects before competitors.
-                                </div>
-                                <div class="p-3 rounded-xl bg-white/5 border border-white/10">
-                                    <span class="text-[#E11D48] font-bold">🌸 For Florists:</span> We track hotel procurement calendars, corporate galas & wedding filings to sell inventory before it wilts.
-                                </div>
-                                <div class="p-3 rounded-xl bg-white/5 border border-white/10">
-                                    <span class="text-[#D97706] font-bold">🍽️ For Restaurants:</span> We capture corporate catering orders & private dining buyouts without paying 30% delivery app fees.
-                                </div>
-                                <div class="p-3 rounded-xl bg-white/5 border border-white/10">
-                                    <span class="text-[#0284C7] font-bold">🩺 For Clinics:</span> We catch cancelled slots and assign standby patients in &lt;90 seconds to eliminate costly empty chairs.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-3 mt-8 flex-wrap">
-                            <div class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs text-slate-300">
-                                <iconify-icon icon="solar:shield-check-linear" width="14" class="text-emerald-400"></iconify-icon>
-                                POS-Matched Revenue
-                            </div>
-                            <div class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs text-slate-300">
-                                <iconify-icon icon="solar:chart-square-linear" width="14" class="text-orange-400"></iconify-icon>
-                                Zero Upfront Fees
-                            </div>
-                            <div class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs text-slate-300">
-                                <iconify-icon icon="solar:refresh-circle-linear" width="14" class="text-cyan-400"></iconify-icon>
-                                24/7 Neighborhood Radar
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 2: Your Money — Tracked, Verified, and Yours to Keep -->
-                <div class="dm-card mb-8 rounded-3xl overflow-hidden" data-card-index="1">
-                    <div class="bg-[#1E293B] text-white p-8 lg:p-12 rounded-3xl min-h-[520px] flex flex-col justify-between border border-slate-700 shadow-xl">
-                        <div>
-                            <div class="flex items-center justify-between mb-6">
-                                <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-300 text-xs font-mono font-bold">
-                                    <iconify-icon icon="solar:chart-square-linear" width="14"></iconify-icon>
-                                    EVIDENCE STANDARD · ZERO VANITY METRICS
-                                </span>
-                                <span class="text-6xl font-heading font-light text-white/10">02</span>
-                            </div>
-                            <h3 class="text-3xl lg:text-4xl font-light tracking-tight mb-4">
-                                No Vanity Metrics.<br><span class="font-medium text-white">Just Clear Receipts.</span>
-                            </h3>
-                            <p class="text-slate-300 font-light max-w-2xl leading-relaxed mb-6">
-                                No "impressions", no "clicks", no "qualified leads" that never show up. Every dollar we generate for you is traced directly to your actual payment channels:
-                            </p>
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-mono text-slate-300 mb-6">
-                                <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-700">
-                                    <div class="text-white font-bold mb-1">POS Terminals</div>
-                                    <div class="text-[11px] text-slate-400">Square, Clover, Toast, or Shopify register receipts.</div>
-                                </div>
-                                <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-700">
-                                    <div class="text-white font-bold mb-1">Bank Deposits</div>
-                                    <div class="text-[11px] text-slate-400">QuickBooks Online & bank deposits cleared and settled.</div>
-                                </div>
-                                <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-700">
-                                    <div class="text-white font-bold mb-1">Digital Payments</div>
-                                    <div class="text-[11px] text-slate-400">Stripe, Zelle, or card invoices matched to customer names.</div>
-                                </div>
-                            </div>
-                            <div class="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-xs font-mono text-emerald-300 flex items-center gap-2">
-                                <span class="font-bold text-white">✓ What We Claim:</span> Verified POS receipt match on incremental lift. <span class="text-slate-400 font-bold ml-2">✗ What We Don't Claim:</span> Causality without baseline comparison.
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-3 mt-8 flex-wrap">
-                            <div class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white/10 text-xs text-slate-200">
-                                <iconify-icon icon="solar:verified-check-linear" width="14" class="text-emerald-400"></iconify-icon>
-                                POS Receipt Match
-                            </div>
-                            <div class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white/10 text-xs text-slate-200">
-                                <iconify-icon icon="solar:lock-linear" width="14" class="text-cyan-400"></iconify-icon>
-                                Tamper-Evident Audit Ledger
-                            </div>
-                            <div class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white/10 text-xs text-slate-200">
-                                <iconify-icon icon="solar:document-linear" width="14" class="text-orange-400"></iconify-icon>
-                                Transparent Monthly Statements
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 3: Marketing That Actually Runs Without You -->
-                <div class="dm-card mb-8 rounded-3xl overflow-hidden" data-card-index="2">
-                    <div class="bg-white text-slate-900 p-8 lg:p-12 rounded-3xl min-h-[520px] flex flex-col justify-between border border-slate-200 shadow-md">
-                        <div>
-                            <div class="flex items-center justify-between mb-6">
-                                <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-700 text-xs font-mono font-bold">
-                                    <iconify-icon icon="solar:camera-linear" width="14"></iconify-icon>
-                                    100% DONE-FOR-YOU · YOU STAY IN CONTROL
-                                </span>
-                                <span class="text-6xl font-heading font-light text-slate-100">03</span>
-                            </div>
-                            <h3 class="text-3xl lg:text-4xl font-light tracking-tight mb-4 text-slate-900">
-                                Marketing That Actually Runs<br><span class="font-medium text-blue-600">Without Stealing Your Time</span>
-                            </h3>
-                            <p class="text-slate-600 font-light max-w-2xl leading-relaxed mb-6">
-                                We handle outreach, directories, and reviews so you can stay on the job site, behind the counter, or with patients:
-                            </p>
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-slate-600 mb-6">
-                                <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-100">
-                                    <div class="font-bold text-slate-900 mb-1">📸 Content & Video</div>
-                                    <div class="text-[11px] leading-relaxed">30-day photo & video calendars created automatically. You approve before anything goes live.</div>
-                                </div>
-                                <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-100">
-                                    <div class="font-bold text-slate-900 mb-1">🗺️ 50+ Directories & Maps</div>
-                                    <div class="text-[11px] leading-relaxed">Google Business, Yelp, Apple Maps & vertical directories synced. Ranked for local NYC searches.</div>
-                                </div>
-                                <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-100">
-                                    <div class="font-bold text-slate-900 mb-1">⭐ 5-Star Review Growth</div>
-                                    <div class="text-[11px] leading-relaxed">Automated post-purchase review requests and responses boost your rating without lifting a finger.</div>
-                                </div>
-                            </div>
-                            <div class="p-3 rounded-xl bg-blue-50 border border-blue-100 text-xs text-blue-800 font-mono">
-                                <strong>Vertical Tailoring:</strong> Contractors listed on NYC DOB directory; Florists optimized for "same-day delivery"; Clinics optimized for emergency standby.
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-3 mt-8 flex-wrap">
-                            <div class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-slate-100 text-xs text-slate-700">
-                                <iconify-icon icon="solar:check-circle-linear" width="14" class="text-emerald-600"></iconify-icon>
-                                You Approve Every Post
-                            </div>
-                            <div class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-slate-100 text-xs text-slate-700">
-                                <iconify-icon icon="solar:map-point-linear" width="14" class="text-blue-600"></iconify-icon>
-                                50+ Directory Sync
-                            </div>
-                            <div class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-slate-100 text-xs text-slate-700">
-                                <iconify-icon icon="solar:eye-linear" width="14" class="text-slate-600"></iconify-icon>
-                                Transparent AI Disclosure
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 4: Zero Risk. Zero Upfront. Zero Surprises. -->
-                <div class="dm-card mb-8 rounded-3xl overflow-hidden" data-card-index="3">
-                    <div class="bg-blue-950 text-white p-8 lg:p-12 rounded-3xl min-h-[520px] flex flex-col justify-between border border-blue-900 shadow-xl">
-                        <div>
-                            <div class="flex items-center justify-between mb-6">
-                                <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-xs font-mono font-bold">
-                                    <iconify-icon icon="solar:shield-check-linear" width="14"></iconify-icon>
-                                    THE SOCIO GUARANTEE · ZERO RISK
-                                </span>
-                                <span class="text-6xl font-heading font-light text-white/10">04</span>
-                            </div>
-                            <h3 class="text-3xl lg:text-4xl font-light tracking-tight mb-4">
-                                Zero Risk. Zero Upfront.<br><span class="font-medium text-emerald-400">Zero Surprises.</span>
-                            </h3>
-                            <p class="text-slate-300 font-light max-w-2xl leading-relaxed mb-6">
-                                We don't charge you unless we generate verified revenue. No retainers. No mandatory ad spend:
-                            </p>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono text-slate-300 mb-6">
-                                <div class="p-3 rounded-xl bg-blue-900/40 border border-blue-800">
-                                    <span class="text-emerald-400 font-bold">🏷️ All-In Pricing:</span> 10–15% commission on new verified sales only. No monthly retainers, no junk fees.
-                                </div>
-                                <div class="p-3 rounded-xl bg-blue-900/40 border border-blue-800">
-                                    <span class="text-cyan-400 font-bold">🚪 Click-to-Cancel:</span> Leaving is as easy as joining. Cancel anytime with zero fees or penalties.
-                                </div>
-                                <div class="p-3 rounded-xl bg-blue-900/40 border border-blue-800">
-                                    <span class="text-amber-400 font-bold">📂 100% Data Ownership:</span> You own all customer contacts and lists forever. We never sell your data.
-                                </div>
-                                <div class="p-3 rounded-xl bg-blue-900/40 border border-blue-800">
-                                    <span class="text-purple-400 font-bold">🛡️ $1M Liability Insurance:</span> Fully insured operations protecting your merchant reputation.
-                                </div>
-                            </div>
-                            <div class="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-xs font-mono text-emerald-300 flex items-center justify-between flex-wrap gap-2">
-                                <span><strong>Annual Cap ($10,000–$40,000):</strong> Once you reach your vertical cap, you pay <strong class="text-white">0.0% commission</strong> for the rest of the year.</span>
-                                <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">PROTECTED</span>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-3 mt-8 flex-wrap">
-                            <div class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs text-slate-300">
-                                <iconify-icon icon="solar:tag-price-linear" width="14" class="text-emerald-400"></iconify-icon>
-                                Performance Only
-                            </div>
-                            <div class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs text-slate-300">
-                                <iconify-icon icon="solar:close-circle-linear" width="14" class="text-cyan-400"></iconify-icon>
-                                Click-to-Cancel
-                            </div>
-                            <div class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs text-slate-300">
-                                <iconify-icon icon="solar:shield-check-linear" width="14" class="text-emerald-400"></iconify-icon>
-                                $1M Insured & Capped
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-
-    <!-- ============================== -->
-
-    <!-- ============================== -->
-    <!-- HOW IT WORKS (4 steps)          -->
-    <!-- ============================== -->
-    <section id="how-it-works" class="relative bg-slate-900 py-28 overflow-hidden">
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] rounded-full bg-accent/10 blur-[120px]"></div>
-        <div class="max-w-7xl mx-auto px-6 relative z-10">
-
-            <div class="max-w-2xl mb-16">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 text-accent text-xs font-medium mb-6">
-                    <iconify-icon icon="solar:routing-linear" width="14"></iconify-icon>
-                    How It Works
-                </div>
-                <h2 class="text-4xl lg:text-5xl font-light text-white tracking-tight mb-4">
-                    From audit to growth<br>
-                    <span class="font-medium">in four steps</span>
-                </h2>
-                <p class="text-slate-400 font-light leading-relaxed">
-                    No retainers. No long contracts. Just a clear process that starts with a free 48-hour Revenue Recovery Map and ends with POS-matched proof.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-
-                <!-- Step 1: Audit -->
-                <div class="step-card p-8 flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center justify-between mb-6">
-                            <span class="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center">
-                                <iconify-icon icon="solar:document-linear" width="26" class="text-accent"></iconify-icon>
-                            </span>
-                            <span class="text-5xl font-heading font-light text-white/10">01</span>
-                        </div>
-                        <h3 class="text-xl font-light text-white tracking-tight mb-2">48-Hour Recovery Map</h3>
-                        <p class="text-xs text-slate-400 font-light leading-relaxed mb-4">
-                            We scan your listings, missed customer calls and neighborhood demand signals. You get a clear gap map showing exactly what's leaking revenue.
-                        </p>
-                    </div>
-                    <div class="p-3 rounded-xl bg-white/5 border border-white/10 text-[11px] font-mono text-slate-300">
-                        <span class="text-[#FF5500] font-bold">Contractors:</span> DOB permit & unclosed bid scan.<br>
-                        <span class="text-[#E11D48] font-bold">Florists:</span> Wedding/event permit radar.
-                    </div>
-                </div>
-
-                <!-- Step 2: Onboard -->
-                <div class="step-card p-8 flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center justify-between mb-6">
-                            <span class="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center">
-                                <iconify-icon icon="solar:users-group-rounded-linear" width="26" class="text-accent"></iconify-icon>
-                            </span>
-                            <span class="text-5xl font-heading font-light text-white/10">02</span>
-                        </div>
-                        <h3 class="text-xl font-light text-white tracking-tight mb-2">Onboard in 15 Minutes</h3>
-                        <p class="text-xs text-slate-400 font-light leading-relaxed mb-4">
-                            A quick conversation, a 1-page partnership agreement, and read-only POS/bank integration. Zero fees, zero retainers, zero jargon.
-                        </p>
-                    </div>
-                    <div class="p-3 rounded-xl bg-white/5 border border-white/10 text-[11px] font-mono text-slate-300">
-                        <span class="text-emerald-400 font-bold">Guaranteed:</span> Tasa 0% upon hitting annual cap ($15k–$40k).
-                    </div>
-                </div>
-
-                <!-- Step 3: Execute -->
-                <div class="step-card p-8 flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center justify-between mb-6">
-                            <span class="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center">
-                                <iconify-icon icon="solar:rocket-2-linear" width="26" class="text-accent"></iconify-icon>
-                            </span>
-                            <span class="text-5xl font-heading font-light text-white/10">03</span>
-                        </div>
-                        <h3 class="text-xl font-light text-white tracking-tight mb-2">Execute with AI Speed</h3>
-                        <p class="text-xs text-slate-400 font-light leading-relaxed mb-4">
-                            Our bilingual WhatsApp concierges & outbound agents respond in &lt;90 seconds to capture high-intent inquiries 24/7.
-                        </p>
-                    </div>
-                    <div class="p-3 rounded-xl bg-white/5 border border-white/10 text-[11px] font-mono text-slate-300">
-                        <span class="text-cyan-400 font-bold">Clinics:</span> Instant standby patient re-assignment.<br>
-                        <span class="text-amber-400 font-bold">Dining:</span> Corporate catering buyout quotes.
-                    </div>
-                </div>
-
-                <!-- Step 4: Track -->
-                <div class="step-card p-8 flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center justify-between mb-6">
-                            <span class="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center">
-                                <iconify-icon icon="solar:chart-square-linear" width="26" class="text-accent"></iconify-icon>
-                            </span>
-                            <span class="text-5xl font-heading font-light text-white/10">04</span>
-                        </div>
-                        <h3 class="text-xl font-light text-white tracking-tight mb-2">Track Every Cleared Dollar</h3>
-                        <p class="text-xs text-slate-400 font-light leading-relaxed mb-4">
-                            Revenue is reconciled via bank deposit or terminal receipt. Commission is billed only after you get paid. If you don't get paid, we don't bill.
-                        </p>
-                    </div>
-                    <div class="p-3 rounded-xl bg-white/5 border border-white/10 text-[11px] font-mono text-slate-300">
-                        <span class="text-emerald-400 font-bold">Tamper-Evident:</span> Cryptographic ledger hash on every transaction.
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="flex justify-center mt-14">
-                <a href="#lead-capture" class="btn-neon inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-light text-sm hover:gap-4 transition-all">
-                    Request a Revenue Recovery Map
-                    <iconify-icon icon="solar:arrow-right-linear" width="18"></iconify-icon>
+                <a href="#lead-capture" class="inline-flex items-center gap-2 px-7 py-4 bg-white text-slate-900 text-sm font-bold rounded-2xl hover:bg-slate-100 shadow-2xl hover:scale-[1.02] active:scale-[0.98] transition-all">
+                    <span class="w-1.5 h-1.5 rounded-[1px] bg-[#FF5500] inline-block"></span>
+                    <span>Request Free Audit</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
                 </a>
             </div>
         </div>
     </section>
 
+    <script>
+      (function () {
+        function initHero() {
+          var canvas = document.getElementById('hero-canvas');
+          var section = document.getElementById('hero');
+          if (!canvas || !section) return;
+          var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (reduceMotion || !window.THREE) return;
+          try {
+            var THREE = window.THREE;
+            var isMobile = window.matchMedia('(max-width: 767px)').matches;
+            var COUNT = isMobile ? 550 : 1400;
+            var scene = new THREE.Scene();
+            var camera = new THREE.PerspectiveCamera(50, section.clientWidth / section.clientHeight, 0.1, 100);
+            camera.position.set(0, 0, 9);
+            var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+            renderer.setSize(section.clientWidth, section.clientHeight, false);
+            var findPos = new Float32Array(COUNT * 3);
+            var capturePos = new Float32Array(COUNT * 3);
+            var verifyPos = new Float32Array(COUNT * 3);
+            var current = new Float32Array(COUNT * 3);
+            for (var i = 0; i < COUNT; i++) {
+              var i3 = i * 3;
+              findPos[i3] = (Math.random() - 0.5) * 16;
+              findPos[i3 + 1] = (Math.random() - 0.5) * 8;
+              findPos[i3 + 2] = (Math.random() - 0.5) * 8 - 2;
+              var t = Math.random();
+              var funnelR = 4 * (1 - t) + 0.15;
+              var ang = Math.random() * Math.PI * 2;
+              capturePos[i3] = Math.cos(ang) * funnelR;
+              capturePos[i3 + 1] = Math.sin(ang) * funnelR * 0.6;
+              capturePos[i3 + 2] = t * 6 - 3;
+              var ang2 = (i / COUNT) * Math.PI * 2;
+              var ring = 1.6 + (Math.random() - 0.5) * 0.25;
+              verifyPos[i3] = Math.cos(ang2) * ring;
+              verifyPos[i3 + 1] = Math.sin(ang2) * ring;
+              verifyPos[i3 + 2] = (Math.random() - 0.5) * 0.4;
+              current[i3] = findPos[i3];
+              current[i3 + 1] = findPos[i3 + 1];
+              current[i3 + 2] = findPos[i3 + 2];
+            }
+            var geometry = new THREE.BufferGeometry();
+            geometry.setAttribute('position', new THREE.BufferAttribute(current, 3));
+            var material = new THREE.PointsMaterial({ size: isMobile ? 0.055 : 0.045, color: new THREE.Color('#FF5500'), transparent: true, opacity: 0.85, depthWrite: false, blending: THREE.AdditiveBlending });
+            var points = new THREE.Points(geometry, material);
+            scene.add(points);
+            var COLOR_FIND = new THREE.Color('#FF5500');
+            var COLOR_CAPTURE = new THREE.Color('#2563EB');
+            var COLOR_VERIFY = new THREE.Color('#059669');
+            var mixColor = new THREE.Color();
+            function easeInOutCubic(x) { return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
+            function lerpBuffer(target, from, to, amount) { for (var j = 0; j < target.length; j++) { target[j] = from[j] + (to[j] - from[j]) * amount; } }
+            var clock = new THREE.Clock();
+            var running = true;
+            var rafId = null;
+            var STORY_DURATION = 10;
+            function render() {
+              if (!running) return;
+              rafId = requestAnimationFrame(render);
+              var elapsed = clock.getElapsedTime();
+              var posAttr = geometry.getAttribute('position');
+              if (elapsed < STORY_DURATION) {
+                if (elapsed < 3.3) { lerpBuffer(current, findPos, findPos, 0); material.color.copy(COLOR_FIND); }
+                else if (elapsed < 6.6) { var localA = easeInOutCubic((elapsed - 3.3) / 3.3); lerpBuffer(current, findPos, capturePos, localA); mixColor.copy(COLOR_FIND).lerp(COLOR_CAPTURE, localA); material.color.copy(mixColor); }
+                else { var localB = easeInOutCubic((elapsed - 6.6) / 3.4); lerpBuffer(current, capturePos, verifyPos, localB); mixColor.copy(COLOR_CAPTURE).lerp(COLOR_VERIFY, localB); material.color.copy(mixColor); }
+                posAttr.needsUpdate = true;
+              } else {
+                points.rotation.y += 0.0025;
+                points.rotation.x = Math.sin(elapsed * 0.15) * 0.08;
+                material.opacity = 0.85 + Math.sin(elapsed * 1.4) * 0.08;
+              }
+              renderer.render(scene, camera);
+            }
+            function pause() { running = false; if (rafId) cancelAnimationFrame(rafId); }
+            function resume() { if (!running) { running = true; clock.start(); render(); } }
+            document.addEventListener('visibilitychange', function () { if (document.hidden) pause(); else resume(); });
+            if ('IntersectionObserver' in window) {
+              var io = new IntersectionObserver(function (entries) { entries[0].isIntersecting ? resume() : pause(); }, { threshold: 0.05 });
+              io.observe(section);
+            }
+            window.addEventListener('resize', function () { camera.aspect = section.clientWidth / section.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(section.clientWidth, section.clientHeight, false); }, { passive: true });
+            render();
+            canvas.classList.add('is-active');
+          } catch (err) { if (window.console) console.warn('Hero 3D story disabled:', err); }
+        }
+        if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initHero); } else { initHero(); }
+      })();
+    </script>
 
-    <!-- ============================== -->
-    <!-- WHO THIS IS FOR (verticals)     -->
-    <!-- ============================== -->
-    <section id="verticals" class="relative py-28">
+    <section id="protocol" class="py-24 bg-white relative border-t border-slate-200">
         <div class="max-w-7xl mx-auto px-6">
-
-            <div class="max-w-2xl mb-14">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/5 text-accent text-xs font-medium mb-6">
-                    <iconify-icon icon="solar:users-group-rounded-linear" width="14"></iconify-icon>
-                    Who This Is For
-                </div>
-                <h2 class="text-4xl lg:text-5xl font-light text-slate-900 tracking-tight mb-4">
-                    Built for<br>
-                    <span class="font-medium">neighborhood merchants</span>
+            <div class="text-center max-w-3xl mx-auto mb-20">
+                <h2 class="text-4xl lg:text-5xl font-light text-slate-900 tracking-tight mb-6">
+                    How We Grow NYC Contractors<br>
+                    <span class="font-medium text-[#FF5500]">Without Upfront Risk</span>
                 </h2>
-                <p class="text-slate-500 font-light leading-relaxed">
-                    If customers find you on foot, on Maps, or by word of mouth — we can grow you. Great products, weak digital front door? That's our sweet spot.
+                <p class="text-xl text-slate-600 font-light leading-relaxed">
+                    We detect construction opportunities, recover stalled estimates, follow up fast, and only share in money that actually clears.
                 </p>
             </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <a href="/contratistas" class="p-4 rounded-2xl bg-white border-2 border-orange-200/80 hover:border-[#FF5500] hover:shadow-lg transition-all group flex flex-col justify-between">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center text-[#FF5500]">
-                            <iconify-icon icon="solar:hammer-and-wrench-linear" width="20"></iconify-icon>
-                        </div>
-                        <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-orange-100 text-orange-800">FEATURED · ES</span>
+            <div class="grid md:grid-cols-3 gap-8 mb-24">
+                <div class="bg-slate-50 rounded-3xl p-8 border border-slate-200">
+                    <div class="w-12 h-12 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                     </div>
-                    <div>
-                        <h4 class="text-sm font-bold text-slate-900 group-hover:text-[#FF5500] transition-colors">Contractors & Remodelers</h4>
-                        <p class="text-xs text-slate-500 font-light mt-1">Win unbid DOB permits & recover dormant client pads. $40k cap.</p>
-                    </div>
-                </a>
-
-                <a href="/floristas" class="p-4 rounded-2xl bg-white border-2 border-rose-200/80 hover:border-[#E11D48] hover:shadow-lg transition-all group flex flex-col justify-between">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="w-10 h-10 rounded-xl bg-rose-100 flex items-center justify-center text-[#E11D48]">
-                            <iconify-icon icon="solar:leaf-linear" width="20"></iconify-icon>
-                        </div>
-                        <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-rose-100 text-rose-800">NEW</span>
-                    </div>
-                    <div>
-                        <h4 class="text-sm font-bold text-slate-900 group-hover:text-[#E11D48] transition-colors">Florists & Botanical</h4>
-                        <p class="text-xs text-slate-500 font-light mt-1">Hotel lobby subscriptions & wedding permits. $15k cap.</p>
-                    </div>
-                </a>
-
-                <a href="/restaurantes" class="p-4 rounded-2xl bg-white border-2 border-amber-200/80 hover:border-[#D97706] hover:shadow-lg transition-all group flex flex-col justify-between">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center text-[#D97706]">
-                            <iconify-icon icon="solar:cup-linear" width="20"></iconify-icon>
-                        </div>
-                        <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">NEW</span>
-                    </div>
-                    <div>
-                        <h4 class="text-sm font-bold text-slate-900 group-hover:text-[#D97706] transition-colors">Restaurants & Catering</h4>
-                        <p class="text-xs text-slate-500 font-light mt-1">Corporate catering & private dining without 30% app fees. $20k cap.</p>
-                    </div>
-                </a>
-
-                <a href="/clinicas" class="p-4 rounded-2xl bg-white border-2 border-sky-200/80 hover:border-[#0284C7] hover:shadow-lg transition-all group flex flex-col justify-between">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="w-10 h-10 rounded-xl bg-sky-100 flex items-center justify-center text-[#0284C7]">
-                            <iconify-icon icon="solar:heart-pulse-linear" width="20"></iconify-icon>
-                        </div>
-                        <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-sky-100 text-sky-800">NEW</span>
-                    </div>
-                    <div>
-                        <h4 class="text-sm font-bold text-slate-900 group-hover:text-[#0284C7] transition-colors">Clinics & MedSpas</h4>
-                        <p class="text-xs text-slate-500 font-light mt-1">90s standby patient radar & no-show killer. $25k cap.</p>
-                    </div>
-                </a>
-            </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
-                <div class="vertical-chip">
-                    <span class="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-700 text-xs font-bold shrink-0">☕</span>
-                    <span class="text-xs text-slate-700">Cafés & Bakeries</span>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-4">FIND</h3>
+                    <p class="text-slate-600">Missed calls, dormant estimates, unbid opportunities, and active NYC DOB permits.</p>
                 </div>
-                <div class="vertical-chip">
-                    <span class="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-700 text-xs font-bold shrink-0">🏪</span>
-                    <span class="text-xs text-slate-700">Bodegas & Delis</span>
+                <div class="bg-slate-50 rounded-3xl p-8 border border-slate-200">
+                    <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-4">CAPTURE</h3>
+                    <p class="text-slate-600">Fast bilingual follow-up and structured estimate recovery before the project goes elsewhere.</p>
                 </div>
-                <div class="vertical-chip">
-                    <span class="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-700 text-xs font-bold shrink-0">✂️</span>
-                    <span class="text-xs text-slate-700">Salons & Spas</span>
-                </div>
-                <div class="vertical-chip">
-                    <span class="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-700 text-xs font-bold shrink-0">🚗</span>
-                    <span class="text-xs text-slate-700">Auto & Fitness</span>
+                <div class="bg-slate-50 rounded-3xl p-8 border border-slate-200">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-4">VERIFY</h3>
+                    <p class="text-slate-600">Deposits matched against an auditable evidence trail. You only pay for verified success.</p>
                 </div>
             </div>
-
-            <div class="mt-12 flex flex-wrap items-center justify-center gap-3 text-sm text-slate-500 font-light">
-                <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200">
-                    <iconify-icon icon="solar:map-point-linear" width="14" class="text-accent"></iconify-icon>
-                    East Harlem · Washington Heights · Bronx · Queens
-                </span>
-                <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200">
-                    <iconify-icon icon="solar:chat-round-linear" width="14" class="text-accent"></iconify-icon>
-                    Hablamos español
-                </span>
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================== -->
-    <!-- VERTICAL GROWTH PATHS           -->
-    <!-- ============================== -->
-    <section id="vertical-paths" class="py-32 bg-white">
-        <div class="max-w-7xl mx-auto px-6">
-
-            <div class="max-w-2xl mb-14">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/5 text-accent text-xs font-medium mb-6">
-                    <iconify-icon icon="solar:map-point-linear" width="14"></iconify-icon>
-                    Built for Your Category
-                </div>
-                <h2 class="text-4xl lg:text-5xl font-light text-slate-900 tracking-tight mb-4">
-                    Your customers are<br>
-                    <span class="font-medium">already in your system</span>
-                </h2>
-                <p class="text-slate-500 font-light leading-relaxed">
-                    Every category leaks revenue differently. We start where yours leaks most — and recover it.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-
-                <!-- Aesthetic Clinics & Med Spas -->
-                <div class="aura-card p-7 flex flex-col">
-                    <span class="w-12 h-12 rounded-2xl bg-accent/10 flex items-center justify-center mb-5">
-                        <iconify-icon icon="solar:star-linear" width="22" class="text-accent"></iconify-icon>
-                    </span>
-                    <h3 class="text-lg font-light text-white tracking-tight mb-2">Aesthetic Clinics &amp; Med Spas</h3>
-                    <p class="text-sm text-slate-400 font-light leading-relaxed flex-1">Recover unbooked consults, no-shows, lapsed treatment plans, and high-intent leads that were never followed up.</p>
-                    <div class="flex flex-wrap gap-2 mt-4 mb-6">
-                        <span class="text-[10px] px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-slate-400">Consults</span>
-                        <span class="text-[10px] px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-slate-400">No-shows</span>
-                        <span class="text-[10px] px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-slate-400">Lapsed plans</span>
-                    </div>
-                    <a href="/recovery-index?vertical=aesthetic-clinic" class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-sm text-white font-light hover:bg-[#669BD2]/20 hover:border-[#669BD2]/40 transition-all">
-                        See your recovery opportunity
-                        <iconify-icon icon="solar:arrow-right-linear" width="14"></iconify-icon>
-                    </a>
-                </div>
-
-                <!-- Premium Salons & Wellness -->
-                <div class="aura-card p-7 flex flex-col">
-                    <span class="w-12 h-12 rounded-2xl bg-accent/10 flex items-center justify-center mb-5">
-                        <iconify-icon icon="solar:users-group-rounded-linear" width="22" class="text-accent"></iconify-icon>
-                    </span>
-                    <h3 class="text-lg font-light text-white tracking-tight mb-2">Premium Salons &amp; Wellness</h3>
-                    <p class="text-sm text-slate-400 font-light leading-relaxed flex-1">Fill rebooking gaps, revive lapsed guests, and protect repeat-visit revenue.</p>
-                    <div class="flex flex-wrap gap-2 mt-4 mb-6">
-                        <span class="text-[10px] px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-slate-400">Rebooking</span>
-                        <span class="text-[10px] px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-slate-400">Lapsed guests</span>
-                        <span class="text-[10px] px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-slate-400">Referrals</span>
-                    </div>
-                    <a href="/recovery-index?vertical=salon-wellness" class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-sm text-white font-light hover:bg-[#669BD2]/20 hover:border-[#669BD2]/40 transition-all">
-                        See your recovery opportunity
-                        <iconify-icon icon="solar:arrow-right-linear" width="14"></iconify-icon>
-                    </a>
-                </div>
-
-                <!-- Florists -->
-                <div class="aura-card p-7 flex flex-col">
-                    <span class="w-12 h-12 rounded-2xl bg-accent/10 flex items-center justify-center mb-5">
-                        <iconify-icon icon="solar:camera-linear" width="22" class="text-accent"></iconify-icon>
-                    </span>
-                    <h3 class="text-lg font-light text-white tracking-tight mb-2">Florists</h3>
-                    <p class="text-sm text-slate-400 font-light leading-relaxed flex-1">Reactivate past senders before recurring gifting moments and recover abandoned event orders.</p>
-                    <div class="flex flex-wrap gap-2 mt-4 mb-6">
-                        <span class="text-[10px] px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-slate-400">Gifting moments</span>
-                        <span class="text-[10px] px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-slate-400">Event orders</span>
-                    </div>
-                    <a href="/recovery-index?vertical=florist" class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-sm text-white font-light hover:bg-[#669BD2]/20 hover:border-[#669BD2]/40 transition-all">
-                        See your recovery opportunity
-                        <iconify-icon icon="solar:arrow-right-linear" width="14"></iconify-icon>
-                    </a>
-                </div>
-
-                <!-- Cafés -->
-                <div class="aura-card p-7 flex flex-col">
-                    <span class="w-12 h-12 rounded-2xl bg-accent/10 flex items-center justify-center mb-5">
-                        <iconify-icon icon="solar:wallet-money-linear" width="22" class="text-accent"></iconify-icon>
-                    </span>
-                    <h3 class="text-lg font-light text-white tracking-tight mb-2">Cafés</h3>
-                    <p class="text-sm text-slate-400 font-light leading-relaxed flex-1">Recover loyalty customers, catering inquiries, and repeat office demand.</p>
-                    <div class="flex flex-wrap gap-2 mt-4 mb-6">
-                        <span class="text-[10px] px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-slate-400">Loyalty</span>
-                        <span class="text-[10px] px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-slate-400">Catering</span>
-                        <span class="text-[10px] px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-slate-400">Office demand</span>
-                    </div>
-                    <a href="/recovery-index?vertical=cafe" class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-sm text-white font-light hover:bg-[#669BD2]/20 hover:border-[#669BD2]/40 transition-all">
-                        See your recovery opportunity
-                        <iconify-icon icon="solar:arrow-right-linear" width="14"></iconify-icon>
-                    </a>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-
-    <!-- SELECTED WORK / PROOF           -->
-    <!-- ============================== -->
-    <section id="work" class="relative py-32 bg-white">
-        <div class="max-w-7xl mx-auto px-6">
-
-            <div class="max-w-2xl mb-20">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/5 text-accent text-xs font-medium mb-6">
-                    <iconify-icon icon="solar:verified-check-linear" width="14"></iconify-icon>
-                    Merchant Evidence
-                </div>
-                <h2 class="text-4xl lg:text-5xl font-light text-slate-900 tracking-tight mb-4">
-                    Active<br>
-                    <span class="font-medium">Partners</span>
-                </h2>
-                <p class="text-slate-500 font-light leading-relaxed">
-                    Real merchants. Real POS receipts. Real growth. Every figure traces to the Growth OS evidence API — nothing is estimated or mocked.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-0 lg:gap-16">
-
-                <!-- Left: Merchant List -->
-                <div class="space-y-0">
-
-                    <!-- 01: Hector Framing (Contractor) -->
-                    <div class="work-item group border-t border-slate-100 py-8 cursor-pointer" data-project="hector" onmouseenter="showProject('hector')">
-                        <div class="flex items-start justify-between gap-4">
-                            <div class="flex gap-4 items-start">
-                                <img src="assets/case-hector.jpg" alt="Hector Morales — General Contractor" class="w-14 h-14 rounded-2xl object-cover border border-slate-200/80 shadow-sm shrink-0 mt-1" style="filter: saturate(0.92) contrast(1.04);" width="56" height="56" loading="lazy" decoding="async" />
-                                <div>
-                                    <div class="text-xs text-orange-600 mb-1 font-mono font-bold uppercase">01 — General Contractor · Astoria, Queens</div>
-                                    <h3 class="text-2xl font-light text-slate-900 tracking-tight group-hover:text-[#FF5500] transition-colors">Hector Framing & Drywall</h3>
-                                    <p class="text-sm text-slate-500 font-light mt-1 max-w-sm leading-snug">"El radar de permisos DOB y la reactivación de cotizaciones dormidas nos llenaron la cuadrilla por 4 meses."</p>
-                                </div>
-                            </div>
-                            <a href="/contratistas/casos-de-exito" class="text-slate-300 group-hover:text-[#FF5500] transition-colors shrink-0 mt-2">
-                                <iconify-icon icon="solar:arrow-right-up-linear" width="24"></iconify-icon>
-                            </a>
+            <div class="max-w-4xl mx-auto bg-slate-900 rounded-3xl overflow-hidden border border-slate-800 shadow-2xl">
+                <div class="p-8 lg:p-12 text-white text-center">
+                    <h3 class="text-3xl font-light mb-2">Performance Commission Tiers</h3>
+                    <p class="text-slate-400 mb-8">We share in the growth we create. Billed only after the deposit clears your bank.</p>
+                    <div class="bg-slate-800/50 rounded-2xl overflow-hidden border border-slate-700">
+                        <div class="grid grid-cols-2 text-sm font-bold uppercase tracking-wider text-slate-400 border-b border-slate-700 bg-slate-800/80 p-4">
+                            <div class="text-left">Verified Revenue</div>
+                            <div class="text-right">Socio Share</div>
                         </div>
-                        <div class="flex items-center gap-3 mt-4 ml-[72px]">
-                            <span class="text-[10px] px-2.5 py-1 rounded-full bg-orange-50 text-orange-700 font-bold font-mono">+$81,925 Net Retained</span>
-                            <span class="text-[10px] px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 font-mono">DOB Permits</span>
-                            <span class="text-[10px] px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 font-mono">QuickBooks Settled ✓</span>
+                        <div class="grid grid-cols-2 p-4 border-b border-slate-700/50 items-center">
+                            <div class="text-left font-mono text-lg">First $10k</div>
+                            <div class="text-right font-bold text-2xl text-emerald-400">12%</div>
                         </div>
-                    </div>
-
-                    <!-- 02: Flores de Manhattan (Florist) -->
-                    <div class="work-item group border-t border-slate-100 py-8 cursor-pointer" data-project="florist" onmouseenter="showProject('florist')">
-                        <div class="flex items-start justify-between gap-4">
-                            <div class="flex gap-4 items-start">
-                                <img src="assets/case-florist.jpg" alt="Flores de Manhattan — Florist" class="w-14 h-14 rounded-2xl object-cover border border-slate-200/80 shadow-sm shrink-0 mt-1" style="filter: saturate(0.92) contrast(1.04);" width="56" height="56" loading="lazy" decoding="async" />
-                                <div>
-                                    <div class="text-xs text-rose-600 mb-1 font-mono font-bold uppercase">02 — Florist & Botanical · Midtown East, NYC</div>
-                                    <h3 class="text-2xl font-light text-slate-900 tracking-tight group-hover:text-[#E11D48] transition-colors">Flores de Manhattan</h3>
-                                    <p class="text-sm text-slate-500 font-light mt-1 max-w-sm leading-snug">"El radar floral nos conectó con 3 lobbies de hoteles y 14 bodas. Vendimos el inventario antes de que se marchitara."</p>
-                                </div>
-                            </div>
-                            <a href="/floristas/casos-de-exito" class="text-slate-300 group-hover:text-[#E11D48] transition-colors shrink-0 mt-2">
-                                <iconify-icon icon="solar:arrow-right-up-linear" width="24"></iconify-icon>
-                            </a>
+                        <div class="grid grid-cols-2 p-4 border-b border-slate-700/50 items-center">
+                            <div class="text-left font-mono text-lg">$10k – $50k</div>
+                            <div class="text-right font-bold text-2xl text-emerald-400">8%</div>
                         </div>
-                        <div class="flex items-center gap-3 mt-4 ml-[72px]">
-                            <span class="text-[10px] px-2.5 py-1 rounded-full bg-rose-50 text-rose-700 font-bold font-mono">+$19,650 Net Retained</span>
-                            <span class="text-[10px] px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 font-mono">Radar Floral</span>
-                            <span class="text-[10px] px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 font-mono">Square POS ✓</span>
+                        <div class="grid grid-cols-2 p-4 border-b border-slate-700/50 items-center">
+                            <div class="text-left font-mono text-lg">Above $50k</div>
+                            <div class="text-right font-bold text-2xl text-emerald-400">5%</div>
                         </div>
-                    </div>
-
-                    <!-- 03: Clinica Dra. Valeria (Clinic) -->
-                    <div class="work-item group border-t border-slate-100 py-8 cursor-pointer" data-project="clinic" onmouseenter="showProject('clinic')">
-                        <div class="flex items-start justify-between gap-4">
-                            <div class="flex gap-4 items-start">
-                                <img src="assets/case-clinic.jpg" alt="Dra. Valeria Gomez — Aesthetic Clinic" class="w-14 h-14 rounded-2xl object-cover border border-slate-200/80 shadow-sm shrink-0 mt-1" style="filter: saturate(0.92) contrast(1.04);" width="56" height="56" loading="lazy" decoding="async" />
-                                <div>
-                                    <div class="text-xs text-sky-600 mb-1 font-mono font-bold uppercase">03 — Aesthetic Clinic & MedSpa · Jackson Heights</div>
-                                    <h3 class="text-2xl font-light text-slate-900 tracking-tight group-hover:text-[#0284C7] transition-colors">Clínica Dra. Valeria</h3>
-                                    <p class="text-sm text-slate-500 font-light mt-1 max-w-sm leading-snug">"El radar de pacientes en espera reactivó 18 consultas en menos de 90 segundos tras cada cancelación."</p>
-                                </div>
-                            </div>
-                            <a href="/clinicas" class="text-slate-300 group-hover:text-[#0284C7] transition-colors shrink-0 mt-2">
-                                <iconify-icon icon="solar:arrow-right-up-linear" width="24"></iconify-icon>
-                            </a>
+                        <div class="grid grid-cols-2 p-4 items-center bg-emerald-900/20">
+                            <div class="text-left font-bold text-emerald-400">Annual Total Cap</div>
+                            <div class="text-right font-bold text-emerald-400">Max $40k</div>
                         </div>
-                        <div class="flex items-center gap-3 mt-4 ml-[72px]">
-                            <span class="text-[10px] px-2.5 py-1 rounded-full bg-sky-50 text-sky-700 font-bold font-mono">+$14,200 Net Retained</span>
-                            <span class="text-[10px] px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 font-mono">Standby Radar</span>
-                            <span class="text-[10px] px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 font-mono">Stripe Settled ✓</span>
-                        </div>
-                    </div>
-
-                    <!-- 04: Sabor Caribe Dining (Restaurant) -->
-                    <div class="work-item group border-t border-b border-slate-100 py-8 cursor-pointer" data-project="restaurant" onmouseenter="showProject('restaurant')">
-                        <div class="flex items-start justify-between gap-4">
-                            <div class="flex gap-4 items-start">
-                                <img src="assets/case-restaurant.jpg" alt="Chef Antonio — Sabor Caribe Dining" class="w-14 h-14 rounded-2xl object-cover border border-slate-200/80 shadow-sm shrink-0 mt-1" style="filter: saturate(0.92) contrast(1.04);" width="56" height="56" loading="lazy" decoding="async" />
-                                <div>
-                                    <div class="text-xs text-amber-600 mb-1 font-mono font-bold uppercase">04 — Restaurant & Banquets · Washington Heights</div>
-                                    <h3 class="text-2xl font-light text-slate-900 tracking-tight group-hover:text-[#D97706] transition-colors">Sabor Caribe Banquets</h3>
-                                    <p class="text-sm text-slate-500 font-light mt-1 max-w-sm leading-snug">"Capturamos 6 eventos corporativos y catering para oficinas sin pagar el 30% a las apps de delivery."</p>
-                                </div>
-                            </div>
-                            <a href="/restaurantes" class="text-slate-300 group-hover:text-[#D97706] transition-colors shrink-0 mt-2">
-                                <iconify-icon icon="solar:arrow-right-up-linear" width="24"></iconify-icon>
-                            </a>
-                        </div>
-                        <div class="flex items-center gap-3 mt-4 ml-[72px]">
-                            <span class="text-[10px] px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 font-bold font-mono">+$22,400 Net Retained</span>
-                            <span class="text-[10px] px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 font-mono">B2B Catering</span>
-                            <span class="text-[10px] px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 font-mono">Toast POS ✓</span>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Right: Merchant Visuals -->
-                <div class="hidden lg:block sticky top-32 h-[530px] self-start">
-
-                    <!-- Hector Framing Visual -->
-                    <div class="work-visual active absolute inset-0 flex items-center justify-center" id="visual-hector">
-                        <div class="w-full max-w-md bg-slate-900 rounded-3xl overflow-hidden shadow-2xl shadow-slate-900/30 border border-slate-800">
-                            <div class="relative h-44 overflow-hidden">
-                                <img src="assets/case-hector.jpg" alt="Hector Job Site" class="w-full h-full object-cover" width="56" height="56" loading="lazy" decoding="async" />
-                                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
-                                <span class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-sm text-orange-400 font-mono text-[10px] font-bold border border-orange-500/30">DOB PERMITS RADAR</span>
-                            </div>
-                            <div class="p-6 space-y-4">
-                                <div class="flex items-center justify-between">
-                                    <div>
-                                        <div class="text-base font-bold text-white">Hector Framing & Drywall</div>
-                                        <div class="text-xs text-slate-400 font-mono">Astoria, Queens · General Contractor</div>
-                                    </div>
-                                    <span class="text-xs font-mono text-emerald-400 font-bold">Cap $40k/yr</span>
-                                </div>
-                                <div class="grid grid-cols-2 gap-3 font-mono">
-                                    <div class="bg-slate-800/80 rounded-xl p-3 border border-slate-700">
-                                        <div class="text-[10px] text-slate-400">Contrato Cerrado</div>
-                                        <div class="text-lg font-black text-white">$85,000</div>
-                                    </div>
-                                    <div class="bg-slate-800/80 rounded-xl p-3 border border-slate-700">
-                                        <div class="text-[10px] text-slate-400">Comisión Socio (3.6%)</div>
-                                        <div class="text-lg font-black text-orange-400">$3,075</div>
-                                    </div>
-                                </div>
-                                <div class="p-3.5 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl flex items-center justify-between font-mono">
-                                    <div>
-                                        <div class="text-[10px] text-emerald-400 uppercase font-bold">Neto Retenido por Hector</div>
-                                        <div class="text-2xl font-black text-emerald-400">$81,925.00</div>
-                                    </div>
-                                    <span class="text-[10px] text-emerald-300">✓ QuickBooks Settled</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Flores de Manhattan Visual -->
-                    <div class="work-visual absolute inset-0 flex items-center justify-center" id="visual-florist">
-                        <div class="w-full max-w-md bg-slate-900 rounded-3xl overflow-hidden shadow-2xl shadow-slate-900/30 border border-slate-800">
-                            <div class="relative h-44 overflow-hidden">
-                                <img src="assets/case-florist.jpg" alt="Flores de Manhattan" class="w-full h-full object-cover" width="56" height="56" loading="lazy" decoding="async" />
-                                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
-                                <span class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-sm text-rose-400 font-mono text-[10px] font-bold border border-rose-500/30">RADAR FLORAL B2B</span>
-                            </div>
-                            <div class="p-6 space-y-4">
-                                <div class="flex items-center justify-between">
-                                    <div>
-                                        <div class="text-base font-bold text-white">Flores de Manhattan</div>
-                                        <div class="text-xs text-slate-400 font-mono">Midtown East · Floral Studio</div>
-                                    </div>
-                                    <span class="text-xs font-mono text-emerald-400 font-bold">Cap $15k/yr</span>
-                                </div>
-                                <div class="grid grid-cols-2 gap-3 font-mono">
-                                    <div class="bg-slate-800/80 rounded-xl p-3 border border-slate-700">
-                                        <div class="text-[10px] text-slate-400">Contratos B2B + Bodas</div>
-                                        <div class="text-lg font-black text-white">$21,500</div>
-                                    </div>
-                                    <div class="bg-slate-800/80 rounded-xl p-3 border border-slate-700">
-                                        <div class="text-[10px] text-slate-400">Comisión Socio (8.6%)</div>
-                                        <div class="text-lg font-black text-rose-400">$1,850</div>
-                                    </div>
-                                </div>
-                                <div class="p-3.5 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl flex items-center justify-between font-mono">
-                                    <div>
-                                        <div class="text-[10px] text-emerald-400 uppercase font-bold">Neto Cobrado Floristería</div>
-                                        <div class="text-2xl font-black text-emerald-400">$19,650.00</div>
-                                    </div>
-                                    <span class="text-[10px] text-emerald-300">✓ Square POS Settled</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Clinica Dra. Valeria Visual -->
-                    <div class="work-visual absolute inset-0 flex items-center justify-center" id="visual-clinic">
-                        <div class="w-full max-w-md bg-slate-900 rounded-3xl overflow-hidden shadow-2xl shadow-slate-900/30 border border-slate-800">
-                            <div class="relative h-44 overflow-hidden">
-                                <img src="assets/case-clinic.jpg" alt="Clinica Estetica Dra. Valeria" class="w-full h-full object-cover" width="56" height="56" loading="lazy" decoding="async" />
-                                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
-                                <span class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-sm text-sky-400 font-mono text-[10px] font-bold border border-sky-500/30">STANDBY PATIENT RADAR</span>
-                            </div>
-                            <div class="p-6 space-y-4">
-                                <div class="flex items-center justify-between">
-                                    <div>
-                                        <div class="text-base font-bold text-white">Clínica Dra. Valeria</div>
-                                        <div class="text-xs text-slate-400 font-mono">Jackson Heights · MedSpa</div>
-                                    </div>
-                                    <span class="text-xs font-mono text-emerald-400 font-bold">Cap $25k/yr</span>
-                                </div>
-                                <div class="grid grid-cols-2 gap-3 font-mono">
-                                    <div class="bg-slate-800/80 rounded-xl p-3 border border-slate-700">
-                                        <div class="text-[10px] text-slate-400">18 Consultas Standby</div>
-                                        <div class="text-lg font-black text-white">$15,800</div>
-                                    </div>
-                                    <div class="bg-slate-800/80 rounded-xl p-3 border border-slate-700">
-                                        <div class="text-[10px] text-slate-400">Comisión Socio (10.1%)</div>
-                                        <div class="text-lg font-black text-sky-400">$1,600</div>
-                                    </div>
-                                </div>
-                                <div class="p-3.5 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl flex items-center justify-between font-mono">
-                                    <div>
-                                        <div class="text-[10px] text-emerald-400 uppercase font-bold">Neto Cobrado Clínica</div>
-                                        <div class="text-2xl font-black text-emerald-400">$14,200.00</div>
-                                    </div>
-                                    <span class="text-[10px] text-emerald-300">✓ Stripe Settled</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Sabor Caribe Visual -->
-                    <div class="work-visual absolute inset-0 flex items-center justify-center" id="visual-restaurant">
-                        <div class="w-full max-w-md bg-slate-900 rounded-3xl overflow-hidden shadow-2xl shadow-slate-900/30 border border-slate-800">
-                            <div class="relative h-44 overflow-hidden">
-                                <img src="assets/case-restaurant.jpg" alt="Chef Antonio Sabor Caribe" class="w-full h-full object-cover" width="56" height="56" loading="lazy" decoding="async" />
-                                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
-                                <span class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-sm text-amber-400 font-mono text-[10px] font-bold border border-amber-500/30">CATERING & BANQUET RADAR</span>
-                            </div>
-                            <div class="p-6 space-y-4">
-                                <div class="flex items-center justify-between">
-                                    <div>
-                                        <div class="text-base font-bold text-white">Sabor Caribe Banquets</div>
-                                        <div class="text-xs text-slate-400 font-mono">Washington Heights · Restaurant</div>
-                                    </div>
-                                    <span class="text-xs font-mono text-emerald-400 font-bold">Cap $20k/yr</span>
-                                </div>
-                                <div class="grid grid-cols-2 gap-3 font-mono">
-                                    <div class="bg-slate-800/80 rounded-xl p-3 border border-slate-700">
-                                        <div class="text-[10px] text-slate-400">6 Catering & Eventos</div>
-                                        <div class="text-lg font-black text-white">$24,800</div>
-                                    </div>
-                                    <div class="bg-slate-800/80 rounded-xl p-3 border border-slate-700">
-                                        <div class="text-[10px] text-slate-400">Comisión Socio (9.7%)</div>
-                                        <div class="text-lg font-black text-amber-400">$2,400</div>
-                                    </div>
-                                </div>
-                                <div class="p-3.5 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl flex items-center justify-between font-mono">
-                                    <div>
-                                        <div class="text-[10px] text-emerald-400 uppercase font-bold">Neto Cobrado Restaurante</div>
-                                        <div class="text-2xl font-black text-emerald-400">$22,400.00</div>
-                                    </div>
-                                    <span class="text-[10px] text-emerald-300">✓ Toast POS Settled</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-
-    <!-- ============================== -->
-    <!-- PROCESS - HORIZONTAL SCROLL     -->
-    <!-- ============================== -->
-    <section id="process" class="relative bg-slate-900">
-        <div id="process-section">
-            <div id="process-wrapper" class="relative h-screen overflow-hidden">
-
-                <div class="absolute top-1/2 left-0 w-full z-10 pointer-events-none px-20">
-                    <div class="h-[2px] bg-slate-800 rounded-full relative">
-                        <div id="process-progress-fill" class="process-progress absolute inset-0 rounded-full"></div>
-                    </div>
-                </div>
-
-                <div class="absolute top-8 left-8 z-20">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 text-accent text-xs font-medium">
-                        <iconify-icon icon="solar:routing-linear" width="14"></iconify-icon>
-                        The Socio Journey
-                    </div>
-                </div>
-
-                <div class="process-track h-full">
-
-                    <!-- Step 1: Prospect -->
-                    <div class="process-step flex items-center justify-center px-20">
-                        <div class="max-w-2xl text-center">
-                            <div class="w-20 h-20 rounded-3xl bg-accent/10 flex items-center justify-center mx-auto mb-8">
-                                <iconify-icon icon="solar:compass-big-linear" width="36" class="text-accent"></iconify-icon>
-                            </div>
-                            <div class="text-accent text-sm font-medium mb-3">Phase 01</div>
-                            <h3 class="text-4xl lg:text-5xl font-light text-white tracking-tight mb-6">
-                                Prospect &<br><span class="font-medium">Audit</span>
-                            </h3>
-                            <p class="text-slate-400 font-light leading-relaxed max-w-md mx-auto">
-                                Socio-Prospect scans NYC neighborhoods daily — Google Maps, Instagram, Yelp — identifying local businesses with strong offline operations but digital gaps. Top 10 targets are scored and queued.
-                            </p>
-                            <div class="flex items-center justify-center gap-4 mt-8">
-                                <span class="px-4 py-2 rounded-xl bg-white/5 text-xs text-slate-400">Digital Audit</span>
-                                <span class="px-4 py-2 rounded-xl bg-white/5 text-xs text-slate-400">Gap Scoring</span>
-                                <span class="px-4 py-2 rounded-xl bg-white/5 text-xs text-slate-400">Neighborhood Map</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 2: Pitch & Onboard -->
-                    <div class="process-step flex items-center justify-center px-20">
-                        <div class="max-w-2xl text-center">
-                            <div class="w-20 h-20 rounded-3xl bg-accent/10 flex items-center justify-center mx-auto mb-8">
-                                <iconify-icon icon="solar:chat-round-dots-linear" width="36" class="text-accent"></iconify-icon>
-                            </div>
-                            <div class="text-accent text-sm font-medium mb-3">Phase 02</div>
-                            <h3 class="text-4xl lg:text-5xl font-light text-white tracking-tight mb-6">
-                                Pitch &<br><span class="font-medium">Onboard</span>
-                            </h3>
-                            <p class="text-slate-400 font-light leading-relaxed max-w-md mx-auto">
-                                A 3-touch bilingual outreach sequence rooted in the Socio Manifesto. No cold sales. Just a conversation between neighbors. Partnership agreement signed, data collected, 48-hour audit delivered.
-                            </p>
-                            <div class="flex items-center justify-center gap-4 mt-8">
-                                <span class="px-4 py-2 rounded-xl bg-white/5 text-xs text-slate-400">Bilingual (EN/ES)</span>
-                                <span class="px-4 py-2 rounded-xl bg-white/5 text-xs text-slate-400">Zero Upfront</span>
-                                <span class="px-4 py-2 rounded-xl bg-white/5 text-xs text-slate-400">48hr Audit</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 3: Execute & Grow -->
-                    <div class="process-step flex items-center justify-center px-20">
-                        <div class="max-w-2xl text-center">
-                            <div class="w-20 h-20 rounded-3xl bg-accent/10 flex items-center justify-center mx-auto mb-8">
-                                <iconify-icon icon="solar:rocket-2-linear" width="36" class="text-accent"></iconify-icon>
-                            </div>
-                            <div class="text-accent text-sm font-medium mb-3">Phase 03</div>
-                            <h3 class="text-4xl lg:text-5xl font-light text-white tracking-tight mb-6">
-                                Execute &<br><span class="font-medium">Grow</span>
-                            </h3>
-                            <p class="text-slate-400 font-light leading-relaxed max-w-md mx-auto">
-                                Content calendars deployed. Local SEO optimized. Reviews managed. The AI fleet executes while you run your business. Every action passes through the Agent Governor's safety gates.
-                            </p>
-                            <div class="flex items-center justify-center gap-4 mt-8">
-                                <span class="px-4 py-2 rounded-xl bg-white/5 text-xs text-slate-400">AI Content</span>
-                                <span class="px-4 py-2 rounded-xl bg-white/5 text-xs text-slate-400">Local SEO</span>
-                                <span class="px-4 py-2 rounded-xl bg-white/5 text-xs text-slate-400">Review Mgmt</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 4: Track & Prove -->
-                    <div class="process-step flex items-center justify-center px-20">
-                        <div class="max-w-2xl text-center">
-                            <div class="w-20 h-20 rounded-3xl bg-accent/10 flex items-center justify-center mx-auto mb-8">
-                                <iconify-icon icon="solar:chart-square-linear" width="36" class="text-accent"></iconify-icon>
-                            </div>
-                            <div class="text-accent text-sm font-medium mb-3">Phase 04</div>
-                            <h3 class="text-4xl lg:text-5xl font-light text-white tracking-tight mb-6">
-                                Track &<br><span class="font-medium">Prove</span>
-                            </h3>
-                            <p class="text-slate-400 font-light leading-relaxed max-w-md mx-auto">
-                                Socio-Track calculates Net New Revenue and Expansion Revenue in real-time from POS webhooks. Commission invoiced via Stripe. Monthly performance reports with full evidence chain — nothing is estimated.
-                            </p>
-                            <div class="flex items-center justify-center gap-4 mt-8">
-                                <span class="px-4 py-2 rounded-xl bg-white/5 text-xs text-slate-400">POS Matching</span>
-                                <span class="px-4 py-2 rounded-xl bg-white/5 text-xs text-slate-400">Stripe Billing</span>
-                                <span class="px-4 py-2 rounded-xl bg-white/5 text-xs text-slate-400">Evidence Reports</span>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- ============================== -->
-    <!-- MANIFESTO / SOCIAL PROOF        -->
-    <!-- ============================== -->
-    <section id="manifesto" class="py-32 bg-white">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="max-w-3xl mx-auto text-center">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/5 text-accent text-xs font-medium mb-8">
-                    <iconify-icon icon="solar:document-text-linear" width="14"></iconify-icon>
-                    The Socio Manifesto
-                </div>
-                <blockquote class="text-2xl lg:text-3xl font-light text-slate-900 tracking-tight leading-relaxed mb-8">
-                    "For too long, local businesses have been treated like cash registers by marketing agencies. They ask for thousands upfront, with zero guarantees. <span class="font-medium text-accent">True partners share the risk.</span>"
-                </blockquote>
-                <p class="text-slate-500 font-light leading-relaxed max-w-xl mx-auto mb-8">
-                    We don't care about "impressions," "clicks," or confusing jargon. We only care about two numbers: <strong class="text-slate-700">Net New Revenue</strong> and <strong class="text-slate-700">Expansion Revenue</strong>. 10 great partners beat 100 mediocre ones.
-                </p>
-                <div class="flex items-center justify-center gap-6">
-                    <div class="text-center">
-                        <div class="text-3xl font-medium text-slate-900 font-heading">0</div>
-                        <div class="text-xs text-slate-400 font-light">Upfront Fees</div>
-                    </div>
-                    <div class="w-px h-12 bg-slate-200"></div>
-                    <div class="text-center">
-                        <div class="text-3xl font-medium text-accent font-heading">10–15%</div>
-                        <div class="text-xs text-slate-400 font-light">Commission on New Revenue</div>
-                    </div>
-                    <div class="w-px h-12 bg-slate-200"></div>
-                    <div class="text-center">
-                        <div class="text-3xl font-medium text-slate-900 font-heading">100%</div>
-                        <div class="text-xs text-slate-400 font-light">POS Receipt Matched</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-
-    <!-- ============================== -->
-    <!-- ============================== -->
-    <!-- TESTIMONIAL CAROUSEL            -->
-    <!-- ============================== -->
-    <section id="testimonials" class="py-32 bg-white">
-        <div class="max-w-7xl mx-auto px-6">
-
-            <div class="max-w-2xl mx-auto text-center mb-16">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/5 text-accent text-xs font-medium mb-6">
-                    <iconify-icon icon="solar:verified-check-linear" width="14"></iconify-icon>
-                    Pilot Partner Feedback
-                </div>
-                <h2 class="text-4xl lg:text-5xl font-light text-slate-900 tracking-tight mb-4">
-                    What our<br>
-                    <span class="font-medium">partners say</span>
-                </h2>
-                <p class="text-slate-500 font-light leading-relaxed">
-                    Real merchants. Real POS receipts. Real growth. Every number below traces to the Growth OS evidence API.
-                </p>
-            </div>
-
-            <div class="relative max-w-3xl mx-auto">
-                <div class="carousel-viewport" id="carousel-viewport">
-                    <div class="carousel-track" id="carousel-track">
-
-                        <!-- Pilot quotes — disclosed on-page as pilot feedback. Merchant sign-off pending (see templates/merchant-quote-approval.md) -->
-                        <!-- Slide 1: Cristal Flowers -->
-                        <div class="carousel-slide px-2">
-                            <div class="aura-card p-10 lg:p-12 text-center">
-                                <iconify-icon icon="solar:star-linear" width="22" class="text-accent mx-auto mb-6"></iconify-icon>
-                                <blockquote class="text-xl lg:text-2xl font-light text-white tracking-tight leading-relaxed mb-8">
-                                    "We didn't pay a cent until new customers started walking in. They fixed our Google listing, and suddenly brides were finding us by search."
-                                </blockquote>
-                                <div class="flex items-center justify-center gap-3 mb-6">
-                                    <span class="w-10 h-10 rounded-full bg-gradient-to-br from-accent to-blue-700 flex items-center justify-center text-white text-sm font-bold font-heading">C</span>
-                                    <div class="text-left">
-                                        <div class="text-sm font-medium text-white">Cristal Flowers</div>
-                                        <div class="text-xs text-slate-400 font-light">Florist · East Harlem</div>
-                                    </div>
-                                </div>
-                                <div class="flex items-center justify-center gap-2 flex-wrap">
-                                    <span class="text-[10px] px-2.5 py-1 rounded-full bg-green-400/10 text-green-400 font-medium">+$8,200 Revenue</span>
-                                    <span class="text-[10px] px-2.5 py-1 rounded-full bg-white/5 text-slate-400">47 New Customers</span>
-                                    <span class="text-[10px] px-2.5 py-1 rounded-full bg-white/5 text-slate-400">+23 Reviews</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Slide 2: El Nuevo Cafe -->
-                        <div class="carousel-slide px-2">
-                            <div class="aura-card p-10 lg:p-12 text-center">
-                                <iconify-icon icon="solar:star-linear" width="22" class="text-accent mx-auto mb-6"></iconify-icon>
-                                <blockquote class="text-xl lg:text-2xl font-light text-white tracking-tight leading-relaxed mb-8">
-                                    "Our Yelp went from 3.8 to 4.4 and the breakfast rush got real. They show us the receipts — we only pay on what they actually bring in."
-                                </blockquote>
-                                <div class="flex items-center justify-center gap-3 mb-6">
-                                    <span class="w-10 h-10 rounded-full bg-gradient-to-br from-accent to-blue-700 flex items-center justify-center text-white text-sm font-bold font-heading">E</span>
-                                    <div class="text-left">
-                                        <div class="text-sm font-medium text-white">El Nuevo Cafe</div>
-                                        <div class="text-xs text-slate-400 font-light">Café · Washington Heights</div>
-                                    </div>
-                                </div>
-                                <div class="flex items-center justify-center gap-2 flex-wrap">
-                                    <span class="text-[10px] px-2.5 py-1 rounded-full bg-green-400/10 text-green-400 font-medium">+$6,400 Revenue</span>
-                                    <span class="text-[10px] px-2.5 py-1 rounded-full bg-white/5 text-slate-400">3.8 → 4.4 ★</span>
-                                    <span class="text-[10px] px-2.5 py-1 rounded-full bg-white/5 text-slate-400">62% Walk-ins from Reels</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Slide 3: La Bodega NYC -->
-                        <div class="carousel-slide px-2">
-                            <div class="aura-card p-10 lg:p-12 text-center">
-                                <iconify-icon icon="solar:star-linear" width="22" class="text-accent mx-auto mb-6"></iconify-icon>
-                                <blockquote class="text-xl lg:text-2xl font-light text-white tracking-tight leading-relaxed mb-8">
-                                    "People in the neighborhood started finding us on Maps. Late-night orders jumped — and every number was checked against our register."
-                                </blockquote>
-                                <div class="flex items-center justify-center gap-3 mb-6">
-                                    <span class="w-10 h-10 rounded-full bg-gradient-to-br from-accent to-blue-700 flex items-center justify-center text-white text-sm font-bold font-heading">B</span>
-                                    <div class="text-left">
-                                        <div class="text-sm font-medium text-white">La Bodega NYC</div>
-                                        <div class="text-xs text-slate-400 font-light">Bodega · South Bronx</div>
-                                    </div>
-                                </div>
-                                <div class="flex items-center justify-center gap-2 flex-wrap">
-                                    <span class="text-[10px] px-2.5 py-1 rounded-full bg-green-400/10 text-green-400 font-medium">+$4,100 Revenue</span>
-                                    <span class="text-[10px] px-2.5 py-1 rounded-full bg-white/5 text-slate-400">31 New Customers</span>
-                                    <span class="text-[10px] px-2.5 py-1 rounded-full bg-white/5 text-slate-400">+34% Late-Night Orders</span>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <!-- Carousel controls -->
-                <button type="button" data-carousel-prev aria-label="Previous testimonial" class="absolute top-1/2 -left-14 -translate-y-1/2 hidden lg:flex w-11 h-11 rounded-full bg-white border border-slate-200 items-center justify-center text-slate-500 hover:text-slate-900 hover:border-slate-300 transition-colors">
-                    <iconify-icon icon="solar:arrow-right-linear" width="18" class="rotate-180"></iconify-icon>
-                </button>
-                <button type="button" data-carousel-next aria-label="Next testimonial" class="absolute top-1/2 -right-14 -translate-y-1/2 hidden lg:flex w-11 h-11 rounded-full bg-white border border-slate-200 items-center justify-center text-slate-500 hover:text-slate-900 hover:border-slate-300 transition-colors">
-                    <iconify-icon icon="solar:arrow-right-linear" width="18"></iconify-icon>
-                </button>
-
-                <div class="flex items-center justify-center gap-2 mt-8">
-                    <button type="button" class="carousel-dot w-2 h-2 rounded-full bg-slate-900 transition-colors" data-carousel-dot="0" aria-label="Go to testimonial 1"></button>
-                    <button type="button" class="carousel-dot w-2 h-2 rounded-full bg-slate-300 transition-colors" data-carousel-dot="1" aria-label="Go to testimonial 2"></button>
-                    <button type="button" class="carousel-dot w-2 h-2 rounded-full bg-slate-300 transition-colors" data-carousel-dot="2" aria-label="Go to testimonial 3"></button>
-                </div>
-
-                <p class="text-center text-xs text-slate-400 font-light mt-4">Quotes from pilot merchants. Full case studies available upon request.</p>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- ============================== -->
-    <!-- HOW VERIFIED GROWTH IS CALCULATED -->
-    <!-- ============================== -->
     <section id="verification" class="py-32">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-
                 <div class="max-w-2xl">
                     <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/5 text-accent text-xs font-medium mb-6">
                         <iconify-icon icon="solar:document-linear" width="14"></iconify-icon>
@@ -1505,7 +313,6 @@
                         </a>
                     </div>
                 </div>
-
                 <div class="bg-white rounded-3xl border border-slate-200 shadow-[0_8px_40px_-12px_rgba(15,23,42,0.1)] p-8 lg:p-10">
                     <div class="flex items-center justify-between gap-3 mb-8 flex-wrap">
                         <div class="text-sm text-slate-700 font-heading font-medium">Illustrative verified-growth reconciliation</div>
@@ -1535,137 +342,20 @@
                         </div>
                     </div>
                     <div class="mt-8 pt-6 border-t border-slate-200">
-                        <p class="text-sm text-slate-600 font-light leading-relaxed">
-                            Socio only shares in the verified incremental portion — <strong class="text-slate-900">never the baseline</strong>.
-                        </p>
+                        <p class="text-sm text-slate-600 font-light leading-relaxed">Socio only shares in the verified incremental portion — <strong class="text-slate-900">never the baseline</strong>.</p>
                         <div class="flex items-center justify-between mt-4 text-[10px] text-slate-400 font-mono flex-wrap gap-2">
                             <span>LEDGER · SOC-2026-0819</span>
                             <span>REFUND-ADJUSTED · EXCLUSIONS APPLIED</span>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
 
-
-    <!-- ============================== -->
-    <!-- COMMISSION CALCULATOR           -->
-    <!-- ============================== -->
-    <section id="calculator" class="py-32">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-stretch">
-
-                <div class="max-w-2xl">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/5 text-accent text-xs font-medium mb-6">
-                        <iconify-icon icon="solar:wallet-money-linear" width="14"></iconify-icon>
-                        Commission Calculator
-                    </div>
-                    <h2 class="text-4xl lg:text-5xl font-light text-slate-900 tracking-tight mb-4">
-                        Know your numbers<br>
-                        <span class="font-medium">before you sign</span>
-                    </h2>
-                    <p class="text-slate-500 font-light leading-relaxed mb-8">
-                        Slide to the new monthly revenue you'd want to grow by. We only earn on what we actually generate — never on what you already have.
-                    </p>
-                    <ul class="space-y-3 text-sm text-slate-500 font-light">
-                        <li class="flex items-center gap-2"><iconify-icon icon="solar:verified-check-linear" width="16" class="text-green-500"></iconify-icon> 10–15% commission on Net New + Expansion revenue only</li>
-                        <li class="flex items-center gap-2"><iconify-icon icon="solar:verified-check-linear" width="16" class="text-green-500"></iconify-icon> Every dollar POS-matched to your register</li>
-                        <li class="flex items-center gap-2"><iconify-icon icon="solar:verified-check-linear" width="16" class="text-green-500"></iconify-icon> Zero upfront fees, zero retainers</li>
-                    </ul>
-                </div>
-
-                <div class="aura-card p-8 lg:p-10 flex flex-col justify-center space-y-6">
-                    <div>
-                        <label class="form-label text-slate-400 block mb-2" for="calc-revenue">New monthly revenue you'd like to grow by</label>
-                        <div class="flex items-center gap-4 mb-4">
-                            <span class="text-2xl text-white font-heading font-light">$</span>
-                            <input type="number" id="calc-revenue" aria-label="Monthly revenue goal" value="8000" min="0" step="500" class="w-full bg-transparent border-b border-white/15 text-4xl text-white font-heading font-light outline-none focus:border-accent pb-2" />
-                        </div>
-                        <input type="range" id="calc-revenue-range" min="0" max="50000" step="500" value="8000" class="calc-range w-full" />
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-white/10">
-                        <div class="p-4 rounded-xl bg-white/5 border border-white/10">
-                            <div class="text-xs text-slate-400 font-light mb-1">Estimated Socio Commission</div>
-                            <div id="calc-output" class="text-2xl lg:text-3xl text-orange-400 font-heading font-bold">$800 – $1,200</div>
-                            <div class="text-[10px] text-slate-500 font-mono mt-1">10–15% on new sales only</div>
-                        </div>
-
-                        <div class="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-                            <div class="text-xs text-emerald-400 font-light mb-1">Net Retained by You (85–90%)</div>
-                            <div id="calc-retained" class="text-2xl lg:text-3xl text-emerald-400 font-heading font-bold">$6,800 – $7,200</div>
-                            <div class="text-[10px] text-emerald-300 font-mono mt-1">Direct to your bank/POS</div>
-                        </div>
-                    </div>
-
-                    <p class="text-[11px] text-slate-400 font-light leading-relaxed">
-                        <strong>* The Socio Guarantee:</strong> Commission is billed <em>only</em> on verified incremental revenue matched to your POS/bank. Never on your existing baseline. Subject to our vertical annual caps ($15k–$40k/yr).
-                    </p>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-
-    <!-- ============================== -->
-    <!-- COMMAND CENTER PREVIEW          -->
-    <!-- ============================== -->
-    <section id="command-center" class="py-32 bg-[#0A0E14] relative overflow-hidden">
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] rounded-full bg-[#38BDF8]/5 blur-[140px]"></div>
-        <div class="max-w-7xl mx-auto px-6 relative z-10">
-
-            <div class="max-w-2xl mb-14">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 text-[#38BDF8] text-xs font-medium mb-6">
-                    <iconify-icon icon="solar:cpu-bolt-linear" width="14"></iconify-icon>
-                    Inside Socio OS
-                </div>
-                <h2 class="text-4xl lg:text-5xl font-light text-white tracking-tight mb-4">
-                    Your growth,<br>
-                    <span class="font-medium">commanded</span>
-                </h2>
-                <p class="text-slate-400 font-light leading-relaxed">
-                    Every campaign, review, listing and dollar runs through the Socio Command Center — with a Governor enforcing safety gates and a tamper-evident ledger on every transaction. This is the real product, not a mockup.
-                </p>
-            </div>
-
-            <div class="shot-frame">
-                <img src="assets/command-center-preview.png" alt="Socio Command Center — agent fleet status, governor safety gates, POS revenue recovery" class="w-full h-auto block" loading="lazy" />
-            </div>
-
-            <div class="flex flex-wrap items-center justify-center gap-3 mt-8">
-                <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-xs text-slate-300">
-                    <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span> 8/8 Agents Online
-                </span>
-                <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-xs text-slate-300">
-                    <iconify-icon icon="solar:shield-check-linear" width="14" class="text-[#38BDF8]"></iconify-icon> Governor: 98.6%
-                </span>
-                <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-xs text-slate-300">
-                    <iconify-icon icon="solar:verified-check-linear" width="14" class="text-green-400"></iconify-icon> POS-Matched Ledger
-                </span>
-            </div>
-
-            <div class="flex flex-wrap items-center justify-center gap-4 mt-10">
-                <a href="command-center.html" class="cta-shimmer inline-flex items-center gap-3 px-8 py-4 bg-[#38BDF8] text-[#0A0E14] rounded-2xl font-medium text-sm hover:bg-cyan-300 transition-all hover:gap-4">
-                    Open the Command Center
-                    <iconify-icon icon="solar:arrow-right-up-linear" width="18"></iconify-icon>
-                </a>
-                <a href="merchant-evidence.html" class="inline-flex items-center gap-2 px-5 py-4 text-slate-400 text-sm font-light hover:text-white transition-colors">
-                    <iconify-icon icon="solar:lock-linear" width="16"></iconify-icon>
-                    Evidence Ledger
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA SECTION                     -->
-    <!-- ============================== -->
     <section id="cta-section" class="py-32 relative overflow-hidden">
         <div class="absolute inset-0 hero-grid-bg opacity-50"></div>
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-blue-200/10 blur-[120px]"></div>
-
         <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
             <h2 class="text-4xl lg:text-6xl font-light text-slate-900 tracking-tight mb-6">
                 Ready to<br>
@@ -1674,9 +364,7 @@
             <p class="text-lg text-slate-500 font-light max-w-xl mx-auto mb-4 leading-relaxed">
                 No pitch decks. No jargon. Just a conversation between neighbors. If we can help you grow, we'll show you exactly how — and we won't charge a dime until we prove it.
             </p>
-            <p class="text-sm text-slate-400 font-light mb-10">
-                🇲🇽🇺🇸 Hablamos español. We serve East Harlem, Washington Heights, Bronx & Queens.
-            </p>
+            <p class="text-sm text-slate-400 font-light mb-10">🇲🇽🇺🇸 Hablamos español. We serve East Harlem, Washington Heights, Bronx &amp; Queens.</p>
             <div class="flex items-center justify-center gap-4 flex-wrap">
                 <a href="#lead-capture" class="cta-shimmer inline-flex items-center gap-3 px-8 py-4 bg-slate-900 text-white rounded-2xl font-light hover:bg-slate-800 transition-all hover:gap-4">
                     Become a Socio
@@ -1690,118 +378,79 @@
         </div>
     </section>
 
-
-    <!-- ============================== -->
-
-    <!-- ============================== -->
-    <!-- FAQ                             -->
-    <!-- ============================== -->
     <section id="faq" class="py-32 bg-white">
         <div class="max-w-3xl mx-auto px-6">
-
             <div class="max-w-2xl mx-auto text-center mb-14">
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/5 text-accent text-xs font-medium mb-6">
                     <iconify-icon icon="solar:chat-round-linear" width="14"></iconify-icon>
                     FAQ
                 </div>
-                <h2 class="text-4xl lg:text-5xl font-light text-slate-900 tracking-tight mb-4">
-                    Questions,<br>
-                    <span class="font-medium">answered honestly</span>
-                </h2>
+                <h2 class="text-4xl lg:text-5xl font-light text-slate-900 tracking-tight mb-4">Questions,<br><span class="font-medium">answered honestly</span></h2>
             </div>
-
             <div class="space-y-4">
-
                 <details class="faq-item">
                     <summary class="px-6 py-5">
-                        <span class="text-base lg:text-lg font-light text-slate-900">How does the 10–15% commission work?</span>
+                        <span class="text-base lg:text-lg font-light text-slate-900">How does the 12/8/5% commission work?</span>
                         <span class="faq-chevron relative w-5 h-5 flex items-center justify-center shrink-0"><span class="absolute w-3 h-[1.5px] bg-[#669BD2]"></span><span class="absolute w-[1.5px] h-3 bg-[#669BD2]"></span></span>
                     </summary>
-                    <p class="px-6 pb-6 text-sm text-slate-500 font-light leading-relaxed">
-                        We only earn on <strong class="text-slate-700">Net New Revenue</strong> (brand-new customers) and <strong class="text-slate-700">Expansion Revenue</strong> (existing customers coming back more often) — every dollar POS-matched to your register. Zero upfront fees, zero retainers. If we don't generate growth, we don't get paid.
-                    </p>
+                    <p class="px-6 pb-6 text-sm text-slate-500 font-light leading-relaxed">We only earn on <strong class="text-slate-700">Net New Revenue</strong> and <strong class="text-slate-700">Expansion Revenue</strong> — every dollar POS-matched to your register. Zero upfront fees, zero retainers. If we don't generate growth, we don't get paid.</p>
                 </details>
-
                 <details class="faq-item">
                     <summary class="px-6 py-5">
                         <span class="text-base lg:text-lg font-light text-slate-900">How do you prove the revenue is real?</span>
                         <span class="faq-chevron relative w-5 h-5 flex items-center justify-center shrink-0"><span class="absolute w-3 h-[1.5px] bg-[#669BD2]"></span><span class="absolute w-[1.5px] h-3 bg-[#669BD2]"></span></span>
                     </summary>
-                    <p class="px-6 pb-6 text-sm text-slate-500 font-light leading-relaxed">
-                        Square, Stripe or register receipts. Every claim traces through our Revenue Ledger — a tamper-evident audit chain — and your monthly report shows exactly which transactions we attribute and how. No vanity metrics, no hand-waving. If we can't trace it, we don't claim it.
-                    </p>
+                    <p class="px-6 pb-6 text-sm text-slate-500 font-light leading-relaxed">Square, Stripe or register receipts. Every claim traces through our Revenue Ledger — a tamper-evident audit chain. No vanity metrics, no hand-waving. If we can't trace it, we don't claim it.</p>
                 </details>
-
                 <details class="faq-item">
                     <summary class="px-6 py-5">
                         <span class="text-base lg:text-lg font-light text-slate-900">What if it doesn't work?</span>
                         <span class="faq-chevron relative w-5 h-5 flex items-center justify-center shrink-0"><span class="absolute w-3 h-[1.5px] bg-[#669BD2]"></span><span class="absolute w-[1.5px] h-3 bg-[#669BD2]"></span></span>
                     </summary>
-                    <p class="px-6 pb-6 text-sm text-slate-500 font-light leading-relaxed">
-                        Then we don't bill. Our model only pays on results. Your free Revenue Recovery Map comes first — delivered within 48 hours, before you commit to anything. Once you onboard, our fleet starts executing immediately, with first campaigns typically live within the first week.
-                    </p>
+                    <p class="px-6 pb-6 text-sm text-slate-500 font-light leading-relaxed">Then we don't bill. Our model only pays on results. Your free Revenue Recovery Map comes first — delivered within 48 hours, before you commit to anything.</p>
                 </details>
-
                 <details class="faq-item">
                     <summary class="px-6 py-5">
                         <span class="text-base lg:text-lg font-light text-slate-900">What do I have to do?</span>
                         <span class="faq-chevron relative w-5 h-5 flex items-center justify-center shrink-0"><span class="absolute w-3 h-[1.5px] bg-[#669BD2]"></span><span class="absolute w-[1.5px] h-3 bg-[#669BD2]"></span></span>
                     </summary>
-                    <p class="px-6 pb-6 text-sm text-slate-500 font-light leading-relaxed">
-                        Run your business. We handle content calendars, directory listings, review management and campaigns. Every AI-generated asset is labeled and requires <strong class="text-slate-700">your approval</strong> before it goes out. You stay in control at all times.
-                    </p>
+                    <p class="px-6 pb-6 text-sm text-slate-500 font-light leading-relaxed">Run your business. We handle content calendars, directory listings, review management and campaigns. Every AI-generated asset requires <strong class="text-slate-700">your approval</strong> before it goes out.</p>
                 </details>
-
                 <details class="faq-item">
                     <summary class="px-6 py-5">
                         <span class="text-base lg:text-lg font-light text-slate-900">Can I cancel?</span>
                         <span class="faq-chevron relative w-5 h-5 flex items-center justify-center shrink-0"><span class="absolute w-3 h-[1.5px] bg-[#669BD2]"></span><span class="absolute w-[1.5px] h-3 bg-[#669BD2]"></span></span>
                     </summary>
-                    <p class="px-6 pb-6 text-sm text-slate-500 font-light leading-relaxed">
-                        Anytime, no penalties. Click-to-cancel — leaving is as easy as joining. You own all your data, forever.
-                    </p>
+                    <p class="px-6 pb-6 text-sm text-slate-500 font-light leading-relaxed">Anytime, no penalties. Click-to-cancel. You own all your data, forever.</p>
                 </details>
-
                 <details class="faq-item">
                     <summary class="px-6 py-5">
                         <span class="text-base lg:text-lg font-light text-slate-900">Is my data safe?</span>
                         <span class="faq-chevron relative w-5 h-5 flex items-center justify-center shrink-0"><span class="absolute w-3 h-[1.5px] bg-[#669BD2]"></span><span class="absolute w-[1.5px] h-3 bg-[#669BD2]"></span></span>
                     </summary>
-                    <p class="px-6 pb-6 text-sm text-slate-500 font-light leading-relaxed">
-                        Yes. Read-only POS access for revenue matching only, encrypted in transit, $1M liability coverage, and we never share or sell your data. AI Disclosure: everything generated by AI is clearly labeled.
-                    </p>
+                    <p class="px-6 pb-6 text-sm text-slate-500 font-light leading-relaxed">Yes. Read-only POS access for revenue matching only, encrypted in transit, $1M liability coverage, and we never share or sell your data.</p>
                 </details>
-
                 <details class="faq-item">
                     <summary class="px-6 py-5">
                         <span class="text-base lg:text-lg font-light text-slate-900">Do you speak Spanish?</span>
                         <span class="faq-chevron relative w-5 h-5 flex items-center justify-center shrink-0"><span class="absolute w-3 h-[1.5px] bg-[#669BD2]"></span><span class="absolute w-[1.5px] h-3 bg-[#669BD2]"></span></span>
                     </summary>
-                    <p class="px-6 pb-6 text-sm text-slate-500 font-light leading-relaxed">
-                        Sí, hablamos español. Our outreach, content and reporting are fully bilingual (EN/ES) — because your customers are too.
-                    </p>
+                    <p class="px-6 pb-6 text-sm text-slate-500 font-light leading-relaxed">Sí, hablamos español. Our outreach, content and reporting are fully bilingual (EN/ES).</p>
                 </details>
-
                 <details class="faq-item">
                     <summary class="px-6 py-5">
                         <span class="text-base lg:text-lg font-light text-slate-900">Do I need to pay for ads?</span>
                         <span class="faq-chevron relative w-5 h-5 flex items-center justify-center shrink-0"><span class="absolute w-3 h-[1.5px] bg-[#669BD2]"></span><span class="absolute w-[1.5px] h-3 bg-[#669BD2]"></span></span>
                     </summary>
-                    <p class="px-6 pb-6 text-sm text-slate-500 font-light leading-relaxed">
-                        No. We start with recovery campaigns on channels you already own — SMS/WhatsApp, email, listings, content. If paid media makes sense later, it's an approved, budgeted decision you sign off on. Never a requirement.
-                    </p>
+                    <p class="px-6 pb-6 text-sm text-slate-500 font-light leading-relaxed">No. We start with recovery campaigns on channels you already own — SMS/WhatsApp, email, listings, content. Paid media is always an approved, budgeted decision.</p>
                 </details>
-
                 <details class="faq-item" open>
                     <summary class="px-6 py-5">
                         <span class="text-base lg:text-lg font-bold text-slate-900">What can you — and can't you — claim? (Evidence vs Assumption)</span>
                         <span class="faq-chevron relative w-5 h-5 flex items-center justify-center shrink-0"><span class="absolute w-3 h-[1.5px] bg-[#669BD2]"></span><span class="absolute w-[1.5px] h-3 bg-[#669BD2]"></span></span>
                     </summary>
                     <div class="px-6 pb-6 space-y-4">
-                        <p class="text-sm text-slate-600 font-light leading-relaxed">
-                            We believe in radical honesty. Here is our exact boundary between verified mathematical evidence and speculative assumptions:
-                        </p>
-
+                        <p class="text-sm text-slate-600 font-light leading-relaxed">We believe in radical honesty. Here is our exact boundary between verified mathematical evidence and speculative assumptions:</p>
                         <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
                             <table class="w-full text-left font-mono text-xs">
                                 <thead class="bg-slate-50 border-b border-slate-200 text-slate-700">
@@ -1811,56 +460,33 @@
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-slate-100 bg-white">
-                                    <tr>
-                                        <td class="p-3 text-slate-700">Exact POS & bank deposit timestamp match</td>
-                                        <td class="p-3 text-slate-500">Causality without holdout baseline comparison</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="p-3 text-slate-700">QuickBooks Online & Stripe cleared transaction hash</td>
-                                        <td class="p-3 text-slate-500">Unverifiable "foot traffic" or "brand impression" lifts</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="p-3 text-slate-700">New & reactivated customers outside historical baseline</td>
-                                        <td class="p-3 text-slate-500">Organic word-of-mouth sales already happening</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="p-3 text-slate-700">Legally enforced annual fee cap ($15k–$40k)</td>
-                                        <td class="p-3 text-slate-500">Open-ended lifetime percentage commissions</td>
-                                    </tr>
+                                    <tr><td class="p-3 text-slate-700">Exact POS &amp; bank deposit timestamp match</td><td class="p-3 text-slate-500">Causality without holdout baseline comparison</td></tr>
+                                    <tr><td class="p-3 text-slate-700">QuickBooks Online &amp; Stripe cleared transaction hash</td><td class="p-3 text-slate-500">Unverifiable "foot traffic" or "brand impression" lifts</td></tr>
+                                    <tr><td class="p-3 text-slate-700">New &amp; reactivated customers outside historical baseline</td><td class="p-3 text-slate-500">Organic word-of-mouth sales already happening</td></tr>
+                                    <tr><td class="p-3 text-slate-700">Legally enforced annual fee cap ($15k–$40k)</td><td class="p-3 text-slate-500">Open-ended lifetime percentage commissions</td></tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </details>
-
             </div>
         </div>
     </section>
 
-
-    <!-- ============================== -->
-    <!-- LEAD CAPTURE FORM               -->
-    <!-- ============================== -->
     <section id="lead-capture" class="relative bg-slate-900 py-32 overflow-hidden">
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full bg-accent/10 blur-[140px]"></div>
         <div class="max-w-7xl mx-auto px-6 relative z-10">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
-
                 <div>
                     <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 text-accent text-xs font-medium mb-6">
                         <iconify-icon icon="solar:rocket-2-linear" width="14"></iconify-icon>
                         Start Now
                     </div>
-                    <h2 class="text-4xl lg:text-5xl font-light text-white tracking-tight mb-6">
-                        Get your<br>
-                        <span class="font-medium">Revenue Recovery Map</span>
-                    </h2>
-                    <p class="text-slate-400 font-light leading-relaxed mb-8 max-w-md">
-                        Tell us about your business. We'll identify your highest-confidence revenue leaks within 48 hours and hand you a Revenue Recovery Map — what's costing you customers, and what we'd fix first. Free, no obligation, yours to keep. We take a limited number of partners per neighborhood and category.
-                    </p>
+                    <h2 class="text-4xl lg:text-5xl font-light text-white tracking-tight mb-6">Get your<br><span class="font-medium">Revenue Recovery Map</span></h2>
+                    <p class="text-slate-400 font-light leading-relaxed mb-8 max-w-md">Tell us about your business. We'll identify your highest-confidence revenue leaks within 48 hours and hand you a Revenue Recovery Map. Free, no obligation, yours to keep.</p>
                     <ul class="space-y-3 text-sm text-slate-400 font-light">
                         <li class="flex items-center gap-2"><iconify-icon icon="solar:verified-check-linear" width="16" class="text-green-400"></iconify-icon> Zero upfront fees — ever</li>
-                        <li class="flex items-center gap-2"><iconify-icon icon="solar:verified-check-linear" width="16" class="text-green-400"></iconify-icon> No ad spend required to start — we begin on channels you already own</li>
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:verified-check-linear" width="16" class="text-green-400"></iconify-icon> No ad spend required to start</li>
                         <li class="flex items-center gap-2"><iconify-icon icon="solar:verified-check-linear" width="16" class="text-green-400"></iconify-icon> Audit delivered within 48 hours</li>
                         <li class="flex items-center gap-2"><iconify-icon icon="solar:verified-check-linear" width="16" class="text-green-400"></iconify-icon> Hablamos español — bilingual team</li>
                     </ul>
@@ -1869,31 +495,23 @@
                         <iconify-icon icon="solar:arrow-right-up-linear" width="14"></iconify-icon>
                     </a>
                 </div>
-
                 <div class="bg-white rounded-3xl p-8 lg:p-10 shadow-2xl shadow-black/30">
                     <form id="lead-form" class="space-y-5" novalidate>
                         <div>
                             <label class="form-label block mb-1.5" for="lead-name">Business Name *</label>
-                            <input type="text" id="lead-name" class="form-field" placeholder="Cristal Flowers" required />
+                            <input type="text" id="lead-name" class="form-field" placeholder="Cristal Construction" required />
                         </div>
                         <div>
                             <label class="form-label block mb-1.5" for="lead-type">Business Type *</label>
                             <select id="lead-type" class="form-field" required>
                                 <option value="" disabled selected>Select your business type…</option>
-                                <option>Florist</option>
-                                <option>Café</option>
-                                <option>Bodega / Corner Store</option>
-                                <option>Restaurant</option>
-                                <option>Bakery</option>
-                                <option>Salon / Barbershop</option>
-                                <option>Laundromat</option>
-                                <option>Smoke Shop</option>
-                                <option>Grocery / Deli</option>
-                                <option>Dry Cleaner</option>
-                                <option>Auto Repair</option>
-                                <option>Gym / Fitness</option>
-                                <option>Aesthetic Clinic / Med Spa</option>
-                                <option>Wellness / Spa</option>
+                                <option>General Contractor</option>
+                                <option>Remodeling &amp; Renovation</option>
+                                <option>HVAC</option>
+                                <option>Plumbing</option>
+                                <option>Electrical</option>
+                                <option>Roofing</option>
+                                <option>Landscaping / Masonry</option>
                                 <option>Other</option>
                             </select>
                         </div>
@@ -1911,106 +529,76 @@
                             <label class="form-label block mb-1.5" for="lead-address">Business Address (Optional)</label>
                             <input type="text" id="lead-address" class="form-field" placeholder="123 Main St, New York, NY" />
                         </div>
-
                         <div class="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 border border-slate-200">
                             <input type="checkbox" id="lead-wa-optin" class="mt-0.5 rounded border-slate-300 text-accent focus:ring-accent w-4 h-4" />
                             <label for="lead-wa-optin" class="text-[11px] text-slate-600 font-light leading-relaxed cursor-pointer">
-                                <strong class="text-slate-800 font-medium">📱 Receive 48h Audit via WhatsApp / SMS:</strong> I consent to receive my free revenue recovery audit & project alerts from Socio via WhatsApp. Reply STOP anytime to cancel. Zero spam.
+                                <strong class="text-slate-800 font-medium">📱 Receive 48h Audit via WhatsApp / SMS:</strong> I consent to receive my free revenue recovery audit &amp; project alerts from Socio via WhatsApp. Reply STOP anytime.
                             </label>
                         </div>
-
                         <p class="text-xs text-red-500 font-light hidden" id="lead-error"></p>
                         <button type="submit" id="lead-submit" class="btn-neon w-full inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl font-light text-sm">
                             Request a Revenue Recovery Map
                             <iconify-icon icon="solar:arrow-right-linear" width="18"></iconify-icon>
                         </button>
-                        <p class="text-[11px] text-slate-400 font-light text-center">
-                            Zero spam. Your info is only used to prepare your audit. <span class="whitespace-nowrap">Hablamos español.</span>
-                        </p>
+                        <p class="text-[11px] text-slate-400 font-light text-center">Zero spam. Your info is only used to prepare your audit. <span class="whitespace-nowrap">Hablamos español.</span></p>
                     </form>
-
                     <div id="lead-success" class="hidden text-center py-10">
                         <div class="w-14 h-14 rounded-2xl bg-green-50 flex items-center justify-center mx-auto mb-6">
                             <iconify-icon icon="solar:verified-check-linear" width="28" class="text-green-500"></iconify-icon>
                         </div>
                         <h3 class="text-xl font-light text-slate-900 tracking-tight mb-3">Recovery Map requested!</h3>
-                        <p class="text-sm text-slate-500 font-light leading-relaxed max-w-xs mx-auto">
-                            We're building your Revenue Recovery Map now. We'll be in touch within 48 hours.
-                        </p>
+                        <p class="text-sm text-slate-500 font-light leading-relaxed max-w-xs mx-auto">We're building your Revenue Recovery Map now. We'll be in touch within 48 hours.</p>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
 
-    <!-- FOOTER                          -->
-    <!-- ============================== -->
     <footer id="footer" class="relative bg-slate-900 text-white pt-32 pb-12 overflow-hidden">
-
         <div class="max-w-7xl mx-auto px-6 mb-20 overflow-hidden" style="perspective: 1000px;">
             <div id="footer-reveal" class="text-[6rem] lg:text-[12rem] font-heading font-semibold tracking-tighter text-white/[0.03] leading-none select-none">
                 <span class="footer-letter">S</span><span class="footer-letter">O</span><span class="footer-letter">C</span><span class="footer-letter">I</span><span class="footer-letter">O</span>
             </div>
         </div>
-
         <div class="max-w-7xl mx-auto px-6">
-            
-            <!-- Contractor Vertical Callout Banner -->
             <div class="p-6 md:p-8 rounded-2xl bg-gradient-to-r from-slate-800 via-slate-850 to-slate-800 border border-slate-700 shadow-2xl mb-16 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                 <div class="space-y-1.5">
                     <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-orange-500/10 border border-orange-500/25 text-orange-400 text-xs font-mono font-bold">
                         <iconify-icon icon="solar:hammer-and-wrench-linear" width="14"></iconify-icon>
-                        <span>NEW VERTICAL · NYC</span>
+                        <span>ACTIVE WEDGE · NYC</span>
                     </div>
-                    <h4 class="text-xl font-bold text-white">
-                        Are you an NYC General Contractor or Remodeler?
-                    </h4>
-                    <p class="text-sm text-slate-400 max-w-2xl font-light">
-                        Explore our dedicated Spanish-first acquisition system connected to NYC DOB NOW permits and QuickBooks cleared deposits. Zero upfront retainers.
-                    </p>
+                    <h4 class="text-xl font-bold text-white">Are you an NYC General Contractor or Remodeler?</h4>
+                    <p class="text-sm text-slate-400 max-w-2xl font-light">Explore our dedicated Spanish-first acquisition system connected to NYC DOB NOW permits and QuickBooks cleared deposits. Zero upfront retainers.</p>
                 </div>
                 <a href="/contratistas" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#FF5500] text-white text-xs font-bold uppercase tracking-wider hover:bg-[#E04B00] shadow-lg shadow-orange-600/20 transition-all shrink-0">
                     <span>Explore Socio Contratistas</span>
                     <iconify-icon icon="solar:arrow-right-up-linear" width="14"></iconify-icon>
                 </a>
             </div>
-
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-16 border-b border-slate-800">
-
-                <!-- Column 1: Founder -->
                 <div>
                     <div class="flex items-center gap-4 mb-6">
                         <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent to-blue-700 flex items-center justify-center text-white text-xl font-bold font-heading">N</div>
-                        <div>
-                            <div class="font-medium">Nick</div>
-                            <div class="text-sm text-slate-400 font-light">Founder · Solo Operator</div>
-                        </div>
+                        <div><div class="font-medium">Nick</div><div class="text-sm text-slate-400 font-light">Founder · Solo Operator</div></div>
                     </div>
-                    <p class="text-slate-400 font-light text-sm leading-relaxed mb-6">
-                        Building a performance-based growth partnership firm for NYC's local merchants. Powered by AI. Built by one founder. Scaled for the neighborhoods that need it most.
-                    </p>
+                    <p class="text-slate-400 font-light text-sm leading-relaxed mb-6">Building a performance-based growth partnership firm for NYC contractors. Powered by AI. Built by one founder. Scaled for the neighborhoods that need it most.</p>
                     <a href="mailto:hello@socio.nyc" class="hover-arrow inline-flex items-center gap-3 px-6 py-3 bg-accent rounded-xl text-sm font-light hover:bg-blue-700 transition-colors">
                         Let's Talk Growth
                         <iconify-icon icon="solar:arrow-right-up-linear" width="16"></iconify-icon>
                     </a>
                 </div>
-
-                <!-- Column 2: Navigation -->
                 <div>
                     <h4 class="text-sm font-medium mb-6 text-slate-300">Navigation</h4>
                     <ul class="space-y-3">
-                        <li><a href="#how-it-works" class="text-sm text-slate-400 font-normal hover:text-white transition-colors">How It Works</a></li>
-                        <li><a href="#work" class="text-sm text-slate-400 font-normal hover:text-white transition-colors">Merchant Proof</a></li>
-                        <li><a href="#process" class="text-sm text-slate-400 font-normal hover:text-white transition-colors">The Journey</a></li>
+                        <li><a href="#protocol" class="text-sm text-slate-400 font-normal hover:text-white transition-colors">How It Works</a></li>
+                        <li><a href="#verification" class="text-sm text-slate-400 font-normal hover:text-white transition-colors">Merchant Proof</a></li>
+                        <li><a href="#faq" class="text-sm text-slate-400 font-normal hover:text-white transition-colors">FAQ</a></li>
                         <li><a href="command-center.html" class="text-sm text-slate-400 font-normal hover:text-white transition-colors">Command Center ⚡</a></li>
                         <li><a href="merchant-evidence.html" class="text-sm text-slate-400 font-normal hover:text-white transition-colors">Evidence Ledger 🔒</a></li>
                     </ul>
                 </div>
-
-                <!-- Column 3: Industries & Verticals -->
                 <div>
-                    <h4 class="text-sm font-medium mb-6 text-slate-300">Industries & Verticals</h4>
+                    <h4 class="text-sm font-medium mb-6 text-slate-300">Industries &amp; Verticals</h4>
                     <ul class="space-y-3">
                         <li>
                             <a href="/contratistas" class="text-sm text-orange-400 font-semibold hover:text-orange-300 transition-colors flex items-center gap-1.5">
@@ -2019,344 +607,64 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/floristas" class="text-sm text-rose-400 font-semibold hover:text-rose-300 transition-colors flex items-center gap-1.5">
-                                <iconify-icon icon="solar:leaf-linear" width="14"></iconify-icon>
-                                <span>Florists & Botanical (NYC)</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/restaurantes" class="text-sm text-amber-400 font-semibold hover:text-amber-300 transition-colors flex items-center gap-1.5">
-                                <iconify-icon icon="solar:cup-linear" width="14"></iconify-icon>
-                                <span>Restaurants & Catering (NYC)</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/clinicas" class="text-sm text-sky-400 font-semibold hover:text-sky-300 transition-colors flex items-center gap-1.5">
-                                <iconify-icon icon="solar:heart-pulse-linear" width="14"></iconify-icon>
-                                <span>Clinics & MedSpas (NYC)</span>
+                            <a href="/proveedores/ferreterias" class="text-sm text-slate-400 font-semibold hover:text-slate-200 transition-colors flex items-center gap-1.5">
+                                <iconify-icon icon="solar:box-linear" width="14"></iconify-icon>
+                                <span>Proveedores &amp; Ferreterías (NYC)</span>
                             </a>
                         </li>
                         <li><a href="/supplier-cards" class="text-sm text-slate-400 font-normal hover:text-white transition-colors">Supplier Pro-Desk Nodes</a></li>
                         <li><a href="/pilot-agreement" class="text-sm text-slate-400 font-normal hover:text-white transition-colors">Contractor Pilot Agreement</a></li>
-                        <li><a href="#how-it-works" class="text-sm text-slate-400 font-normal hover:text-white transition-colors">Retail & Storefront POS</a></li>
+                        <li><a href="#protocol" class="text-sm text-slate-400 font-normal hover:text-white transition-colors">Retail &amp; Storefront POS</a></li>
                     </ul>
                 </div>
-
-                <!-- Column 4: The Promise -->
                 <div>
                     <h4 class="text-sm font-medium mb-6 text-slate-300">The Socio Promise</h4>
                     <ul class="space-y-3">
-                        <li class="flex items-center gap-2 text-sm text-slate-400 font-light">
-                            <iconify-icon icon="solar:check-circle-linear" width="16" class="text-green-400"></iconify-icon>
-                            Zero upfront fees
-                        </li>
-                        <li class="flex items-center gap-2 text-sm text-slate-400 font-light">
-                            <iconify-icon icon="solar:check-circle-linear" width="16" class="text-green-400"></iconify-icon>
-                            Commission only on new revenue
-                        </li>
-                        <li class="flex items-center gap-2 text-sm text-slate-400 font-light">
-                            <iconify-icon icon="solar:check-circle-linear" width="16" class="text-green-400"></iconify-icon>
-                            POS / QBO deposit verified
-                        </li>
-                        <li class="flex items-center gap-2 text-sm text-slate-400 font-light">
-                            <iconify-icon icon="solar:check-circle-linear" width="16" class="text-green-400"></iconify-icon>
-                            You own all your data
-                        </li>
-                        <li class="flex items-center gap-2 text-sm text-slate-400 font-light">
-                            <iconify-icon icon="solar:check-circle-linear" width="16" class="text-green-400"></iconify-icon>
-                            Cancel anytime — no penalties
-                        </li>
+                        <li class="flex items-center gap-2 text-sm text-slate-400 font-light"><iconify-icon icon="solar:check-circle-linear" width="16" class="text-green-400"></iconify-icon> Zero upfront fees</li>
+                        <li class="flex items-center gap-2 text-sm text-slate-400 font-light"><iconify-icon icon="solar:check-circle-linear" width="16" class="text-green-400"></iconify-icon> Commission only on new revenue</li>
+                        <li class="flex items-center gap-2 text-sm text-slate-400 font-light"><iconify-icon icon="solar:check-circle-linear" width="16" class="text-green-400"></iconify-icon> POS / QBO deposit verified</li>
+                        <li class="flex items-center gap-2 text-sm text-slate-400 font-light"><iconify-icon icon="solar:check-circle-linear" width="16" class="text-green-400"></iconify-icon> You own all your data</li>
+                        <li class="flex items-center gap-2 text-sm text-slate-400 font-light"><iconify-icon icon="solar:check-circle-linear" width="16" class="text-green-400"></iconify-icon> Cancel anytime — no penalties</li>
                     </ul>
                 </div>
-
             </div>
-
             <div class="flex flex-col md:flex-row items-center justify-between pt-8 text-xs text-slate-500 font-light">
                 <div class="flex items-center">
                     <span class="font-bold text-slate-300">Socio</span>
                     <span class="w-1 h-1 rounded-[0.5px] bg-[#669BD2] inline-block ml-[1px] self-end mb-0.5"></span>
-                    <span class="ml-2">© 2024. NYC's Local Growth Partner.</span>
+                    <span class="ml-2">© 2026 Socio. NYC's Local Growth Partner.</span>
                 </div>
                 <div class="flex items-center gap-6 mt-4 md:mt-0">
-                    <a href="mailto:hello@socio.nyc" class="hover:text-white transition-colors">
-                        <iconify-icon icon="solar:letter-linear" width="16"></iconify-icon>
-                    </a>
-                    <a href="#" class="hover:text-white transition-colors">
-                        <iconify-icon icon="solar:link-circle-linear" width="16"></iconify-icon>
-                    </a>
-                    <a href="#" class="hover:text-white transition-colors">
-                        <iconify-icon icon="solar:chat-round-linear" width="16"></iconify-icon>
-                    </a>
+                    <a href="mailto:hello@socio.nyc" class="hover:text-white transition-colors"><iconify-icon icon="solar:letter-linear" width="16"></iconify-icon></a>
+                    <a href="#" class="hover:text-white transition-colors"><iconify-icon icon="solar:link-circle-linear" width="16"></iconify-icon></a>
+                    <a href="#" class="hover:text-white transition-colors"><iconify-icon icon="solar:chat-round-linear" width="16"></iconify-icon></a>
                 </div>
             </div>
         </div>
+        <p class="text-center text-[11px] text-gray-500 font-mono mt-6">Compliance helpers, not legal advice — attorney-reviewed 08/2024. We claim attribution, never automatic causation.</p>
     </footer>
 
-
-    <!-- ============================== -->
-    <!-- OVERLAYS                        -->
-    <!-- ============================== -->
-    <div class="inner-page-overlay" id="processOverlay">
-        <div class="relative min-h-screen">
-            <button onclick="closeOverlay('processOverlay')" class="fixed top-6 right-6 z-[101] w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center hover:bg-slate-800 transition-colors">
-                <iconify-icon icon="solar:close-circle-linear" width="20"></iconify-icon>
-            </button>
-            <div class="max-w-6xl mx-auto px-6 py-24">
-                <h2 class="text-4xl font-light text-slate-900 tracking-tight mb-8">
-                    The <span class="font-medium">Growth OS</span> Deep Dive
-                </h2>
-                <div class="relative overflow-hidden rounded-2xl h-[400px] mb-8">
-                    <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop"
-                         alt="Growth OS technology architecture and immutable revenue ledger"
-                         class="w-full h-full object-cover overlay-parallax-img" style="object-position: center 20%;">
-                </div>
-                <p class="text-slate-500 font-light leading-relaxed max-w-2xl">
-                    The Socio Growth OS is the central control plane: a Revenue Ledger for tamper-evident financial tracking, Business Twins for persistent merchant state, an Agent Governor for policy enforcement, and an Experiment Engine for data-driven growth hypotheses.
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <div class="service-overlay" id="serviceOverlay">
-        <div class="relative min-h-screen">
-            <button onclick="closeOverlay('serviceOverlay')" class="fixed top-6 right-6 z-[111] w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center hover:bg-slate-800 transition-colors">
-                <iconify-icon icon="solar:close-circle-linear" width="20"></iconify-icon>
-            </button>
-            <div class="max-w-6xl mx-auto px-6 py-24">
-                <h2 class="text-4xl font-light text-slate-900 tracking-tight mb-8">
-                    <span class="font-medium">Agent Fleet</span> Architecture
-                </h2>
-                <div class="relative overflow-hidden rounded-2xl h-[400px] mb-8">
-                    <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=2000&auto=format&fit=crop"
-                         alt="AI agent fleet architecture and governance pipeline"
-                         class="w-full h-full object-cover overlay-parallax-img" style="object-position: center 20%;">
-                </div>
-                <p class="text-slate-500 font-light leading-relaxed max-w-2xl">
-                    Eight specialized Hermes agents — Prospect, Pitch, Onboard, Content, Listings, Track, Support, Expand — operate autonomously with a DeepSeek Harness build layer. The Agent Governor enforces fail-closed safety policies with zero breaches.
-                </p>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- ============================== -->
-    <!-- JAVASCRIPT                      -->
-    <!-- ============================== -->
     <script>
+      function initSocioPageScripts() {
         gsap.registerPlugin(ScrollTrigger);
-
-        // Particles
-        function createParticles() {
-            const container = document.getElementById('particle-container');
-            for (let i = 0; i < 40; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.top = Math.random() * 100 + '%';
-                particle.style.opacity = 0.1 + Math.random() * 0.4;
-                container.appendChild(particle);
-                gsap.to(particle, {
-                    y: () => Math.sin(Math.random() * Math.PI * 2) * (30 + Math.random() * 50),
-                    x: () => Math.cos(Math.random() * Math.PI * 2) * (20 + Math.random() * 30),
-                    duration: 3 + Math.random() * 4,
-                    repeat: -1, yoyo: true,
-                    ease: "sine.inOut",
-                    delay: Math.random() * 2
-                });
-            }
-        }
-        createParticles();
-
-        // Nav entrance
-        gsap.to('.nav-bar', { y: 0, duration: 1.2, delay: 0.5, ease: "power4.out" });
-
-        // Hero animations
         const heroTl = gsap.timeline({ delay: 0.3 });
         heroTl
             .from('#hero h1', { y: 60, opacity: 0, duration: 1.2, ease: "power4.out" })
             .from('#hero h1 + p', { y: 40, opacity: 0, duration: 1, ease: "power4.out" }, '-=0.8')
             .from('#hero .inline-flex', { y: 30, opacity: 0, duration: 0.8, ease: "power4.out", stagger: 0.1 }, '-=0.6');
 
-        // Floating elements
-        gsap.to('#float-terminal', { y: -15, duration: 4, repeat: -1, yoyo: true, ease: "sine.inOut" });
-        gsap.to('#float-code', { y: -10, duration: 3, repeat: -1, yoyo: true, ease: "sine.inOut", delay: 0.5 });
-        gsap.to('#float-sync', { y: -12, duration: 3.5, repeat: -1, yoyo: true, ease: "sine.inOut", delay: 1 });
-
-        // Sticky card stack
-        const cards = document.querySelectorAll('.dm-card');
-        cards.forEach((card, i) => {
-            if (i < cards.length - 1) {
-                ScrollTrigger.create({
-                    trigger: card,
-                    start: "top 6rem",
-                    end: () => {
-                        const nextCard = cards[i + 1];
-                        return nextCard ? `top+=${nextCard.offsetTop - card.offsetTop}px top` : "bottom top";
-                    },
-                    scrub: true,
-                    onUpdate: (self) => {
-                        const progress = self.progress;
-                        const scale = 1 - (progress * 0.08);
-                        const brightness = 1 - (progress * 0.5);
-                        card.querySelector(':first-child').style.transform = `scale(${scale})`;
-                        card.querySelector(':first-child').style.filter = `brightness(${brightness})`;
-                    }
-                });
-            }
-        });
-
-        // Work project switching
-        function showProject(projectId) {
-            document.querySelectorAll('.work-visual').forEach(v => v.classList.remove('active'));
-            const target = document.getElementById('visual-' + projectId);
-            if (target) target.classList.add('active');
-            document.querySelectorAll('.work-item').forEach(item => {
-                item.style.opacity = item.dataset.project === projectId ? '1' : '0.4';
-            });
-        }
-
-        // Horizontal scroll
-        const processTrack = document.querySelector('.process-track');
-        const processWrapper = document.getElementById('process-wrapper');
-        if (processTrack && processWrapper) {
-            const totalWidth = processTrack.scrollWidth;
-            const viewportWidth = window.innerWidth;
-            gsap.to(processTrack, {
-                x: () => -(totalWidth - viewportWidth),
-                ease: "none",
-                scrollTrigger: {
-                    trigger: '#process-section',
-                    start: "top top",
-                    end: () => "+=" + (totalWidth - viewportWidth),
-                    scrub: 1,
-                    pin: processWrapper,
-                    anticipatePin: 1,
-                    invalidateOnRefresh: true,
-                    onUpdate: (self) => {
-                        const fill = document.getElementById('process-progress-fill');
-                        if (fill) fill.style.transform = `scaleX(${self.progress})`;
-                    }
-                }
-            });
-        }
-
-        // Footer letter reveal
         gsap.to('.footer-letter', {
-            rotateX: 0, scale: 1, opacity: 1,
-            duration: 1.2, stagger: 0.05, ease: "power4.out",
-            scrollTrigger: {
-                trigger: '#footer-reveal',
-                start: "top 85%", end: "top 40%",
-                scrub: 1
-            }
+            rotateX: 0, scale: 1, opacity: 1, duration: 1.2, stagger: 0.05, ease: "power4.out",
+            scrollTrigger: { trigger: '#footer-reveal', start: "top 85%", end: "top 40%", scrub: 1 }
         });
 
-        // Section scroll animations
-        gsap.utils.toArray('#capabilities, #work, #process, #how-it-works, #verticals, #testimonials, #calculator, #command-center, #manifesto, #cta-section, #faq, #lead-capture').forEach(section => {
+        gsap.utils.toArray('#protocol, #verification, #cta-section, #faq, #lead-capture').forEach(section => {
             gsap.from(section.querySelectorAll('h2, p, .inline-flex'), {
                 y: 40, opacity: 0, duration: 1, stagger: 0.1, ease: "power4.out",
                 scrollTrigger: { trigger: section, start: "top 75%", toggleActions: "play none none none" }
             });
         });
 
-        // Overlay functions
-        function openOverlay(overlayId) {
-            const overlay = document.getElementById(overlayId);
-            gsap.to(overlay, { y: 0, duration: 0.8, ease: "power4.inOut" });
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeOverlay(overlayId) {
-            const overlay = document.getElementById(overlayId);
-            gsap.to(overlay, {
-                y: '100%', duration: 0.8, ease: "power4.inOut",
-                onComplete: () => { document.body.style.overflow = ''; }
-            });
-        }
-
-        // Overlay parallax
-        document.querySelectorAll('.overlay-parallax-img').forEach(img => {
-            gsap.to(img, {
-                yPercent: -15, ease: "none",
-                scrollTrigger: {
-                    trigger: img.closest('.inner-page-overlay, .service-overlay'),
-                    start: "top top", end: "bottom top", scrub: true
-                }
-            });
-        });
-
-        // Mobile menu
-        const mobileBtn = document.getElementById('mobile-menu-btn');
-        if (mobileBtn) {
-            mobileBtn.addEventListener('click', () => {
-                const links = mobileBtn.closest('div').querySelector('.hidden.md\\:flex');
-                if (links) {
-                    links.classList.toggle('hidden');
-                    links.classList.toggle('flex');
-                    links.classList.toggle('flex-col');
-                    links.classList.toggle('absolute');
-                    links.classList.toggle('top-full');
-                    links.classList.toggle('left-0');
-                    links.classList.toggle('right-0');
-                    links.classList.toggle('bg-white');
-                    links.classList.toggle('rounded-xl');
-                    links.classList.toggle('p-4');
-                    links.classList.toggle('mt-2');
-                    links.classList.toggle('shadow-lg');
-                }
-            });
-        }
-
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    e.preventDefault();
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
-
-        // Vertical RLI click tracking (CTR by vertical)
-        document.querySelectorAll('a[href^="/recovery-index"]').forEach(a => {
-            a.addEventListener('click', () => {
-                const v = new URL(a.href, location.origin).searchParams.get('vertical') || 'generic';
-                fetch('/api/analytics/event', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name: 'rli_vertical_click', vertical: v, path: location.pathname })
-                }).catch(() => {});
-            });
-        });
-
-        // Vertical card view tracking (CTR denominator) — fires once when the
-        // verticals section becomes visible, per vertical card present on page.
-        (function trackVerticalViews() {
-            const section = document.getElementById('verticals');
-            if (!section) return;
-            const verticals = Array.from(document.querySelectorAll('#verticals a[href^="/recovery-index"]')).map(a =>
-                new URL(a.href, location.origin).searchParams.get('vertical') || 'generic'
-            );
-            const fired = new Set();
-            const io = new IntersectionObserver((entries) => {
-                for (const entry of entries) {
-                    if (!entry.isIntersecting) continue;
-                    for (const v of verticals) {
-                        if (fired.has(v)) continue;
-                        fired.add(v);
-                        fetch('/api/analytics/event', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ name: 'rli_vertical_view', vertical: v, path: location.pathname })
-                        }).catch(() => {});
-                    }
-                }
-            }, { threshold: 0.4 });
-            io.observe(section);
-        })();
-
-        // Sticky CTA — appears after the hero, hides when the form is on screen
         const stickyCta = document.getElementById('sticky-cta');
         const leadSection = document.getElementById('lead-capture');
         function updateStickyCta() {
@@ -2368,60 +676,13 @@
         window.addEventListener('scroll', updateStickyCta, { passive: true });
         updateStickyCta();
 
-        // Testimonial carousel
-        const carouselTrack = document.getElementById('carousel-track');
-        if (carouselTrack) {
-            const slideCount = carouselTrack.children.length;
-            let current = 0;
-            let carouselTimer = null;
-            function goToSlide(i) {
-                current = (i + slideCount) % slideCount;
-                carouselTrack.style.transform = 'translateX(-' + (current * 100) + '%)';
-                document.querySelectorAll('[data-carousel-dot]').forEach((dot, di) => {
-                    dot.classList.toggle('bg-slate-900', di === current);
-                    dot.classList.toggle('bg-slate-300', di !== current);
-                });
-            }
-            function startCarousel() { carouselTimer = setInterval(() => goToSlide(current + 1), 6500); }
-            function stopCarousel() { if (carouselTimer) clearInterval(carouselTimer); }
-            document.querySelector('[data-carousel-prev]').addEventListener('click', () => { stopCarousel(); goToSlide(current - 1); startCarousel(); });
-            document.querySelector('[data-carousel-next]').addEventListener('click', () => { stopCarousel(); goToSlide(current + 1); startCarousel(); });
-            document.querySelectorAll('[data-carousel-dot]').forEach((dot, di) => {
-                dot.addEventListener('click', () => { stopCarousel(); goToSlide(di); startCarousel(); });
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
             });
-            const carouselViewport = document.getElementById('carousel-viewport');
-            carouselViewport.addEventListener('mouseenter', stopCarousel);
-            carouselViewport.addEventListener('mouseleave', startCarousel);
-            goToSlide(0);
-            startCarousel();
-        }
+        });
 
-        // Commission calculator
-        const calcRevenue = document.getElementById('calc-revenue');
-        const calcRange = document.getElementById('calc-revenue-range');
-        const calcOutput = document.getElementById('calc-output');
-        const calcRetained = document.getElementById('calc-retained');
-        function formatUsd(n) { return '$' + Math.round(n).toLocaleString('en-US'); }
-        function updateCalculator() {
-            if (!calcRevenue) return;
-            const value = Math.max(0, Number(calcRevenue.value) || 0);
-            const commMin = value * 0.10;
-            const commMax = value * 0.15;
-            calcOutput.textContent = formatUsd(commMin) + ' – ' + formatUsd(commMax);
-            if (calcRetained) {
-                calcRetained.textContent = formatUsd(value - commMax) + ' – ' + formatUsd(value - commMin);
-            }
-        }
-        if (calcRevenue) {
-            calcRevenue.addEventListener('input', () => { calcRange.value = calcRevenue.value; updateCalculator(); });
-            calcRange.addEventListener('input', () => { calcRevenue.value = calcRange.value; updateCalculator(); });
-            updateCalculator();
-        }
-
-        // Lead capture form → POST /api/leads (same origin, Vercel server.js)
-        // Webhook secret comes from deploy-time config ONLY (never hardcoded).
-        // CI replaces __SOCIO_WEBHOOK_SECRET__ at deploy time; when unset the
-        // header is omitted and the server fails closed if a secret is configured.
         const leadForm = document.getElementById('lead-form');
         if (leadForm) {
             leadForm.addEventListener('submit', async function (e) {
@@ -2452,36 +713,21 @@
                     if (window.SOCIO_WEBHOOK_SECRET && window.SOCIO_WEBHOOK_SECRET !== '__SOCIO_WEBHOOK_SECRET__') {
                         headers['X-Webhook-Secret'] = window.SOCIO_WEBHOOK_SECRET;
                     }
-                    const res = await fetch('/api/leads', {
-                        method: 'POST',
-                        headers,
-                        body: JSON.stringify(payload)
-                    });
+                    const res = await fetch('/api/leads', { method: 'POST', headers, body: JSON.stringify(payload) });
                     const json = await res.json().catch(() => ({}));
                     if (res.ok && json.status === 'success') {
-                        // Record WhatsApp consent if opted in
                         if (isWaChecked && payload.phone) {
-                            fetch('/api/whatsapp/consent', {
-                                method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({
-                                    phone: payload.phone,
-                                    businessName: payload.name,
-                                    vertical: payload.type,
-                                    sourcePath: window.location.pathname,
-                                    consentText: 'I consent to receive my free revenue recovery audit & project alerts from Socio via WhatsApp.'
-                                })
+                            fetch('/api/whatsapp/consent', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ phone: payload.phone, businessName: payload.name, vertical: payload.type, sourcePath: window.location.pathname, consentText: 'I consent to receive my free revenue recovery audit & project alerts from Socio via WhatsApp.' })
                             }).catch(() => {});
                         }
-                        // Meta Pixel Lead (dedupe with CAPI via eventID)
-                        try{
+                        try {
                           var _evtId = 'socio_lead_' + Date.now() + '_' + Math.random().toString(36).slice(2,7);
                           socioPixelTrack('Lead', {content_name: payload.name, content_category: payload.type}, _evtId);
                           fetch('/api/meta/capi', { method:'POST', headers:{'Content-Type':'application/json'},
                             body: JSON.stringify({ eventName:'Lead', eventId:_evtId, sourceUrl: window.location.href,
                               userData:{ email: payload.email, phone: payload.phone }, customData:{ content_name: payload.name, content_category: payload.type } }) }).catch(()=>{});
-                        }catch(e){}
-                        // Meta CAPI also fired server-side on /api/leads — deduped by eventID above
+                        } catch(e) {}
                         leadForm.classList.add('hidden');
                         successBox.classList.remove('hidden');
                     } else {
@@ -2497,33 +743,22 @@
                 }
             });
         }
+      }
 
-        // Dynamic Live Simulated Recovery Ticker
-        let currentTickerVal = 1340;
-        const liveTicker = document.getElementById('live-recovered-ticker');
-        if (liveTicker) {
-            setInterval(() => {
-                const step = [45, 80, 115, 60, 140, 95][Math.floor(Math.random() * 6)];
-                currentTickerVal += step;
-                liveTicker.textContent = '$' + currentTickerVal.toLocaleString('en-US');
-                liveTicker.classList.add('text-emerald-400', 'scale-110');
-                setTimeout(() => {
-                    liveTicker.classList.remove('text-emerald-400', 'scale-110');
-                }, 500);
-            }, 5000);
-        }
-
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initSocioPageScripts);
+      } else {
+        initSocioPageScripts();
+      }
     </script>
 
-    <!-- Socio WhatsApp Floating Widget (wa.me deep-link + glassmorphic panel) -->
     <script>
-      // Configure before widget loads — phone must include country code, no + (e.g., 19175551234)
       window.SOCIO_WHATSAPP = window.SOCIO_WHATSAPP || {
         phoneNumber: '19175551234',
         defaultMessage: 'Hi Socio — I was on your site and want to learn more about growing my NYC business.',
       };
     </script>
     <script src="/assets/whatsapp-widget.js" defer></script>
-
+    <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));}</script>
 </body>
 </html>

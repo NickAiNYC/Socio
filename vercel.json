@@ -21,11 +21,11 @@
     },
     {
       "src": "/privacy",
-      "dest": "server.js"
+      "dest": "website/privacy.html"
     },
     {
       "src": "/terms",
-      "dest": "server.js"
+      "dest": "website/terms.html"
     },
     {
       "src": "/contratistas/?",
@@ -60,24 +60,20 @@
       "dest": "website/escaneo-de-fugas-scorecard.html"
     },
     {
+      "src": "/contratistas/(.*)/?",
+      "dest": "website/contratistas/$1.html"
+    },
+    {
+      "src": "/assets/(.*)",
+      "dest": "website/assets/$1"
+    },
+    {
+      "src": "/(.*)\\.html",
+      "dest": "website/$1.html"
+    },
+    {
       "src": "/",
-      "dest": "website/contratistas.html"
-    },
-    {
-      "src": "/floristas/?",
-      "dest": "website/contratistas.html"
-    },
-    {
-      "src": "/restaurantes/?",
-      "dest": "website/contratistas.html"
-    },
-    {
-      "src": "/clinicas/?",
-      "dest": "website/contratistas.html"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "website/contratistas.html"
+      "dest": "website/index.html"
     }
   ]
 }

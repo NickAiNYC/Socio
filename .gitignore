@@ -36,3 +36,11 @@ Thumbs.db
 # Git worktrees (admin directories, not project content)
 .worktrees/
 .vercel
+
+# Scratch directories and stale archives — not source
+Socio/
+_stale/
+
+# Journey bundle — generated build artifact, not committed source
+website/assets/journey.bundle.css
+website/assets/journey.bundle.js

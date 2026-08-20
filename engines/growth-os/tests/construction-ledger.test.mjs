@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 
 import { computeTieredCommission, evaluateCommissionWithCap } from '../construction/commission-engine.mjs';
-import { normalizePhone, normalizeEmail, matchLeadInPool } from '../construction/attribution-engine.mjs';
+import { matchLeadInPool } from '../construction/attribution-engine.mjs';
 import { evaluateDepositStatus, processInvoiceDeposit } from '../construction/quickbooks-client.mjs';
 import { parsePermitRecord } from '../construction/dob-permit-ingestion.mjs';
 import { buildWhatsAppMessage } from '../construction/whatsapp-service.mjs';

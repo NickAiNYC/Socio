@@ -1,0 +1,278 @@
+
+/* ============================================================
+   WARM CLINICAL LUXURY THEME & GLASSMORPHISM
+   ============================================================ */
+:root {
+  --bg-warm-alabaster: #FBF9F5;
+  --bg-warm-surface: #F7F5F0;
+  --color-espresso: #1C1917;
+  --color-slate-deep: #292524;
+  --grid-line-warm: rgba(220, 215, 205, 0.45);
+  --glass-bg: rgba(255, 255, 255, 0.72);
+  --glass-border: rgba(231, 225, 215, 0.8);
+  --glass-shadow: 0 12px 36px -4px rgba(28, 25, 23, 0.05);
+}
+
+.bg-warm-alabaster { background-color: var(--bg-warm-alabaster) !important; }
+.bg-warm-surface { background-color: var(--bg-warm-surface) !important; }
+.text-espresso { color: var(--color-espresso) !important; }
+
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 18px;
+}
+
+.glass-card-dark {
+  background: rgba(11, 15, 23, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+}
+
+.cyber-grid {
+  background-image: linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.live-pulse {
+  animation: pulseGlow 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+@keyframes pulseGlow {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.08); }
+}
+
+/* ============================================================
+   Socio Design Tokens — single source of truth
+   Mirrors the token intent already declared in tailwind.config.js
+   (accent/brandOrange/safety/neon) and src/app/globals.css, which
+   most pages currently bypass in favor of generic Tailwind palette
+   utilities (orange-50, yellow-400, blue-700, red-600, etc).
+   Load this AFTER output.css (or the Tailwind CDN) on every page —
+   plain CSS, works regardless of which Tailwind delivery a page uses.
+   Added as part of the Aug 2026 design-system audit.
+   ============================================================ */
+
+:root {
+  /* Brand core — matches tailwind.config.js theme.extend.colors */
+  --brand-blue: #669BD2;       /* tailwind: accent */
+  --brand-blue-dark: #4A7CAE;
+  --brand-blue-light: #7BAEE0;
+  --brand-orange: #FF5500;     /* tailwind: brandOrange.DEFAULT */
+  --brand-orange-hover: #E04B00;
+  --brand-orange-dark: #C2410C;
+  --safety-yellow: #EAB308;    /* tailwind: safety */
+  --neon: #CCFF00;             /* tailwind: neon — internal ops-dashboard accent ONLY (command-center.html). Do not use on public marketing/sales pages. */
+
+  /* Brand tint scales — replaces ad-hoc use of Tailwind's default
+     orange-50/200/800, yellow-50/300/400/700, blue-700 on brand surfaces */
+  --brand-orange-50: #FFF4EE;
+  --brand-orange-100: #FFE3D1;
+  --brand-orange-200: #FFC7A3;
+  --brand-orange-800: #7A2900;
+  --brand-orange-950: #431700;
+  --brand-blue-50: #EEF5FB;
+  --brand-blue-100: #D7E8F5;
+  --safety-yellow-50: #FEFAE8;
+  --safety-yellow-200: #FCE590;
+  --safety-yellow-800: #713F12;
+
+  /* Semantic — ONE value each. Audit found 3 competing "error" reds
+     (#E11D48, #D97706, #0284C7) and 2 competing "success" greens
+     (#25D366, #20ba5a) in production. Standardize here. */
+  --color-danger: #E11D48;
+  --color-danger-bg: #FEF1F3;
+  --color-danger-border: #FBD5DD;
+  --color-success: #25D366;    /* official WhatsApp green */
+  --color-money: #34D399;      /* distinct from success — used for $ callouts */
+  --color-warning: var(--safety-yellow);
+  --color-info: var(--brand-blue);
+
+  /* Neutrals already in wide, consistent use — centralized, not changed */
+  --ink-900: #0f172a;
+  --ink-700: #334155;
+  --ink-500: #64748b;
+  --ink-300: #cbd5e1;
+  --ink-100: #e2e8f0;
+  --ink-50:  #f8fafc;
+  --surface: #FAFAFA;
+
+  /* Typography — canonical pair (matches contratistas.html, the pilot
+     agreement, and the leak-scan scorecard — the 3 pages that actually
+     touch a paying contractor today). Open item: index.html,
+     command-center.html, field-cheat-sheet.html, recovery-index.html,
+     and supplier-briefing.html currently render Geist/Inter/Space
+     Grotesk instead — see audit Priority Action #1 before migrating. */
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Radius scale — converges 20+ ad-hoc values found in audit */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 1.5rem;
+  --radius-pill: 9999px;
+
+  /* Shadow scale */
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 8px 24px -12px rgba(102, 155, 210, 0.35);
+  --shadow-lg: 0 30px 80px -20px rgba(0, 0, 0, 0.35);
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ============================================================
+   Semantic component classes — plain CSS, safe on every page.
+   Use instead of raw Tailwind palette utilities so every page
+   draws visibly from ONE palette instead of whichever default
+   Tailwind shade looked right in the moment.
+   ============================================================ */
+
+.brand-stripe {
+  background: linear-gradient(90deg, var(--safety-yellow), var(--brand-orange), var(--safety-yellow));
+}
+
+.chip-brand {
+  display: inline-block;
+  padding: 0.15rem 0.65rem;
+  border-radius: var(--radius-pill);
+  background: var(--brand-orange-50);
+  border: 1px solid var(--brand-orange-200);
+  color: var(--brand-orange-800);
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.chip-confidential {
+  display: inline-block;
+  padding: 0.2rem 0.7rem;
+  border-radius: var(--radius-sm);
+  background: var(--safety-yellow-50);
+  border: 1px solid var(--safety-yellow-200);
+  color: var(--safety-yellow-800);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 11px;
+}
+
+.badge-danger {
+  color: var(--color-danger);
+  background: var(--color-danger-bg);
+  border: 1px solid var(--color-danger-border);
+  border-radius: var(--radius-sm);
+}
+
+.badge-warning {
+  color: var(--safety-yellow-800);
+  background: var(--safety-yellow-50);
+  border: 1px solid var(--safety-yellow-200);
+  border-radius: var(--radius-sm);
+}
+
+.text-brand-orange { color: var(--brand-orange) !important; }
+.text-brand-blue { color: var(--brand-blue) !important; }
+.text-danger { color: var(--color-danger) !important; }
+.text-success { color: var(--color-success) !important; }
+.text-money { color: var(--color-money) !important; }
+.text-safety { color: var(--safety-yellow) !important; }
+
+
+/* ============================================================
+   SOCIO TYPE & RHYTHM LAYER  (added 2026-08-20)
+   Loads on every page, so these corrections propagate site-wide
+   without touching 35 files of markup.
+   ============================================================ */
+
+/* 1. Display type. Headings were rendering loose and wide at large
+      sizes. Optical tightening scales with size, the way type wants. */
+h1, h2, h3 { text-wrap: balance; }
+h1 { letter-spacing: -0.035em; line-height: 1.02; }
+h2 { letter-spacing: -0.025em; line-height: 1.1; }
+h3 { letter-spacing: -0.015em; line-height: 1.2; }
+p  { text-wrap: pretty; }
+
+/* 2. Readable measure. Body copy was running the full grid width
+      on wide screens, which is the single biggest readability tax
+      on these pages. 65ch is the ceiling, not a suggestion. */
+main p, section p, article p { max-width: 68ch; }
+main p.max-w-none, section p.max-w-none { max-width: none; }
+
+/* 3. Numerals. Every price, tier and stat on this site is monospace
+      by design. Tabular figures stop them shifting between values. */
+.font-mono, [class*="font-mono"] { font-variant-numeric: tabular-nums; }
+
+/* 4. Shape consistency lock. The audit found 12px, 16px, 20px and
+      pill radii mixed inside single sections. One scale, applied. */
+:root { --r-control: 0.75rem; --r-surface: 1rem; }
+
+/* 5. Focus. Was browser-default outline on an orange brand, which
+      disappears against the CTA. Visible in both directions. */
+a:focus-visible, button:focus-visible,
+input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--brand-orange);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* 6. Tap targets. Traffic to this site is ~100% WhatsApp, so ~100%
+      mobile. Anything interactive clears the 44px minimum. */
+@media (max-width: 767px) {
+  a[class*="px-"][class*="py-"], button { min-height: 44px; }
+}
+
+/* 7. Motion respect. Several pages ship animate-ping and animate-pulse
+      on decorative dots. Honour the user setting. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* 8. Print. The pilot agreement and the leak-scan scorecard are both
+      meant to be handed over on paper at a coffee meeting. */
+@media print {
+  nav, header .lang-toggle, .no-print, [data-lucide="message-square"] { display: none !important; }
+  body { background: #fff !important; color: #000 !important; }
+  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 9pt; word-break: break-all; }
+}
+
+/* 9. Sticky mobile CTA bar overlays the last section on small screens.
+      Reserve its height so nothing is permanently covered. */
+@media (max-width: 767px) {
+  body:has(.fixed.bottom-0) { padding-bottom: 5.5rem; }
+}
+
+/* ============================================================
+   HERO FALLBACK — shown when WebGL / Three.js is unavailable
+   or prefers-reduced-motion is set. Provides the dark bg +
+   colour wash so the hero headline is always readable.
+   ============================================================ */
+#hero-orbs {
+  background: #020617;
+  background-image:
+    radial-gradient(ellipse 55% 40% at 15% 30%, rgba(255, 85, 0, 0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 50% at 50% 55%, rgba(37, 99, 235, 0.14) 0%, transparent 70%),
+    radial-gradient(ellipse 45% 35% at 85% 75%, rgba(5, 150, 105, 0.16) 0%, transparent 70%);
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #hero-orbs {
+    background-image:
+      radial-gradient(ellipse 60% 50% at 20% 35%, rgba(255, 85, 0, 0.28) 0%, transparent 65%),
+      radial-gradient(ellipse 55% 55% at 50% 55%, rgba(37, 99, 235, 0.22) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 40% at 80% 70%, rgba(5, 150, 105, 0.24) 0%, transparent 65%);
+  }
+}

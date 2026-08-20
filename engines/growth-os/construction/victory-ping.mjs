@@ -4,7 +4,7 @@
  * Automatically generates a Stripe/QBO commission invoice and sends a celebratory WhatsApp notification.
  */
 
-import { computeTieredCommission, evaluateCommissionWithCap } from './commission-engine.mjs';
+import { computeTieredCommission } from './commission-engine.mjs';
 
 export function buildVictoryPingPayload({
   contractorId,
@@ -26,13 +26,6 @@ export function buildVictoryPingPayload({
   const discountMultiplier = isPilotDiscountActive ? 0.50 : 1.0;
   const rawFee = Number((standardCalc.fee * discountMultiplier).toFixed(2));
   const effectiveRate = Number((rawFee / totalContractAmount).toFixed(4));
-
-  const cappedCalc = evaluateCommissionWithCap({
-    contractAmount: totalContractAmount,
-    currentYearBilled,
-    annualCap: 40000,
-    isAlreadyCapped: currentYearBilled >= 40000,
-  });
 
   const appliedFee = Math.min(rawFee, Math.max(0, 40000 - currentYearBilled));
 
