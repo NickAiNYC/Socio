@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: https://socio-one.vercel.app/sitemap.xml
+Sitemap: https://socio.nyc/sitemap.xml

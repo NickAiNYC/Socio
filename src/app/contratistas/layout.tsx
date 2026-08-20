@@ -6,16 +6,16 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Socio para Contratistas | Más Contratos en NYC',
     description: 'Adquisición de proyectos de remodelación y construcción. Conectado a WhatsApp y QuickBooks.',
-    url: 'https://socio-one.vercel.app/contratistas',
+    url: 'https://socio.nyc/contratistas',
     siteName: 'Socio Contratistas NYC',
     locale: 'es_US',
     type: 'website',
   },
   alternates: {
-    canonical: 'https://socio-one.vercel.app/contratistas',
+    canonical: 'https://socio.nyc/contratistas',
     languages: {
-      'es-US': 'https://socio-one.vercel.app/contratistas',
-      'en-US': 'https://socio-one.vercel.app',
+      'es-US': 'https://socio.nyc/contratistas',
+      'en-US': 'https://socio.nyc/contractors',
     },
   },
 };

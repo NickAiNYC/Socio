@@ -1,198 +1,192 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://socio-one.vercel.app/</loc>
-    <lastmod>2026-08-19</lastmod>
+    <loc>https://socio.nyc/</loc>
+    <lastmod>2026-08-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://socio-one.vercel.app/clinicas</loc>
+    <loc>https://socio.nyc/clinicas</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://socio-one.vercel.app/clinicas/casos-de-exito</loc>
+    <loc>https://socio.nyc/clinicas/casos-de-exito</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://socio-one.vercel.app/clinicas/como-funciona</loc>
+    <loc>https://socio.nyc/clinicas/como-funciona</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://socio-one.vercel.app/clinicas/preguntas-frecuentes</loc>
+    <loc>https://socio.nyc/clinicas/preguntas-frecuentes</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://socio-one.vercel.app/clinicas/radar-pacientes</loc>
+    <loc>https://socio.nyc/clinicas/radar-pacientes</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://socio-one.vercel.app/contratistas</loc>
-    <lastmod>2026-08-19</lastmod>
+    <loc>https://socio.nyc/contractors</loc>
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://socio.nyc/contratistas</loc>
+    <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://socio-one.vercel.app/contratistas/casos-de-exito</loc>
+    <loc>https://socio.nyc/contratistas/casos-de-exito</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://socio-one.vercel.app/contratistas/como-funciona</loc>
+    <loc>https://socio.nyc/contratistas/como-funciona</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://socio-one.vercel.app/contratistas/preguntas-frecuentes</loc>
+    <loc>https://socio.nyc/contratistas/preguntas-frecuentes</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://socio-one.vercel.app/contratistas/radar-de-permisos</loc>
+    <loc>https://socio.nyc/contratistas/radar-de-permisos</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://socio-one.vercel.app/contratistas/radar-de-permisos/brooklyn</loc>
+    <loc>https://socio.nyc/contratistas/radar-de-permisos/brooklyn</loc>
     <lastmod>2026-08-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://socio-one.vercel.app/contratistas/radar-de-permisos/queens</loc>
+    <loc>https://socio.nyc/contratistas/radar-de-permisos/queens</loc>
     <lastmod>2026-08-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://socio-one.vercel.app/floristas</loc>
+    <loc>https://socio.nyc/floristas</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://socio-one.vercel.app/floristas/casos-de-exito</loc>
+    <loc>https://socio.nyc/floristas/casos-de-exito</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://socio-one.vercel.app/floristas/como-funciona</loc>
+    <loc>https://socio.nyc/floristas/como-funciona</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://socio-one.vercel.app/floristas/preguntas-frecuentes</loc>
+    <loc>https://socio.nyc/floristas/preguntas-frecuentes</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://socio-one.vercel.app/floristas/radar-floral</loc>
+    <loc>https://socio.nyc/floristas/radar-floral</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://socio-one.vercel.app/global-brands</loc>
+    <loc>https://socio.nyc/global-brands</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://socio-one.vercel.app/limpieza</loc>
+    <loc>https://socio.nyc/limpieza</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://socio-one.vercel.app/merchant-evidence</loc>
+    <loc>https://socio.nyc/proveedores/equipos</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://socio.nyc/proveedores/ferreterias</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://socio.nyc/proveedores/materiales</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://socio.nyc/restaurantes</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://socio-one.vercel.app/proveedores/equipos</loc>
+    <loc>https://socio.nyc/restaurantes/casos-de-exito</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://socio-one.vercel.app/proveedores/ferreterias</loc>
+    <loc>https://socio.nyc/restaurantes/como-funciona</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://socio-one.vercel.app/proveedores/materiales</loc>
+    <loc>https://socio.nyc/restaurantes/preguntas-frecuentes</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://socio-one.vercel.app/recovery-index</loc>
+    <loc>https://socio.nyc/restaurantes/radar-gastronomico</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://socio.nyc/trust-and-proof</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://socio-one.vercel.app/restaurantes</loc>
-    <lastmod>2026-08-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://socio-one.vercel.app/restaurantes/casos-de-exito</loc>
-    <lastmod>2026-08-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://socio-one.vercel.app/restaurantes/como-funciona</loc>
-    <lastmod>2026-08-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://socio-one.vercel.app/restaurantes/preguntas-frecuentes</loc>
-    <lastmod>2026-08-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://socio-one.vercel.app/restaurantes/radar-gastronomico</loc>
-    <lastmod>2026-08-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://socio-one.vercel.app/trust-and-proof</loc>
-    <lastmod>2026-08-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://socio-one.vercel.app/privacy</loc>
+    <loc>https://socio.nyc/privacy</loc>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://socio-one.vercel.app/terms</loc>
+    <loc>https://socio.nyc/terms</loc>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
