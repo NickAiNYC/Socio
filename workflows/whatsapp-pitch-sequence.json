@@ -88,7 +88,7 @@
             "messaging_product": "whatsapp",
             "to": "{{prospect_phone}}",
             "type": "audio",
-            "audio": { "link": "https://socio-one.vercel.app/assets/audio/socio-voice-intro.mp3" }
+            "audio": { "link": "https://socio.nyc/assets/audio/socio-voice-intro.mp3" }
           }
         },
         {
@@ -98,7 +98,7 @@
             "to": "{{prospect_phone}}",
             "type": "document",
             "document": {
-              "link": "https://socio-one.vercel.app/docs/guia-marketing-contratistas-nyc.pdf",
+              "link": "https://socio.nyc/docs/guia-marketing-contratistas-nyc.pdf",
               "filename": "Guia_Contratistas_NYC_Socio.pdf",
               "caption": "Don {{ownerName}}, le dejé una nota de voz rápida de 20 segundos arriba. También le adjunto la *Guía de Adquisición de Contratos para Contratistas Hispanos en NYC*. Si en el futuro busca expandir sus cuadrillas, aquí estamos a su orden."
             }

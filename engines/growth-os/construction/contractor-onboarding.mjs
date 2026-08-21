@@ -86,7 +86,7 @@ export function provisionTwilioTrackingNumber({ borough = 'QUEENS', contractorId
 export function generateQboAuthLink({ contractorId, stateToken = null }) {
   const token = stateToken || `sec_${contractorId}_${Date.now()}`;
   const clientId = process.env.QBO_CLIENT_ID || 'AB123456789_DEMO';
-  const redirectUri = encodeURIComponent(process.env.QBO_REDIRECT_URI || 'https://socio-one.vercel.app/api/auth/quickbooks/callback');
+  const redirectUri = encodeURIComponent(process.env.QBO_REDIRECT_URI || 'https://socio.nyc/api/auth/quickbooks/callback');
 
   const authUrl = `https://appcenter.intuit.com/connect/oauth2?client_id=${clientId}&response_type=code&scope=com.intuit.quickbooks.accounting&redirect_uri=${redirectUri}&state=${token}`;
 

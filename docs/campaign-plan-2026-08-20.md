@@ -89,7 +89,7 @@
 |---|---|---|---|
 | Escaneo de Fugas PDF template | 1-page Spanish-first leak-scan scorecard, populated per-contractor from the GBP + response-latency + follow-up scoring model | Must-have | **Already built** (`/api/construction/gtm/leak-scan`) |
 | WhatsApp Touch 1/2/3 scripts | Personalized with `{{ownerName}}`, `{{companyName}}`, `{{borough}}` variables | Must-have | **Already built**, needs live variable-fill testing on first real batch |
-| 1-page pilot agreement | Zero-cost entry, 50%-discount commission terms, deposit-trigger clause | Must-have | **Already built** (`socio-one.vercel.app/pilot-agreement`) |
+| 1-page pilot agreement | Zero-cost entry, 50%-discount commission terms, deposit-trigger clause | Must-have | **Already built** (`socio.nyc/pilot-agreement`) |
 | Printed supply-house referral cards (QR + kickback terms) | Physical card for pro-desk handoff, referral-tagged QR code | Must-have | Needs printing — not yet produced physically |
 | Dead-lead reactivation message template | Sent by "María" as the contractor's own secretary, not as Socio | Must-have | **Already built**, needs first live test |
 | Simple conversion tracker (scans → replies → pilots) | Spreadsheet or dashboard view against Gate 1's 30% threshold | Must-have | Not yet stood up — needed by Week 2 |
