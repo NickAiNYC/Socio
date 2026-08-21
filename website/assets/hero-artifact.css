@@ -38,21 +38,14 @@
   min-width: 0;
 }
 
-.hero-artifact__mark {
+.hero-artifact__logo {
   flex-shrink: 0;
-  width: 32px;
-  height: 32px;
-  border-radius: 10px;
-  background: #fff;
-  color: #0b1220;
-  display: grid;
-  place-items: center;
-  font-weight: 900;
-  font-size: 14px;
-}
-
-.hero-artifact__mark span {
-  color: var(--socio-orange);
+  display: block;
+  height: 24px;
+  width: auto;
+  /* Recolors the navy/blue transparent PNG to solid white so it reads
+     against the dark panel without a light chip behind it. */
+  filter: brightness(0) invert(1);
 }
 
 .hero-artifact__brand-name {
@@ -419,6 +412,10 @@
 
   .hero-artifact__tabs {
     display: none;
+  }
+
+  .hero-artifact__logo {
+    height: 18px;
   }
 
   .hero-artifact__stepper {
