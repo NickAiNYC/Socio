@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { FeaturesCardsSection } from '@/components/canvas/FeaturesCardsSection';
 
 export const metadata: Metadata = {
   title: 'Socio for Contractors | Performance-Based Contract Acquisition in NYC',
@@ -104,28 +105,23 @@ export default function ContractorsPage() {
             </div>
           </div>
 
-          <div className="mt-14 grid gap-4 md:grid-cols-3">
-            {[
-              ['FIND', 'DOB permits', 'Opportunity signal'],
-              ['CAPTURE', 'Estimate follow-up', 'Lead reactivated'],
-              ['VERIFY', 'Cleared deposit', 'Revenue verified'],
-            ].map(([label, value, status], i) => (
-              <article
-                key={label}
-                className="rounded-3xl border border-slate-700 bg-slate-900/80 p-6 shadow-2xl backdrop-blur"
-              >
-                <div className="font-mono text-xs font-bold tracking-widest text-slate-500">
-                  0{i + 1}
-                </div>
-                <div className="mt-5 text-xs font-black tracking-widest text-[#669bd2]">
-                  {label}
-                </div>
-                <div className="mt-2 text-xl font-bold">{value}</div>
-                <div className="mt-6 rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 font-mono text-xs text-emerald-400">
-                  ● {status}
-                </div>
-              </article>
-            ))}
+          <div className="mt-14">
+            <FeaturesCardsSection
+              cards={[
+                {
+                  title: 'FIND',
+                  body: 'Missed calls, dormant estimates, unbid opportunities, and active NYC DOB permits.',
+                },
+                {
+                  title: 'CAPTURE',
+                  body: 'Fast bilingual follow-up and structured estimate recovery before the project goes elsewhere.',
+                },
+                {
+                  title: 'VERIFY',
+                  body: 'Deposits matched against an auditable evidence trail. You only pay for verified success.',
+                },
+              ]}
+            />
           </div>
         </div>
       </section>
