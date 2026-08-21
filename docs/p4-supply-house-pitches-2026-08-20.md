@@ -82,7 +82,7 @@
 **Bring:**
 
 - 20 cards per location, with a blank space on the back for **their** name and Zelle
-- Your phone open to `socio-one.vercel.app/contratistas` — showing beats describing
+- Your phone open to `socio.nyc/contratistas` — showing beats describing
 - The one-page pilot agreement, in case a contractor is standing at the counter (they will be — that's half the reason to go)
 
 **Do not:**

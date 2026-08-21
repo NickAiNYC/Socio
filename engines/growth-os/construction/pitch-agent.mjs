@@ -27,8 +27,8 @@ export function buildPitchPayload({
   borough = 'Queens',
   touchNumber = 1,
   lang = 'es',
-  pdfGuideUrl = 'https://socio-one.vercel.app/docs/guia-marketing-contratistas-nyc.pdf',
-  voiceAudioUrl = 'https://socio-one.vercel.app/assets/audio/socio-voice-intro.mp3',
+  pdfGuideUrl = 'https://socio.nyc/docs/guia-marketing-contratistas-nyc.pdf',
+  voiceAudioUrl = 'https://socio.nyc/assets/audio/socio-voice-intro.mp3',
 }) {
   const cleanPhone = prospectPhone.replace(/\D/g, '');
 

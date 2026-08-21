@@ -25,7 +25,7 @@
 
 Three artifacts, two incompatible pricing models. The message says free, the landing page asks for $1,200, the contract says never.
 
-**Why this is the top of the list:** your entire pitch is engineered around one objection — *cash-flow paranoia, "me estafaron con una mensualidad."* You send a contractor a WhatsApp promising $0 upfront, he taps `socio-one.vercel.app/contratistas`, and the first thing above the fold asks him for **$1,200**. You lose him on the page you sent him to, and he never tells you why. This may be a meaningful share of your 8 non-replies.
+**Why this is the top of the list:** your entire pitch is engineered around one objection — *cash-flow paranoia, "me estafaron con una mensualidad."* You send a contractor a WhatsApp promising $0 upfront, he taps `socio.nyc/contratistas`, and the first thing above the fold asks him for **$1,200**. You lose him on the page you sent him to, and he never tells you why. This may be a meaningful share of your 8 non-replies.
 
 **It also isn't survivable at the coffee meeting.** If he read the page and you hand him a one-page agreement saying $0 forever, one of you is going to look like they moved the goalposts.
 

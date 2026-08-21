@@ -1,7 +1,7 @@
 # Socio para Contratistas — Phase 3 GTM Execution Playbook (v1.0)
 
 > **Vertical**: Spanish-speaking General Contractors & Renovation Firms in NYC  
-> **Production Platform**: `https://socio-one.vercel.app/contratistas`  
+> **Production Platform**: `https://socio.nyc/contratistas`  
 > **Pilot Cohort**: 5 Founding Partners at 50% Commission Discount (6% / 4% / 2.5%)  
 
 ---
@@ -81,7 +81,7 @@ Ingests photo uploads of handwritten pads, extracting phone numbers, contract to
 $$\text{Annual Revenue Leakage} = (\text{Estimated Monthly Lost Bids} \times 0.20 \times 12) \times \text{Avg NYC Project Ticket (\$35,000)}$$
 
 * **API Endpoint**: `POST /api/construction/gtm/leak-scan`
-* **Printable Scorecard URL**: `https://socio-one.vercel.app/escaneo-de-fugas-scorecard.html`
+* **Printable Scorecard URL**: `https://socio.nyc/escaneo-de-fugas-scorecard.html`
 
 ---
 
@@ -101,7 +101,7 @@ $$\text{Annual Revenue Leakage} = (\text{Estimated Monthly Lost Bids} \times 0.2
   * Threshold: $\ge 3$ of 5 pilots generate $\ge 1$ contract with a bank-cleared deposit.
   * Action on Failure: Triggers `KILL_GATE_FAILED` if $<3$ pilots generate verified bank revenue.
 
-* **Live Dashboard API**: `GET https://socio-one.vercel.app/api/construction/gtm/pilot-dashboard`
+* **Live Dashboard API**: `GET https://socio.nyc/api/construction/gtm/pilot-dashboard`
 
 ---
 

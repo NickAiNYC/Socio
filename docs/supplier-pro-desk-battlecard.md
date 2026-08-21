@@ -24,7 +24,7 @@
 ### Spanish (Primary):
 > *"Buenas tardes, mi hermano. Una pregunta rápida: ¿cuántos contratistas te llegan todos los días quejándose de que los clientes no les pagan o que necesitan más trabajos para comprar más material?*
 > 
-> *Nosotros somos **Socio**. Les conseguimos contratos de remodelación en su zona sin cobrarles nada por adelantado. Solo cobramos comisión cuando el cliente deposita el anticipo en su cuenta de banco. Si le dejas esta tarjeta a los maestros que te compran aquí y ponen tu nombre, **te pagamos el 1% en efectivo del contrato** ($400 a $1,200 por cada obra que cierren). Mira cómo funciona en mi celular: socio-one.vercel.app/contratistas."*
+> *Nosotros somos **Socio**. Les conseguimos contratos de remodelación en su zona sin cobrarles nada por adelantado. Solo cobramos comisión cuando el cliente deposita el anticipo en su cuenta de banco. Si le dejas esta tarjeta a los maestros que te compran aquí y ponen tu nombre, **te pagamos el 1% en efectivo del contrato** ($400 a $1,200 por cada obra que cierren). Mira cómo funciona en mi celular: socio.nyc/contratistas."*
 
 ### English:
 > *"Hey, quick question: how many of your regular contractors are waiting on slow client deposits before they can purchase materials for their next phase?*
@@ -35,7 +35,7 @@
 
 ## 3. The Live Phone Demonstration Script (60 Seconds)
 
-1. **Open Phone to**: `https://socio-one.vercel.app/contratistas`
+1. **Open Phone to**: `https://socio.nyc/contratistas`
 2. **Scroll to**: **Escaneo de Fugas Interactivo** (Interactive Leak Diagnostic).
 3. **Type Contractor Name**: e.g., *"Hector Framing"* and select *"Queens"*.
 4. **Hit "Escanear Fugas"**: Show the red **$700,000 Annual Revenue Leakage** card and explain:

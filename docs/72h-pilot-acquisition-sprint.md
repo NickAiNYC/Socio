@@ -35,7 +35,7 @@ $limit=50
     "From": "whatsapp:+17185550199",
     "To": "whatsapp:+1{{owner_phone_cleaned}}",
     "Body": "Hola {{owner_name}}, le saluda Nick de Socio en NYC. Vimos su permiso de remodelación registrado en el DOB para {{house_number}} {{street_name}} en {{borough}} (${{estimated_cost}}). ¿Ya tiene contratista general asignado para la obra o le gustaría recibir presupuestos de nuestros 3 mejores maestros locales certificados con seguro COI al día? Cero costo por la consulta.",
-    "StatusCallback": "https://socio-one.vercel.app/api/construction/webhooks/twilio-status"
+    "StatusCallback": "https://socio.nyc/api/construction/webhooks/twilio-status"
   }
 }
 ```
@@ -63,7 +63,7 @@ $limit=50
 > 
 > *El trato contigo es simple: deja estas 20 tarjetas en tu mostrador. Pon tu nombre y tu Zelle en la parte de atrás. Cada vez que un contratista que tú mandes cierre una obra y cobre el anticipo, **te transferimos el 1% del total del contrato en efectivo a ti directo** ($400 a $1,200 por obra).*
 > 
-> *Tú vendes más material porque ellos tienen dinero en mano, y tú te llevas una comisión extra cada mes. Mira cómo se ve en mi celular: socio-one.vercel.app/contratistas. ¿Te dejo el primer paquete de tarjetas aquí al lado del POS?"*
+> *Tú vendes más material porque ellos tienen dinero en mano, y tú te llevas una comisión extra cada mes. Mira cómo se ve en mi celular: socio.nyc/contratistas. ¿Te dejo el primer paquete de tarjetas aquí al lado del POS?"*
 
 #### English Script (Verbatim):
 > *"Good afternoon. I know you're slammed moving lumber and drywall orders, so I'll give you the bottom line in 60 seconds.*
@@ -74,7 +74,7 @@ $limit=50
 > 
 > *Here is the deal for you: keep this stack of 20 QR cards right by your checkout register. Write your name and phone on the back. When a contractor you hand a card to signs a project through us and clears their deposit, **we send you a direct 1% cash referral kickback** ($400 to $1,200 cash per project).*
 > 
-> *You move more inventory because they're liquid, and you get paid cash on the side. Take a look on my phone: socio-one.vercel.app/contratistas. Can I set these right next to the receipt printer?"*
+> *You move more inventory because they're liquid, and you get paid cash on the side. Take a look on my phone: socio.nyc/contratistas. Can I set these right next to the receipt printer?"*
 
 ---
 
@@ -104,7 +104,7 @@ graph TD
 ---
 
 #### Phase 2: The Live Escaneo de Fugas Walkthrough (3:00 - 7:00)
-> **Rep**: *"Entre a su celular a **socio-one.vercel.app/contratistas** o déjeme abrir su ficha aquí mismo. Vemos que su empresa [Nombre de Empresa] en [Queens/Bronx] pierde un promedio de 8 llamadas al mes porque usted está ocupado trabajando con la cuadrilla.*
+> **Rep**: *"Entre a su celular a **socio.nyc/contratistas** o déjeme abrir su ficha aquí mismo. Vemos que su empresa [Nombre de Empresa] en [Queens/Bronx] pierde un promedio de 8 llamadas al mes porque usted está ocupado trabajando con la cuadrilla.*
 > 
 > *En NYC, cuando un cliente con un presupuesto de $45,000 para remodelar un sótano o una cocina llama y nadie contesta en 5 minutos, llama al siguiente contratista en Google. Eso representa más de **$700,000 al año en contratos que se le están escapando**. Socio le pone una asistente por WhatsApp que responde en 90 segundos y le agenda la visita."*
 
@@ -118,7 +118,7 @@ graph TD
 ---
 
 #### Phase 4: The 1-Page Agreement & Deposit-Trigger Rule (10:00 - 13:00)
-> **Rep**: *"Nuestro acuerdo cabe en una sola página (socio-one.vercel.app/pilot-agreement):*
+> **Rep**: *"Nuestro acuerdo cabe en una sola página (socio.nyc/pilot-agreement):*
 > 1. *Cero costo de entrada.*
 > 2. *Por ser uno de nuestros 5 contratistas piloto en NYC, tiene un **50% de descuento en la comisión**: solo 4% en obras medianas en lugar del 8% habitual.*
 > 3. *Usted solo nos paga cuando el cliente le deposita el 30% del anticipo en su cuenta de banco comercial verificada por QuickBooks.*
