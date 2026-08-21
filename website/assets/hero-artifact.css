@@ -382,12 +382,26 @@
 @media (max-width: 1279.98px) {
   .hero-artifact-stage {
     position: relative;
-    margin: 8px 20px 0;
+    margin: 20px 22px 0;
+    transform: rotate(-2deg);
     perspective: none;
     border-radius: 22px;
     overflow: hidden;
-    max-height: 360px;
-    box-shadow: 0 30px 60px -35px rgba(2, 8, 23, 0.55);
+    max-height: 520px;
+    box-shadow:
+      0 45px 90px -30px rgba(2, 8, 23, 0.65),
+      0 18px 40px -20px rgba(2, 8, 23, 0.5);
+  }
+
+  .hero-artifact-stage::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--socio-blue), var(--socio-green));
+    z-index: 1;
   }
 
   .hero-artifact-stage::after {
