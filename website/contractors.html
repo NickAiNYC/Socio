@@ -19,46 +19,15 @@
   <link rel="stylesheet" href="/assets/output.css">
   <link rel="stylesheet" href="/assets/design-tokens.css">
   <link rel="stylesheet" href="/assets/socio.css">
+  <link rel="stylesheet" href="/assets/hero-artifact.css">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <style>
     :root{--socio-blue:#669BD2;--socio-green:#34D399;--socio-orange:#FF5500;--socio-ink:#0B1220}
     body{font-family:Inter,system-ui,sans-serif;background:#f8fafc;color:#0f172a}
-    .socio-gradient{background:linear-gradient(135deg,#2E6BD4 0%,#4FA3DD 42%,#2BD49B 100%)}
-    .socio-glow{box-shadow:0 30px 80px -40px rgba(43,212,155,.5),0 25px 70px -45px rgba(46,107,212,.6)}
-    .dash-shell{background:#09111f;border:1px solid #22324a;border-radius:26px;box-shadow:0 35px 90px -45px rgba(2,8,23,.75),inset 0 1px 0 rgba(255,255,255,.06);transform:perspective(1200px) rotateY(-4deg) rotateX(2deg)}
-    .dash-card{background:linear-gradient(145deg,rgba(42,64,94,.92),rgba(13,27,47,.96));border:1px solid rgba(102,155,210,.18);border-radius:17px;backdrop-filter:blur(8px)}
+    .socio-gradient{background:linear-gradient(135deg,#5f92cc 0%,#6aa5da 42%,#35c99b 100%)}
     .mini-card{background:#fff;border:1px solid #e2e8f0;border-radius:17px;box-shadow:0 18px 45px -35px rgba(15,23,42,.45)}
     .mono{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,monospace}
     .artifact-grid{background-image:linear-gradient(rgba(102,155,210,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(102,155,210,.08) 1px,transparent 1px);background-size:24px 24px}
-
-    /* Metric + 4-stage flow system (visual product pass) */
-    .kpi{background:rgba(13,27,47,.55);border:1px solid rgba(102,155,210,.14);border-radius:13px;padding:10px 11px}
-    .kpi-label{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:8px;letter-spacing:.12em;color:#7e8aa0;text-transform:uppercase}
-    .kpi-value{font-size:19px;font-weight:800;color:#fff;line-height:1.05;margin-top:3px}
-    .kpi-value .unit{font-size:11px;color:#9fb0c8;font-weight:600;margin-left:1px}
-
-    .flow-rail{display:flex;align-items:flex-start;gap:0}
-    .flow-node{flex:1;display:flex;flex-direction:column;align-items:center;min-width:0}
-    .flow-dot{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:800;color:#06121f;box-shadow:0 4px 12px -4px rgba(0,0,0,.5);z-index:2}
-    .flow-line{height:2px;flex:1;max-width:36px;background:linear-gradient(90deg,#2E6BD4,#4FA3DD,#2BD49B);margin:12px -4px 0;align-self:flex-start;border-radius:2px}
-    .flow-name{margin-top:7px;font-size:9px;font-weight:700;color:#cdd8e8;text-align:center;letter-spacing:.01em;white-space:nowrap}
-    .flow-sub{font-size:8px;color:#6b7894;text-align:center;margin-top:1px;white-space:nowrap}
-
-    .stage{background:linear-gradient(160deg,rgba(20,34,58,.95),rgba(10,20,38,.97));border:1px solid rgba(102,155,210,.16);border-radius:15px;padding:12px;position:relative;overflow:hidden}
-    .stage::before{content:"";position:absolute;top:0;left:0;right:0;height:3px}
-    .stage-1::before{background:linear-gradient(90deg,#2E6BD4,#4FA3DD)}
-    .stage-2::before{background:linear-gradient(90deg,#4FA3DD,#36B7C9)}
-    .stage-3::before{background:linear-gradient(90deg,#36B7C9,#2BD49B)}
-    .stage-4::before{background:linear-gradient(90deg,#2BD49B,#1fae7e)}
-    .stage-4{background:linear-gradient(160deg,rgba(13,42,34,.96),rgba(8,28,22,.98));border-color:rgba(43,212,155,.32)}
-    .stage-title{font-size:11px;font-weight:800;color:#fff}
-    .stage-metric{font-size:16px;font-weight:800;margin-top:7px;letter-spacing:-.01em}
-    .stage-sub{font-size:8.5px;color:#8595ad;margin-top:2px}
-
-    .m-blue{color:#7FB4E8}.m-cyan{color:#8FCBE6}.m-teal{color:#5FD3C2}.m-green{color:#2BD49B}
-
-    @media(max-width:900px){.dash-shell{transform:none}}
-    @media(max-width:520px){.flow-name,.flow-sub{font-size:7.5px}.kpi-value{font-size:16px}}
   </style>
   <script type="application/ld+json">
   {
@@ -105,10 +74,10 @@
   </header>
 
   <main>
-    <section class="relative overflow-hidden bg-white">
+    <section class="hero-section relative overflow-hidden bg-white">
       <div class="absolute inset-0 artifact-grid opacity-60"></div>
-      <div class="relative max-w-7xl mx-auto px-5 sm:px-6 py-16 lg:py-24 grid lg:grid-cols-12 gap-12 items-center">
-        <div class="lg:col-span-6">
+      <div class="relative max-w-7xl mx-auto px-5 sm:px-6 py-16 lg:py-28">
+        <div class="max-w-xl lg:max-w-[44%] relative z-10">
           <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 mono text-[10px] font-bold uppercase tracking-widest">Founding cohort · 5 slots</div>
           <h1 class="mt-6 text-5xl sm:text-6xl lg:text-[4.35rem] leading-[.95] tracking-[-.04em] font-black text-slate-950">NYC Contractor Leads — <span class="text-[#FF5500]">Commission-Only.</span><br>Zero Upfront.</h1>
           <p class="mt-6 max-w-xl text-lg sm:text-xl leading-relaxed text-slate-600">We match renovation opportunities to open NYC DOB permit signals. You pay only when your client's deposit clears.</p>
@@ -116,109 +85,113 @@
             <a href="/contratistas#enroll-form" class="inline-flex justify-center items-center gap-2 px-6 py-4 rounded-xl bg-[#FF5500] text-white font-extrabold">Become a Socio →</a>
             <a href="/pilot-agreement" class="inline-flex justify-center items-center gap-2 px-6 py-4 rounded-xl border border-slate-300 bg-white text-slate-900 font-bold">Read the one-page agreement</a>
           </div>
-          <div class="mt-7 grid sm:grid-cols-3 gap-3 text-xs">
+          <div class="mt-7 grid sm:grid-cols-3 gap-3 text-xs max-w-md">
             <div class="mini-card p-4"><div class="mono text-[9px] text-slate-400 font-bold">UPFRONT</div><div class="mt-2 text-lg font-black">$0</div></div>
             <div class="mini-card p-4"><div class="mono text-[9px] text-slate-400 font-bold">ATTRIBUTION</div><div class="mt-2 text-lg font-black">60 days</div></div>
             <div class="mini-card p-4"><div class="mono text-[9px] text-slate-400 font-bold">CAP</div><div class="mt-2 text-lg font-black">$40K</div></div>
           </div>
         </div>
+      </div>
 
-        <div class="lg:col-span-6">
-          <div class="socio-glow socio-gradient rounded-[30px] p-4 sm:p-5">
-            <div class="dash-shell p-4 sm:p-5">
-              <!-- Brand header -->
-              <div class="flex items-center justify-between border-b border-slate-700/70 pb-4">
-                <div class="flex items-center gap-3">
-                  <svg class="w-9 h-9 rounded-xl shadow-lg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-label="Socio">
-                    <rect width="32" height="32" rx="8" fill="#0F172A"/>
-                    <circle cx="21" cy="22" r="3" fill="#669BD2"/>
-                    <text x="7" y="23" font-family="sans-serif" font-weight="900" font-size="18" fill="#FFFFFF">S</text>
-                  </svg>
+      <div class="hero-artifact-stage" role="img" aria-label="Illustrative screenshot of the Socio Command View dashboard, showing an opportunity moving through recovery, verification, and recovered revenue.">
+        <div class="hero-artifact">
+            <div class="hero-artifact__side"></div>
+            <div class="hero-artifact__bottom"></div>
+            <div class="hero-artifact__front">
+              <div class="hero-artifact__topbar">
+                <div class="hero-artifact__brand">
+                  <div class="hero-artifact__mark">S<span>.</span></div>
                   <div>
-                    <div class="text-white font-bold leading-tight">Socio <span class="text-[#FF5500]">Command View</span></div>
-                    <div class="mono text-[9px] text-slate-500">REVENUE RECOVERY · NYC</div>
+                    <div class="hero-artifact__brand-name">Socio Command View</div>
+                    <div class="hero-artifact__demo-badge">ILLUSTRATIVE DEMO UI</div>
                   </div>
                 </div>
-                <span class="mono text-[9px] px-2 py-1 rounded bg-emerald-400/10 text-emerald-300 border border-emerald-400/20">VERIFIED</span>
-              </div>
-
-              <!-- KPI summary -->
-              <div class="grid grid-cols-3 gap-3 mt-4">
-                <div class="kpi">
-                  <div class="kpi-label">Opportunities</div>
-                  <div class="kpi-value">12</div>
-                </div>
-                <div class="kpi">
-                  <div class="kpi-label">In recovery</div>
-                  <div class="kpi-value">7</div>
-                </div>
-                <div class="kpi">
-                  <div class="kpi-label">Verified rev.</div>
-                  <div class="kpi-value"><span class="m-green">$24.0</span><span class="unit">K</span></div>
+                <div class="hero-artifact__tabs">
+                  <span class="is-active">Overview</span>
+                  <span>Recovery</span>
+                  <span>Verification</span>
                 </div>
               </div>
 
-              <!-- The 4-stage flow: Opportunity -> Recovery -> Verification -> Revenue -->
-              <div class="flow-rail mt-5">
-                <div class="flow-node">
-                  <div class="flow-dot" style="background:linear-gradient(135deg,#2E6BD4,#4FA3DD)">1</div>
-                  <div class="flow-name">Opportunity</div>
-                  <div class="flow-sub">DOB permit signal</div>
+              <ol class="hero-artifact__stepper">
+                <li class="is-done"><span class="hero-artifact__step-dot"></span>Opportunity</li>
+                <li class="is-done"><span class="hero-artifact__step-dot"></span>Recovery</li>
+                <li class="is-active"><span class="hero-artifact__step-dot"></span>Verification</li>
+                <li><span class="hero-artifact__step-dot"></span>Revenue</li>
+              </ol>
+
+              <div class="hero-artifact__stats">
+                <div class="hero-artifact__card">
+                  <div class="hero-artifact__label">VERIFIED REVENUE RECOVERED</div>
+                  <div class="hero-artifact__figure">$24,000</div>
+                  <svg class="hero-artifact__chart" viewBox="0 0 300 60" preserveAspectRatio="none" focusable="false">
+                    <defs>
+                      <linearGradient id="heroRevStroke" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0%" stop-color="#669BD2" />
+                        <stop offset="100%" stop-color="#34D399" />
+                      </linearGradient>
+                      <linearGradient id="heroRevFill" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#34D399" stop-opacity="0.35" />
+                        <stop offset="100%" stop-color="#34D399" stop-opacity="0" />
+                      </linearGradient>
+                    </defs>
+                    <path d="M0,48 L38,44 L75,40 L112,32 L150,35 L188,22 L225,17 L262,10 L300,6 L300,60 L0,60 Z" fill="url(#heroRevFill)" />
+                    <path class="hero-artifact__chart-line" d="M0,48 L38,44 L75,40 L112,32 L150,35 L188,22 L225,17 L262,10 L300,6" />
+                  </svg>
                 </div>
-                <div class="flow-line"></div>
-                <div class="flow-node">
-                  <div class="flow-dot" style="background:linear-gradient(135deg,#4FA3DD,#36B7C9)">2</div>
-                  <div class="flow-name">Recovery</div>
-                  <div class="flow-sub">WhatsApp follow-up</div>
-                </div>
-                <div class="flow-line"></div>
-                <div class="flow-node">
-                  <div class="flow-dot" style="background:linear-gradient(135deg,#36B7C9,#2BD49B)">3</div>
-                  <div class="flow-name">Verification</div>
-                  <div class="flow-sub">POS · bank proof</div>
-                </div>
-                <div class="flow-line"></div>
-                <div class="flow-node">
-                  <div class="flow-dot" style="background:linear-gradient(135deg,#2BD49B,#1fae7e)">4</div>
-                  <div class="flow-name">Revenue</div>
-                  <div class="flow-sub">cleared deposit</div>
+                <div class="hero-artifact__card">
+                  <div class="hero-artifact__label">OPEN OPPORTUNITIES</div>
+                  <div class="hero-artifact__figure">12</div>
+                  <div class="hero-artifact__pulse"><span class="hero-artifact__pulse-dot"></span>4 ready for follow-up</div>
                 </div>
               </div>
 
-              <!-- Connected stages -->
-              <div class="grid grid-cols-2 gap-3 mt-4">
-                <div class="stage stage-1">
-                  <div class="stage-title">Opportunity</div>
-                  <div class="stage-metric m-blue">12 <span class="text-[10px] font-semibold text-slate-400">signals</span></div>
-                  <div class="stage-sub">NYC DOB permits matched</div>
+              <div class="hero-artifact__queue">
+                <div class="hero-artifact__row">
+                  <div class="hero-artifact__row-icon">🏗️</div>
+                  <div class="hero-artifact__row-body">
+                    <div class="hero-artifact__row-title">DOB Permit Signal · 234 W 45th St</div>
+                    <div class="hero-artifact__row-sub">New renovation filing matched</div>
+                  </div>
+                  <span class="hero-artifact__pill hero-artifact__pill--signal">OPPORTUNITY</span>
                 </div>
-                <div class="stage stage-2">
-                  <div class="stage-title">Recovery</div>
-                  <div class="stage-metric m-cyan">7 <span class="text-[10px] font-semibold text-slate-400">in play</span></div>
-                  <div class="stage-sub">4 ready for follow-up</div>
+                <div class="hero-artifact__row">
+                  <div class="hero-artifact__row-icon">💬</div>
+                  <div class="hero-artifact__row-body">
+                    <div class="hero-artifact__row-title">WhatsApp Follow-up · Reyes Bath Remodel</div>
+                    <div class="hero-artifact__row-sub">Bilingual outreach sent</div>
+                  </div>
+                  <span class="hero-artifact__pill hero-artifact__pill--recovery">IN RECOVERY</span>
                 </div>
-                <div class="stage stage-3">
-                  <div class="stage-title">Verification</div>
-                  <div class="stage-metric m-teal">3 <span class="text-[10px] font-semibold text-slate-400">matched</span></div>
-                  <div class="stage-sub">POS + bank reconciled</div>
+                <div class="hero-artifact__row hero-artifact__row--expanded">
+                  <div class="hero-artifact__row-top">
+                    <div class="hero-artifact__row-icon">📄</div>
+                    <div class="hero-artifact__row-body">
+                      <div class="hero-artifact__row-title">Estimate Recovery · Chen Kitchen Project</div>
+                      <div class="hero-artifact__row-sub">Deposit received, closing out</div>
+                    </div>
+                    <span class="hero-artifact__pill hero-artifact__pill--recovery">IN RECOVERY</span>
+                  </div>
+                  <div class="hero-artifact__checklist">
+                    <span class="hero-artifact__check is-done">✓ POS match</span>
+                    <span class="hero-artifact__check is-done">✓ Deposit verified</span>
+                    <span class="hero-artifact__check">Attribution confirmed</span>
+                    <span class="hero-artifact__verify-btn">Verify</span>
+                  </div>
                 </div>
-                <div class="stage stage-4">
-                  <div class="stage-title">Revenue</div>
-                  <div class="stage-metric m-green">$24,000</div>
-                  <div class="stage-sub">cleared · commission only</div>
+                <div class="hero-artifact__row">
+                  <div class="hero-artifact__row-icon">✅</div>
+                  <div class="hero-artifact__row-body">
+                    <div class="hero-artifact__row-title">Payment Verification · 189 Bergen St</div>
+                    <div class="hero-artifact__row-sub">Cleared deposit matched to ledger</div>
+                  </div>
+                  <span class="hero-artifact__pill hero-artifact__pill--verified">VERIFIED</span>
                 </div>
-              </div>
-
-              <!-- Governance footer line -->
-              <div class="mt-4 flex items-center justify-between dash-card px-4 py-3">
-                <div class="mono text-[8px] text-slate-500">ATTRIBUTION TRAIL</div>
-                <div class="flex items-center gap-2 mono text-[9px] text-emerald-300">MATCHED <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> RECONCILED <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> CLEARED</div>
               </div>
             </div>
-          </div>
-          <p class="mt-3 text-center mono text-[9px] text-slate-400">ILLUSTRATIVE UI — no customer or revenue claim.</p>
         </div>
       </div>
+      <p class="hero-artifact-caption">ILLUSTRATIVE DEMO UI — not live customer data or a revenue claim.</p>
     </section>
 
     <section id="offer" class="py-20 bg-slate-950 text-white">
