@@ -23,14 +23,42 @@
   <style>
     :root{--socio-blue:#669BD2;--socio-green:#34D399;--socio-orange:#FF5500;--socio-ink:#0B1220}
     body{font-family:Inter,system-ui,sans-serif;background:#f8fafc;color:#0f172a}
-    .socio-gradient{background:linear-gradient(135deg,#5f92cc 0%,#6aa5da 42%,#35c99b 100%)}
-    .socio-glow{box-shadow:0 30px 80px -40px rgba(52,211,153,.45),0 25px 70px -45px rgba(102,155,210,.55)}
-    .dash-shell{background:#09111f;border:1px solid #22324a;border-radius:26px;box-shadow:0 35px 90px -45px rgba(2,8,23,.75);transform:perspective(1200px) rotateY(-4deg) rotateX(2deg)}
-    .dash-card{background:linear-gradient(145deg,rgba(42,64,94,.95),rgba(13,27,47,.96));border:1px solid #314764;border-radius:17px}
+    .socio-gradient{background:linear-gradient(135deg,#2E6BD4 0%,#4FA3DD 42%,#2BD49B 100%)}
+    .socio-glow{box-shadow:0 30px 80px -40px rgba(43,212,155,.5),0 25px 70px -45px rgba(46,107,212,.6)}
+    .dash-shell{background:#09111f;border:1px solid #22324a;border-radius:26px;box-shadow:0 35px 90px -45px rgba(2,8,23,.75),inset 0 1px 0 rgba(255,255,255,.06);transform:perspective(1200px) rotateY(-4deg) rotateX(2deg)}
+    .dash-card{background:linear-gradient(145deg,rgba(42,64,94,.92),rgba(13,27,47,.96));border:1px solid rgba(102,155,210,.18);border-radius:17px;backdrop-filter:blur(8px)}
     .mini-card{background:#fff;border:1px solid #e2e8f0;border-radius:17px;box-shadow:0 18px 45px -35px rgba(15,23,42,.45)}
     .mono{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,monospace}
     .artifact-grid{background-image:linear-gradient(rgba(102,155,210,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(102,155,210,.08) 1px,transparent 1px);background-size:24px 24px}
+
+    /* Metric + 4-stage flow system (visual product pass) */
+    .kpi{background:rgba(13,27,47,.55);border:1px solid rgba(102,155,210,.14);border-radius:13px;padding:10px 11px}
+    .kpi-label{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:8px;letter-spacing:.12em;color:#7e8aa0;text-transform:uppercase}
+    .kpi-value{font-size:19px;font-weight:800;color:#fff;line-height:1.05;margin-top:3px}
+    .kpi-value .unit{font-size:11px;color:#9fb0c8;font-weight:600;margin-left:1px}
+
+    .flow-rail{display:flex;align-items:flex-start;gap:0}
+    .flow-node{flex:1;display:flex;flex-direction:column;align-items:center;min-width:0}
+    .flow-dot{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:800;color:#06121f;box-shadow:0 4px 12px -4px rgba(0,0,0,.5);z-index:2}
+    .flow-line{height:2px;flex:1;max-width:36px;background:linear-gradient(90deg,#2E6BD4,#4FA3DD,#2BD49B);margin:12px -4px 0;align-self:flex-start;border-radius:2px}
+    .flow-name{margin-top:7px;font-size:9px;font-weight:700;color:#cdd8e8;text-align:center;letter-spacing:.01em;white-space:nowrap}
+    .flow-sub{font-size:8px;color:#6b7894;text-align:center;margin-top:1px;white-space:nowrap}
+
+    .stage{background:linear-gradient(160deg,rgba(20,34,58,.95),rgba(10,20,38,.97));border:1px solid rgba(102,155,210,.16);border-radius:15px;padding:12px;position:relative;overflow:hidden}
+    .stage::before{content:"";position:absolute;top:0;left:0;right:0;height:3px}
+    .stage-1::before{background:linear-gradient(90deg,#2E6BD4,#4FA3DD)}
+    .stage-2::before{background:linear-gradient(90deg,#4FA3DD,#36B7C9)}
+    .stage-3::before{background:linear-gradient(90deg,#36B7C9,#2BD49B)}
+    .stage-4::before{background:linear-gradient(90deg,#2BD49B,#1fae7e)}
+    .stage-4{background:linear-gradient(160deg,rgba(13,42,34,.96),rgba(8,28,22,.98));border-color:rgba(43,212,155,.32)}
+    .stage-title{font-size:11px;font-weight:800;color:#fff}
+    .stage-metric{font-size:16px;font-weight:800;margin-top:7px;letter-spacing:-.01em}
+    .stage-sub{font-size:8.5px;color:#8595ad;margin-top:2px}
+
+    .m-blue{color:#7FB4E8}.m-cyan{color:#8FCBE6}.m-teal{color:#5FD3C2}.m-green{color:#2BD49B}
+
     @media(max-width:900px){.dash-shell{transform:none}}
+    @media(max-width:520px){.flow-name,.flow-sub{font-size:7.5px}.kpi-value{font-size:16px}}
   </style>
   <script type="application/ld+json">
   {
@@ -98,23 +126,94 @@
         <div class="lg:col-span-6">
           <div class="socio-glow socio-gradient rounded-[30px] p-4 sm:p-5">
             <div class="dash-shell p-4 sm:p-5">
-              <div class="flex items-center justify-between border-b border-slate-700 pb-4">
-                <div class="flex items-center gap-3"><div class="w-9 h-9 rounded-xl bg-white grid place-items-center text-slate-950 font-black">S<span class="text-[#FF5500]">.</span></div><div><div class="text-white font-bold">Socio Command View</div><div class="mono text-[9px] text-slate-500">REVENUE RECOVERY / NYC</div></div></div>
+              <!-- Brand header -->
+              <div class="flex items-center justify-between border-b border-slate-700/70 pb-4">
+                <div class="flex items-center gap-3">
+                  <svg class="w-9 h-9 rounded-xl shadow-lg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-label="Socio">
+                    <rect width="32" height="32" rx="8" fill="#0F172A"/>
+                    <circle cx="21" cy="22" r="3" fill="#669BD2"/>
+                    <text x="7" y="23" font-family="sans-serif" font-weight="900" font-size="18" fill="#FFFFFF">S</text>
+                  </svg>
+                  <div>
+                    <div class="text-white font-bold leading-tight">Socio <span class="text-[#FF5500]">Command View</span></div>
+                    <div class="mono text-[9px] text-slate-500">REVENUE RECOVERY · NYC</div>
+                  </div>
+                </div>
                 <span class="mono text-[9px] px-2 py-1 rounded bg-emerald-400/10 text-emerald-300 border border-emerald-400/20">VERIFIED</span>
               </div>
-              <div class="grid grid-cols-2 gap-3 mt-4">
-                <div class="dash-card p-4"><div class="mono text-[9px] text-slate-400">VERIFIED REVENUE</div><div class="mt-2 text-2xl font-black text-white">$24,000</div><div class="mt-2 h-1.5 rounded bg-slate-800 overflow-hidden"><div class="h-full w-3/4 bg-gradient-to-r from-[#669BD2] to-[#34D399]"></div></div></div>
-                <div class="dash-card p-4"><div class="mono text-[9px] text-slate-400">OPPORTUNITIES</div><div class="mt-2 text-2xl font-black text-white">12</div><div class="mt-2 text-[10px] text-emerald-300">● 4 ready for follow-up</div></div>
-              </div>
-              <div class="dash-card mt-3 p-4">
-                <div class="flex items-center justify-between"><span class="mono text-[9px] text-slate-400">RECOVERY PIPELINE</span><span class="mono text-[9px] text-emerald-300">LIVE</span></div>
-                <div class="mt-4 grid grid-cols-3 gap-2 text-[10px]">
-                  <div class="rounded-xl bg-slate-900/70 p-3"><div class="text-slate-500 mono">01</div><div class="mt-2 text-white font-bold">DOB signal</div><div class="mt-1 text-slate-500">permit matched</div></div>
-                  <div class="rounded-xl bg-slate-900/70 p-3"><div class="text-slate-500 mono">02</div><div class="mt-2 text-white font-bold">Follow-up</div><div class="mt-1 text-slate-500">WhatsApp</div></div>
-                  <div class="rounded-xl bg-emerald-950/70 p-3 border border-emerald-800"><div class="text-emerald-400 mono">03</div><div class="mt-2 text-white font-bold">Deposit</div><div class="mt-1 text-emerald-300">cleared ✓</div></div>
+
+              <!-- KPI summary -->
+              <div class="grid grid-cols-3 gap-3 mt-4">
+                <div class="kpi">
+                  <div class="kpi-label">Opportunities</div>
+                  <div class="kpi-value">12</div>
+                </div>
+                <div class="kpi">
+                  <div class="kpi-label">In recovery</div>
+                  <div class="kpi-value">7</div>
+                </div>
+                <div class="kpi">
+                  <div class="kpi-label">Verified rev.</div>
+                  <div class="kpi-value"><span class="m-green">$24.0</span><span class="unit">K</span></div>
                 </div>
               </div>
-              <div class="mt-3 flex gap-3"><div class="dash-card flex-1 p-3"><div class="mono text-[8px] text-slate-500">POS / BANK</div><div class="mt-1 text-emerald-300 text-xs font-bold">MATCHED ✓</div></div><div class="dash-card flex-1 p-3"><div class="mono text-[8px] text-slate-500">BASELINE</div><div class="mt-1 text-emerald-300 text-xs font-bold">RECONCILED ✓</div></div></div>
+
+              <!-- The 4-stage flow: Opportunity -> Recovery -> Verification -> Revenue -->
+              <div class="flow-rail mt-5">
+                <div class="flow-node">
+                  <div class="flow-dot" style="background:linear-gradient(135deg,#2E6BD4,#4FA3DD)">1</div>
+                  <div class="flow-name">Opportunity</div>
+                  <div class="flow-sub">DOB permit signal</div>
+                </div>
+                <div class="flow-line"></div>
+                <div class="flow-node">
+                  <div class="flow-dot" style="background:linear-gradient(135deg,#4FA3DD,#36B7C9)">2</div>
+                  <div class="flow-name">Recovery</div>
+                  <div class="flow-sub">WhatsApp follow-up</div>
+                </div>
+                <div class="flow-line"></div>
+                <div class="flow-node">
+                  <div class="flow-dot" style="background:linear-gradient(135deg,#36B7C9,#2BD49B)">3</div>
+                  <div class="flow-name">Verification</div>
+                  <div class="flow-sub">POS · bank proof</div>
+                </div>
+                <div class="flow-line"></div>
+                <div class="flow-node">
+                  <div class="flow-dot" style="background:linear-gradient(135deg,#2BD49B,#1fae7e)">4</div>
+                  <div class="flow-name">Revenue</div>
+                  <div class="flow-sub">cleared deposit</div>
+                </div>
+              </div>
+
+              <!-- Connected stages -->
+              <div class="grid grid-cols-2 gap-3 mt-4">
+                <div class="stage stage-1">
+                  <div class="stage-title">Opportunity</div>
+                  <div class="stage-metric m-blue">12 <span class="text-[10px] font-semibold text-slate-400">signals</span></div>
+                  <div class="stage-sub">NYC DOB permits matched</div>
+                </div>
+                <div class="stage stage-2">
+                  <div class="stage-title">Recovery</div>
+                  <div class="stage-metric m-cyan">7 <span class="text-[10px] font-semibold text-slate-400">in play</span></div>
+                  <div class="stage-sub">4 ready for follow-up</div>
+                </div>
+                <div class="stage stage-3">
+                  <div class="stage-title">Verification</div>
+                  <div class="stage-metric m-teal">3 <span class="text-[10px] font-semibold text-slate-400">matched</span></div>
+                  <div class="stage-sub">POS + bank reconciled</div>
+                </div>
+                <div class="stage stage-4">
+                  <div class="stage-title">Revenue</div>
+                  <div class="stage-metric m-green">$24,000</div>
+                  <div class="stage-sub">cleared · commission only</div>
+                </div>
+              </div>
+
+              <!-- Governance footer line -->
+              <div class="mt-4 flex items-center justify-between dash-card px-4 py-3">
+                <div class="mono text-[8px] text-slate-500">ATTRIBUTION TRAIL</div>
+                <div class="flex items-center gap-2 mono text-[9px] text-emerald-300">MATCHED <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> RECONCILED <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> CLEARED</div>
+              </div>
             </div>
           </div>
           <p class="mt-3 text-center mono text-[9px] text-slate-400">ILLUSTRATIVE UI — no customer or revenue claim.</p>
