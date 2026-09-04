@@ -2,53 +2,17 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-hairline bg-surface py-12">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
-          <div className="col-span-1 md:col-span-2">
-            <Link href="/" className="font-display text-2xl font-semibold tracking-tight text-ink">
-              Socio.
-            </Link>
-            <p className="mt-4 text-sm text-ink-soft max-w-sm">
-              Technology and front-office infrastructure for Brooklyn trades and merchants.
-            </p>
-          </div>
-          <div>
-            <h3 className="font-sans text-sm font-semibold text-ink">Network</h3>
-            <ul className="mt-4 space-y-3">
-              <li>
-                <Link href="/craft" className="text-sm text-ink-soft hover:text-ink">
-                  For Homeowners
-                </Link>
-              </li>
-              <li>
-                <Link href="/contractors/join" className="text-sm text-ink-soft hover:text-ink">
-                  For Contractors
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="font-sans text-sm font-semibold text-ink">Contact</h3>
-            <ul className="mt-4 space-y-3">
-              <li>
-                <a href="mailto:hello@socio.nyc" className="text-sm text-ink-soft hover:text-ink">
-                  hello@socio.nyc
-                </a>
-              </li>
-            </ul>
-          </div>
+    <footer className="border-t border-zinc-200 bg-white py-12 px-4 mt-20">
+      <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6 text-xs text-zinc-500">
+        <div className="flex items-center gap-2">
+          <Link href="/" className="font-semibold text-zinc-900 hover:text-zinc-700">socio.nyc</Link>
+          <span>— Technology & Front-Office Infrastructure</span>
         </div>
-        
-        <div className="mt-12 border-t border-neutral-100 pt-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <p className="text-xs text-ink-soft">
-            &copy; {new Date().getFullYear()} Socio NYC. All rights reserved.
-          </p>
-          <div className="text-xs text-ink-soft max-w-2xl text-left md:text-right">
-            <strong>Legal Notice:</strong> Socio acts solely as an administrative coordination, estimating, and technology desk. 
-            Socio is not a licensed home improvement general contractor under NYC Admin Code § 20-387. 
-            All homeowner agreements and warranties are contracted directly with the licensed, insured craftsman performing the work.
-          </div>
+
+        <div className="flex items-center gap-6">
+          <Link href="/craft" className="hover:text-zinc-900 transition-colors">Craftsman Network</Link>
+          <Link href="/contractors/join" className="hover:text-zinc-900 transition-colors">Contractors</Link>
+          <Link href="/variance" className="hover:text-zinc-900 transition-colors text-zinc-400">Enterprise Scope</Link>
         </div>
       </div>
     </footer>
