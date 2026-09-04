@@ -15,6 +15,7 @@ const config: Config = {
         "hairline-strong": "rgba(10,10,8,0.16)",
       },
       fontFamily: {
+        serif: ["var(--font-instrument-serif)", "Georgia", "serif"],
         display: ["var(--font-instrument-serif)", "Georgia", "serif"],
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
         mono: ["var(--font-jetbrains-mono)", "ui-monospace", "monospace"],
