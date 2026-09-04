@@ -71,9 +71,9 @@ export default function CraftIntakeForm() {
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto bg-white border border-neutral-200 rounded-xl shadow-sm overflow-hidden">
-      <div className="bg-neutral-50 px-8 py-6 border-b border-neutral-200">
-        <div className="flex items-center justify-between text-sm font-medium text-neutral-500 mb-4">
+    <div className="w-full max-w-3xl mx-auto bg-surface border border-hairline rounded-xl shadow-sm overflow-hidden">
+      <div className="bg-canvas px-8 py-6 border-b border-hairline">
+        <div className="flex items-center justify-between text-sm font-medium text-ink-soft mb-4">
           <span>Step {step} of 4</span>
           <span>
             {step === 1 && "Property Details"}
@@ -82,9 +82,9 @@ export default function CraftIntakeForm() {
             {step === 4 && "Contact & Walkthrough"}
           </span>
         </div>
-        <div className="w-full bg-neutral-200 rounded-full h-1.5">
+        <div className="w-full bg-hairline rounded-full h-1.5">
           <div
-            className="bg-neutral-900 h-1.5 rounded-full transition-all duration-300"
+            className="bg-accent text-accent-ink h-1.5 rounded-full transition-all duration-300"
             style={{ width: `${(step / 4) * 100}%` }}
           ></div>
         </div>
@@ -94,10 +94,10 @@ export default function CraftIntakeForm() {
         {step === 1 && (
           <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div>
-              <label className="block text-sm font-semibold text-neutral-900 mb-2">Property Type</label>
+              <label className="block text-sm font-semibold text-ink mb-2">Property Type</label>
               <select
                 required
-                className="w-full rounded-md border border-neutral-300 px-4 py-3 text-neutral-900 focus:border-neutral-900 focus:outline-none focus:ring-1 focus:ring-neutral-900 bg-white"
+                className="w-full rounded-md border border-hairline-strong px-4 py-3 text-ink focus:border-neutral-900 focus:outline-none focus:ring-1 focus:ring-neutral-900 bg-surface"
                 value={formData.propertyType}
                 onChange={(e) => updateFields({ propertyType: e.target.value })}
               >
@@ -109,10 +109,10 @@ export default function CraftIntakeForm() {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-semibold text-neutral-900 mb-2">Neighborhood</label>
+              <label className="block text-sm font-semibold text-ink mb-2">Neighborhood</label>
               <select
                 required
-                className="w-full rounded-md border border-neutral-300 px-4 py-3 text-neutral-900 focus:border-neutral-900 focus:outline-none focus:ring-1 focus:ring-neutral-900 bg-white"
+                className="w-full rounded-md border border-hairline-strong px-4 py-3 text-ink focus:border-neutral-900 focus:outline-none focus:ring-1 focus:ring-neutral-900 bg-surface"
                 value={formData.neighborhood}
                 onChange={(e) => updateFields({ neighborhood: e.target.value })}
               >
@@ -131,16 +131,16 @@ export default function CraftIntakeForm() {
         {step === 2 && (
           <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div>
-              <label className="block text-sm font-semibold text-neutral-900 mb-2">Primary Trade Needed</label>
+              <label className="block text-sm font-semibold text-ink mb-2">Primary Trade Needed</label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {["Plaster & Skim-Coating", "Architectural Painting", "Custom Tile & Masonry", "Architectural Millwork"].map((trade) => (
                   <label
                     key={trade}
                     className={`cursor-pointer flex items-center justify-between p-4 border rounded-lg transition-colors ${
-                      formData.trade === trade ? "border-neutral-900 bg-neutral-50" : "border-neutral-200 hover:border-neutral-300"
+                      formData.trade === trade ? "border-neutral-900 bg-canvas" : "border-hairline hover:border-hairline-strong"
                     }`}
                   >
-                    <span className="text-sm font-medium text-neutral-900">{trade}</span>
+                    <span className="text-sm font-medium text-ink">{trade}</span>
                     <input
                       type="radio"
                       name="trade"
@@ -155,12 +155,12 @@ export default function CraftIntakeForm() {
               </div>
             </div>
             <div>
-              <label className="block text-sm font-semibold text-neutral-900 mb-2">Project Scope</label>
-              <p className="text-xs text-neutral-500 mb-3">Include room dimensions, wall condition, and any specific requirements.</p>
+              <label className="block text-sm font-semibold text-ink mb-2">Project Scope</label>
+              <p className="text-xs text-ink-soft mb-3">Include room dimensions, wall condition, and any specific requirements.</p>
               <textarea
                 required
                 rows={4}
-                className="w-full rounded-md border border-neutral-300 px-4 py-3 text-neutral-900 focus:border-neutral-900 focus:outline-none focus:ring-1 focus:ring-neutral-900 bg-white"
+                className="w-full rounded-md border border-hairline-strong px-4 py-3 text-ink focus:border-neutral-900 focus:outline-none focus:ring-1 focus:ring-neutral-900 bg-surface"
                 placeholder="e.g., Living room is 20x15. Current plaster is cracking near the ceiling cornice..."
                 value={formData.scope}
                 onChange={(e) => updateFields({ scope: e.target.value })}
@@ -172,10 +172,10 @@ export default function CraftIntakeForm() {
         {step === 3 && (
           <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div>
-              <label className="block text-sm font-semibold text-neutral-900 mb-2">Desired Schedule</label>
+              <label className="block text-sm font-semibold text-ink mb-2">Desired Schedule</label>
               <select
                 required
-                className="w-full rounded-md border border-neutral-300 px-4 py-3 text-neutral-900 focus:border-neutral-900 focus:outline-none focus:ring-1 focus:ring-neutral-900 bg-white"
+                className="w-full rounded-md border border-hairline-strong px-4 py-3 text-ink focus:border-neutral-900 focus:outline-none focus:ring-1 focus:ring-neutral-900 bg-surface"
                 value={formData.schedule}
                 onChange={(e) => updateFields({ schedule: e.target.value })}
               >
@@ -186,16 +186,16 @@ export default function CraftIntakeForm() {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-semibold text-neutral-900 mb-2">Budget Bracket</label>
+              <label className="block text-sm font-semibold text-ink mb-2">Budget Bracket</label>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 {["$3k–$5k", "$5k–$10k", "$10k–$25k+"].map((bracket) => (
                   <label
                     key={bracket}
                     className={`cursor-pointer flex items-center justify-center text-center p-4 border rounded-lg transition-colors ${
-                      formData.budget === bracket ? "border-neutral-900 bg-neutral-50" : "border-neutral-200 hover:border-neutral-300"
+                      formData.budget === bracket ? "border-neutral-900 bg-canvas" : "border-hairline hover:border-hairline-strong"
                     }`}
                   >
-                    <span className="text-sm font-medium text-neutral-900">{bracket}</span>
+                    <span className="text-sm font-medium text-ink">{bracket}</span>
                     <input
                       type="radio"
                       name="budget"
@@ -210,17 +210,17 @@ export default function CraftIntakeForm() {
               </div>
             </div>
             <div>
-              <label className="block text-sm font-semibold text-neutral-900 mb-2">Photos (Optional but recommended)</label>
-              <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-neutral-300 border-dashed rounded-md bg-neutral-50 hover:bg-neutral-100 transition-colors cursor-pointer">
+              <label className="block text-sm font-semibold text-ink mb-2">Photos (Optional but recommended)</label>
+              <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-hairline-strong border-dashed rounded-md bg-canvas hover:bg-canvas transition-colors cursor-pointer">
                 <div className="space-y-1 text-center">
-                  <div className="flex text-sm text-neutral-600 justify-center">
-                    <label className="relative cursor-pointer rounded-md font-medium text-neutral-900 hover:text-neutral-700">
+                  <div className="flex text-sm text-ink-soft justify-center">
+                    <label className="relative cursor-pointer rounded-md font-medium text-ink hover:text-neutral-700">
                       <span>Upload files</span>
                       <input type="file" className="sr-only" multiple accept="image/*" />
                     </label>
                     <p className="pl-1">or drag and drop</p>
                   </div>
-                  <p className="text-xs text-neutral-500">PNG, JPG, GIF up to 10MB</p>
+                  <p className="text-xs text-ink-soft">PNG, JPG, GIF up to 10MB</p>
                 </div>
               </div>
             </div>
@@ -230,44 +230,44 @@ export default function CraftIntakeForm() {
         {step === 4 && (
           <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div>
-              <label className="block text-sm font-semibold text-neutral-900 mb-2">Full Name</label>
+              <label className="block text-sm font-semibold text-ink mb-2">Full Name</label>
               <input
                 required
                 type="text"
-                className="w-full rounded-md border border-neutral-300 px-4 py-3 text-neutral-900 focus:border-neutral-900 focus:outline-none focus:ring-1 focus:ring-neutral-900 bg-white"
+                className="w-full rounded-md border border-hairline-strong px-4 py-3 text-ink focus:border-neutral-900 focus:outline-none focus:ring-1 focus:ring-neutral-900 bg-surface"
                 value={formData.name}
                 onChange={(e) => updateFields({ name: e.target.value })}
               />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-semibold text-neutral-900 mb-2">Email</label>
+                <label className="block text-sm font-semibold text-ink mb-2">Email</label>
                 <input
                   required
                   type="email"
-                  className="w-full rounded-md border border-neutral-300 px-4 py-3 text-neutral-900 focus:border-neutral-900 focus:outline-none focus:ring-1 focus:ring-neutral-900 bg-white"
+                  className="w-full rounded-md border border-hairline-strong px-4 py-3 text-ink focus:border-neutral-900 focus:outline-none focus:ring-1 focus:ring-neutral-900 bg-surface"
                   value={formData.email}
                   onChange={(e) => updateFields({ email: e.target.value })}
                 />
               </div>
               <div>
-                <label className="block text-sm font-semibold text-neutral-900 mb-2">Phone</label>
+                <label className="block text-sm font-semibold text-ink mb-2">Phone</label>
                 <input
                   required
                   type="tel"
-                  className="w-full rounded-md border border-neutral-300 px-4 py-3 text-neutral-900 focus:border-neutral-900 focus:outline-none focus:ring-1 focus:ring-neutral-900 bg-white"
+                  className="w-full rounded-md border border-hairline-strong px-4 py-3 text-ink focus:border-neutral-900 focus:outline-none focus:ring-1 focus:ring-neutral-900 bg-surface"
                   value={formData.phone}
                   onChange={(e) => updateFields({ phone: e.target.value })}
                 />
               </div>
             </div>
             <div>
-              <label className="block text-sm font-semibold text-neutral-900 mb-2">Preferred Walkthrough Window</label>
+              <label className="block text-sm font-semibold text-ink mb-2">Preferred Walkthrough Window</label>
               <input
                 required
                 type="text"
                 placeholder="e.g., Weekday mornings, or Saturday afternoons"
-                className="w-full rounded-md border border-neutral-300 px-4 py-3 text-neutral-900 focus:border-neutral-900 focus:outline-none focus:ring-1 focus:ring-neutral-900 bg-white"
+                className="w-full rounded-md border border-hairline-strong px-4 py-3 text-ink focus:border-neutral-900 focus:outline-none focus:ring-1 focus:ring-neutral-900 bg-surface"
                 value={formData.walkthroughWindow}
                 onChange={(e) => updateFields({ walkthroughWindow: e.target.value })}
               />
@@ -275,12 +275,12 @@ export default function CraftIntakeForm() {
           </div>
         )}
 
-        <div className="mt-8 flex justify-between items-center border-t border-neutral-200 pt-6">
+        <div className="mt-8 flex justify-between items-center border-t border-hairline pt-6">
           {step > 1 ? (
             <button
               type="button"
               onClick={prevStep}
-              className="px-6 py-3 text-sm font-medium text-neutral-600 hover:text-neutral-900 transition-colors"
+              className="px-6 py-3 text-sm font-medium text-ink-soft hover:text-ink transition-colors"
             >
               Back
             </button>
@@ -291,7 +291,7 @@ export default function CraftIntakeForm() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="px-8 py-3 text-sm font-medium text-white bg-neutral-900 rounded-md hover:bg-neutral-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-8 py-3 text-sm font-medium text-white bg-accent text-accent-ink rounded-md hover:opacity-90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {step === 4 ? (isSubmitting ? "Submitting..." : "Submit Request") : "Continue"}
           </button>

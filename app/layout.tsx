@@ -30,7 +30,8 @@ import Footer from "@/components/layout/Footer";
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${instrumentSerif.variable} ${inter.variable} ${jetbrainsMono.variable}`}>
-      <body className="bg-neutral-50 font-sans text-neutral-900 antialiased selection:bg-neutral-900 selection:text-white flex min-h-screen flex-col">
+      <body className="bg-canvas font-sans text-ink antialiased selection:bg-accent selection:text-canvas flex min-h-screen flex-col">
+        <div className="registration" />
         <Header />
         <main className="flex-1 flex flex-col">
           <SmoothScroll>
