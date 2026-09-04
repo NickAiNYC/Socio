@@ -1,18 +1,25 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 
 export function Navigation() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        {/* Logomark */}
+        {/* Logomark with authentic Socio. bluish dot logo */}
         <div className="flex items-center gap-3">
-          <Link href="/" className="text-xl tracking-tight text-black flex items-baseline gap-1">
-            <span className="font-bold">socio</span>
-            <span className="font-mono text-gray-400 text-sm">.nyc</span>
+          <Link href="/" className="flex items-center group">
+            <Image
+              src="/socio-logo.png"
+              alt="Socio."
+              width={112}
+              height={32}
+              className="h-7 w-auto object-contain transition-opacity group-hover:opacity-80"
+              priority
+            />
           </Link>
-          <div className="hidden md:flex items-center justify-center px-2 py-1 bg-gray-100 text-gray-500 font-mono text-[10px] uppercase tracking-widest ml-4 border border-gray-200">
+          <div className="hidden md:flex items-center justify-center px-2 py-1 bg-gray-100 text-gray-500 font-mono text-[10px] uppercase tracking-widest ml-3 border border-gray-200">
             Brooklyn Hub
           </div>
         </div>

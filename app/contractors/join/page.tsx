@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { TradesmanForm } from '@/components/TradesmanForm';
 
 export default function JoinFormPage() {
@@ -21,9 +22,18 @@ export default function JoinFormPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
           >
-            <span className="font-mono text-sm uppercase tracking-widest text-gray-400 mb-6 block">
-              Socio · Brooklyn Hub
-            </span>
+            <div className="flex items-center gap-3 mb-6">
+              <Image
+                src="/socio-logo.png"
+                alt="Socio."
+                width={84}
+                height={24}
+                className="h-5 w-auto object-contain"
+              />
+              <span className="font-mono text-sm uppercase tracking-widest text-gray-400">
+                · Brooklyn Hub
+              </span>
+            </div>
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif leading-[1.1] text-black mb-8 pr-4">
               Usted hace el trabajo de maestro. Nosotros nos encargamos de los clientes, estimados y cobros.
             </h1>
