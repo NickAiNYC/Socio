@@ -60,7 +60,7 @@ export function ArchitectureSection() {
           ref={leftColRef}
           className="md:h-screen flex flex-col justify-center py-24 md:py-0"
         >
-          <p className="font-mono text-sm uppercase tracking-widest text-gray-400 mb-6">
+          <p className="font-mono text-xs uppercase tracking-widest text-gray-400 mb-6">
             The Architecture
           </p>
           <h2 className="text-4xl md:text-5xl font-serif leading-tight text-black pr-8">
@@ -68,13 +68,17 @@ export function ArchitectureSection() {
           </h2>
         </div>
 
-        {/* Scrolling Right Column */}
+        {/* Scrolling Right Column with Architectural Blueprint Anchors */}
         <div ref={rightColRef} className="flex flex-col py-24 md:py-[40vh] gap-32">
           {steps.map((step, idx) => (
-            <div key={idx} className="flex flex-col border-t border-gray-200 pt-8">
-              <span className="font-mono text-xl text-black mb-6">{step.num}</span>
-              <h3 className="text-2xl font-serif text-black mb-4">{step.title}</h3>
-              <p className="font-sans text-gray-500 leading-relaxed text-lg">
+            <div key={idx} className="flex flex-col border-t border-gray-200 pt-16">
+              <span className="text-6xl font-serif text-black mb-6 select-none">
+                {step.num}
+              </span>
+              <h3 className="text-3xl font-serif text-black mb-4">
+                {step.title}
+              </h3>
+              <p className="font-sans text-gray-500 leading-relaxed text-lg max-w-xl">
                 {step.desc}
               </p>
             </div>

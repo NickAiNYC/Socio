@@ -19,7 +19,7 @@ export function Navigation() {
               priority
             />
           </Link>
-          <div className="hidden md:flex items-center justify-center px-2 py-1 bg-gray-100 text-gray-500 font-mono text-[10px] uppercase tracking-widest ml-3 border border-gray-200">
+          <div className="hidden md:flex items-center justify-center bg-gray-100 border border-gray-200 text-gray-500 font-mono text-[10px] uppercase tracking-widest px-3 py-1.5 ml-3">
             Brooklyn Hub
           </div>
         </div>
