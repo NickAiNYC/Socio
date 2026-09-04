@@ -30,6 +30,22 @@ export default function Header() {
             >
               Craftsman Network
             </Link>
+            <Link
+              href="/contractors/join"
+              className={`text-sm font-medium transition-colors hover:text-neutral-900 ${
+                pathname?.startsWith("/contractors/") ? "text-neutral-900" : "text-neutral-500"
+              }`}
+            >
+              For Tradesmen
+            </Link>
+            <Link
+              href="/variance"
+              className={`text-sm font-medium transition-colors hover:text-neutral-900 ${
+                pathname?.startsWith("/variance") ? "text-neutral-900" : "text-neutral-400"
+              }`}
+            >
+              Enterprise Scope / DOB
+            </Link>
           </nav>
         </div>
         <div className="flex items-center gap-4">
