@@ -4,6 +4,18 @@ import { motion } from 'framer-motion';
 import { bentoContainer, bentoCard } from '@/components/Animations';
 
 export function MetricsBentoGrid() {
+  const neighborhoods = [
+    'Park Slope',
+    'Brooklyn Heights',
+    'Carroll Gardens',
+    'Cobble Hill',
+    'Crown Heights',
+    'Williamsburg',
+    'Greenpoint',
+    'Astoria',
+    'Long Island City',
+  ];
+
   return (
     <section className="w-full bg-white py-32 px-6 border-b border-gray-200">
       <div className="max-w-7xl mx-auto">
@@ -28,8 +40,13 @@ export function MetricsBentoGrid() {
             variants={bentoCard}
             className="md:col-span-2 group bg-[#FAFAFA] border border-gray-200 p-10 hover:border-black transition-colors duration-300 flex flex-col justify-between min-h-[320px]"
           >
-            <div className="font-mono text-xs uppercase tracking-widest text-gray-500 mb-8">
-              Quality Standard
+            <div className="flex items-center justify-between">
+              <div className="font-mono text-xs uppercase tracking-widest text-gray-500">
+                Quality Standard
+              </div>
+              <span className="font-mono text-[10px] bg-white border border-gray-200 px-2 py-0.5 text-gray-500 uppercase tracking-widest">
+                DOB / Board Aligned
+              </span>
             </div>
             <div>
               <div className="text-6xl md:text-7xl font-serif text-black mb-4">Level 5</div>
@@ -44,8 +61,13 @@ export function MetricsBentoGrid() {
             variants={bentoCard}
             className="group bg-[#FAFAFA] border border-gray-200 p-10 hover:border-black transition-colors duration-300 flex flex-col justify-between min-h-[320px]"
           >
-            <div className="font-mono text-xs uppercase tracking-widest text-gray-500 mb-8">
-              Turnaround Time
+            <div className="flex items-center justify-between">
+              <div className="font-mono text-xs uppercase tracking-widest text-gray-500">
+                Turnaround Time
+              </div>
+              <span className="font-mono text-[10px] bg-white border border-gray-200 px-2 py-0.5 text-gray-500 uppercase tracking-widest">
+                Digital Desk
+              </span>
             </div>
             <div>
               <div className="text-6xl md:text-7xl font-serif text-black mb-4 flex items-center gap-2">
@@ -57,20 +79,38 @@ export function MetricsBentoGrid() {
             </div>
           </motion.div>
 
-          {/* Full Width Bottom Card */}
+          {/* Full Width Bottom Card with Neighborhoods */}
           <motion.div
             variants={bentoCard}
-            className="md:col-span-3 group bg-black text-white p-10 flex flex-col md:flex-row md:items-end justify-between min-h-[240px]"
+            className="md:col-span-3 group bg-black text-white p-10 flex flex-col justify-between min-h-[280px]"
           >
-            <div className="mb-8 md:mb-0">
-              <div className="font-mono text-xs uppercase tracking-widest text-gray-400 mb-8">
-                Coverage Area
+            <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-8">
+              <div>
+                <div className="font-mono text-xs uppercase tracking-widest text-gray-400 mb-4">
+                  Borough Coverage Area
+                </div>
+                <div className="text-5xl md:text-6xl font-serif">Kings & Queens</div>
               </div>
-              <div className="text-5xl md:text-6xl font-serif">Kings & Queens</div>
+              <p className="font-sans text-base md:text-lg text-gray-400 max-w-lg md:text-right">
+                Operating strictly within verified residential corridors in Brooklyn & Queens to guarantee direct site supervision, rapid mobilization, and verified co-op/condo compliance.
+              </p>
             </div>
-            <p className="font-sans text-lg text-gray-400 max-w-lg md:text-right">
-              Currently operating exclusively within Brooklyn and Queens to maintain strict quality control and ultra-fast deployment times.
-            </p>
+
+            <div className="border-t border-gray-800 pt-6">
+              <span className="font-mono text-[10px] uppercase tracking-widest text-gray-400 block mb-3">
+                Active Neighborhood Hubs:
+              </span>
+              <div className="flex flex-wrap gap-2">
+                {neighborhoods.map((nh, idx) => (
+                  <span
+                    key={idx}
+                    className="font-mono text-xs bg-zinc-900 border border-zinc-700/80 px-3 py-1 text-gray-300 tracking-wide"
+                  >
+                    {nh}
+                  </span>
+                ))}
+              </div>
+            </div>
           </motion.div>
         </motion.div>
       </div>

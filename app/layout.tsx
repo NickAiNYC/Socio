@@ -19,9 +19,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Socio · a renovation should start with a real scope",
+  title: "Socio · Infrastructure & Precision Front-Office for Local Trades",
   description:
-    "Socio reads NYC DOB filings so a renovation starts with a real, standardized scope. Free for homeowners. Contractors pay only when a bid closes.",
+    "Socio pairs master-level independent craftsmen across Brooklyn and Queens with institutional-grade estimates, standardized scopes, and board-ready alteration compliance.",
 };
 
 import Header from "@/components/layout/Header";
@@ -30,7 +30,7 @@ import Footer from "@/components/layout/Footer";
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${instrumentSerif.variable} ${inter.variable} ${jetbrainsMono.variable}`}>
-      <body className="bg-zinc-50 text-zinc-900 selection:bg-zinc-200 font-sans antialiased flex min-h-screen flex-col">
+      <body className="bg-[#FAFAFA] text-zinc-900 selection:bg-black selection:text-white font-sans antialiased flex min-h-screen flex-col">
         <Header />
         <main className="flex-1 flex flex-col">
           <SmoothScroll>

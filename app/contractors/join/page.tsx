@@ -3,13 +3,14 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { TradesmanForm } from '@/components/TradesmanForm';
+import { WhatsAppCTA, FloatingWhatsAppButton } from '@/components/WhatsAppCTA';
 
 export default function JoinFormPage() {
   const benefits = [
     'Presupuestos profesionales en inglés para clientes exigentes.',
     'Citas confirmadas en casas residenciales (cero pérdida de tiempo).',
     'Gestión de seguros y certificados (COI) para edificios y co-ops.',
-    'Sin mensualidades fijas: solo pagas cuando recibes el trabajo.',
+    'Sin cobros ocultos: capa operativa y de presupuesto para maestros independientes.',
   ];
 
   return (
@@ -49,6 +50,17 @@ export default function JoinFormPage() {
                 </li>
               ))}
             </ul>
+
+            {/* Direct 1-Click WhatsApp Channel */}
+            <div className="mt-10 pt-8 border-t border-gray-200">
+              <span className="font-mono text-xs uppercase tracking-wider text-gray-400 block mb-3">
+                ¿Prefiere saltarse el formulario?
+              </span>
+              <WhatsAppCTA
+                label="Habla con nuestro desk de operaciones por WhatsApp"
+                className="w-full"
+              />
+            </div>
           </motion.div>
         </div>
 
@@ -59,12 +71,17 @@ export default function JoinFormPage() {
           transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
           className="bg-white border border-gray-200 p-8 md:p-12 shadow-[0_4px_40px_rgba(0,0,0,0.02)]"
         >
-          <div className="mb-10 pb-6 border-b border-gray-100">
+          <div className="mb-10 pb-6 border-b border-gray-100 flex items-center justify-between">
             <h2 className="text-2xl font-serif text-black">Solicitar una invitación</h2>
+            <span className="font-mono text-[11px] text-gray-400 uppercase tracking-widest">
+              Paso 1 de 2
+            </span>
           </div>
           <TradesmanForm />
         </motion.div>
       </div>
+
+      <FloatingWhatsAppButton />
     </main>
   );
 }
