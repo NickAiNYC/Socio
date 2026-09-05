@@ -1,5 +1,7 @@
 'use client';
 
+import { DensityGridArtifact } from './artifacts/DensityGridArtifact';
+
 export function CompliancePreview() {
   const complianceItems = [
     { label: 'COI (ACORD 25)', detail: 'Explicit $1M/$2M endorsements naming building & managing agent', status: 'VERIFIED' },
@@ -10,21 +12,9 @@ export function CompliancePreview() {
     { label: 'MANAGING AGENT DOSSIER', detail: 'Standardized alteration agreement rider attached', status: 'CLEARED' },
   ];
 
-  const corridors = [
-    'PARK SLOPE',
-    'CARROLL GARDENS',
-    'COBBLE HILL',
-    'BROOKLYN HEIGHTS',
-    'CROWN HEIGHTS',
-    'WILLIAMSBURG',
-    'GREENPOINT',
-    'ASTORIA',
-    'LONG ISLAND CITY',
-  ];
-
   return (
     <section className="w-full bg-white py-32 px-6 border-b border-gray-200">
-      <div className="max-w-7xl mx-auto space-y-24">
+      <div className="max-w-7xl mx-auto space-y-28">
         {/* Header */}
         <div className="max-w-3xl">
           <p className="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
@@ -72,35 +62,21 @@ export function CompliancePreview() {
           </div>
         </div>
 
-        {/* Local Knowledge Compounds (Density corridors) */}
-        <div className="border-t border-gray-200 pt-16 grid grid-cols-1 lg:grid-cols-12 gap-10 items-baseline">
-          <div className="lg:col-span-5 space-y-3">
+        {/* Local Density Compounds Artifact */}
+        <div className="space-y-8 border-t border-gray-200 pt-16">
+          <div className="max-w-3xl space-y-2">
             <span className="font-mono text-xs font-semibold text-black uppercase tracking-widest block">
               LOCAL KNOWLEDGE COMPOUNDS
             </span>
-            <h3 className="text-2xl sm:text-3xl font-serif text-black leading-snug">
+            <h3 className="text-3xl sm:text-4xl font-serif text-black leading-snug">
               Density beats broad directories.
             </h3>
-            <p className="font-sans text-sm text-gray-600 leading-relaxed">
-              The more projects Socio coordinates in a neighborhood, the deeper our database of building rules, trusted trade crews, superintendent preferences, and historical alteration timelines becomes.
+            <p className="font-sans text-sm sm:text-base text-gray-600 leading-relaxed">
+              The more projects Socio coordinates in a neighborhood, the deeper our institutional memory of building rules, trusted trade crews, superintendent preferences, and historical alteration timelines becomes.
             </p>
           </div>
 
-          <div className="lg:col-span-7">
-            <div className="flex flex-wrap gap-2.5 font-mono text-xs">
-              {corridors.map((c) => (
-                <span
-                  key={c}
-                  className="px-3.5 py-2 bg-[#FAFAFA] border border-gray-200 text-black font-medium hover:border-black transition-colors"
-                >
-                  {c}
-                </span>
-              ))}
-            </div>
-            <p className="font-sans text-xs text-gray-400 mt-4">
-              Focusing on high-density residential corridors in Brooklyn &amp; Queens.
-            </p>
-          </div>
+          <DensityGridArtifact />
         </div>
       </div>
     </section>

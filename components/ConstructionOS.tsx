@@ -1,5 +1,7 @@
 'use client';
 
+import { ExplodedProjectArtifact } from './artifacts/ExplodedProjectArtifact';
+
 export function ConstructionOS() {
   const pillars = [
     {
@@ -57,6 +59,9 @@ export function ConstructionOS() {
             Socio connects the pieces that are normally scattered across contractors, architects, managing agents, paper documents, spreadsheets, email threads, and payment systems.
           </p>
         </div>
+
+        {/* Signature Exploded Project Primitive Artifact */}
+        <ExplodedProjectArtifact />
 
         {/* 4 Pillars Grid (Clean, minimalist architectural lines) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 border-t border-gray-200 pt-16">
