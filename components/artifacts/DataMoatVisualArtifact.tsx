@@ -86,10 +86,10 @@ export function DataMoatVisualArtifact() {
           <span className="font-semibold text-black uppercase tracking-wider">
             LIFECYCLE STATE 07 · PROJECT BECOMES DATA
           </span>
-          <span className="text-gray-400">[EMPIRICAL DATA MOAT]</span>
+          <span className="text-gray-400">[SOCIO BENCHMARK — n=14 PROJECTS (BROOKLYN PILOT)]</span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-[10px] text-gray-400 uppercase">[EXAMPLE ARTIFACT]</span>
+          <span className="text-[10px] text-gray-400 uppercase">[ILLUSTRATIVE BENCHMARK]</span>
           <button
             onClick={() => setIsAutoPlaying(!isAutoPlaying)}
             className="text-[10px] uppercase font-mono px-2.5 py-1 bg-white border border-gray-300 text-gray-700 hover:text-black hover:border-black transition-colors"
@@ -257,14 +257,14 @@ export function DataMoatVisualArtifact() {
             <div className="flex items-center justify-between border-b border-gray-200 pb-3">
               <div>
                 <span className="text-[10px] text-gray-400 uppercase tracking-widest block font-mono">
-                  STEP 03 · EMPIRICAL NYC BENCHMARKS
+                  STEP 03 · ILLUSTRATIVE BENCHMARK · [PILOT DATASET n=14]
                 </span>
                 <span className="text-xl font-serif text-black">
-                  Statistical confidence replaces contractor guesswork.
+                  Statistical baselines replace contractor guesswork.
                 </span>
               </div>
               <span className="text-xs font-mono text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-1 font-semibold">
-                AUDITED BASELINES
+                PILOT BASELINES (n=14)
               </span>
             </div>
 
@@ -288,7 +288,7 @@ export function DataMoatVisualArtifact() {
 
             <div className="p-4 bg-white border border-gray-200 font-mono text-[11px] text-gray-600 flex flex-col sm:flex-row justify-between items-center gap-2">
               <span>CALIBRATED FOR: BROOKLYN PRE-WAR &amp; MANHATTAN HIGH-RISE CORRIDORS</span>
-              <span className="font-bold text-black">CONFIDENCE INTERVAL: 98.4%</span>
+              <span className="font-bold text-black">DERIVED FROM n=14 COMPLETED PILOT RECORDS</span>
             </div>
           </div>
         )}

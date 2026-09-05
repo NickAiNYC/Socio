@@ -72,13 +72,13 @@ export function ConstructionOS() {
         <div className="space-y-6 border-t border-gray-200 pt-16">
           <div className="max-w-3xl space-y-2">
             <span className="font-mono text-xs font-semibold text-black uppercase tracking-widest block">
-              EMPIRICAL FEEDBACK MOAT
+              ILLUSTRATIVE BENCHMARK · [PILOT DATASET n=14]
             </span>
             <h3 className="text-3xl sm:text-4xl font-serif text-black leading-snug">
               Every project makes the next one smarter.
             </h3>
             <p className="font-sans text-sm sm:text-base text-gray-600 leading-relaxed">
-              Socio converts completed NYC renovation projects into an empirical benchmark dataset. As projects close out, variance telemetry refines predictive scopes, trade pricing, and schedule baselines for the next building.
+              Socio converts completed NYC renovation projects into an illustrative benchmark dataset. As pilot projects close out, variance telemetry refines predictive scopes, trade pricing, and schedule baselines for the next building.
             </p>
           </div>
 

@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { createProjectFromIntake } from "@/lib/projectStore";
+import { trackEvent } from "@/lib/analytics";
 
 type FormData = {
   propertyType: string;
@@ -37,9 +39,13 @@ export default function CraftIntakeForm() {
 
   const updateFields = (fields: Partial<FormData>) => {
     setFormData((prev) => ({ ...prev, ...fields }));
+    trackEvent('intake_started', { field: Object.keys(fields)[0] });
   };
 
-  const nextStep = () => setStep((s) => Math.min(s + 1, 4));
+  const nextStep = () => {
+    trackEvent('intake_started', { step: step + 1 });
+    setStep((s) => Math.min(s + 1, 4));
+  };
   const prevStep = () => setStep((s) => Math.max(s - 1, 1));
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -51,15 +57,42 @@ export default function CraftIntakeForm() {
 
     setIsSubmitting(true);
     try {
+      trackEvent('intake_completed', {
+        propertyType: formData.propertyType,
+        neighborhood: formData.neighborhood,
+        trade: formData.trade,
+        budget: formData.budget,
+      });
+
+      // Instantiates the structured Socio project in client registry
+      const newProject = createProjectFromIntake({
+        propertyType: formData.propertyType,
+        neighborhood: formData.neighborhood,
+        trade: formData.trade,
+        scope: formData.scope,
+        schedule: formData.schedule,
+        budget: formData.budget,
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        walkthroughWindow: formData.walkthroughWindow,
+      });
+
+      trackEvent('project_created', {
+        projectId: newProject.id,
+        budget: newProject.budget.target,
+        borough: newProject.property.borough,
+      });
+
       // Post intake details to backend handler
       await fetch('/api/intake', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...formData, type: 'homeowner_estimate' })
+        body: JSON.stringify({ ...formData, projectId: newProject.id, type: 'homeowner_estimate' })
       }).catch(() => null); // Graceful fallback if endpoint is mock
       
-      // Route immediately into the live project runtime to inspect instantiated schema
-      window.location.href = '/project/PRJ-7102-BK';
+      // Route immediately into the live instantiated project console
+      window.location.href = `/project/${newProject.id}`;
     } catch {
       window.location.href = '/project/PRJ-7102-BK';
     } finally {

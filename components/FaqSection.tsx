@@ -25,11 +25,11 @@ export function FaqSection() {
     },
     {
       q: 'Does Socio manage construction?',
-      a: 'Socio is not a general contractor. We provide the operating system that governs the transaction: structuring the project, matching the right licensed trade crews, providing escrow rails, and enforcing milestone inspections before capital is disbursed.',
+      a: 'Socio is not a general contractor. We provide the operating system that governs the transaction: structuring the project, matching the right licensed trade crews, providing milestone payment rails, and enforcing milestone inspections before capital is disbursed.',
     },
     {
       q: 'How does payment work?',
-      a: 'Funds are never paid upfront blindly. Capital for each project phase is deposited securely in escrow and released to the contractor only after inspection clearance and mutual sign-off from both the owner and contractor.',
+      a: 'Funds are never paid upfront blindly. Capital for each project phase is secured on staged milestone payment rails and released to the contractor only after inspection clearance and mutual sign-off from both the owner and contractor.',
     },
     {
       q: 'What types of NYC properties does Socio support?',
