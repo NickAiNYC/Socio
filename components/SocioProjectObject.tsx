@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { bentoContainer, bentoCard } from '@/components/Animations';
 
@@ -97,7 +98,16 @@ export function SocioProjectObject() {
                 <span className="w-1.5 h-1.5 bg-black" />
                 <span>Deterministic Project Architecture</span>
               </div>
-              <span>Immutable Ledger · Zero Vague Napkin Agreements</span>
+              <div className="flex items-center gap-4">
+                <span className="hidden sm:inline">Immutable Ledger · Zero Vague Napkin Agreements</span>
+                <Link
+                  href="/project/PRJ-7102-BK"
+                  className="bg-black text-white px-3 py-1.5 font-mono text-xs hover:bg-gray-800 transition-colors inline-flex items-center gap-1.5"
+                >
+                  <span>Inspect Live Project Runtime</span>
+                  <span>→</span>
+                </Link>
+              </div>
             </div>
           </div>
         </motion.div>
