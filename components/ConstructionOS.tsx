@@ -1,123 +1,128 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { bentoContainer, bentoCard } from '@/components/Animations';
-
 export function ConstructionOS() {
-  const layers = [
+  const pillars = [
     {
-      layer: 'LAYER 01',
-      title: 'Scope Engine',
-      summary: 'Normalize ambiguous renovation requests into structured line items.',
-      items: [
-        'Included: Explicit labor & material allocations',
-        'Excluded: Clear demarcation of client-provided finishes',
-        'Unknown: Contingency items flagged before contract',
-        'Specified Materials: Architectural manufacturer references',
-        'Milestone Breakdown: Sequential delivery phases',
-      ],
-      badge: 'Specification Core',
+      step: '01',
+      title: 'SCOPE',
+      simple: 'Define exactly what you’re building.',
+      detail: 'CSI line-item structure with unambiguous labor, materials, exclusions, and flagged site contingencies.',
     },
     {
-      layer: 'LAYER 02',
-      title: 'Project-Fit + Verification',
-      summary: 'Match the project to verified NYC trade capacity.',
-      items: [
-        'DOB Records: Active permit history & license standing',
-        'NYC Experience: Proven pre-war & historic building track record',
-        'Trade Specialization: Level 5 plasterers, master tile, custom millwork',
-        'COI Verification: $1M/$2M liability & workers’ comp compliance',
-        'Geographic Proximity: Real-time site proximity across Brooklyn/Queens',
-      ],
-      badge: 'Capacity Layer',
+      step: '02',
+      title: 'MATCHING',
+      simple: 'Find contractors who actually fit the project.',
+      detail: 'Targeted matching based on trade specialization, active DOB permit history, and co-op board experience.',
     },
     {
-      layer: 'LAYER 03',
-      title: 'Milestone + Payment Rails',
-      summary: 'Construction payments correspond to verified project progress.',
-      items: [
-        'Milestone: Capital funded into secure escrow before phase starts',
-        'Inspection: Physical site walkthrough or digital proof verification',
-        'Cure Period: Defined window to address punch-list deficiencies',
-        'Approval: Dual signoff from property owner & site lead',
-        'Release: Direct automated disbursement to the craftsman',
-      ],
-      badge: 'Escrow Rails',
+      step: '03',
+      title: 'COMPLIANCE',
+      simple: 'Get the documentation your building requires.',
+      detail: 'Standardized ACORD 25 COIs, lead-safe disclosures, and managing agent alteration riders pre-assembled.',
     },
     {
-      layer: 'LAYER 04',
-      title: 'Project Data Moat',
-      summary: 'Every completed transaction permanently improves network intelligence.',
-      items: [
-        'Estimated vs. Actual Cost: Real benchmark variances recorded',
-        'Schedule Variance: Empirical duration tracking by neighborhood',
-        'Change-Order Frequency: Root-cause analysis by trade category',
-        'Contractor Performance: Verified reliability scores',
-        'Building Requirements: Pre-war co-op board approval precedents',
-      ],
-      badge: 'Proprietary Moat',
+      step: '04',
+      title: 'MILESTONES & PAYMENTS',
+      simple: 'Connect payments to project milestones.',
+      detail: 'Capital secured in escrow rails and disbursed strictly upon mutual inspection and punchlist clearance.',
     },
   ];
 
+  const loop = [
+    { label: 'EXPECTED', desc: 'Predictive scope & baseline model' },
+    { label: 'BID', desc: 'Normalized contractor submissions' },
+    { label: 'EXECUTION', desc: 'Weekly milestone progression & logs' },
+    { label: 'ACTUAL', desc: 'Final audited cost & duration' },
+    { label: 'BENCHMARK', desc: 'Feeds model for next building' },
+  ];
+
+  const benchmarks = [
+    { label: 'COST VARIANCE', value: '-0.6%', note: 'Initial model vs. final completion cost' },
+    { label: 'SCHEDULE VARIANCE', value: '+3.3%', note: 'Factoring building freight elevator access' },
+    { label: 'SCOPE VARIANCE', value: '0.0%', note: 'Zero unapproved change-order expansions' },
+  ];
+
   return (
-    <section id="platform" className="w-full bg-white py-32 px-6 border-b border-gray-200">
-      <div className="max-w-7xl mx-auto">
-        <div className="max-w-3xl mb-16">
+    <section id="the-os" className="w-full bg-[#FAFAFA] py-32 px-6 border-b border-gray-200">
+      <div className="max-w-7xl mx-auto space-y-24">
+        {/* Section Header */}
+        <div className="max-w-3xl">
           <p className="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
-            Section 03 · Operating System
+            The System Behind The Service
           </p>
-          <h2 className="text-3xl md:text-5xl font-serif text-black leading-tight mb-6">
-            The Four Layers of Socio.
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-serif text-black leading-tight mb-6">
+            Connecting what is <br />normally broken.
           </h2>
           <p className="font-sans text-gray-600 text-lg leading-relaxed">
-            Socio is built on four interconnected infrastructure layers. They replace subjective contractor guesswork with deterministic engineering, contractual transparency, and compounding market data.
+            Socio connects the pieces that are normally scattered across contractors, architects, managing agents, paper documents, spreadsheets, email threads, and payment systems.
           </p>
         </div>
 
-        <motion.div
-          variants={bentoContainer}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: '-100px' }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-8"
-        >
-          {layers.map((item, idx) => (
-            <motion.div
-              key={idx}
-              variants={bentoCard}
-              className="bg-[#FAFAFA] border border-gray-200 p-8 md:p-10 flex flex-col justify-between hover:border-black transition-colors"
-            >
-              <div>
-                <div className="flex items-center justify-between pb-4 border-b border-gray-200 mb-6">
-                  <span className="font-mono text-xs font-semibold text-black tracking-widest">
-                    {item.layer}
-                  </span>
-                  <span className="font-mono text-[10px] bg-white text-gray-600 px-2.5 py-1 border border-gray-200 uppercase tracking-widest">
-                    {item.badge}
-                  </span>
-                </div>
-                <h3 className="text-2xl font-serif text-black mb-2">{item.title}</h3>
-                <p className="font-sans text-sm text-gray-600 mb-6 leading-relaxed">
-                  {item.summary}
-                </p>
-
-                <ul className="space-y-2.5 border-t border-gray-200/80 pt-6">
-                  {item.items.map((it, i) => (
-                    <li key={i} className="flex items-start gap-2.5 text-xs font-mono text-gray-600">
-                      <span className="w-1.5 h-1.5 bg-black mt-1 shrink-0" />
-                      <span>{it}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="mt-8 pt-6 border-t border-gray-200 flex items-center justify-between text-xs font-mono text-gray-400">
-                <span>SYSTEM ARCHITECTURE</span>
-                <span className="text-black font-semibold">DETERMINISTIC</span>
-              </div>
-            </motion.div>
+        {/* 4 Pillars Grid (Clean, minimalist architectural lines) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 border-t border-gray-200 pt-16">
+          {pillars.map((p) => (
+            <div key={p.step} className="space-y-3 font-mono text-xs">
+              <span className="text-gray-400 block font-semibold">[{p.step}]</span>
+              <h3 className="font-bold text-black uppercase tracking-wider text-sm">
+                {p.title}
+              </h3>
+              <p className="font-sans text-black font-semibold text-sm">
+                {p.simple}
+              </p>
+              <p className="font-sans text-gray-500 leading-relaxed text-xs">
+                {p.detail}
+              </p>
+            </div>
           ))}
-        </motion.div>
+        </div>
+
+        {/* The Compounding Data Feedback Moat */}
+        <div className="bg-white border border-gray-200 p-8 sm:p-12 shadow-xs space-y-12">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-gray-200">
+            <div>
+              <span className="font-mono text-xs uppercase tracking-widest text-gray-400 block mb-1">
+                Empirical Feedback Moat
+              </span>
+              <h3 className="text-2xl sm:text-3xl font-serif text-black">
+                Every project makes the next one smarter.
+              </h3>
+            </div>
+            <p className="font-sans text-xs text-gray-500 max-w-md">
+              Socio is actively building a project-level benchmark dataset across NYC residential renovations.
+            </p>
+          </div>
+
+          {/* Flow Indicator: EXPECTED -> BID -> EXECUTION -> ACTUAL -> BENCHMARK */}
+          <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 font-mono text-xs">
+            {loop.map((step, idx) => (
+              <div key={idx} className="p-4 bg-[#FAFAFA] border border-gray-200 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-bold text-black text-xs">{step.label}</span>
+                    {idx < loop.length - 1 && (
+                      <span className="text-gray-400 hidden sm:inline">→</span>
+                    )}
+                  </div>
+                  <p className="font-sans text-[11px] text-gray-500 leading-relaxed">
+                    {step.desc}
+                  </p>
+                </div>
+                <span className="text-[10px] text-gray-400 mt-4 block">NODE 0{idx + 1}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Benchmark Variance Outputs */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4 border-t border-gray-100 font-mono text-xs">
+            {benchmarks.map((b, idx) => (
+              <div key={idx} className="p-4 bg-gray-50/70 border border-gray-200">
+                <span className="text-gray-400 block text-[10px] uppercase mb-1">{b.label}</span>
+                <span className="text-2xl font-serif text-black font-bold block mb-1">{b.value}</span>
+                <span className="font-sans text-[11px] text-gray-500">{b.note}</span>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

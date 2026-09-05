@@ -1,54 +1,50 @@
 import { HeroSection } from '@/components/HeroSection';
-import { TheProblem } from '@/components/TheProblem';
+import { WhatSocioDoes } from '@/components/WhatSocioDoes';
+import { CoreOutcomes } from '@/components/CoreOutcomes';
+import { ProductShowcase } from '@/components/ProductShowcase';
 import { SocioProjectObject } from '@/components/SocioProjectObject';
-import { ConstructionOS } from '@/components/ConstructionOS';
+import { HowItWorksSimple } from '@/components/HowItWorksSimple';
 import { TwoSidedNetwork } from '@/components/TwoSidedNetwork';
 import { CompliancePreview } from '@/components/CompliancePreview';
-import { HyperlocalMoat } from '@/components/HyperlocalMoat';
-import { TransactionLifecycle } from '@/components/TransactionLifecycle';
-import { DataMoat } from '@/components/DataMoat';
-import { TrustVerification } from '@/components/TrustVerification';
-import { ArchitectureSection } from '@/components/ArchitectureSection';
+import { ConstructionOS } from '@/components/ConstructionOS';
+import { FaqSection } from '@/components/FaqSection';
 import { SystemCTA } from '@/components/SystemCTA';
 
 export default function LandingPage() {
   return (
-    <div className="w-full bg-[#FAFAFA]">
-      {/* 01. Category Hero & Two-Sided Doorways */}
+    <main className="w-full bg-[#FAFAFA]">
+      {/* 01. Minimal Editorial Hero with Example Project Artifact & NYC Trust Strip */}
       <HeroSection />
 
-      {/* 02. The Problem: Fragmentation vs. Structured Transaction */}
-      <TheProblem />
+      {/* 02. What Socio Does: The 5 Core Services */}
+      <WhatSocioDoes />
 
-      {/* 03. The Primary Digital Object: The Socio Project */}
+      {/* 03. The Three Core Outcomes: Structure, Match, Control with Visual Artifacts */}
+      <CoreOutcomes />
+
+      {/* 04. Interactive Product Showcase: Tabs across Project, Scope, Contractors, Docs, Milestones, Payments */}
+      <ProductShowcase />
+
+      {/* 05. The Socio Project: The Central Digital Primitive & Runtime Inspector */}
       <SocioProjectObject />
 
-      {/* 04. The Four Infrastructure Layers of Socio */}
-      <ConstructionOS />
+      {/* 06. How It Works: The Simple 5-Step Journey (Describe → Structure → Match → Build → Record) */}
+      <HowItWorksSimple />
 
-      {/* 05. The Two-Sided Network: Better Outcomes for Both Sides */}
+      {/* 07. Two-Sided Alignment: For Owners (Readiness) vs. For Contractors (Opportunities) */}
       <TwoSidedNetwork />
 
-      {/* 06. NYC Compliance Layer: The Project Arrives Ready to Move */}
+      {/* 08. Built for NYC: Building Realities, Board Compliance Dossier & Local Density Corridors */}
       <CompliancePreview />
 
-      {/* 07. Hyperlocal Density Moat: Brooklyn & Queens Corridors */}
-      <HyperlocalMoat />
+      {/* 09. The Construction OS: System Behind the Service & Empirical Feedback Moat */}
+      <ConstructionOS />
 
-      {/* 08. The 10-Step Deterministic Transaction Protocol */}
-      <TransactionLifecycle />
+      {/* 10. Frequently Asked Questions: Clean Accordion */}
+      <FaqSection />
 
-      {/* 09. The Compounding Data Moat: Expected → Bid → Execution → Actual */}
-      <DataMoat />
-
-      {/* 10. The Trust & Verification Layer */}
-      <TrustVerification />
-
-      {/* 11. GSAP Scroll-Pinned Architecture Blueprint */}
-      <ArchitectureSection />
-
-      {/* 12. Final Two-Sided Transaction CTA */}
+      {/* 11. Final Minimal Call to Action */}
       <SystemCTA />
-    </div>
+    </main>
   );
 }

@@ -4,71 +4,48 @@ import Link from 'next/link';
 
 export function SystemCTA() {
   return (
-    <section className="w-full bg-[#FAFAFA] py-32 px-6 border-b border-gray-200">
-      <div className="max-w-7xl mx-auto">
-        <div className="max-w-4xl mx-auto text-center mb-16">
-          <p className="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
-            Transaction Execution
-          </p>
-          <h2 className="text-4xl md:text-6xl font-serif text-black leading-tight mb-6">
-            Ready to execute NYC construction <br />
-            without the guesswork?
-          </h2>
-          <p className="font-sans text-gray-600 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-            Whether you are a property owner planning a pre-war renovation or a master craftsman seeking verified demand, Socio replaces fragmentation with control.
-          </p>
+    <section className="w-full bg-[#FAFAFA] py-36 px-6 border-b border-gray-200">
+      <div className="max-w-4xl mx-auto text-center space-y-8">
+        <p className="font-mono text-xs uppercase tracking-widest text-gray-400">
+          Ready When You Are
+        </p>
+        <h2 className="text-4xl sm:text-6xl md:text-7xl font-serif text-black leading-tight tracking-tight">
+          Start with a <br />
+          better-defined project.
+        </h2>
+        <p className="font-sans text-gray-600 text-lg sm:text-xl max-w-xl mx-auto leading-relaxed">
+          Turn your renovation into a structured Socio Project — with normalized scope, verified contractors, and inspection-gated milestone payments.
+        </p>
+
+        {/* Dual standardized CTAs */}
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <Link
+            href="/craft/estimate"
+            className="w-full sm:w-auto bg-black text-white font-mono text-xs uppercase tracking-wider px-8 py-4 hover:bg-gray-800 transition-colors flex items-center justify-center gap-3"
+          >
+            <span>START A PROJECT</span>
+            <span>→</span>
+          </Link>
+          <Link
+            href="/contractors/join"
+            className="w-full sm:w-auto bg-white border border-gray-300 text-black font-mono text-xs uppercase tracking-wider px-8 py-4 hover:border-black transition-colors flex items-center justify-center gap-3"
+          >
+            <span>I&apos;M A CONTRACTOR</span>
+            <span>→</span>
+          </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          {/* FOR PROPERTY OWNERS */}
-          <div className="bg-white border border-gray-200 p-8 md:p-12 flex flex-col justify-between hover:border-black transition-colors shadow-xs">
-            <div>
-              <div className="flex items-center justify-between pb-4 border-b border-gray-100 mb-6">
-                <span className="font-mono text-xs uppercase tracking-widest text-gray-500 bg-gray-50 border border-gray-200 px-2.5 py-1">
-                  Property Owners
-                </span>
-                <span className="font-mono text-xs text-gray-400">DEMAND</span>
-              </div>
-              <h3 className="text-3xl font-serif text-black mb-3">
-                Build a Structured Project
-              </h3>
-              <p className="font-sans text-sm text-gray-500 mb-8 leading-relaxed">
-                Submit your preliminary renovation details. Receive a normalized CSI scope breakdown, pre-vetted master trade matches, and guaranteed milestone escrow protection.
-              </p>
-            </div>
-            <Link
-              href="/craft/estimate"
-              className="w-full bg-black text-white font-sans text-sm font-medium py-4 px-6 hover:bg-gray-800 transition-colors flex items-center justify-between group"
-            >
-              <span>BUILD A STRUCTURED PROJECT</span>
-              <span className="font-mono group-hover:translate-x-1 transition-transform">→</span>
-            </Link>
-          </div>
-
-          {/* FOR CONTRACTORS */}
-          <div className="bg-white border border-gray-200 p-8 md:p-12 flex flex-col justify-between hover:border-black transition-colors shadow-xs">
-            <div>
-              <div className="flex items-center justify-between pb-4 border-b border-gray-100 mb-6">
-                <span className="font-mono text-xs uppercase tracking-widest text-gray-500 bg-gray-50 border border-gray-200 px-2.5 py-1">
-                  Contractors &amp; Trades
-                </span>
-                <span className="font-mono text-xs text-gray-400">SUPPLY</span>
-              </div>
-              <h3 className="text-3xl font-serif text-black mb-3">
-                Receive Qualified Opportunities
-              </h3>
-              <p className="font-sans text-sm text-gray-500 mb-8 leading-relaxed">
-                Stop wasting unpaid nights calculating estimates on cold leads. Receive verified project scopes with transparent client budgets and guaranteed milestone bank rails.
-              </p>
-            </div>
-            <Link
-              href="/contractors/join"
-              className="w-full bg-black text-white font-sans text-sm font-medium py-4 px-6 hover:bg-gray-800 transition-colors flex items-center justify-between group"
-            >
-              <span>RECEIVE QUALIFIED OPPORTUNITIES</span>
-              <span className="font-mono group-hover:translate-x-1 transition-transform">→</span>
-            </Link>
-          </div>
+        <div className="pt-12 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between text-xs font-mono text-gray-400 gap-4">
+          <span>SOCIO OPERATING SYSTEM · NYC</span>
+          <a
+            href="https://wa.me/16467504650?text=Hello%20Socio%20Operations%20Desk"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-500 hover:text-black transition-colors flex items-center gap-1.5"
+          >
+            <span>Direct WhatsApp Desk: +1 (646) 750-4650</span>
+            <span>↗</span>
+          </a>
         </div>
       </div>
     </section>

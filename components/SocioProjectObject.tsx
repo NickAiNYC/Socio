@@ -23,14 +23,14 @@ export function SocioProjectObject() {
       <div className="max-w-7xl mx-auto">
         <div className="max-w-3xl mb-16">
           <p className="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
-            Section 02 · Core Data Primitive
+            The Core Object
           </p>
           <h2 className="text-3xl md:text-5xl font-serif text-black leading-tight mb-6">
-            The Socio Project: <br />
-            The primary digital object.
+            Every renovation becomes <br />
+            a structured project.
           </h2>
           <p className="font-sans text-gray-600 text-lg leading-relaxed">
-            Socio is not a static web catalog. It is an operating environment where every renovation is instantiated as a structured, tamper-resistant digital project record governing scope, compliance, and capital.
+            Instead of scattering project information across fragmented emails, spreadsheets, PDF invoices, and napkin agreements, Socio unifies scope, contractor matching, compliance, and payments into a single structured record.
           </p>
         </div>
 
@@ -99,7 +99,7 @@ export function SocioProjectObject() {
                 <span>Deterministic Project Architecture</span>
               </div>
               <div className="flex items-center gap-4">
-                <span className="hidden sm:inline">Immutable Ledger · Zero Vague Napkin Agreements</span>
+                <span className="hidden sm:inline">Auditable Digital Ledger · Zero Vague Napkin Agreements</span>
                 <Link
                   href="/project/PRJ-7102-BK"
                   className="bg-black text-white px-3 py-1.5 font-mono text-xs hover:bg-gray-800 transition-colors inline-flex items-center gap-1.5"
