@@ -19,9 +19,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Socio · Infrastructure & Precision Front-Office for Local Trades",
+  title: "Socio — Construction Operating System for NYC",
   description:
-    "Socio pairs master-level independent craftsmen across Brooklyn and Queens with institutional-grade estimates, standardized scopes, and board-ready alteration compliance.",
+    "Socio turns NYC residential renovation into a structured, verifiable transaction — from scope and contractor selection to compliance, milestones, and payment.",
 };
 
 import Header from "@/components/layout/Header";

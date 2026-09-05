@@ -24,13 +24,19 @@ export function Navigation() {
           </div>
         </div>
 
-        {/* Two-Sided Platform Links */}
+        {/* Minimal Category Navigation */}
         <nav className="hidden md:flex items-center gap-8">
+          <Link
+            href="#how-it-works"
+            className="font-sans text-sm text-gray-500 hover:text-black transition-colors"
+          >
+            How It Works
+          </Link>
           <Link
             href="/craft"
             className="font-sans text-sm text-gray-500 hover:text-black transition-colors"
           >
-            For Property Owners
+            For Owners
           </Link>
           <Link
             href="/contractors/join"
@@ -42,17 +48,17 @@ export function Navigation() {
             href="#platform"
             className="font-sans text-sm text-gray-500 hover:text-black transition-colors"
           >
-            The OS Platform
+            The OS
           </Link>
         </nav>
 
-        {/* CTA Button */}
+        {/* Primary Action */}
         <Link
           href="/craft/estimate"
           className="bg-black text-white font-sans text-sm font-medium px-6 py-3 hover:bg-gray-800 transition-colors flex items-center gap-2 rounded-none"
         >
-          Start a Project
-          <span className="font-mono">↗</span>
+          Build a Project
+          <span className="font-mono">→</span>
         </Link>
       </div>
     </header>
