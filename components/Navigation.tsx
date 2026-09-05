@@ -24,19 +24,25 @@ export function Navigation() {
           </div>
         </div>
 
-        {/* Center Links */}
+        {/* Two-Sided Platform Links */}
         <nav className="hidden md:flex items-center gap-8">
           <Link
             href="/craft"
             className="font-sans text-sm text-gray-500 hover:text-black transition-colors"
           >
-            Craftsman Network
+            For Property Owners
           </Link>
           <Link
             href="/contractors/join"
             className="font-sans text-sm text-gray-500 hover:text-black transition-colors"
           >
-            For Tradesmen
+            For Contractors
+          </Link>
+          <Link
+            href="#platform"
+            className="font-sans text-sm text-gray-500 hover:text-black transition-colors"
+          >
+            The OS Platform
           </Link>
         </nav>
 
@@ -45,7 +51,7 @@ export function Navigation() {
           href="/craft/estimate"
           className="bg-black text-white font-sans text-sm font-medium px-6 py-3 hover:bg-gray-800 transition-colors flex items-center gap-2 rounded-none"
         >
-          Get an Estimate
+          Start a Project
           <span className="font-mono">↗</span>
         </Link>
       </div>
