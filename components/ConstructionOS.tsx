@@ -24,7 +24,7 @@ export function ConstructionOS() {
       step: '04',
       title: 'MILESTONES & PAYMENTS',
       simple: 'Connect payments to project milestones.',
-      detail: 'Capital secured in escrow rails and disbursed strictly upon mutual inspection and punchlist clearance.',
+      detail: 'Capital secured on milestone payment rails and disbursed strictly upon mutual inspection clearance.',
     },
   ];
 

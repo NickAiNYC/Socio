@@ -1,8 +1,6 @@
 import { HeroSection } from '@/components/HeroSection';
-import { WhatSocioDoes } from '@/components/WhatSocioDoes';
 import { CoreOutcomes } from '@/components/CoreOutcomes';
 import { ProductShowcase } from '@/components/ProductShowcase';
-import { SocioProjectObject } from '@/components/SocioProjectObject';
 import { HowItWorksSimple } from '@/components/HowItWorksSimple';
 import { TwoSidedNetwork } from '@/components/TwoSidedNetwork';
 import { CompliancePreview } from '@/components/CompliancePreview';
@@ -13,37 +11,27 @@ import { SystemCTA } from '@/components/SystemCTA';
 export default function LandingPage() {
   return (
     <main className="w-full bg-[#FAFAFA]">
-      {/* 01. Minimal Editorial Hero with Example Project Artifact & NYC Trust Strip */}
+      {/* CHAPTER 01: HERO & CORE OUTCOMES (10-Second Value Hook) */}
       <HeroSection />
-
-      {/* 02. What Socio Does: The 5 Core Services */}
-      <WhatSocioDoes />
-
-      {/* 03. The Three Core Outcomes: Structure, Match, Control with Visual Artifacts */}
       <CoreOutcomes />
 
-      {/* 04. Interactive Product Showcase: Tabs across Project, Scope, Contractors, Docs, Milestones, Payments */}
+      {/* CHAPTER 02: THE PRODUCT CONSOLE (Interactive Project Object) */}
       <ProductShowcase />
 
-      {/* 05. The Socio Project: The Central Digital Primitive & Runtime Inspector */}
-      <SocioProjectObject />
-
-      {/* 06. How It Works: The Simple 5-Step Journey (Describe → Structure → Match → Build → Record) */}
+      {/* CHAPTER 03: HOW IT WORKS (The 5-Step Customer Journey) */}
       <HowItWorksSimple />
 
-      {/* 07. Two-Sided Alignment: For Owners (Readiness) vs. For Contractors (Opportunities) */}
+      {/* CHAPTER 04: FOR OWNERS & CONTRACTORS (Two-Sided Alignment) */}
       <TwoSidedNetwork />
 
-      {/* 08. Built for NYC: Building Realities, Board Compliance Dossier & Local Density Corridors */}
+      {/* CHAPTER 05: BUILT FOR NYC (Compliance Dossier & Local Density Corridors) */}
       <CompliancePreview />
 
-      {/* 09. The Construction OS: System Behind the Service & Empirical Feedback Moat */}
+      {/* CHAPTER 06: INFRASTRUCTURE (Construction OS & Empirical Feedback Moat) */}
       <ConstructionOS />
 
-      {/* 10. Frequently Asked Questions: Clean Accordion */}
+      {/* CHAPTER 07: FAQ & FINAL CONVERSION */}
       <FaqSection />
-
-      {/* 11. Final Minimal Call to Action */}
       <SystemCTA />
     </main>
   );
