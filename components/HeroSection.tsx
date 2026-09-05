@@ -55,13 +55,13 @@ export function HeroSection() {
         </div>
 
         {/* Interactive Digital Project Assembly Artifact */}
-        <div className="mt-16 w-full max-w-4xl bg-white border border-gray-200 text-left shadow-xs font-mono text-xs">
+        <div className="mt-16 w-full max-w-5xl bg-white border border-gray-200 text-left shadow-sm hover:shadow-md transition-shadow font-mono text-xs">
           {/* Top terminal-style bar */}
           <div className="px-6 py-3.5 bg-gray-50 border-b border-gray-200 flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-3">
-              <span className={`w-2 h-2 rounded-full ${step >= 4 ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+              <span className={`w-2 h-2 rounded-full ${step >= 4 ? 'bg-emerald-500' : 'bg-amber-500'} transition-colors`} />
               <span className="font-semibold text-black uppercase tracking-wider">
-                SOCIO PROJECT INSTANCE
+                LIFECYCLE STATE 01 · PROJECT CREATED
               </span>
               <span className="text-gray-400">#PRJ-7102-BK</span>
             </div>
@@ -70,7 +70,7 @@ export function HeroSection() {
                 [EXAMPLE PROJECT]
               </span>
               <span className="bg-emerald-50 text-emerald-800 border border-emerald-200 px-2.5 py-0.5 text-[10px] uppercase font-semibold">
-                {step === 5 ? '● FULLY STRUCTURED RUNTIME' : `● ASSEMBLING STEP ${step} OF 5`}
+                {step === 5 ? '● FULLY STRUCTURED RUNTIME' : `● ASSEMBLING PHASE ${step} OF 5`}
               </span>
             </div>
           </div>

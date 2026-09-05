@@ -22,22 +22,23 @@ export function ProductShowcase() {
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div className="max-w-3xl">
-            <p className="font-mono text-xs uppercase tracking-widest text-gray-400 mb-2">
-              The Socio Project Console
-            </p>
+          <div className="max-w-3xl space-y-2">
+            <div className="flex items-center gap-2 font-mono text-[10px] text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-1 w-fit uppercase font-semibold">
+              <span>●</span>
+              <span>LIFECYCLE STATE 05 · UNIFIED OPERATIONAL RUNTIME</span>
+            </div>
             <h2 className="text-3xl sm:text-5xl font-serif text-black leading-tight">
               One project. One source of truth.
             </h2>
-            <p className="font-sans text-gray-600 text-base mt-2">
-              Interact with the live modules below to see how Socio keeps scope, matching, compliance, and payments unified.
+            <p className="font-sans text-gray-600 text-base">
+              Every document, contractor match, milestone, and payment remains bound to the same persistent project record.
             </p>
           </div>
           <Link
             href="/project/PRJ-7102-BK"
             className="inline-flex items-center gap-2 font-mono text-xs text-black border border-gray-300 px-4 py-2.5 hover:bg-gray-50 transition-colors shrink-0"
           >
-            <span>Inspect Live Runtime</span>
+            <span>Inspect Runtime (#PRJ-7102-BK)</span>
             <span>→</span>
           </Link>
         </div>

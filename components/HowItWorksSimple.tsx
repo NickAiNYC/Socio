@@ -29,8 +29,8 @@ export function HowItWorksSimple() {
       num: '04',
       action: 'BUILD',
       title: 'Manage milestones, docs, and payment',
-      description: 'Alteration agreement packages are cleared with your building. Project funds sit in escrow, released strictly post-inspection.',
-      artifact: 'Inspection-Gated Escrow Rails',
+      description: 'Alteration agreement packages are cleared with your building. Project funds are held on milestone-controlled payment rails, released strictly post-inspection.',
+      artifact: 'Inspection-Gated Payment Rails',
     },
     {
       num: '05',

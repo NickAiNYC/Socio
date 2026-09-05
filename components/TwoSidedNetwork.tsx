@@ -109,9 +109,12 @@ export function TwoSidedNetwork() {
               {/* Contractor Opportunity Artifact */}
               <div className="p-6 bg-[#FAFAFA] border border-gray-200 space-y-4 font-mono text-xs mb-8">
                 <div className="flex items-center justify-between border-b border-gray-200 pb-2">
-                  <span className="font-bold text-black uppercase">NEW OPPORTUNITY</span>
-                  <span className="text-black bg-gray-100 border border-gray-200 px-2 py-0.5">
-                    PARK SLOPE · CO-OP
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-black uppercase">NEW OPPORTUNITY</span>
+                    <span className="text-gray-400 font-mono text-[10px]">#PRJ-7102-BK</span>
+                  </div>
+                  <span className="text-black bg-gray-100 border border-gray-200 px-2 py-0.5 text-[10px]">
+                    CARROLL GARDENS · CO-OP
                   </span>
                 </div>
                 <div className="grid grid-cols-2 gap-3 text-[11px]">
@@ -140,7 +143,7 @@ export function TwoSidedNetwork() {
                 href="/contractors/join"
                 className="w-full bg-white border border-gray-300 text-black font-mono text-xs uppercase tracking-wider py-4 px-6 hover:border-black transition-colors flex items-center justify-between group"
               >
-                <span>JOIN THE CONTRACTOR NETWORK</span>
+                <span>I&apos;M A CONTRACTOR</span>
                 <span className="group-hover:translate-x-1 transition-transform">→</span>
               </Link>
             </div>
